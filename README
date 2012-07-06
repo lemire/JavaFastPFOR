@@ -1,0 +1,46 @@
+A simple integer compression library in Java
+Daniel Lemire, http://lemire.me/en/
+
+== What does this do  ==
+
+It is a library to compress and uncompress arrays of integers 
+very fast. The assumption is that most (but not all) values in
+your array use less than 32 bits.
+
+These sort of arrays often come up when using delta coding.
+
+== Why? ==
+
+I found a few libraries that implemented Binary Packing, NewPFD, OptPFD,
+Variable Byte, Simple 9 and so on in Java. However, I could not find
+one that I liked.
+
+I threw in a cool little benchmark program.
+
+== License ==
+
+This is code is released under the
+Apache License Version 2.0 http://www.apache.org/licenses/.
+
+== Requirements ==
+
+A recent Java compiler.
+
+== What can I do? ==
+
+Compile the code and execute integercompression.benchmark.
+
+I recommend running all the benchmarks with the "-server" flag.
+
+Speed is always reported in millions of integers per second.
+
+== Limitation ==
+
+Currently this library compresses and uncompresses arrays in bulk.
+An alternative strategy is to compress them block-by-block.
+
+== Installing java 7 (optional) ==
+
+Good instructions:
+http://forums.linuxmint.com/viewtopic.php?f=42&t=93052
+
