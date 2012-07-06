@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
- * NewPFD implemented by Daniel Lemire
+ * NewPFD/NewPFOR implemented by Daniel Lemire
  *
  * Follows:
  *
