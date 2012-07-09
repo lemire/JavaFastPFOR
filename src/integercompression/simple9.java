@@ -180,7 +180,7 @@ public final class simple9 implements IntegerCODEC {
         out[currentPos++] = (val << 18) >>> 18;
         break;
       }
-      case 8: { // number : 2, bitwidth : 14
+      case 8: { // number : 1, bitwidth : 28
         out[currentPos++] = (val << 4) >>> 4;
         break;
       }
@@ -256,7 +256,7 @@ public final class simple9 implements IntegerCODEC {
         }
         break;
       }
-      case 8: { // number : 2, bitwidth : 14
+      case 8: { // number : 1, bitwidth : 28
         out[currentPos++] = (val << 4) >>> 4;
         break;
       }
