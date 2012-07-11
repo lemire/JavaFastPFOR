@@ -29,6 +29,7 @@ public class benchmark {
     int N = data.length;
     int totalsize = 0;
     int maxlength = 0;
+    int[] complength = new int[N];
     int[][] dataout = new int[N][];
     for (int k = 0; k < N; ++k) {
       dataout[k] = new int[4 * data[k].length + 1024];
@@ -46,8 +47,9 @@ public class benchmark {
         AtomicInteger howmanywritten = new AtomicInteger(0);
         c.compress(data[k], howmanyread, data[k].length, dataout[k], howmanywritten);
         size += howmanywritten.intValue();
-        if (dataout[k].length != howmanywritten.intValue())
-          dataout[k] = Arrays.copyOf(dataout[k], howmanywritten.intValue());
+        complength[k] = howmanywritten.intValue();
+        //if (dataout[k].length != howmanywritten.intValue())
+        //  dataout[k] = Arrays.copyOf(dataout[k], howmanywritten.intValue());
       }
     }
     aft = System.currentTimeMillis();
@@ -60,7 +62,7 @@ public class benchmark {
       for (int k = 0; k < N; ++k) {
         AtomicInteger howmanyread = new AtomicInteger(0);
         AtomicInteger howmanywritten = new AtomicInteger(0);
-        c.uncompress(dataout[k], howmanyread, dataout[k].length, buffer, howmanywritten);
+        c.uncompress(dataout[k], howmanyread, complength[k], buffer, howmanywritten);
         if (howmanywritten.intValue() != data[k].length)
           throw new RuntimeException("we have a bug (diff length)");
         for (int m = 0; m < howmanywritten.intValue(); ++m)
@@ -73,7 +75,7 @@ public class benchmark {
       for (int k = 0; k < N; ++k) {
         AtomicInteger howmanyread = new AtomicInteger(0);
         AtomicInteger howmanywritten = new AtomicInteger(0);
-        c.uncompress(dataout[k], howmanyread, dataout[k].length, buffer, howmanywritten);
+        c.uncompress(dataout[k], howmanyread, complength[k], buffer, howmanywritten);
         if (howmanywritten.intValue() != data[k].length)
           throw new RuntimeException("we have a bug");
       }
