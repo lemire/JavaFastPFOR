@@ -79,7 +79,7 @@ public final class OptPFD implements IntegerCODEC {
           ++c;
         }
       
-      int thiscost = bits[i] * 4 + s9.estimatecompress(exceptbuffer, 0, 2*tmpcounter);
+      int thiscost = bits[i] * 4 + S9.estimatecompress(exceptbuffer, 0, 2*tmpcounter);
       if (thiscost <= bestcost) {
         bestcost = thiscost;
         besti = i;
@@ -114,7 +114,7 @@ public final class OptPFD implements IntegerCODEC {
             ++c;
           }
         }
-        exceptsize = s9
+        exceptsize = S9
           .compress(exceptbuffer, 0, 2 * nbrexcept, out, tmpoutpos);
         tmpoutpos += exceptsize;
       }

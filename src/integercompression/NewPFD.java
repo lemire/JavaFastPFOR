@@ -103,7 +103,7 @@ public final class NewPFD implements IntegerCODEC {
             ++c;
           }
         }
-        exceptsize = s9
+        exceptsize = S9
           .compress(exceptbuffer, 0, 2 * nbrexcept, out, tmpoutpos);
         tmpoutpos += exceptsize;
       }
@@ -139,7 +139,7 @@ public final class NewPFD implements IntegerCODEC {
       final int cexcept = (in[tmpinpos] >>> 8) & 0xFF;
       final int exceptsize = (in[tmpinpos] >>> 16) ;
       ++tmpinpos;
-      s9.uncompress(in, tmpinpos, exceptsize, exceptbuffer, 0, 2 * cexcept);
+      S9.uncompress(in, tmpinpos, exceptsize, exceptbuffer, 0, 2 * cexcept);
       tmpinpos += exceptsize;
       for (int k = 0; k < 128; k += 32) {
         BitPacking.fastunpack(in, tmpinpos, out, tmpoutpos + k, bits[b]);

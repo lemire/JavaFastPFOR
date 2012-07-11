@@ -13,7 +13,7 @@ package integercompression;
  * 
  */
 
-public final class s9 {
+public final class S9 {
   public static int estimatecompress(int[] in, int currentPos, int inlength) {
     int tmpoutpos = 0;
     int finalpos = currentPos + inlength;

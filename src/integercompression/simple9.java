@@ -9,7 +9,7 @@ package integercompression;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public final class simple9 implements IntegerCODEC {
+public final class Simple9 implements IntegerCODEC {
   // @Override
   public void compress(int[] in, AtomicInteger inpos, int inlength, int out[],
     AtomicInteger outpos) {

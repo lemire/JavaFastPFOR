@@ -108,9 +108,9 @@ public class benchmark {
       System.out.println();
 
       
-      testCodec(new simple9(), data, Max, repeat, false);
-      testCodec(new simple9(), data, Max, repeat, false);
-      testCodec(new simple9(), data, Max, repeat, true);
+      testCodec(new Simple9(), data, Max, repeat, false);
+      testCodec(new Simple9(), data, Max, repeat, false);
+      testCodec(new Simple9(), data, Max, repeat, true);
       System.out.println();
       
       testCodec(new Composition(new NewPFD(),new VariableByte()), data, Max, repeat, false);
