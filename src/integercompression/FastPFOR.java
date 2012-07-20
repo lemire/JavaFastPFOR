@@ -45,6 +45,7 @@ public final class FastPFOR implements IntegerCODEC {
 
   public void compress(int[] in, AtomicInteger inpos, int inlength, int[] out,
     AtomicInteger outpos) {
+    Util.assertTrue(inpos.get()+inlength <= in.length);
     inlength = inlength / 128 * 128;
 
     final int finalinpos = inpos.get() + inlength;
@@ -152,6 +153,7 @@ public final class FastPFOR implements IntegerCODEC {
 
   public void uncompress(int[] in, AtomicInteger inpos, int inlength,
     int[] out, AtomicInteger outpos) {
+    Util.assertTrue(inpos.get()+inlength <= in.length);
     int mynvalue = in[inpos.get()];
     inpos.incrementAndGet();
     int finalout = outpos.get() + mynvalue;

@@ -35,6 +35,7 @@ public final class OptPFD implements IntegerCODEC {
 
   public void compress(int[] in, AtomicInteger inpos, int inlength, int[] out,
     AtomicInteger outpos) {
+    Util.assertTrue(inpos.get()+inlength <= in.length);
     inlength = inlength / 128 * 128;
 
 
@@ -130,6 +131,7 @@ public final class OptPFD implements IntegerCODEC {
 
   public void uncompress(int[] in, AtomicInteger inpos, int inlength,
     int[] out, AtomicInteger outpos) {
+    Util.assertTrue(inpos.get()+inlength <= in.length);
     int mynvalue = in[inpos.get()];
     inpos.incrementAndGet();
     int finalout = outpos.get() + mynvalue;
@@ -150,7 +152,7 @@ public final class OptPFD implements IntegerCODEC {
       final int cexcept = (in[tmpinpos] >>> 8) & 0xFF;
       final int exceptsize = (in[tmpinpos] >>> 16);
       ++tmpinpos;
-      s9.uncompress(in, tmpinpos, exceptsize, exceptbuffer, 0, 2 * cexcept);
+      S9.uncompress(in, tmpinpos, exceptsize, exceptbuffer, 0, 2 * cexcept);
       tmpinpos += exceptsize;
       for (int k = 0; k < 128; k += 32) {
         BitPacking.fastunpack(in, tmpinpos, out, tmpoutpos + k, bits[b]);

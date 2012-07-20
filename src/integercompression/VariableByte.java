@@ -19,7 +19,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class VariableByte implements IntegerCODEC {
   public void compress(int[] in, AtomicInteger inpos, int inlength, int[] out,
     AtomicInteger outpos) {
-    ByteBuffer buf = ByteBuffer.allocateDirect(inlength * 5);
+    Util.assertTrue(inpos.get()+inlength <= in.length);
+    ByteBuffer buf = ByteBuffer.allocateDirect(inlength * 8);
     for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
       for (int val = in[k]; val != 0;) {
         int b = (val & 127);
@@ -42,6 +43,7 @@ public class VariableByte implements IntegerCODEC {
 
   public void uncompress(int[] in, AtomicInteger inpos, int inlength,
     int[] out, AtomicInteger outpos) {
+    Util.assertTrue(inpos.get()+inlength <= in.length);
     int s = 0;
     int p = inpos.get();
     int finalp = inpos.get() + inlength;

@@ -13,10 +13,12 @@ public final class Simple9 implements IntegerCODEC {
   // @Override
   public void compress(int[] in, AtomicInteger inpos, int inlength, int out[],
     AtomicInteger outpos) {
+    Util.assertTrue(inpos.get()+inlength <= in.length);
     int tmpoutpos = outpos.get();
     int currentPos = inpos.get();
     out[tmpoutpos++] = inlength;
-    final int finalin = currentPos + inlength;
+    final int finalin = currentPos + inlength;    
+    Util.assertTrue(finalin <= in.length);
     outer: while (currentPos < finalin - 28) {
       mainloop: for (int selector = 0; selector < 8; selector++) {
 
@@ -44,8 +46,8 @@ public final class Simple9 implements IntegerCODEC {
       mainloop: for (int selector = 0; selector < 8; selector++) {
         int res = 0;
         int compressedNum = codeNum[selector];
-        if (inlength <= currentPos + compressedNum - 1)
-          compressedNum = inlength - currentPos;
+        if (finalin <= currentPos + compressedNum - 1)
+          compressedNum = finalin - currentPos;
         int b = bitLength[selector];
         int max = 1 << b;
         int i = 0;
@@ -61,7 +63,6 @@ public final class Simple9 implements IntegerCODEC {
         out[tmpoutpos++] = res;
         currentPos += compressedNum;
         continue outer;
-
       }
       final int selector = 8;
       Util.assertTrue(codeNum[selector] == 1);
@@ -70,16 +71,18 @@ public final class Simple9 implements IntegerCODEC {
       out[tmpoutpos++] = in[currentPos++] | (selector << 28);
     }
     Util.assertTrue(currentPos == finalin);
-    inpos.set(in.length);
+    inpos.set(currentPos);
     outpos.set(tmpoutpos);
   }
 
   // @Override
   public void uncompress(int[] in, AtomicInteger inpos, int inlength,
     int[] out, AtomicInteger outpos) {
+    Util.assertTrue(inpos.get()+inlength <= in.length);
     int currentPos = outpos.get();
     int tmpinpos = inpos.get();
-    final int finalout = tmpinpos + in[tmpinpos++];
+    final int finalout = currentPos + in[tmpinpos++];
+    Util.assertTrue(finalout <= out.length);
     while (currentPos < finalout - 28) {
       int val = in[tmpinpos++];
       int header = val >>> 28;

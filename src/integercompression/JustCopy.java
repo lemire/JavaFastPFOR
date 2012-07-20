@@ -12,12 +12,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class JustCopy implements IntegerCODEC {
 
   public void compress(int[] in, AtomicInteger inpos, int inlength, int[] out, AtomicInteger outpos) {
+    Util.assertTrue(inpos.get()+inlength <= in.length);
     System.arraycopy(in, inpos.intValue(), out, outpos.intValue(), inlength);
     inpos.addAndGet(inlength);
     outpos.addAndGet(inlength);
   }
 
   public void uncompress(int[] in, AtomicInteger inpos, int inlength, int[] out, AtomicInteger outpos) {
+    Util.assertTrue(inpos.get()+inlength <= in.length);
     System.arraycopy(in, inpos.intValue(), out, outpos.intValue(), inlength);
     inpos.addAndGet(inlength);
     outpos.addAndGet(inlength);

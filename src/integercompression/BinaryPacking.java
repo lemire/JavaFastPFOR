@@ -16,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class BinaryPacking implements IntegerCODEC {
 
   public void compress(int[] in, AtomicInteger inpos, int inlength, int[] out, AtomicInteger outpos) {
+    Util.assertTrue(inpos.get()+inlength <= in.length);
 
     inlength = inlength / 128 * 128;
 
@@ -43,6 +44,7 @@ public final class BinaryPacking implements IntegerCODEC {
   }
 
   public void uncompress(int[] in, AtomicInteger inpos, int inlength, int[] out, AtomicInteger outpos) {
+    Util.assertTrue(inpos.get()+inlength <= in.length);
     final int outlength = in[inpos.intValue()];
     inpos.incrementAndGet();
     int tmpinpos = inpos.intValue();
