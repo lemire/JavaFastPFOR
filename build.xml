@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project default="compile">
+
+  <property name="benchmark.target" value="benchmark" />
+
+  <target name="compile">
+    <mkdir dir="target/classes" />
+    <depend srcdir="src" destdir="target/classes" />
+    <javac includeantruntime="false" destdir="target/classes">
+      <src path="src" />
+    </javac>
+  </target>
+
+  <target name="benchmark" depends="compile">
+    <java
+      classpath="target/classes"
+      classname="integercompression.${benchmark.target}"
+      fork="true">
+      <jvmarg value="-server" />
+    </java>
+  </target>
+
+  <target name="clean">
+    <delete dir="target" />
+  </target>
+
+</project>

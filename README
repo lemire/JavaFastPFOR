@@ -34,6 +34,16 @@ I recommend running all the benchmarks with the "-server" flag.
 
 Speed is always reported in millions of integers per second.
 
+=== For ant user ===
+
+When you use Apache ant, please try this:
+
+    $ ant benchmark
+
+or:
+
+    $ ant benchmark -Dbenchmark.target=BenchmarkBitPacking
+
 == Limitation ==
 
 Currently this library compresses and uncompresses arrays in bulk.
