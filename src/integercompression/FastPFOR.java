@@ -8,7 +8,6 @@ package integercompression;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This is a new PFOR Scheme designed by D. Lemire called FastPFOR.
@@ -43,14 +42,13 @@ public final class FastPFOR implements IntegerCODEC {
       datatobepacked[k] = new int[PageSize / 32 * 4];// heuristic
   }
 
-  public void compress(int[] in, AtomicInteger inpos, int inlength, int[] out,
-    AtomicInteger outpos) {
-    Util.assertTrue(inpos.get()+inlength <= in.length);
+  public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+          IntWrapper outpos) {
     inlength = inlength / 128 * 128;
 
     final int finalinpos = inpos.get() + inlength;
     out[outpos.get()] = inlength;
-    outpos.incrementAndGet();
+    outpos.increment();
     while (inpos.get() != finalinpos) {
       int thissize = finalinpos > PageSize + inpos.get() ? PageSize
         : (finalinpos - inpos.get());
@@ -83,9 +81,10 @@ public final class FastPFOR implements IntegerCODEC {
     }
   }
 
-  private void encodePage(int[] in, AtomicInteger inpos, int thissize,
-    int[] out, AtomicInteger outpos) {
-    final int headerpos = outpos.getAndIncrement();
+  private void encodePage(int[] in, IntWrapper inpos, int thissize,
+    int[] out, IntWrapper outpos) {
+    final int headerpos = outpos.get(); 
+    outpos.increment();
     int tmpoutpos = outpos.get();
     int[] datapointers = new int[32];
     bytecontainer.clear();
@@ -151,11 +150,11 @@ public final class FastPFOR implements IntegerCODEC {
     outpos.set(tmpoutpos);
   }
 
-  public void uncompress(int[] in, AtomicInteger inpos, int inlength,
-    int[] out, AtomicInteger outpos) {
-    Util.assertTrue(inpos.get()+inlength <= in.length);
+  public void uncompress(int[] in, IntWrapper inpos, int inlength,
+    int[] out, IntWrapper outpos) {
+    // Util.assertTrue(inpos.get()+inlength <= in.length);
     int mynvalue = in[inpos.get()];
-    inpos.incrementAndGet();
+    inpos.increment();
     int finalout = outpos.get() + mynvalue;
     while (outpos.get() != finalout) {
       int thissize = finalout > PageSize + outpos.get() ? PageSize
@@ -164,14 +163,15 @@ public final class FastPFOR implements IntegerCODEC {
     }
   }
 
-  private void decodePage(int[] in, AtomicInteger inpos, int[] out,
-    AtomicInteger outpos, int thissize) {
+  private void decodePage(int[] in, IntWrapper inpos, int[] out,
+          IntWrapper outpos, int thissize) {
     final int initpos = inpos.get();
-    final int wheremeta = in[inpos.getAndIncrement()];
+    final int wheremeta = in[inpos.get()];
+    inpos.increment();
     int inexcept = initpos + wheremeta;
     final int bytesize = in[inexcept++];
     bytecontainer.clear();
-    Util.assertTrue((bytesize & 3) == 0);
+    // Util.assertTrue((bytesize & 3) == 0);
     bytecontainer.asIntBuffer().put(in, inexcept, bytesize / 4);
     inexcept += bytesize / 4;
 

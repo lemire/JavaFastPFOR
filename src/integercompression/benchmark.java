@@ -6,16 +6,14 @@
  */
 package integercompression;
 
+import integercompression.synth.ClusteredDataGenerator;
+
 import java.text.DecimalFormat;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import integercompression.synth.*;
 
 public class benchmark {
 
   public static void main(String args[]) {
-    //test(20, 18, 10);
     test(20, 18, 10);
   }
 
@@ -44,8 +42,8 @@ public class benchmark {
     int size = 0;
     int comptime = 0;
     long decomptime = 0;
-    AtomicInteger inpos = new AtomicInteger();
-    AtomicInteger outpos = new AtomicInteger();
+    IntWrapper inpos = new IntWrapper();
+    IntWrapper outpos = new IntWrapper();
     for (int r = 0; r < repeat; ++r) {
       size = 0;
       for (int k = 0; k < N; ++k) {
@@ -60,7 +58,7 @@ public class benchmark {
         aft = System.nanoTime() / 1000;
         //
         comptime += aft - bef;
-        final int thiscompsize = outpos.intValue() + 1;
+        final int thiscompsize = outpos.get() + 1;
         size += thiscompsize;
         //
         bef = System.nanoTime() / 1000;
@@ -72,9 +70,9 @@ public class benchmark {
         aft = System.nanoTime() / 1000;
         //
         decomptime += aft - bef;
-        if (outpos.intValue() != data[k].length)
-          throw new RuntimeException("we have a bug (diff length) "+c+" expected "+data[k].length+ " got "+outpos.intValue() );
-        for (int m = 0; m < outpos.intValue(); ++m)
+        if (outpos.get() != data[k].length)
+          throw new RuntimeException("we have a bug (diff length) "+c+" expected "+data[k].length+ " got "+outpos.get() );
+        for (int m = 0; m < outpos.get(); ++m)
           if (buffer[m] != data[k][m]) {
             throw new RuntimeException(
               "we have a bug (actual difference), expected " + data[k][m]

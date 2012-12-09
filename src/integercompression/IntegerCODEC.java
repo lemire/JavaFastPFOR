@@ -7,7 +7,6 @@
 
 package integercompression;
 
-import java.util.concurrent.atomic.AtomicInteger;
 
 public interface IntegerCODEC {
   /**
@@ -18,10 +17,10 @@ public interface IntegerCODEC {
   * incremented by 3
   * we use AtomicInteger to pass the values by reference.
   */
-  public void compress(int[] in, AtomicInteger inpos, int inlength, int[] out, AtomicInteger outpos);
+  public void compress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos);
 
   // returns how many integers we decompressed
-  public void uncompress(int[] in, AtomicInteger inpos, int inlength, int[] out, AtomicInteger outpos);
+  public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos);
 
   
 }
