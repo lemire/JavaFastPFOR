@@ -6,7 +6,6 @@
  */
 package integercompression;
 
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -15,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Follows:
  *
  * H. Yan, S. Ding, T. Suel, Inverted index compression and query processing with
- * optimized document ordering, in: WWW Õ09, 2009, pp. 401Ð410.
+ * optimized document ordering, in: WWW ï¿½09, 2009, pp. 401ï¿½410.
  * 
  * using Simple9 as the secondary coder.
  * 
@@ -33,15 +32,15 @@ public final class OptPFD implements IntegerCODEC {
     PageSize = 65536;
   }
 
-  public void compress(int[] in, AtomicInteger inpos, int inlength, int[] out,
-    AtomicInteger outpos) {
-    Util.assertTrue(inpos.get()+inlength <= in.length);
+  public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+          IntWrapper outpos) {
+    // Util.assertTrue(inpos.get()+inlength <= in.length);
     inlength = inlength / 128 * 128;
 
 
     final int finalinpos = inpos.get() + inlength;
     out[outpos.get()] = inlength;
-    outpos.incrementAndGet();
+    outpos.increment();
     while (inpos.get() != finalinpos) {
       int thissize = finalinpos > PageSize + inpos.get() ? PageSize
         : (finalinpos - inpos.get());
@@ -56,8 +55,8 @@ public final class OptPFD implements IntegerCODEC {
     12, 13, 14, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
     16, 16 };
 
-  void getBestBFromData(int[] in, int pos, AtomicInteger bestb,
-    AtomicInteger bestexcept) {
+  void getBestBFromData(int[] in, int pos, IntWrapper bestb,
+          IntWrapper bestexcept) {
     final int mb = Util.maxbits(in, pos, BlockSize);
     int mini = 0;
     while (mini + 28 < invbits[mb])
@@ -92,12 +91,12 @@ public final class OptPFD implements IntegerCODEC {
     bestexcept.set(exceptcounter);
   }
 
-  private void encodePage(int[] in, AtomicInteger inpos, int thissize,
-    int[] out, AtomicInteger outpos) {
+  private void encodePage(int[] in, IntWrapper inpos, int thissize,
+    int[] out, IntWrapper outpos) {
     int tmpoutpos = outpos.get();
     int tmpinpos = inpos.get();
-    AtomicInteger bestb = new AtomicInteger();
-    AtomicInteger bestexcept = new AtomicInteger();
+    IntWrapper bestb = new IntWrapper();
+    IntWrapper bestexcept = new IntWrapper();
     for (final int finalinpos = tmpinpos + thissize; tmpinpos + BlockSize <= finalinpos; tmpinpos += BlockSize) {
       getBestBFromData(in, tmpinpos, bestb, bestexcept);
       int tmpbestb = bestb.get();
@@ -129,11 +128,11 @@ public final class OptPFD implements IntegerCODEC {
     outpos.set(tmpoutpos);
   }
 
-  public void uncompress(int[] in, AtomicInteger inpos, int inlength,
-    int[] out, AtomicInteger outpos) {
-    Util.assertTrue(inpos.get()+inlength <= in.length);
+  public void uncompress(int[] in, IntWrapper inpos, int inlength,
+    int[] out, IntWrapper outpos) {
+    // Util.assertTrue(inpos.get()+inlength <= in.length);
     int mynvalue = in[inpos.get()];
-    inpos.incrementAndGet();
+    inpos.increment();
     int finalout = outpos.get() + mynvalue;
     while (outpos.get() != finalout) {
       int thissize = finalout > PageSize + outpos.get() ? PageSize
@@ -142,8 +141,8 @@ public final class OptPFD implements IntegerCODEC {
     }
   }
 
-  private void decodePage(int[] in, AtomicInteger inpos, int[] out,
-    AtomicInteger outpos, int thissize) {
+  private void decodePage(int[] in, IntWrapper inpos, int[] out,
+          IntWrapper outpos, int thissize) {
     int tmpoutpos = outpos.get();
     int tmpinpos = inpos.get();
 
