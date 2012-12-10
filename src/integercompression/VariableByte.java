@@ -8,28 +8,28 @@ package integercompression;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Implementation of variable-byte. Possibly inefficient.
- * 
+ *
  * @author Daniel Lemire
- * 
+ *
  */
 public class VariableByte implements IntegerCODEC {
-  public void compress(int[] in, AtomicInteger inpos, int inlength, int[] out,
-    AtomicInteger outpos) {
-    Util.assertTrue(inpos.get()+inlength <= in.length);
+  public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+          IntWrapper outpos) {
+    // Util.assertTrue(inpos.get()+inlength <= in.length);
     ByteBuffer buf = ByteBuffer.allocateDirect(inlength * 8);
     for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
-      for (int val = in[k]; val != 0;) {
-        int b = (val & 127);
-        val >>>= 7;
-        if (val != 0) {
-          b |= 128;
-        }
-        buf.put((byte) b);
-      }
+      int val = in[k];
+      do {
+          int b = (val & 127);
+          val >>>= 7;
+          if (val != 0) {
+              b |= 128;
+          }
+          buf.put((byte) b);
+      } while (val != 0);
     }
     while (buf.position() % 4 != 0)
       buf.put((byte) 128);
@@ -37,13 +37,13 @@ public class VariableByte implements IntegerCODEC {
     buf.flip();
     IntBuffer ibuf = buf.asIntBuffer();
     ibuf.get(out, outpos.get(), length / 4);
-    outpos.addAndGet(length / 4);
-    inpos.addAndGet(inlength);
+    outpos.add(length / 4);
+    inpos.add(inlength);
   }
 
-  public void uncompress(int[] in, AtomicInteger inpos, int inlength,
-    int[] out, AtomicInteger outpos) {
-    Util.assertTrue(inpos.get()+inlength <= in.length);
+  public void uncompress(int[] in, IntWrapper inpos, int inlength,
+    int[] out, IntWrapper outpos) {
+    // Util.assertTrue(inpos.get()+inlength <= in.length);
     int s = 0;
     int p = inpos.get();
     int finalp = inpos.get() + inlength;
@@ -60,7 +60,7 @@ public class VariableByte implements IntegerCODEC {
         shift += 7;
     }
     outpos.set(tmpoutpos);
-    inpos.addAndGet(inlength);
+    inpos.add(inlength);
   }
 
   public String toString() {

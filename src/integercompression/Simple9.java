@@ -7,18 +7,17 @@
 
 package integercompression;
 
-import java.util.concurrent.atomic.AtomicInteger;
 
 public final class Simple9 implements IntegerCODEC {
   // @Override
-  public void compress(int[] in, AtomicInteger inpos, int inlength, int out[],
-    AtomicInteger outpos) {
-    Util.assertTrue(inpos.get()+inlength <= in.length);
+  public void compress(int[] in, IntWrapper inpos, int inlength, int out[],
+          IntWrapper outpos) {
+    // Util.assertTrue(inpos.get()+inlength <= in.length);
     int tmpoutpos = outpos.get();
     int currentPos = inpos.get();
     out[tmpoutpos++] = inlength;
     final int finalin = currentPos + inlength;    
-    Util.assertTrue(finalin <= in.length);
+    // Util.assertTrue(finalin <= in.length);
     outer: while (currentPos < finalin - 28) {
       mainloop: for (int selector = 0; selector < 8; selector++) {
 
@@ -65,24 +64,24 @@ public final class Simple9 implements IntegerCODEC {
         continue outer;
       }
       final int selector = 8;
-      Util.assertTrue(codeNum[selector] == 1);
+      // Util.assertTrue(codeNum[selector] == 1);
       if (in[currentPos] >= 1 << bitLength[selector])
         throw new RuntimeException("Too big a number");
       out[tmpoutpos++] = in[currentPos++] | (selector << 28);
     }
-    Util.assertTrue(currentPos == finalin);
+    // Util.assertTrue(currentPos == finalin);
     inpos.set(currentPos);
     outpos.set(tmpoutpos);
   }
 
   // @Override
-  public void uncompress(int[] in, AtomicInteger inpos, int inlength,
-    int[] out, AtomicInteger outpos) {
-    Util.assertTrue(inpos.get()+inlength <= in.length);
+  public void uncompress(int[] in, IntWrapper inpos, int inlength,
+    int[] out, IntWrapper outpos) {
+    // Util.assertTrue(inpos.get()+inlength <= in.length);
     int currentPos = outpos.get();
     int tmpinpos = inpos.get();
     final int finalout = currentPos + in[tmpinpos++];
-    Util.assertTrue(finalout <= out.length);
+    // Util.assertTrue(finalout <= out.length);
     while (currentPos < finalout - 28) {
       int val = in[tmpinpos++];
       int header = val >>> 28;
@@ -268,7 +267,7 @@ public final class Simple9 implements IntegerCODEC {
       }
       }
     }
-    Util.assertTrue(currentPos == finalout);
+    // Util.assertTrue(currentPos == finalout);
     outpos.set(currentPos);
     inpos.set(tmpinpos);
 

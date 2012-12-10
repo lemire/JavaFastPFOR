@@ -34,7 +34,7 @@ public final class S9 {
         continue outer;
       }
       final int selector = 8;
-      Util.assertTrue(codeNum[selector] == 1);
+      // Util.assertTrue(codeNum[selector] == 1);
       if (in[currentPos] >= 1 << bitLength[selector])
         throw new RuntimeException("Too big a number");
       tmpoutpos++;
@@ -70,19 +70,19 @@ public final class S9 {
         continue outer;
       }
       final int selector = 8;
-      Util.assertTrue(codeNum[selector] == 1);
+      // Util.assertTrue(codeNum[selector] == 1);
       if (in[currentPos] >= 1 << bitLength[selector])
         throw new RuntimeException("Too big a number");
       out[tmpoutpos++] = in[currentPos++] | (selector << 28);
     }
-    Util.assertTrue(currentPos == finalpos);
+    // Util.assertTrue(currentPos == finalpos);
     return tmpoutpos - origtmpoutpos;
   }
 
   public static void uncompress(int[] in, int tmpinpos, int inlength,
     int[] out, int currentPos, int outlength) {
     int finallength = currentPos + outlength;
-    int finalin = tmpinpos + inlength;
+    // int finalin = tmpinpos + inlength;
 
     while (currentPos < finallength) {
       int val = in[tmpinpos++];
@@ -161,8 +161,8 @@ public final class S9 {
       }
       }
     }
-    Util.assertTrue(currentPos == finallength);
-    Util.assertTrue(tmpinpos <= finalin);
+    // Util.assertTrue(currentPos == finallength);
+    // Util.assertTrue(tmpinpos <= finalin);
 
   }
   
