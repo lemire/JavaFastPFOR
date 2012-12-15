@@ -15,7 +15,7 @@ public interface IntegerCODEC {
   * if 12 ints (inlength = 12) are compressed to 3 ints, then
   * inpos will be incremented by 12 while outpos will be
   * incremented by 3
-  * we use AtomicInteger to pass the values by reference.
+  * we use IntWrapper to pass the values by reference.
   */
   public void compress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos);
 

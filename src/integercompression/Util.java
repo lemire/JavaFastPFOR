@@ -13,6 +13,14 @@ public class Util {
       mask |= i[k];
     return bits(mask);
   }
+  public static int maxdiffbits(int initoffset, int[] i, int pos, int length) {
+	    int mask = 0;
+	    mask |= (i[pos] - initoffset);
+	    for (int k = pos+1; k < pos + length; ++k) {
+	      mask |= i[k] - i[k-1];
+	    }
+	    return bits(mask);
+  }
 
   public static int bits(int i) {
     return 32 - Integer.numberOfLeadingZeros(i);

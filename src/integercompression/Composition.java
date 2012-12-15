@@ -16,7 +16,8 @@ public class Composition implements IntegerCODEC{
   IntegerCODEC F1, F2;
   public Composition(IntegerCODEC f1, IntegerCODEC f2) {F1 = f1; F2= f2;}
 
-  public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+  @Override
+public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
     IntWrapper outpos) {
     int init = inpos.get();
     F1.compress(in, inpos, inlength, out, outpos);
@@ -24,7 +25,8 @@ public class Composition implements IntegerCODEC{
     F2.compress(in, inpos, inlength, out, outpos);
   }
 
-  public void uncompress(int[] in, IntWrapper inpos, int inlength,
+  @Override
+public void uncompress(int[] in, IntWrapper inpos, int inlength,
     int[] out, IntWrapper outpos) {
     int init = inpos.get();
     F1.uncompress(in, inpos, inlength, out, outpos);
@@ -33,7 +35,8 @@ public class Composition implements IntegerCODEC{
   }
   
 
-  public String toString() {
+  @Override
+public String toString() {
     return F1.getClass().getName()+"+"+F2.getClass().getName();
   }
 

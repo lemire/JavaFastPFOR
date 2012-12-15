@@ -10,7 +10,8 @@ package integercompression;
 
 public final class Simple9 implements IntegerCODEC {
   // @Override
-  public void compress(int[] in, IntWrapper inpos, int inlength, int out[],
+  @Override
+public void compress(int[] in, IntWrapper inpos, int inlength, int out[],
           IntWrapper outpos) {
     // Util.assertTrue(inpos.get()+inlength <= in.length);
     int tmpoutpos = outpos.get();
@@ -75,7 +76,8 @@ public final class Simple9 implements IntegerCODEC {
   }
 
   // @Override
-  public void uncompress(int[] in, IntWrapper inpos, int inlength,
+  @Override
+public void uncompress(int[] in, IntWrapper inpos, int inlength,
     int[] out, IntWrapper outpos) {
     // Util.assertTrue(inpos.get()+inlength <= in.length);
     int currentPos = outpos.get();
@@ -278,7 +280,8 @@ public final class Simple9 implements IntegerCODEC {
   private final static int codeNum[] = { 28, 14, 9, 7, 5, 4, 3, 2, 1 };
 
 
-  public String toString() {
+  @Override
+public String toString() {
     return this.getClass().getName();
   }
 

@@ -16,9 +16,9 @@ import java.nio.IntBuffer;
  *
  */
 public class VariableByte implements IntegerCODEC {
-  public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+  @Override
+public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
           IntWrapper outpos) {
-    // Util.assertTrue(inpos.get()+inlength <= in.length);
     ByteBuffer buf = ByteBuffer.allocateDirect(inlength * 8);
     for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
       int val = in[k];
@@ -41,7 +41,8 @@ public class VariableByte implements IntegerCODEC {
     inpos.add(inlength);
   }
 
-  public void uncompress(int[] in, IntWrapper inpos, int inlength,
+  @Override
+public void uncompress(int[] in, IntWrapper inpos, int inlength,
     int[] out, IntWrapper outpos) {
     // Util.assertTrue(inpos.get()+inlength <= in.length);
     int s = 0;
@@ -63,7 +64,8 @@ public class VariableByte implements IntegerCODEC {
     inpos.add(inlength);
   }
 
-  public String toString() {
+  @Override
+public String toString() {
     return this.getClass().getName();
   }
 

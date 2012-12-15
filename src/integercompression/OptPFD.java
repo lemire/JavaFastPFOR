@@ -32,7 +32,8 @@ public final class OptPFD implements IntegerCODEC {
     PageSize = 65536;
   }
 
-  public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+  @Override
+public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
           IntWrapper outpos) {
     // Util.assertTrue(inpos.get()+inlength <= in.length);
     inlength = inlength / 128 * 128;
@@ -128,7 +129,8 @@ public final class OptPFD implements IntegerCODEC {
     outpos.set(tmpoutpos);
   }
 
-  public void uncompress(int[] in, IntWrapper inpos, int inlength,
+  @Override
+public void uncompress(int[] in, IntWrapper inpos, int inlength,
     int[] out, IntWrapper outpos) {
     // Util.assertTrue(inpos.get()+inlength <= in.length);
     int mynvalue = in[inpos.get()];
@@ -166,7 +168,8 @@ public final class OptPFD implements IntegerCODEC {
   }
   
 
-  public String toString() {
+  @Override
+public String toString() {
     return this.getClass().getName();
   }
 

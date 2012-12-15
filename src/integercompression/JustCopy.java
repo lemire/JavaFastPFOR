@@ -10,14 +10,16 @@ package integercompression;
 
 public final class JustCopy implements IntegerCODEC {
 
-  public void compress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
+  @Override
+public void compress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
     // Util.assertTrue(inpos.get()+inlength <= in.length);
     System.arraycopy(in, inpos.get(), out, outpos.get(), inlength);
     inpos.add(inlength);
     outpos.add(inlength);
   }
 
-  public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
+  @Override
+public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
     // Util.assertTrue(inpos.get()+inlength <= in.length);
     System.arraycopy(in, inpos.get(), out, outpos.get(), inlength);
     inpos.add(inlength);
@@ -26,7 +28,8 @@ public final class JustCopy implements IntegerCODEC {
   
   
   
-  public String toString() {
+  @Override
+public String toString() {
     return this.getClass().getName();
   }
 

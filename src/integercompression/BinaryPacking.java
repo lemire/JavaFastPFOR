@@ -14,7 +14,8 @@ package integercompression;
  */
 public final class BinaryPacking implements IntegerCODEC {
 
-  public void compress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
+  @Override
+public void compress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
     inlength = inlength / 128 * 128;
     
     out[outpos.get()] = inlength;
@@ -40,7 +41,8 @@ public final class BinaryPacking implements IntegerCODEC {
     outpos.set(tmpoutpos);
   }
 
-  public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
+  @Override
+public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
     // Util.assertTrue(inpos.get()+inlength <= in.length);
     final int outlength = in[inpos.get()];
     inpos.increment();

@@ -11,12 +11,12 @@ public final class IntWrapper extends Number {
         this(0);
     }
 
-    public IntWrapper(int value) {
-        this.value = value;
+    public IntWrapper(int v) {
+        this.value = v;
     }
 
-    public void add(int value) {
-        this.value += value;
+    public void add(int v) {
+        this.value += v;
     }
 
     @Override
