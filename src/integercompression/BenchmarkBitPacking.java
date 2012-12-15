@@ -48,6 +48,61 @@ public class BenchmarkBitPacking {
           + dfspeed.format(N * times * 1000.0 / (decomp)));
     }
   }
+
+  public static void testWithDeltas(boolean verbose) {
+	    DecimalFormat dfspeed = new DecimalFormat("0");
+	    final int N = 32;
+	    final int times = 100000;
+	    Random r = new Random(0);
+	    int[] data = new int[N];
+	    int[] compressed = new int[N];
+	    int[] icompressed = new int[N];
+	    int[] uncompressed = new int[N];
+	    for (int bit = 1; bit < 31; ++bit) {
+	      long comp = 0;
+	      long decomp = 0;
+	      long icomp = 0;
+	      long idecomp = 0;
+	      for (int t = 0; t < times; ++t) {
+	    	data[0] = r.nextInt(1 << bit);
+	        for (int k = 1; k < N; ++k) {
+	          data[k] = r.nextInt(1 << bit) + data[k-1];
+	        }
+	        int[] tmpdata = Arrays.copyOf(data, data.length);
+	        long time1 = System.nanoTime();
+	        Delta.delta(tmpdata);
+	        BitPacking.fastpackwithoutmask(tmpdata, 0, compressed, 0, bit);
+	        long time2 = System.nanoTime();
+	        BitPacking.fastunpack(compressed, 0, uncompressed, 0, bit);
+	        Delta.fastinverseDelta(uncompressed);
+	        long time3 = System.nanoTime();
+	        if(!Arrays.equals(data, uncompressed)) throw new RuntimeException("bug");
+	        comp += time2 - time1;
+	        decomp += time3 - time2;
+	        tmpdata = Arrays.copyOf(data, data.length);
+	        time1 = System.nanoTime();
+	        IntegratedBitPacking.integratedpack(0, tmpdata, 0, icompressed, 0, bit);
+	        time2 = System.nanoTime();
+	        IntegratedBitPacking.integratedunpack(0, icompressed, 0, uncompressed, 0, bit);
+	        time3 = System.nanoTime();
+	        if(!Arrays.equals(icompressed, compressed)) throw new RuntimeException("ibug "+bit);
+	        if(!Arrays.equals(data, uncompressed)) throw new RuntimeException("bug "+bit);
+	        icomp += time2 - time1;
+	        idecomp += time3 - time2;
+	      }
+	      if (verbose)
+	        System.out.println("bit = " + bit + " comp. speed = "
+	          + dfspeed.format(N * times * 1000.0 / (comp))
+	          + " decomp. speed = "
+	          + dfspeed.format(N * times * 1000.0 / (decomp))
+	          + " icomp. speed = "
+	          + dfspeed.format(N * times * 1000.0 / (icomp))
+	          + " idecomp. speed = "
+	          + dfspeed.format(N * times * 1000.0 / (idecomp))
+	        		);
+	    }
+	  }
+  
   public static void verify() {
     System.out.println("Checking the code...");
     final int N = 32;
@@ -124,6 +179,10 @@ public class BenchmarkBitPacking {
     verify();
     verifyWithExceptions();
     verifyWithoutMask();
+    System.out.println("Testing packing and delta ");
+    testWithDeltas(false);
+    testWithDeltas(true);
+    System.out.println("Testing packing alone ");
     test(false);
     test(true);
   }
