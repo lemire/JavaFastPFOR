@@ -37,7 +37,7 @@ public class BenchmarkBitPacking {
         long time4 = System.nanoTime();
         comp += time2 - time1;
         compwm += time3 - time2;
-        decomp += time4 - time2;
+        decomp += time4 - time3;
       }
       if (verbose)
         System.out.println("bit = " + bit + " comp. speed = "
