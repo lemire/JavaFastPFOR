@@ -13,6 +13,10 @@ your array use less than 32 bits.
 
 These sort of arrays often come up when using delta coding.
 
+== Usage ==
+
+See example.java for a simple demonstration.
+
 == Why? ==
 
 I found a few libraries that implemented Binary Packing, NewPFD, OptPFD,
