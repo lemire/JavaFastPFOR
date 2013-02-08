@@ -44,7 +44,6 @@ public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
   @Override
 public void uncompress(int[] in, IntWrapper inpos, int inlength,
     int[] out, IntWrapper outpos) {
-    // Util.assertTrue(inpos.get()+inlength <= in.length);
     int s = 0;
     int p = inpos.get();
     int finalp = inpos.get() + inlength;
