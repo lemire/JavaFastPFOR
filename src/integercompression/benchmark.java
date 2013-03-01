@@ -11,7 +11,7 @@ import integercompression.synth.ClusteredDataGenerator;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
-public class benchmark {
+public class Benchmark {
 
 	public static void main(String args[]) {
 		test(20, 18, 10);
@@ -106,7 +106,7 @@ public class benchmark {
 				data[k] = cdg.generateClustered((1 << nbr), Max);
 			}
 			System.out.println("# generating random data... ok.");
-			// building
+
 			testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
 					new IntegratedVariableByte()), data, Max, repeat, false);
 			testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
@@ -147,6 +147,15 @@ public class benchmark {
 			testCodec(new Composition(new NewPFD(), new VariableByte()), data,
 					Max, repeat, true);
 			System.out.println();
+			
+
+			testCodec(new Composition(new NewPFDS9(), new VariableByte()), data,
+					Max, repeat, false);
+			testCodec(new Composition(new NewPFDS9(), new VariableByte()), data,
+					Max, repeat, false);
+			testCodec(new Composition(new NewPFDS9(), new VariableByte()), data,
+					Max, repeat, true);
+			System.out.println();
 
 			testCodec(new Composition(new OptPFD(), new VariableByte()), data,
 					Max, repeat, false);
@@ -156,6 +165,15 @@ public class benchmark {
 					Max, repeat, true);
 			System.out.println();
 
+			testCodec(new Composition(new OptPFDS9(), new VariableByte()), data,
+					Max, repeat, false);
+			testCodec(new Composition(new OptPFDS9(), new VariableByte()), data,
+					Max, repeat, false);
+			testCodec(new Composition(new OptPFDS9(), new VariableByte()), data,
+					Max, repeat, true);
+			System.out.println();
+
+			
 			testCodec(new Composition(new FastPFOR(), new VariableByte()),
 					data, Max, repeat, false);
 			testCodec(new Composition(new FastPFOR(), new VariableByte()),
@@ -168,7 +186,6 @@ public class benchmark {
 			testCodec(new Simple9(), data, Max, repeat, false);
 			testCodec(new Simple9(), data, Max, repeat, true);
 			System.out.println();
-
 		}
 	}
 }

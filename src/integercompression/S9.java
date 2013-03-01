@@ -14,7 +14,7 @@ package integercompression;
  */
 
 public final class S9 {
-  public static int estimatecompress(int[] in, int currentPos, int inlength) {
+	public static int estimatecompress(int[] in, int currentPos, int inlength) {
     int tmpoutpos = 0;
     int finalpos = currentPos + inlength;
     outer: while (currentPos < finalpos) {
@@ -82,7 +82,6 @@ public final class S9 {
   public static void uncompress(int[] in, int tmpinpos, int inlength,
     int[] out, int currentPos, int outlength) {
     int finallength = currentPos + outlength;
-    // int finalin = tmpinpos + inlength;
 
     while (currentPos < finallength) {
       int val = in[tmpinpos++];

@@ -1,10 +1,3 @@
-/**
- * This is code is released under the
- * Apache License Version 2.0 http://www.apache.org/licenses/.
- *
- * (c) Daniel Lemire, http://lemire.me/en/
- */
-
 package integercompression;
 
 /**
@@ -13,20 +6,20 @@ package integercompression;
  * Follows:
  * 
  * H. Yan, S. Ding, T. Suel, Inverted index compression and query processing
- * with optimized document ordering, in: WWW �09, 2009, pp. 401�410.
+ * with optimized document ordering, in: WWW 09, 2009, pp. 401-410.
  * 
- * using Simple16 as the secondary coder.
+ * using Simple9 as the secondary coder.
  * 
  * @author Daniel Lemire
  * 
  */
-public final class NewPFD implements IntegerCODEC {
+public final class NewPFDS9 implements IntegerCODEC {
 	final int PageSize;
 	final static int BlockSize = 128;
 
 	int[] exceptbuffer = new int[2 * BlockSize];
 
-	public NewPFD() {
+	public NewPFDS9() {
 		PageSize = 65536;
 	}
 
@@ -99,7 +92,7 @@ public final class NewPFD implements IntegerCODEC {
 						++c;
 					}
 				}
-				exceptsize = S16.compress(exceptbuffer, 0, 2 * nbrexcept, out,
+				exceptsize = S9.compress(exceptbuffer, 0, 2 * nbrexcept, out,
 						tmpoutpos);
 				tmpoutpos += exceptsize;
 			}
@@ -138,7 +131,7 @@ public final class NewPFD implements IntegerCODEC {
 			final int cexcept = (in[tmpinpos] >>> 8) & 0xFF;
 			final int exceptsize = (in[tmpinpos] >>> 16);
 			++tmpinpos;
-			S16.uncompress(in, tmpinpos, exceptsize, exceptbuffer, 0,
+			S9.uncompress(in, tmpinpos, exceptsize, exceptbuffer, 0,
 					2 * cexcept);
 			tmpinpos += exceptsize;
 			for (int k = 0; k < BlockSize; k += 32) {
