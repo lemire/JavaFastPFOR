@@ -9,13 +9,25 @@ Di Wu, http://www.facebook.com/diwu1989
 
 It is a library to compress and uncompress arrays of integers 
 very fast. The assumption is that most (but not all) values in
-your array use less than 32 bits.
+your array use less than 32 bits. These sort of arrays often come up
+when using differential coding.
 
-These sort of arrays often come up when using delta coding.
+
+Some CODECs ("integrated codecs") assume that the integers are
+in sorted orders. Most others do not.
+
 
 == Usage ==
 
 See example.java for a simple demonstration.
+
+== what to read more? ==
+
+We wrote a research paper which documents many of the CODECs implemented here:
+
+Decoding billions of integers per second through vectorization
+http://arxiv.org/abs/1209.2137
+
 
 == Why? ==
 
