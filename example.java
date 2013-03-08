@@ -14,6 +14,10 @@ public class example {
 		//results
 		for(int k = 0; k < data.length; ++k)
 		  data[k] = k;
+		// Very important: the data is in sorted order!!! If not, you
+		// will get very poor compression with IntegratedBinaryPacking,
+		// you should use another CODEC.
+		  
 		// next we compose a CODEC. Most of the processing
 		// will be done with binary packing, and leftovers will
 		// be processed using variable byte
@@ -22,7 +26,10 @@ public class example {
 		            new IntegratedBinaryPacking(),
 					new IntegratedVariableByte());
 		// output vector should be large enough...
-		int [] compressed = new int[data.length];
+		int [] compressed = new int[data.length]; 
+		// compressed might not be large enough in some cases
+		// if you get java.lang.ArrayIndexOutOfBoundsException, try
+		// allocating more memory
 
 		/**
 		*
