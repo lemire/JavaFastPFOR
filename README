@@ -25,7 +25,7 @@ See example.java for a simple demonstration.
 
 We wrote a research paper which documents many of the CODECs implemented here:
 
-Decoding billions of integers per second through vectorization
+Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second through vectorization, Software Pratice & Experience (to appear)
 http://arxiv.org/abs/1209.2137
 
 
