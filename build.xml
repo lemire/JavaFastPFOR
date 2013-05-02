@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project default="compile">
 
-  <property name="benchmark.target" value="benchmark" />
+  <property name="benchmark.target" value="Benchmark" />
 
   <target name="compile">
     <mkdir dir="target/classes" />
@@ -11,7 +11,7 @@
     </javac>
   </target>
 
-  <target name="benchmark" depends="compile">
+  <target name="Benchmark" depends="compile">
     <java
       classpath="target/classes"
       classname="integercompression.${benchmark.target}"
