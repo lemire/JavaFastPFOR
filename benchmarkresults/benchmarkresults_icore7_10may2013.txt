@@ -1,0 +1,612 @@
+# sparsity 1
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.34	51	262
+
+# me.lemire.integercompression.IntegratedBinaryPacking+me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.09	639	1183
+
+# me.lemire.integercompression.JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1151	1468
+
+# me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.00	199	299
+
+# me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.00	148	339
+
+# me.lemire.integercompression.BinaryPacking+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.09	613	920
+
+# me.lemire.integercompression.NewPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.02	143	721
+
+# me.lemire.integercompression.NewPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.05	164	705
+
+# me.lemire.integercompression.OptPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.01	26	790
+
+# me.lemire.integercompression.OptPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.03	30	816
+
+# me.lemire.integercompression.FastPFOR+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	2.78	226	811
+
+# me.lemire.integercompression.Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	2.97	236	604
+
+# sparsity 2
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.17	47	266
+
+# me.lemire.integercompression.IntegratedBinaryPacking+me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.92	672	1261
+
+# me.lemire.integercompression.JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1218	1562
+
+# me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.00	204	290
+
+# me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.00	236	343
+
+# me.lemire.integercompression.BinaryPacking+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.92	505	917
+
+# me.lemire.integercompression.NewPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.82	127	698
+
+# me.lemire.integercompression.NewPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.85	151	726
+
+# me.lemire.integercompression.OptPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.81	18	752
+
+# me.lemire.integercompression.OptPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.84	23	779
+
+# me.lemire.integercompression.FastPFOR+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.56	228	828
+
+# me.lemire.integercompression.Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.82	182	562
+
+# sparsity 3
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.96	43	276
+
+# me.lemire.integercompression.IntegratedBinaryPacking+me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.72	662	1187
+
+# me.lemire.integercompression.JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1215	1566
+
+# me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.02	198	286
+
+# me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.02	254	340
+
+# me.lemire.integercompression.BinaryPacking+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.72	576	848
+
+# me.lemire.integercompression.NewPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.61	111	654
+
+# me.lemire.integercompression.NewPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.64	129	699
+
+# me.lemire.integercompression.OptPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.60	14	732
+
+# me.lemire.integercompression.OptPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.63	18	761
+
+# me.lemire.integercompression.FastPFOR+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.36	226	813
+
+# me.lemire.integercompression.Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.76	148	511
+
+# sparsity 4
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.97	39	270
+
+# me.lemire.integercompression.IntegratedBinaryPacking+me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.72	656	1148
+
+# me.lemire.integercompression.JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1212	1555
+
+# me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.09	206	287
+
+# me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.09	213	334
+
+# me.lemire.integercompression.BinaryPacking+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.72	626	891
+
+# me.lemire.integercompression.NewPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.60	105	672
+
+# me.lemire.integercompression.NewPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.63	121	701
+
+# me.lemire.integercompression.OptPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.58	10	667
+
+# me.lemire.integercompression.OptPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.62	14	736
+
+# me.lemire.integercompression.FastPFOR+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.33	226	805
+
+# me.lemire.integercompression.Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.86	123	464
+
+# sparsity 5
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.49	39	262
+
+# me.lemire.integercompression.IntegratedBinaryPacking+me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.25	659	1121
+
+# me.lemire.integercompression.JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1154	1168
+
+# me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.44	192	265
+
+# me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.44	240	297
+
+# me.lemire.integercompression.BinaryPacking+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.25	631	907
+
+# me.lemire.integercompression.NewPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.13	101	685
+
+# me.lemire.integercompression.NewPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.16	116	714
+
+# me.lemire.integercompression.OptPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.11	9	708
+
+# me.lemire.integercompression.OptPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.14	13	741
+
+# me.lemire.integercompression.FastPFOR+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.86	225	806
+
+# me.lemire.integercompression.Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.44	120	442
+
+# sparsity 6
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.64	35	269
+
+# me.lemire.integercompression.IntegratedBinaryPacking+me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.39	654	1111
+
+# me.lemire.integercompression.JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1207	1553
+
+# me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.06	185	225
+
+# me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.06	166	248
+
+# me.lemire.integercompression.BinaryPacking+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.39	620	888
+
+# me.lemire.integercompression.NewPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.26	91	679
+
+# me.lemire.integercompression.NewPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.30	104	704
+
+# me.lemire.integercompression.OptPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.24	7	704
+
+# me.lemire.integercompression.OptPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.28	10	735
+
+# me.lemire.integercompression.FastPFOR+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.00	221	792
+
+# me.lemire.integercompression.Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.76	106	393
+
+# sparsity 7
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.66	33	266
+
+# me.lemire.integercompression.IntegratedBinaryPacking+me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.41	675	1165
+
+# me.lemire.integercompression.JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1210	1553
+
+# me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.10	154	194
+
+# me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.10	176	207
+
+# me.lemire.integercompression.BinaryPacking+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.41	628	896
+
+# me.lemire.integercompression.NewPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.27	84	643
+
+# me.lemire.integercompression.NewPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.31	95	685
+
+# me.lemire.integercompression.OptPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.25	6	693
+
+# me.lemire.integercompression.OptPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.29	9	723
+
+# me.lemire.integercompression.FastPFOR+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.00	215	773
+
+# me.lemire.integercompression.Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.10	94	357
+
+# sparsity 8
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.52	32	241
+
+# me.lemire.integercompression.IntegratedBinaryPacking+me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.26	692	1194
+
+# me.lemire.integercompression.JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1208	1525
+
+# me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.14	138	178
+
+# me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.14	187	190
+
+# me.lemire.integercompression.BinaryPacking+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.26	647	893
+
+# me.lemire.integercompression.NewPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.14	79	655
+
+# me.lemire.integercompression.NewPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.18	88	684
+
+# me.lemire.integercompression.OptPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.11	6	680
+
+# me.lemire.integercompression.OptPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.15	8	712
+
+# me.lemire.integercompression.FastPFOR+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.86	220	778
+
+# me.lemire.integercompression.Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.39	86	330
+
+# sparsity 9
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.46	31	253
+
+# me.lemire.integercompression.IntegratedBinaryPacking+me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.19	661	1122
+
+# me.lemire.integercompression.JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1210	1546
+
+# me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.27	126	173
+
+# me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.27	155	181
+
+# me.lemire.integercompression.BinaryPacking+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.19	617	886
+
+# me.lemire.integercompression.NewPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.07	73	634
+
+# me.lemire.integercompression.NewPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.11	82	669
+
+# me.lemire.integercompression.OptPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.04	5	663
+
+# me.lemire.integercompression.OptPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.08	7	700
+
+# me.lemire.integercompression.FastPFOR+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.79	215	757
+
+# me.lemire.integercompression.Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.79	78	325
+
+# sparsity 10
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.13	30	243
+
+# me.lemire.integercompression.IntegratedBinaryPacking+me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.83	628	1028
+
+# me.lemire.integercompression.JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1167	1498
+
+# me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.71	152	179
+
+# me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.71	151	187
+
+# me.lemire.integercompression.BinaryPacking+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.83	389	820
+
+# me.lemire.integercompression.NewPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.76	72	638
+
+# me.lemire.integercompression.NewPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.79	79	683
+
+# me.lemire.integercompression.OptPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.69	5	655
+
+# me.lemire.integercompression.OptPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.73	7	682
+
+# me.lemire.integercompression.FastPFOR+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.42	219	767
+
+# me.lemire.integercompression.Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.49	77	332
+
+# sparsity 11
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.38	29	254
+
+# me.lemire.integercompression.IntegratedBinaryPacking+me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.01	660	1112
+
+# me.lemire.integercompression.JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1142	1445
+
+# me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.87	143	172
+
+# me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.87	144	178
+
+# me.lemire.integercompression.BinaryPacking+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.01	582	830
+
+# me.lemire.integercompression.NewPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.04	64	647
+
+# me.lemire.integercompression.NewPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.08	69	649
+
+# me.lemire.integercompression.OptPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.91	4	637
+
+# me.lemire.integercompression.OptPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.95	7	660
+
+# me.lemire.integercompression.FastPFOR+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.61	217	766
+
+# me.lemire.integercompression.Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.96	73	313
+
+# sparsity 12
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.57	29	265
+
+# me.lemire.integercompression.IntegratedBinaryPacking+me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.01	611	1012
+
+# me.lemire.integercompression.JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1215	1565
+
+# me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	14.73	121	160
+
+# me.lemire.integercompression.IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	14.73	131	166
+
+# me.lemire.integercompression.BinaryPacking+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.01	603	832
+
+# me.lemire.integercompression.NewPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.26	68	737
+
+# me.lemire.integercompression.NewPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.29	72	761
+
+# me.lemire.integercompression.OptPFD+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.06	4	591
+
+# me.lemire.integercompression.OptPFDS9+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.10	6	625
+
+# me.lemire.integercompression.FastPFOR+me.lemire.integercompression.VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.61	213	755
+
+# me.lemire.integercompression.Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	15.38	69	281
+

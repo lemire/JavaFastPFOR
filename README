@@ -26,8 +26,8 @@ I threw in a cool little benchmark program.
 
 == How does it compare to the Kamikaze PForDelta library? ==
 
-In our tests, Kamikaze PForDelta does not fare well. (Run
-the benchmarks yourself, see below.)
+In our tests, Kamikaze PForDelta does not fare well. See
+the benchmarkresults directory for some results. 
 
 
 == License ==
