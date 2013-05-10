@@ -18,6 +18,11 @@ import com.kamikaze.pfordelta.PForDelta;
 public class Benchmark {
 
 	public static void main(String args[]) {
+		System.out.println("# benchmark based on the ClusterData model from:");
+		System.out.println("# 	 Vo Ngoc Anh and Alistair Moffat. ");
+		System.out.println("#	 Index compression using 64-bit words.") ;
+		System.out.println("# 	 Softw. Pract. Exper.40, 2 (February 2010), 131-147. ");
+		System.out.println();
 		test(20, 18, 10);
 	}
 

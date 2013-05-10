@@ -7,7 +7,11 @@
 package me.lemire.integercompression.synth;
 
 /**
- * This class will generate uniformly distributed lists of random integers.
+ * This class will generate  lists of random integers based on the clustered model:
+ * 
+ * Reference:
+ * Vo Ngoc Anh and Alistair Moffat. 2010. Index compression using 64-bit words. 
+ * Softw. Pract. Exper.40, 2 (February 2010), 131-147. 
  * 
  * @author Daniel Lemire
  */
