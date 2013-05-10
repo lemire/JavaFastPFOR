@@ -5,16 +5,16 @@
 
   <target name="compile">
     <mkdir dir="target/classes" />
-    <depend srcdir="src" destdir="target/classes" />
+    <depend srcdir="src/main/java" destdir="target/classes" />
     <javac includeantruntime="false" destdir="target/classes">
-      <src path="src" />
+      <src path="src/main/java" />
     </javac>
   </target>
 
   <target name="Benchmark" depends="compile">
     <java
       classpath="target/classes"
-      classname="integercompression.${benchmark.target}"
+      classname="me.lemire.integercompression.${benchmark.target}"
       fork="true">
       <jvmarg value="-server" />
     </java>
