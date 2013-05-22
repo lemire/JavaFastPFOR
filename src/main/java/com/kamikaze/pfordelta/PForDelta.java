@@ -338,7 +338,6 @@ public class PForDelta {
      * Read a certain number of bits of an integer into an integer array starting from the given start offset
      *
      * @param in       the input array
-     * @param val      the integer to be read
      * @param inOffset the start offset in bits in the input array
      * @param bits     the number of bits to be read, unlike writeBits(), readBits() does not deal with bits==0 and thus bits must > 0. When bits ==0, the calling functions will just skip the entire bits-bit slots without decoding them
      * @return the bits bits of the input
