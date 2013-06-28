@@ -17,6 +17,8 @@ your array use less than 32 bits. These sort of arrays often come up
 when using differential coding in databases and information
 retrieval (e.g., in inverted indexes or column stores).
 
+This library is used by the Columnar file format for Hadoop "Parquet" 
+(http://parquet.io/).
 
 Some CODECs ("integrated codecs") assume that the integers are
 in sorted orders. Most others do not.
