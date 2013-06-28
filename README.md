@@ -48,7 +48,7 @@ How does it compare to the Kamikaze PForDelta library?
 In our tests, Kamikaze PForDelta does not fare well. See
 the benchmarkresults directory for some results. 
 
-
+https://github.com/lemire/JavaFastPFOR/blob/master/benchmarkresults/benchmarkresults_icore7_10may2013.txt
 
 Requirements
 ------------
