@@ -1,22 +1,30 @@
 JavaFastPFOR: A simple integer compression library in Java
-Main contributors
-Daniel Lemire, http://lemire.me/en/
+==========================================================
 
-Minor contributors
-Di Wu, http://www.facebook.com/diwu1989
+License
+-------
 
-== What does this do  ==
+This code is released under the
+Apache License Version 2.0 http://www.apache.org/licenses/.
+
+
+What does this do?
+------------------
 
 It is a library to compress and uncompress arrays of integers 
 very fast. The assumption is that most (but not all) values in
 your array use less than 32 bits. These sort of arrays often come up
-when using differential coding.
+when using differential coding in databases and information
+retrieval (e.g., in inverted indexes or column stores).
 
 
 Some CODECs ("integrated codecs") assume that the integers are
 in sorted orders. Most others do not.
 
-== Why? ==
+
+
+Why?
+----
 
 I found a few libraries that implemented Binary Packing, NewPFD, OptPFD,
 Variable Byte, Simple 9 and so on in Java. However, I could not find
@@ -24,22 +32,38 @@ one that I liked.
 
 I threw in a cool little benchmark program.
 
-== How does it compare to the Kamikaze PForDelta library? ==
+
+Authors
+-------
+
+Main contributor
+Daniel Lemire, http://lemire.me/en/
+
+Minor contribution by 
+Di Wu, http://www.facebook.com/diwu1989
+
+How does it compare to the Kamikaze PForDelta library?
+------------------------------------------------------
 
 In our tests, Kamikaze PForDelta does not fare well. (Run
 the benchmarks yourself, see below.)
 
 
-== License ==
 
-This code is released under the
-Apache License Version 2.0 http://www.apache.org/licenses/.
+Requirements
+------------
 
-== Requirements ==
+A recent Java compiler. Java 7 or better is recommended.
 
-A recent Java compiler.
+Good instructions on installing Java 7 on Linux:
 
-== What can I do? ==
+http://forums.linuxmint.com/viewtopic.php?f=42&t=93052
+
+
+
+
+What can I do?
+--------------
 
 Compile the code and execute integercompression.benchmark.
 
@@ -48,13 +72,17 @@ I recommend running all the benchmarks with the "-server" flag.
 Speed is always reported in millions of integers per second.
 
 
-=== For Maven users ===
+For Maven users
+---------------
+
+mvn compile
 
 mvn exec:java
 
-=== For ant users ===
+For ant users
+-------------
 
-When you use Apache ant, please try this:
+If you use Apache ant, please try this:
 
     $ ant Benchmark
 
@@ -63,11 +91,13 @@ or:
     $ ant Benchmark -Dbenchmark.target=BenchmarkBitPacking
 
 
-== Usage ==
+Usage 
+-----
 
 See example.java for a simple demonstration.
 
-== what to read more? ==
+Want to read more?
+------------------
 
 We wrote a research paper which documents many of the CODECs implemented here:
 
@@ -75,15 +105,4 @@ Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second throu
 http://arxiv.org/abs/1209.2137
 
 
-
-
-== Limitation ==
-
-Currently this library compresses and uncompresses arrays in bulk.
-An alternative strategy is to compress them block-by-block.
-
-== Installing java 7 (optional) ==
-
-Good instructions:
-http://forums.linuxmint.com/viewtopic.php?f=42&t=93052
 
