@@ -45,8 +45,8 @@ Di Wu, http://www.facebook.com/diwu1989
 How does it compare to the Kamikaze PForDelta library?
 ------------------------------------------------------
 
-In our tests, Kamikaze PForDelta does not fare well. (Run
-the benchmarks yourself, see below.)
+In our tests, Kamikaze PForDelta does not fare well. See
+the benchmarkresults directory for some results. 
 
 
 
