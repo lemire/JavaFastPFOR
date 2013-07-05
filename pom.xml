@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.googlecode.javafastpfor</groupId>
+    <groupId>me.lemire.integercompression</groupId>
     <artifactId>JavaFastPFOR</artifactId>
     <version>0.0.2</version>
     <packaging>jar</packaging>
@@ -55,8 +55,28 @@
     <system>GitHub Issue Tracking</system>
     <url>https://github.com/lemire/JavaFastPFOR/issues</url>
   </issueManagement>
+     <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>5</version>
+  </parent>
+
     <build>
     <plugins>
+    
+	   <plugin>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>maven-bundle-plugin</artifactId>
+			<version>2.3.7</version>
+			<extensions>true</extensions>
+			<configuration>
+				<instructions>
+					<Export-Package>me.lemire.integercompression.*</Export-Package>
+					<Import-Package>*</Import-Package>
+				</instructions>
+			</configuration>
+      </plugin>
+
     		<plugin>
   <groupId>org.codehaus.mojo</groupId>
   <artifactId>exec-maven-plugin</artifactId>
