@@ -3,7 +3,7 @@
 
     <groupId>me.lemire.integercompression</groupId>
     <artifactId>JavaFastPFOR</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -20,9 +20,9 @@
 	  </license>
 	</licenses>
 	<scm>
-	  <connection>scm:git:git@github.com:lemire/javafastpfor.git</connection>
-	  <url>scm:git:git@github.com:lemire/javafastpfor.git</url>
-	  <developerConnection>scm:git:git@github.com:lemire/javafastpfor.git</developerConnection>
+	  <connection>scm:git:git@github.com:lemire/JavaFastPFOR.git</connection>
+	  <url>scm:git:git@github.com:lemire/JavaFastPFOR.git</url>
+	  <developerConnection>scm:git:git@github.com:lemire/JavaFastPFOR.git</developerConnection>
     </scm>
       <developers>
     <developer>
