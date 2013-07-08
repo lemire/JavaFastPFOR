@@ -23,7 +23,19 @@ This library is used by the Columnar file format for Hadoop "Parquet"
 Some CODECs ("integrated codecs") assume that the integers are
 in sorted orders. Most others do not.
 
+Maven
+-----
 
+Using this code in your own project is easy with maven, just add
+the following code in your pom.xml file:
+
+    <dependencies>
+     <dependency>
+     <groupId>me.lemire.integercompression</groupId>
+     <artifactId>JavaFastPFOR</artifactId>
+     <version>0.0.3</version>
+     </dependency>
+    </dependencies>
 
 Why?
 ----
@@ -44,6 +56,7 @@ Daniel Lemire, http://lemire.me/en/
 Minor contribution by 
 Di Wu, http://www.facebook.com/diwu1989
 
+
 How does it compare to the Kamikaze PForDelta library?
 ------------------------------------------------------
 
@@ -61,6 +74,24 @@ Good instructions on installing Java 7 on Linux:
 
 http://forums.linuxmint.com/viewtopic.php?f=42&t=93052
 
+Maven central repository
+------------------------
+
+You can download JavaFastPFOR from the Maven central repository:
+http://repo1.maven.org/maven2/me/lemire/integercompression/JavaFastPFOR/
+
+You can also specify the dependency in the Maven "pom.xml" file:
+
+    <dependencies>
+         <dependency>
+	     <groupId>me.lemire.integercompression</groupId>
+	     <artifactId>JavaFastPFOR</artifactId>
+	     <version>0.0.3</version>
+         </dependency>
+     </dependencies>
+
+Naturally, you should replace "version" by the version
+you desire.
 
 
 
