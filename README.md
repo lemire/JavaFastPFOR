@@ -18,7 +18,9 @@ when using differential coding in databases and information
 retrieval (e.g., in inverted indexes or column stores).
 
 This library is used by the Columnar file format for Hadoop "Parquet" 
-(http://parquet.io/).
+(http://parquet.io/). It is also used by Jimmy Lin's 
+Hadoop tools for manipulating ClueWeb collections
+(https://github.com/lintool/clueweb).
 
 Some CODECs ("integrated codecs") assume that the integers are
 in sorted orders. Most others do not.
