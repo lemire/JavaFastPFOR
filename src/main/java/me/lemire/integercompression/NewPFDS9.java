@@ -25,6 +25,9 @@ public final class NewPFDS9 implements IntegerCODEC {
 
     int[] exceptbuffer = new int[2 * BlockSize];
 
+    /**
+     * Constructor for the NewPFDS9 CODEC.
+     */
     public NewPFDS9() {
         PageSize = 65536;
     }
@@ -45,13 +48,13 @@ public final class NewPFDS9 implements IntegerCODEC {
 
     }
 
-    public static final int[] bits = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+    protected static final int[] bits = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
             12, 13, 16, 20, 32};
-    public static final int[] invbits = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+    protected static final int[] invbits = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
             12, 13, 14, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16,
             16, 16, 16, 16};
 
-    public static void getBestBFromData(int[] in, int pos, IntWrapper bestb,
+    protected static void getBestBFromData(int[] in, int pos, IntWrapper bestb,
                                         IntWrapper bestexcept) {
         final int mb = Util.maxbits(in, pos, BlockSize);
         int mini = 0;
@@ -115,7 +118,6 @@ public final class NewPFDS9 implements IntegerCODEC {
     @Override
     public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
                            IntWrapper outpos) {
-        // Util.assertTrue(inpos.get()+inlength <= in.length);
         int mynvalue = in[inpos.get()];
         inpos.increment();
         int finalout = outpos.get() + mynvalue;

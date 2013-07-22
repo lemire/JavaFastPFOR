@@ -8,11 +8,14 @@
 package me.lemire.integercompression;
 
 
+/**
+ * @author Daniel Lemire
+ *
+ */
 public final class JustCopy implements IntegerCODEC {
 
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
-        // Util.assertTrue(inpos.get()+inlength <= in.length);
         System.arraycopy(in, inpos.get(), out, outpos.get(), inlength);
         inpos.add(inlength);
         outpos.add(inlength);
@@ -20,7 +23,6 @@ public final class JustCopy implements IntegerCODEC {
 
     @Override
     public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
-        // Util.assertTrue(inpos.get()+inlength <= in.length);
         System.arraycopy(in, inpos.get(), out, outpos.get(), inlength);
         inpos.add(inlength);
         outpos.add(inlength);

@@ -10,6 +10,10 @@ package me.lemire.integercompression;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
+/**
+ * @author Daniel Lemire
+ *
+ */
 public class IntegratedVariableByte implements IntegratedIntegerCODEC {
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,

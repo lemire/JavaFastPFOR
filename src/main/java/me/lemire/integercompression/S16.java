@@ -14,8 +14,9 @@ package me.lemire.integercompression;
  */
 public final class S16 {
 
-    public static int compress(int[] in, int currentPos, int inlength,
-                               int out[], int tmpoutpos) {
+
+    protected static int compress(final int[] in, int currentPos, int inlength,
+                               final int out[], final int tmpoutpos) {
         int outpos = tmpoutpos;
         final int finalin = currentPos + inlength;
         while (currentPos < finalin) {
@@ -28,8 +29,15 @@ public final class S16 {
         }
         return outpos - tmpoutpos;
     }
-
-    public static int estimatecompress(int[] in, int currentPos, int inlength) {
+    /**
+	 * Estimate size of the compressed output.
+	 * 
+	 * @param in array to compress
+	 * @param currentPos where to start reading
+	 * @param inlength how many integers to read
+	 * @return estimated size of the output (in 32-bit integers)
+	 */
+    public static int estimatecompress(final int[] in, int currentPos, int inlength) {
         final int finalin = currentPos + inlength;
         int counter = 0;
         while (currentPos < finalin) {
@@ -51,7 +59,8 @@ public final class S16 {
      * @param in        the integer input array
      * @param inOffset  the offset of the input in the number of integers
      * @param n         the number of elements to be compressed
-     * @return the number of compressed integers
+     * @return the size of the outputs in 32-bit integers
+     *      
      */
     public static final int compressblock(int[] out, int outOffset, int[] in,
                                           int inOffset, int n) {
@@ -75,7 +84,7 @@ public final class S16 {
         return -1;
     }
 
-    public static final int fakecompressblock(int[] in, int inOffset, int n) {
+    private static final int fakecompressblock(int[] in, int inOffset, int n) {
         int numIdx, j, num;
         for (numIdx = 0; numIdx < S16_NUMSIZE; numIdx++) {
             num = (S16_NUM[numIdx] < n) ? S16_NUM[numIdx] : n;
@@ -116,8 +125,8 @@ public final class S16 {
         return num;
     }
 
-    public static void uncompress(int[] in, int tmpinpos, int inlength,
-                                  int[] out, int currentPos, int outlength) {
+    protected static void uncompress(final int[] in, int tmpinpos, final int inlength,
+                                  final int[] out, int currentPos, int outlength) {
         final int finalpos = tmpinpos + inlength;
         while (tmpinpos < finalpos) {
             final int howmany = decompressblock(out, currentPos, in, tmpinpos,

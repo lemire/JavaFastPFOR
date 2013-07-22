@@ -10,7 +10,7 @@ package me.lemire.integercompression;
 /**
  * Generic class to compute differential coding.
  * 
- * @author lemire
+ * @author Daniel Lemire
  *
  */
 public class Delta {

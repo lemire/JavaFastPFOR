@@ -44,7 +44,6 @@ public final class BinaryPacking implements IntegerCODEC {
 
     @Override
     public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
-        // Util.assertTrue(inpos.get()+inlength <= in.length);
         final int outlength = in[inpos.get()];
         inpos.increment();
         int tmpinpos = inpos.get();

@@ -13,7 +13,15 @@ package me.lemire.integercompression;
  */
 public class IntegratedComposition implements IntegratedIntegerCODEC {
     IntegratedIntegerCODEC F1, F2;
-
+    
+    /**
+     * Compose a scheme from a first one (f1) and a second one (f2).
+     * The first one is called first and then the second one tries to
+     * compress whatever remains from the first run.
+     * 
+     * @param f1 first codec
+     * @param f2 second codec
+     */
     public IntegratedComposition(IntegratedIntegerCODEC f1, IntegratedIntegerCODEC f2) {
         F1 = f1;
         F2 = f2;

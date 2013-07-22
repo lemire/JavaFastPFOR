@@ -9,10 +9,17 @@ package me.lemire.integercompression;
 
 import java.util.Arrays;
 
+/**
+ * "Integrated" bit packing routines: they include
+ * both the bit packing and the differential coding.
+ * 
+ * @author Daniel Lemire
+ *
+ */
 public final class IntegratedBitPacking {
 
 
-    public static void integratedpack1(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack1(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 1)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 2)
@@ -49,7 +56,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack2(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack2(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 2)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 4)
@@ -87,7 +94,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack3(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack3(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 3)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 6)
@@ -128,7 +135,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack4(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack4(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 4)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 8)
@@ -168,7 +175,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack5(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack5(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 5)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 10)
@@ -213,7 +220,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack6(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack6(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 6)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 12)
@@ -259,7 +266,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack7(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack7(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 7)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 14)
@@ -308,7 +315,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack8(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack8(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 8)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 16)
@@ -352,7 +359,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack9(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack9(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 9)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 18)
@@ -405,7 +412,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack10(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack10(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 10)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 20)
@@ -459,7 +466,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack11(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack11(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 11)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 22)
@@ -516,7 +523,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack12(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack12(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 12)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 24)
@@ -572,7 +579,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack13(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack13(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 13)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 26)
@@ -633,7 +640,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack14(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack14(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 14)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 28)
@@ -695,7 +702,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack15(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack15(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 15)
                 | ((in[2 + inpos] - in[2 + inpos - 1]) << 30)
@@ -760,7 +767,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack16(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack16(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 16)
         ;
@@ -812,7 +819,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack17(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack17(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 17)
         ;
@@ -881,7 +888,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack18(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack18(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 18)
         ;
@@ -951,7 +958,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack19(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack19(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 19)
         ;
@@ -1024,7 +1031,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack20(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack20(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 20)
         ;
@@ -1096,7 +1103,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack21(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack21(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 21)
         ;
@@ -1173,7 +1180,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack22(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack22(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 22)
         ;
@@ -1251,7 +1258,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack23(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack23(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 23)
         ;
@@ -1332,7 +1339,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack24(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack24(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 24)
         ;
@@ -1408,7 +1415,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack25(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack25(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 25)
         ;
@@ -1493,7 +1500,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack26(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack26(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 26)
         ;
@@ -1579,7 +1586,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack27(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack27(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 27)
         ;
@@ -1668,7 +1675,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack28(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack28(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 28)
         ;
@@ -1756,7 +1763,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack29(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack29(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 29)
         ;
@@ -1849,7 +1856,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack30(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack30(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 30)
         ;
@@ -1943,7 +1950,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack31(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack31(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] - initoffset)
                 | ((in[1 + inpos] - in[1 + inpos - 1]) << 31)
         ;
@@ -2040,7 +2047,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack1(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack1(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 1)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 1) & 1)
@@ -2108,7 +2115,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack2(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack2(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 3)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 2) & 3)
@@ -2176,7 +2183,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack3(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack3(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 7)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 3) & 7)
@@ -2246,7 +2253,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack4(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack4(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 15)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 4) & 15)
@@ -2314,7 +2321,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack5(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack5(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 31)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 5) & 31)
@@ -2386,7 +2393,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack6(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack6(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 63)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 6) & 63)
@@ -2458,7 +2465,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack7(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack7(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 127)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 7) & 127)
@@ -2532,7 +2539,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack8(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack8(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 255)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 8) & 255)
@@ -2600,7 +2607,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack9(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack9(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 511)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 9) & 511)
@@ -2676,7 +2683,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack10(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack10(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 1023)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 10) & 1023)
@@ -2752,7 +2759,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack11(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack11(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 2047)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 11) & 2047)
@@ -2830,7 +2837,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack12(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack12(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 4095)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 12) & 4095)
@@ -2906,7 +2913,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack13(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack13(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 8191)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 13) & 8191)
@@ -2986,7 +2993,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack14(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack14(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 16383)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 14) & 16383)
@@ -3066,7 +3073,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack15(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack15(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 32767)
         ) + initoffset;
         out[1 + outpos] = (((in[0 + inpos] >>> 15) & 32767)
@@ -3148,7 +3155,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack16(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack16(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 65535)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 16)
@@ -3216,7 +3223,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack17(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack17(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 131071)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 17)
@@ -3300,7 +3307,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack18(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack18(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 262143)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 18)
@@ -3384,7 +3391,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack19(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack19(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 524287)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 19)
@@ -3470,7 +3477,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack20(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack20(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 1048575)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 20)
@@ -3554,7 +3561,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack21(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack21(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 2097151)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 21)
@@ -3642,7 +3649,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack22(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack22(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 4194303)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 22)
@@ -3730,7 +3737,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack23(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack23(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 8388607)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 23)
@@ -3820,7 +3827,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack24(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack24(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 16777215)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 24)
@@ -3904,7 +3911,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack25(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack25(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 33554431)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 25)
@@ -3996,7 +4003,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack26(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack26(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 67108863)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 26)
@@ -4088,7 +4095,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack27(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack27(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 134217727)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 27)
@@ -4182,7 +4189,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack28(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack28(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 268435455)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 28)
@@ -4274,7 +4281,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack29(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack29(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 536870911)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 29)
@@ -4370,7 +4377,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack30(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack30(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 1073741823)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 30)
@@ -4466,7 +4473,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack31(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack31(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (((in[0 + inpos] >>> 0) & 2147483647)
         ) + initoffset;
         out[1 + outpos] = ((in[0 + inpos] >>> 31)
@@ -4564,27 +4571,27 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedunpack32(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack32(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         System.arraycopy(in, inpos, out, outpos, 32); // no sense in doing delta coding
     }
 
 
-    public static void integratedpack32(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack32(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         System.arraycopy(in, inpos, out, outpos, 32); // no sense in doing delta coding 
     }
 
 
-    public static void integratedunpack0(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedunpack0(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         Arrays.fill(out, outpos, outpos + 32, initoffset);
     }
 
 
-    public static void integratedpack0(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void integratedpack0(final int initoffset, final int[] in, int inpos, final int[] out, int outpos) {
         // nothing 
     }
 
 
-    public static void integratedunpack(final int initoffset, final int[] in, int inpos, final int[] out, int outpos, final int bit) {
+    protected static void integratedunpack(final int initoffset, final int[] in, int inpos, final int[] out, int outpos, final int bit) {
         switch (bit) {
             case 0:
                 integratedunpack0(initoffset, in, inpos, out, outpos);
@@ -4691,7 +4698,7 @@ public final class IntegratedBitPacking {
     }
 
 
-    public static void integratedpack(final int initoffset, final int[] in, int inpos, final int[] out, int outpos, final int bit) {
+    protected static void integratedpack(final int initoffset, final int[] in, int inpos, final int[] out, int outpos, final int bit) {
         switch (bit) {
             case 0:
                 integratedpack0(initoffset, in, inpos, out, outpos);

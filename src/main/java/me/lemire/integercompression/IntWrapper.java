@@ -7,20 +7,33 @@
 package me.lemire.integercompression;
 
 /**
+ * Essentially a mutable wrapper around an integer.
+ * 
  * @author dwu
  */
 public final class IntWrapper extends Number {
     private static final long serialVersionUID = 1L;
     private int value;
 
+    /**
+     * Constructor: value set to 0.
+     */
     public IntWrapper() {
         this(0);
     }
 
-    public IntWrapper(int v) {
+    /**
+     * Construction: value set to provided argument.
+     * 
+     * @param v value to wrap
+     */
+    public IntWrapper(final int v) {
         this.value = v;
     }
 
+    /**
+     * @param v
+     */
     public void add(int v) {
         this.value += v;
     }
@@ -35,10 +48,16 @@ public final class IntWrapper extends Number {
         return this.value;
     }
 
+    /**
+     * @return the integer value
+     */
     public int get() {
         return this.value;
     }
 
+    /**
+     * add 1 to the integer value
+     */
     public void increment() {
         this.value++;
     }
@@ -53,7 +72,11 @@ public final class IntWrapper extends Number {
         return this.value;
     }
 
-    public void set(int value) {
+    /**
+     * Set the value to that of the specified integer.
+     * @param value specified integer value
+     */
+    public void set(final int value) {
         this.value = value;
     }
 

@@ -8,8 +8,11 @@
 package me.lemire.integercompression;
 
 
+/**
+ * @author Daniel Lemire
+ *
+ */
 public final class Simple9 implements IntegerCODEC {
-    // @Override
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int out[],
                          IntWrapper outpos) {
@@ -266,7 +269,6 @@ public final class Simple9 implements IntegerCODEC {
                 }
             }
         }
-        // Util.assertTrue(currentPos == finalout);
         outpos.set(currentPos);
         inpos.set(tmpinpos);
 

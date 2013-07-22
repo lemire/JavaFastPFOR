@@ -7,6 +7,10 @@
 
 package me.lemire.integercompression;
 
+/**
+ * @author Daniel Lemire
+ *
+ */
 public class IntegratedBinaryPacking implements IntegratedIntegerCODEC {
 
     @Override
@@ -43,7 +47,6 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC {
 
     @Override
     public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
-        // Util.assertTrue(inpos.get()+inlength <= in.length);
         final int outlength = in[inpos.get()];
         inpos.increment();
         int tmpinpos = inpos.get();

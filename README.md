@@ -35,7 +35,7 @@ the following code in your pom.xml file:
      <dependency>
      <groupId>me.lemire.integercompression</groupId>
      <artifactId>JavaFastPFOR</artifactId>
-     <version>0.0.3</version>
+     <version>0.0.4</version>
      </dependency>
     </dependencies>
 

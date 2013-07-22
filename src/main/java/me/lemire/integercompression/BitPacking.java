@@ -9,10 +9,16 @@ package me.lemire.integercompression;
 
 import java.util.Arrays;
 
+/**
+ * Bitpacking routines
+ * 
+ * @author Daniel Lemire
+ *
+ */
 public final class BitPacking {
 
 
-    public static void fastpackwithoutmask1(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask1(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 1)
                 | ((in[2 + inpos]) << 2)
@@ -49,7 +55,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask2(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask2(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 2)
                 | ((in[2 + inpos]) << 4)
@@ -87,7 +93,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask3(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask3(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 3)
                 | ((in[2 + inpos]) << 6)
@@ -128,7 +134,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask4(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask4(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 4)
                 | ((in[2 + inpos]) << 8)
@@ -168,7 +174,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask5(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask5(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 5)
                 | ((in[2 + inpos]) << 10)
@@ -213,7 +219,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask6(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask6(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 6)
                 | ((in[2 + inpos]) << 12)
@@ -259,7 +265,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask7(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask7(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 7)
                 | ((in[2 + inpos]) << 14)
@@ -308,7 +314,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask8(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask8(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 8)
                 | ((in[2 + inpos]) << 16)
@@ -352,7 +358,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask9(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask9(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 9)
                 | ((in[2 + inpos]) << 18)
@@ -405,7 +411,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask10(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask10(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 10)
                 | ((in[2 + inpos]) << 20)
@@ -459,7 +465,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask11(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask11(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 11)
                 | ((in[2 + inpos]) << 22)
@@ -516,7 +522,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask12(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask12(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 12)
                 | ((in[2 + inpos]) << 24)
@@ -572,7 +578,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask13(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask13(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 13)
                 | ((in[2 + inpos]) << 26)
@@ -633,7 +639,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask14(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask14(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 14)
                 | ((in[2 + inpos]) << 28)
@@ -695,7 +701,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask15(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask15(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 15)
                 | ((in[2 + inpos]) << 30)
@@ -760,7 +766,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask16(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask16(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 16)
         ;
@@ -812,7 +818,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask17(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask17(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 17)
         ;
@@ -881,7 +887,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask18(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask18(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 18)
         ;
@@ -951,7 +957,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask19(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask19(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 19)
         ;
@@ -1024,7 +1030,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask20(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask20(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 20)
         ;
@@ -1096,7 +1102,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask21(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask21(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 21)
         ;
@@ -1173,7 +1179,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask22(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask22(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 22)
         ;
@@ -1251,7 +1257,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask23(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask23(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 23)
         ;
@@ -1332,7 +1338,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask24(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask24(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 24)
         ;
@@ -1408,7 +1414,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask25(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask25(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 25)
         ;
@@ -1493,7 +1499,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask26(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask26(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 26)
         ;
@@ -1579,7 +1585,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask27(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask27(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 27)
         ;
@@ -1668,7 +1674,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask28(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask28(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 28)
         ;
@@ -1756,7 +1762,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask29(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask29(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 29)
         ;
@@ -1849,7 +1855,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask30(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask30(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 30)
         ;
@@ -1943,7 +1949,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask31(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask31(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = in[0 + inpos]
                 | ((in[1 + inpos]) << 31)
         ;
@@ -2040,7 +2046,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack1(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack1(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 1)
                 | ((in[1 + inpos] & 1) << 1)
                 | ((in[2 + inpos] & 1) << 2)
@@ -2077,7 +2083,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack2(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack2(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 3)
                 | ((in[1 + inpos] & 3) << 2)
                 | ((in[2 + inpos] & 3) << 4)
@@ -2115,7 +2121,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack3(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack3(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 7)
                 | ((in[1 + inpos] & 7) << 3)
                 | ((in[2 + inpos] & 7) << 6)
@@ -2156,7 +2162,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack4(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack4(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 15)
                 | ((in[1 + inpos] & 15) << 4)
                 | ((in[2 + inpos] & 15) << 8)
@@ -2196,7 +2202,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack5(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack5(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 31)
                 | ((in[1 + inpos] & 31) << 5)
                 | ((in[2 + inpos] & 31) << 10)
@@ -2241,7 +2247,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack6(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack6(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 63)
                 | ((in[1 + inpos] & 63) << 6)
                 | ((in[2 + inpos] & 63) << 12)
@@ -2287,7 +2293,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack7(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack7(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 127)
                 | ((in[1 + inpos] & 127) << 7)
                 | ((in[2 + inpos] & 127) << 14)
@@ -2336,7 +2342,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack8(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack8(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 255)
                 | ((in[1 + inpos] & 255) << 8)
                 | ((in[2 + inpos] & 255) << 16)
@@ -2380,7 +2386,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack9(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack9(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 511)
                 | ((in[1 + inpos] & 511) << 9)
                 | ((in[2 + inpos] & 511) << 18)
@@ -2433,7 +2439,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack10(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack10(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 1023)
                 | ((in[1 + inpos] & 1023) << 10)
                 | ((in[2 + inpos] & 1023) << 20)
@@ -2487,7 +2493,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack11(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack11(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 2047)
                 | ((in[1 + inpos] & 2047) << 11)
                 | ((in[2 + inpos]) << 22)
@@ -2544,7 +2550,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack12(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack12(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 4095)
                 | ((in[1 + inpos] & 4095) << 12)
                 | ((in[2 + inpos]) << 24)
@@ -2600,7 +2606,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack13(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack13(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 8191)
                 | ((in[1 + inpos] & 8191) << 13)
                 | ((in[2 + inpos]) << 26)
@@ -2661,7 +2667,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack14(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack14(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 16383)
                 | ((in[1 + inpos] & 16383) << 14)
                 | ((in[2 + inpos]) << 28)
@@ -2723,7 +2729,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack15(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack15(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 32767)
                 | ((in[1 + inpos] & 32767) << 15)
                 | ((in[2 + inpos]) << 30)
@@ -2788,7 +2794,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack16(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack16(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 65535)
                 | ((in[1 + inpos]) << 16)
         ;
@@ -2840,7 +2846,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack17(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack17(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 131071)
                 | ((in[1 + inpos]) << 17)
         ;
@@ -2909,7 +2915,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack18(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack18(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 262143)
                 | ((in[1 + inpos]) << 18)
         ;
@@ -2979,7 +2985,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack19(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack19(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 524287)
                 | ((in[1 + inpos]) << 19)
         ;
@@ -3052,7 +3058,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack20(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack20(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 1048575)
                 | ((in[1 + inpos]) << 20)
         ;
@@ -3124,7 +3130,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack21(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack21(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 2097151)
                 | ((in[1 + inpos]) << 21)
         ;
@@ -3201,7 +3207,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack22(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack22(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 4194303)
                 | ((in[1 + inpos]) << 22)
         ;
@@ -3279,7 +3285,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack23(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack23(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 8388607)
                 | ((in[1 + inpos]) << 23)
         ;
@@ -3360,7 +3366,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack24(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack24(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 16777215)
                 | ((in[1 + inpos]) << 24)
         ;
@@ -3436,7 +3442,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack25(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack25(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 33554431)
                 | ((in[1 + inpos]) << 25)
         ;
@@ -3521,7 +3527,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack26(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack26(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 67108863)
                 | ((in[1 + inpos]) << 26)
         ;
@@ -3607,7 +3613,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack27(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack27(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 134217727)
                 | ((in[1 + inpos]) << 27)
         ;
@@ -3696,7 +3702,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack28(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack28(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 268435455)
                 | ((in[1 + inpos]) << 28)
         ;
@@ -3784,7 +3790,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack29(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack29(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 536870911)
                 | ((in[1 + inpos]) << 29)
         ;
@@ -3877,7 +3883,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack30(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack30(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 1073741823)
                 | ((in[1 + inpos]) << 30)
         ;
@@ -3971,7 +3977,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack31(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack31(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = (in[0 + inpos] & 2147483647)
                 | ((in[1 + inpos]) << 31)
         ;
@@ -4068,7 +4074,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack1(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack1(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 1)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 1) & 1)
@@ -4136,7 +4142,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack2(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack2(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 3)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 2) & 3)
@@ -4204,7 +4210,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack3(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack3(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 7)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 3) & 7)
@@ -4274,7 +4280,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack4(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack4(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 15)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 4) & 15)
@@ -4342,7 +4348,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack5(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack5(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 31)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 5) & 31)
@@ -4414,7 +4420,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack6(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack6(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 63)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 6) & 63)
@@ -4486,7 +4492,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack7(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack7(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 127)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 7) & 127)
@@ -4560,7 +4566,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack8(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack8(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 255)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 8) & 255)
@@ -4628,7 +4634,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack9(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack9(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 511)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 9) & 511)
@@ -4704,7 +4710,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack10(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack10(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 1023)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 10) & 1023)
@@ -4780,7 +4786,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack11(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack11(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 2047)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 11) & 2047)
@@ -4858,7 +4864,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack12(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack12(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 4095)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 12) & 4095)
@@ -4934,7 +4940,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack13(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack13(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 8191)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 13) & 8191)
@@ -5014,7 +5020,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack14(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack14(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 16383)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 14) & 16383)
@@ -5094,7 +5100,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack15(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack15(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 32767)
         ;
         out[1 + outpos] = ((in[0 + inpos] >>> 15) & 32767)
@@ -5176,7 +5182,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack16(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack16(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 65535)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 16)
@@ -5244,7 +5250,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack17(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack17(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 131071)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 17)
@@ -5328,7 +5334,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack18(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack18(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 262143)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 18)
@@ -5412,7 +5418,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack19(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack19(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 524287)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 19)
@@ -5498,7 +5504,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack20(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack20(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 1048575)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 20)
@@ -5582,7 +5588,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack21(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack21(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 2097151)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 21)
@@ -5670,7 +5676,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack22(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack22(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 4194303)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 22)
@@ -5758,7 +5764,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack23(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack23(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 8388607)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 23)
@@ -5848,7 +5854,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack24(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack24(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 16777215)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 24)
@@ -5932,7 +5938,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack25(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack25(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 33554431)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 25)
@@ -6024,7 +6030,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack26(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack26(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 67108863)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 26)
@@ -6116,7 +6122,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack27(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack27(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 134217727)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 27)
@@ -6210,7 +6216,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack28(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack28(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 268435455)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 28)
@@ -6302,7 +6308,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack29(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack29(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 536870911)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 29)
@@ -6398,7 +6404,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack30(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack30(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 1073741823)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 30)
@@ -6494,7 +6500,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack31(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack31(final int[] in, int inpos, final int[] out, int outpos) {
         out[0 + outpos] = ((in[0 + inpos] >>> 0) & 2147483647)
         ;
         out[1 + outpos] = (in[0 + inpos] >>> 31)
@@ -6592,37 +6598,37 @@ public final class BitPacking {
     }
 
 
-    public static void fastunpack32(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack32(final int[] in, int inpos, final int[] out, int outpos) {
         System.arraycopy(in, inpos, out, outpos, 32);
     }
 
 
-    public static void fastpack32(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack32(final int[] in, int inpos, final int[] out, int outpos) {
         System.arraycopy(in, inpos, out, outpos, 32);
     }
 
 
-    public static void fastpackwithoutmask32(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask32(final int[] in, int inpos, final int[] out, int outpos) {
         System.arraycopy(in, inpos, out, outpos, 32);
     }
 
 
-    public static void fastunpack0(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastunpack0(final int[] in, int inpos, final int[] out, int outpos) {
         Arrays.fill(out, outpos, outpos + 32, 0);
     }
 
 
-    public static void fastpack0(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpack0(final int[] in, int inpos, final int[] out, int outpos) {
         // nothing 
     }
 
 
-    public static void fastpackwithoutmask0(final int[] in, int inpos, final int[] out, int outpos) {
+    protected static void fastpackwithoutmask0(final int[] in, int inpos, final int[] out, int outpos) {
         // nothing
     }
 
 
-    public static void fastunpack(final int[] in, int inpos, final int[] out, int outpos, final int bit) {
+    protected static void fastunpack(final int[] in, int inpos, final int[] out, int outpos, final int bit) {
         switch (bit) {
             case 0:
                 fastunpack0(in, inpos, out, outpos);
@@ -6729,7 +6735,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpack(final int[] in, int inpos, final int[] out, int outpos, final int bit) {
+    protected static void fastpack(final int[] in, int inpos, final int[] out, int outpos, final int bit) {
         switch (bit) {
             case 0:
                 fastpack0(in, inpos, out, outpos);
@@ -6836,7 +6842,7 @@ public final class BitPacking {
     }
 
 
-    public static void fastpackwithoutmask(final int[] in, int inpos, final int[] out, int outpos, final int bit) {
+    protected static void fastpackwithoutmask(final int[] in, int inpos, final int[] out, int outpos, final int bit) {
         switch (bit) {
             case 0:
                 fastpackwithoutmask0(in, inpos, out, outpos);

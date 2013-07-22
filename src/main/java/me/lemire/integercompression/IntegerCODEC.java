@@ -8,6 +8,12 @@
 package me.lemire.integercompression;
 
 
+/**
+ * Interface describing a standard CODEC to compress integers.
+ * 
+ * @author Daniel Lemire
+ *
+ */
 public interface IntegerCODEC {
     /**
      * Compress data from an array to another array.
@@ -18,6 +24,11 @@ public interface IntegerCODEC {
      * inpos will be incremented by 12 while outpos will be
      * incremented by 3
      * we use IntWrapper to pass the values by reference.
+     * @param in  input array
+     * @param inpos location in the input array
+     * @param inlength how many integers to compress
+     * @param out output array
+     * @param outpos  where to write in the output array
      */
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos);
 

@@ -11,8 +11,15 @@ package me.lemire.integercompression;
  *
  * @author Daniel Lemire
  */
-
 public final class S9 {
+	/**
+	 * Estimate size of the compressed output.
+	 * 
+	 * @param in array to compress
+	 * @param currentPos where to start reading
+	 * @param inlength how many integers to read
+	 * @return estimated size of the output (in 32-bit integers)
+	 */
     public static int estimatecompress(int[] in, int currentPos, int inlength) {
         int tmpoutpos = 0;
         int finalpos = currentPos + inlength;
@@ -35,7 +42,6 @@ public final class S9 {
                 continue outer;
             }
             final int selector = 8;
-            // Util.assertTrue(codeNum[selector] == 1);
             if (in[currentPos] >= 1 << bitLength[selector])
                 throw new RuntimeException("Too big a number");
             tmpoutpos++;
@@ -45,7 +51,7 @@ public final class S9 {
         return tmpoutpos;
     }
 
-    public static int compress(int[] in, int currentPos, int inlength, int out[],
+    protected static int compress(int[] in, int currentPos, int inlength, int out[],
                                int tmpoutpos) {
         int origtmpoutpos = tmpoutpos;
         int finalpos = currentPos + inlength;
@@ -73,16 +79,14 @@ public final class S9 {
                 continue outer;
             }
             final int selector = 8;
-            // Util.assertTrue(codeNum[selector] == 1);
             if (in[currentPos] >= 1 << bitLength[selector])
                 throw new RuntimeException("Too big a number");
             out[tmpoutpos++] = in[currentPos++] | (selector << 28);
         }
-        // Util.assertTrue(currentPos == finalpos);
         return tmpoutpos - origtmpoutpos;
     }
 
-    public static void uncompress(int[] in, int tmpinpos, int inlength,
+    protected static void uncompress(int[] in, int tmpinpos, int inlength,
                                   int[] out, int currentPos, int outlength) {
         int finallength = currentPos + outlength;
 
@@ -163,8 +167,6 @@ public final class S9 {
                 }
             }
         }
-        // Util.assertTrue(currentPos == finallength);
-        // Util.assertTrue(tmpinpos <= finalin);
 
     }
 

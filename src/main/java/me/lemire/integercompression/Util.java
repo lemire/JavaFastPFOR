@@ -9,7 +9,7 @@ package me.lemire.integercompression;
 /**
  * Routine utility functions.
  * 
- * @author lemire
+ * @author Daniel Lemire
  *
  */
 public class Util {

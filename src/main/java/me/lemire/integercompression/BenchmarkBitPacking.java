@@ -10,9 +10,16 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * Class used to benchmark the speed of bit packing. (For
+ * expert use.)
+ * 
+ * @author Daniel Lemire
+ *
+ */
 public class BenchmarkBitPacking {
 
-    public static void test(boolean verbose) {
+    private static void test(boolean verbose) {
         DecimalFormat dfspeed = new DecimalFormat("0");
         final int N = 32;
         final int times = 100000;
@@ -49,7 +56,7 @@ public class BenchmarkBitPacking {
         }
     }
 
-    public static void testWithDeltas(boolean verbose) {
+    private static void testWithDeltas(boolean verbose) {
         DecimalFormat dfspeed = new DecimalFormat("0");
         final int N = 32;
         final int times = 100000;
@@ -103,85 +110,12 @@ public class BenchmarkBitPacking {
         }
     }
 
-    public static void verify() {
-        System.out.println("Checking the code...");
-        final int N = 32;
-        final int times = 1000;
-        Random r = new Random();
-        int[] data = new int[N];
-        int[] compressed = new int[N];
-        int[] uncompressed = new int[N];
-        for (int bit = 0; bit < 31; ++bit) {
-            for (int t = 0; t < times; ++t) {
-                for (int k = 0; k < N; ++k) {
-                    data[k] = r.nextInt(1 << bit);
-                }
-                BitPacking.fastpack(data, 0, compressed, 0, bit);
-                BitPacking.fastunpack(compressed, 0, uncompressed, 0, bit);
-                if (!Arrays.equals(uncompressed, data)) {
-                    throw new RuntimeException("bug " + bit);
-                }
-            }
-        }
-        System.out.println("Code appears to be correct.");
-    }
-
-    public static void verifyWithoutMask() {
-        System.out.println("Checking the code...");
-        final int N = 32;
-        final int times = 1000;
-        Random r = new Random();
-        int[] data = new int[N];
-        int[] compressed = new int[N];
-        int[] uncompressed = new int[N];
-        for (int bit = 0; bit < 31; ++bit) {
-            for (int t = 0; t < times; ++t) {
-                for (int k = 0; k < N; ++k) {
-                    data[k] = r.nextInt(1 << bit);
-                }
-                BitPacking.fastpackwithoutmask(data, 0, compressed, 0, bit);
-                BitPacking.fastunpack(compressed, 0, uncompressed, 0, bit);
-                if (!Arrays.equals(uncompressed, data)) {
-                    throw new RuntimeException("bug " + bit);
-                }
-            }
-        }
-        System.out.println("Code appears to be correct.");
-    }
-
-    public static void verifyWithExceptions() {
-        System.out.println("Checking the code...");
-        final int N = 32;
-        final int times = 1000;
-        Random r = new Random();
-        int[] data = new int[N];
-        int[] compressed = new int[N];
-        int[] uncompressed = new int[N];
-        for (int bit = 0; bit < 31; ++bit) {
-            for (int t = 0; t < times; ++t) {
-                for (int k = 0; k < N; ++k) {
-                    data[k] = r.nextInt();
-                }
-                BitPacking.fastpack(data, 0, compressed, 0, bit);
-                BitPacking.fastunpack(compressed, 0, uncompressed, 0, bit);
-                for (int k = 0; k < N; ++k) {
-                    if ((data[k] & ((1 << bit) - 1)) != uncompressed[k]) {
-                        for (int k2 = 0; k2 < N; ++k2) {
-                            System.out.println((data[k] & ((1 << bit) - 1)) + " " + uncompressed[k]);
-                        }
-                        System.out.println(compressed[0]);
-                        throw new RuntimeException("bug " + bit);
-                    }
-                }
-            }
-        }
-        System.out.println("Code with overflow appears to be correct.");
-    }
-
+    /**
+     * Main method
+     * 
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
-        verify();
-        verifyWithExceptions();
-        verifyWithoutMask();
         System.out.println("Testing packing and delta ");
         testWithDeltas(false);
         testWithDeltas(true);

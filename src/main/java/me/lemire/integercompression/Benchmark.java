@@ -17,12 +17,20 @@ import java.util.Arrays;
 /**
  * 
  * Simple class meant to compare the speed of different schemes.
- * @author lemire
+ * @author Daniel Lemire
  *
  */
 public class Benchmark {
 
-    public static void testCodec(IntegerCODEC c, int[][] data, int Max,
+    /**
+     * Standard benchmark
+     * 
+     * @param c the codec
+     * @param data arrays of input data
+     * @param repeat How many times to repeat the test
+     * @param verbose whether to output result on screen
+     */
+    private static void testCodec(IntegerCODEC c, int[][] data, 
                                  int repeat, boolean verbose) {
         DecimalFormat df = new DecimalFormat("0.00");
         DecimalFormat dfspeed = new DecimalFormat("0");
@@ -99,6 +107,11 @@ public class Benchmark {
             System.out.println(line);
     }
 
+	/**
+	 * Main method.
+	 * 
+	 * @param args command-line arguments
+	 */
 	public static void main(String args[]) {
 		System.out.println("# benchmark based on the ClusterData model from:");
 		System.out.println("# 	 Vo Ngoc Anh and Alistair Moffat. ");
@@ -108,7 +121,14 @@ public class Benchmark {
 		test(20, 18, 10);
 	}
 
-    public static void testKamikaze(int[][] data, int Max,
+    /**
+     * Standard test for the Kamikaze library
+     * 
+     * @param data input data
+     * @param repeat how many times to repeat
+     * @param verbose whether to output data on screen
+     */
+    public static void testKamikaze(int[][] data,
                                     int repeat, boolean verbose) {
         DecimalFormat df = new DecimalFormat("0.00");
         DecimalFormat dfspeed = new DecimalFormat("0");
@@ -190,7 +210,14 @@ public class Benchmark {
             System.out.println(line);
     }
 
-    public static void test(int N, int nbr, int repeat) {
+    /**
+     * Generates data and calls other tests.
+     * 
+     * @param N How many input arrays to generate
+     * @param nbr how big (in log2) should the arrays be
+     * @param repeat How many times should we repeat tests.
+     */
+    private static void test(int N, int nbr, int repeat) {
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
         for (int sparsity = 1; sparsity < 31 - nbr; sparsity += 1) {
             System.out.println("# sparsity " + sparsity);
@@ -201,89 +228,89 @@ public class Benchmark {
                 data[k] = cdg.generateClustered((1 << nbr), Max);
             }
             System.out.println("# generating random data... ok.");
-            testKamikaze(data, Max, repeat, false);
-            testKamikaze(data, Max, repeat, false);
-            testKamikaze(data, Max, repeat, true);
+            testKamikaze(data,  repeat, false);
+            testKamikaze(data,  repeat, false);
+            testKamikaze(data,  repeat, true);
             System.out.println();
 
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
-                    new IntegratedVariableByte()), data, Max, repeat, false);
+                    new IntegratedVariableByte()), data,  repeat, false);
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
-                    new IntegratedVariableByte()), data, Max, repeat, false);
+                    new IntegratedVariableByte()), data,  repeat, false);
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
-                    new IntegratedVariableByte()), data, Max, repeat, true);
+                    new IntegratedVariableByte()), data,  repeat, true);
             System.out.println();
 
 
-            testCodec(new JustCopy(), data, Max, repeat, false);
-            testCodec(new JustCopy(), data, Max, repeat, false);
-            testCodec(new JustCopy(), data, Max, repeat, true);
+            testCodec(new JustCopy(), data,  repeat, false);
+            testCodec(new JustCopy(), data,  repeat, false);
+            testCodec(new JustCopy(), data,  repeat, true);
             System.out.println();
 
-            testCodec(new VariableByte(), data, Max, repeat, false);
-            testCodec(new VariableByte(), data, Max, repeat, false);
-            testCodec(new VariableByte(), data, Max, repeat, true);
+            testCodec(new VariableByte(), data,  repeat, false);
+            testCodec(new VariableByte(), data,  repeat, false);
+            testCodec(new VariableByte(), data,  repeat, true);
             System.out.println();
 
-            testCodec(new IntegratedVariableByte(), data, Max, repeat, false);
-            testCodec(new IntegratedVariableByte(), data, Max, repeat, false);
-            testCodec(new IntegratedVariableByte(), data, Max, repeat, true);
+            testCodec(new IntegratedVariableByte(), data,  repeat, false);
+            testCodec(new IntegratedVariableByte(), data,  repeat, false);
+            testCodec(new IntegratedVariableByte(), data,  repeat, true);
             System.out.println();
 
 
             testCodec(new Composition(new BinaryPacking(), new VariableByte()),
-                    data, Max, repeat, false);
+                    data,  repeat, false);
             testCodec(new Composition(new BinaryPacking(), new VariableByte()),
-                    data, Max, repeat, false);
+                    data,  repeat, false);
             testCodec(new Composition(new BinaryPacking(), new VariableByte()),
-                    data, Max, repeat, true);
+                    data,  repeat, true);
             System.out.println();
 
             testCodec(new Composition(new NewPFD(), new VariableByte()), data,
-                    Max, repeat, false);
+                     repeat, false);
             testCodec(new Composition(new NewPFD(), new VariableByte()), data,
-                    Max, repeat, false);
+                     repeat, false);
             testCodec(new Composition(new NewPFD(), new VariableByte()), data,
-                    Max, repeat, true);
+                     repeat, true);
             System.out.println();
 
 
             testCodec(new Composition(new NewPFDS9(), new VariableByte()), data,
-                    Max, repeat, false);
+                     repeat, false);
             testCodec(new Composition(new NewPFDS9(), new VariableByte()), data,
-                    Max, repeat, false);
+                     repeat, false);
             testCodec(new Composition(new NewPFDS9(), new VariableByte()), data,
-                    Max, repeat, true);
+                     repeat, true);
             System.out.println();
 
             testCodec(new Composition(new OptPFD(), new VariableByte()), data,
-                    Max, repeat, false);
+                     repeat, false);
             testCodec(new Composition(new OptPFD(), new VariableByte()), data,
-                    Max, repeat, false);
+                     repeat, false);
             testCodec(new Composition(new OptPFD(), new VariableByte()), data,
-                    Max, repeat, true);
+                     repeat, true);
             System.out.println();
 
             testCodec(new Composition(new OptPFDS9(), new VariableByte()), data,
-                    Max, repeat, false);
+                     repeat, false);
             testCodec(new Composition(new OptPFDS9(), new VariableByte()), data,
-                    Max, repeat, false);
+                     repeat, false);
             testCodec(new Composition(new OptPFDS9(), new VariableByte()), data,
-                    Max, repeat, true);
+                     repeat, true);
             System.out.println();
 
 
             testCodec(new Composition(new FastPFOR(), new VariableByte()),
-                    data, Max, repeat, false);
+                    data,  repeat, false);
             testCodec(new Composition(new FastPFOR(), new VariableByte()),
-                    data, Max, repeat, false);
+                    data,  repeat, false);
             testCodec(new Composition(new FastPFOR(), new VariableByte()),
-                    data, Max, repeat, true);
+                    data,  repeat, true);
             System.out.println();
 
-            testCodec(new Simple9(), data, Max, repeat, false);
-            testCodec(new Simple9(), data, Max, repeat, false);
-            testCodec(new Simple9(), data, Max, repeat, true);
+            testCodec(new Simple9(), data,  repeat, false);
+            testCodec(new Simple9(), data,  repeat, false);
+            testCodec(new Simple9(), data,  repeat, true);
             System.out.println();
         }
     }
