@@ -14,6 +14,12 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * 
+ * Simple class meant to compare the speed of different schemes.
+ * @author lemire
+ *
+ */
 public class Benchmark {
 
     public static void testCodec(IntegerCODEC c, int[][] data, int Max,

@@ -31,8 +31,8 @@ public final class OptPFDS9 implements IntegerCODEC {
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                          IntWrapper outpos) {
-        // Util.assertTrue(inpos.get()+inlength <= in.length);
         inlength = inlength / BlockSize * BlockSize;
+        if(inlength == 0) return;
 
         final int finalinpos = inpos.get() + inlength;
         out[outpos.get()] = inlength;

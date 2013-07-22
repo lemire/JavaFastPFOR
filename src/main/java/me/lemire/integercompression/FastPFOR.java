@@ -30,27 +30,41 @@ public final class FastPFOR implements IntegerCODEC {
     int[][] datatobepacked = new int[32][];
     ByteBuffer bytecontainer;
 
+    /**
+     * Construct the FastPFOR CODEC. 
+     * @param pagesize the desired page size (for expert use)
+     */
     public FastPFOR(int pagesize) {
         PageSize = pagesize;
         initArrays();
     }
 
+    /**
+     * Construct the fastPFOR CODEC with default parameters.
+     */
     public FastPFOR() {
         PageSize = 65536;
         initArrays();
     }
 
-    public void initArrays() {
+    private void initArrays() {
         bytecontainer = ByteBuffer.allocateDirect(3 * PageSize / BlockSize
                 + PageSize);
         for (int k = 1; k < 32; ++k)
             datatobepacked[k] = new int[PageSize / 32 * 4];// heuristic
     }
 
+    /**
+     * Compress data in blocks of 128 integers (if fewer than 128 integers are
+     * provided, nothing is done). 
+     * 
+     * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
+     */
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                          IntWrapper outpos) {
         inlength = inlength / 128 * 128;
+        if(inlength == 0) return;
 
         final int finalinpos = inpos.get() + inlength;
         out[outpos.get()] = inlength;
@@ -62,7 +76,7 @@ public final class FastPFOR implements IntegerCODEC {
         }
     }
 
-    public static void getBestBFromData(int[] in, int pos,
+    private static void getBestBFromData(int[] in, int pos,
                                         byte[] bestbbestcexceptmaxb) {
         int freqs[] = new int[32];
         for (int k = pos; k < BlockSize + pos; ++k)
@@ -166,10 +180,16 @@ public final class FastPFOR implements IntegerCODEC {
         outpos.set(tmpoutpos);
     }
 
+    /**
+     * Uncompress data in blocks of 128 integers. In this
+     * particular case, the inlength parameter is ignored:
+     * it is deduced from the compressed data.
+     * 
+     * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
+     */    
     @Override
     public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
                            IntWrapper outpos) {
-        // Util.assertTrue(inpos.get()+inlength <= in.length);
         int mynvalue = in[inpos.get()];
         inpos.increment();
         int finalout = outpos.get() + mynvalue;
@@ -188,7 +208,6 @@ public final class FastPFOR implements IntegerCODEC {
         int inexcept = initpos + wheremeta;
         final int bytesize = in[inexcept++];
         bytecontainer.clear();
-        // Util.assertTrue((bytesize & 3) == 0);
         bytecontainer.asIntBuffer().put(in, inexcept, bytesize / 4);
         inexcept += bytesize / 4;
 

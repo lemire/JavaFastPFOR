@@ -13,12 +13,10 @@ public final class Simple9 implements IntegerCODEC {
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int out[],
                          IntWrapper outpos) {
-        // Util.assertTrue(inpos.get()+inlength <= in.length);
         int tmpoutpos = outpos.get();
         int currentPos = inpos.get();
         out[tmpoutpos++] = inlength;
         final int finalin = currentPos + inlength;
-        // Util.assertTrue(finalin <= in.length);
         outer:
         while (currentPos < finalin - 28) {
             mainloop:
@@ -69,25 +67,20 @@ public final class Simple9 implements IntegerCODEC {
                 continue outer;
             }
             final int selector = 8;
-            // Util.assertTrue(codeNum[selector] == 1);
             if (in[currentPos] >= 1 << bitLength[selector])
                 throw new RuntimeException("Too big a number");
             out[tmpoutpos++] = in[currentPos++] | (selector << 28);
         }
-        // Util.assertTrue(currentPos == finalin);
         inpos.set(currentPos);
         outpos.set(tmpoutpos);
     }
 
-    // @Override
     @Override
     public void uncompress(int[] in, IntWrapper inpos, int inlength,
                            int[] out, IntWrapper outpos) {
-        // Util.assertTrue(inpos.get()+inlength <= in.length);
         int currentPos = outpos.get();
         int tmpinpos = inpos.get();
         final int finalout = currentPos + in[tmpinpos++];
-        // Util.assertTrue(finalout <= out.length);
         while (currentPos < finalout - 28) {
             int val = in[tmpinpos++];
             int header = val >>> 28;

@@ -10,6 +10,8 @@ package me.lemire.integercompression;
 
 public interface IntegerCODEC {
     /**
+     * Compress data from an array to another array.
+     * 
      * Both inpos and outpos are modified to represent how much
      * data was read and written to
      * if 12 ints (inlength = 12) are compressed to 3 ints, then
@@ -19,7 +21,17 @@ public interface IntegerCODEC {
      */
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos);
 
-    // returns how many integers we decompressed
+    /**
+     * Uncompress data from an array to another array.
+     * 
+     * Both inpos and outpos parameters are modified to indicate new positions after read/write.
+     * 
+     * @param in array containing data in compressed form
+     * @param inpos where to start reading in the array
+     * @param inlength length of the compressed data (ignored by some schemes)
+     * @param out array where to write the compressed output
+     * @param outpos where to write the compressed output in out
+     */
     public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos);
 
 

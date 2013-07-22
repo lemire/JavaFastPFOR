@@ -12,6 +12,7 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC {
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
         inlength = inlength / 128 * 128;
+        if(inlength == 0) return;
         out[outpos.get()] = inlength;
         outpos.increment();
         int tmpoutpos = outpos.get();
