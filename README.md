@@ -28,9 +28,6 @@ in sorted orders. Most others do not.
 Maven
 -----
 
-Using this code in your own project is easy with maven, just add
-the following code in your pom.xml file:
-
     <dependencies>
      <dependency>
      <groupId>me.lemire.integercompression</groupId>
@@ -79,10 +76,9 @@ http://forums.linuxmint.com/viewtopic.php?f=42&t=93052
 Maven central repository
 ------------------------
 
-You can download JavaFastPFOR from the Maven central repository:
-http://repo1.maven.org/maven2/me/lemire/integercompression/JavaFastPFOR/
+Using this code in your own project is easy with maven, just add
+the following code in your pom.xml file:
 
-You can also specify the dependency in the Maven "pom.xml" file:
 
     <dependencies>
          <dependency>
@@ -97,10 +93,15 @@ you desire.
 
 
 
+You can also download JavaFastPFOR from the Maven central repository:
+http://repo1.maven.org/maven2/me/lemire/integercompression/JavaFastPFOR/
+
+
+
 What can I do?
 --------------
 
-Compile the code and execute integercompression.benchmark.
+Compile the code and execute me.lemire.integercompression.Benchmark.
 
 I recommend running all the benchmarks with the "-server" flag.
 
