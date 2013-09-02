@@ -1,4 +1,4 @@
-import integercompression.*;
+import me.lemire.integercompression.*;
 import java.util.*;
 
 public class example {
