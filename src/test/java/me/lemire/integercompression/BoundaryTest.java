@@ -41,7 +41,7 @@ public class BoundaryTest
 
     private static void around256(IntegerCODEC c) {
         compressAndUncompress(255, c);
-        compressAndUncompress(255, c);
+        compressAndUncompress(256, c);
         compressAndUncompress(257, c);
     }
 
