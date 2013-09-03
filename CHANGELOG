@@ -1,3 +1,7 @@
+0.0.5  (Sept. 3rd 2013)
+  - Fixed problem with FastPFOR when integers contain negatives (samuelbosch)
+  - Fixed problem with composition with short arrays (MURAOKA Taro)
+
 0.0.4  (July 22nd 2013)
   - moved unit testing to comply with maven standard
   - codecs that have length limits no longer write out if they don't read in (Jimmy Lin)

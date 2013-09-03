@@ -52,8 +52,9 @@ Authors
 Main contributor
 Daniel Lemire, http://lemire.me/en/
 
-Minor contribution by 
+Contributions by 
 Di Wu, http://www.facebook.com/diwu1989
+Muraoka Taro, https://github.com/koron
 
 
 How does it compare to the Kamikaze PForDelta library?
