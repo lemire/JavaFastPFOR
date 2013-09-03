@@ -25,25 +25,37 @@ Hadoop tools for manipulating ClueWeb collections
 Some CODECs ("integrated codecs") assume that the integers are
 in sorted orders. Most others do not.
 
-Maven
------
+
+Maven central repository
+------------------------
+
+Using this code in your own project is easy with maven, just add
+the following code in your pom.xml file:
+
 
     <dependencies>
-     <dependency>
-     <groupId>me.lemire.integercompression</groupId>
-     <artifactId>JavaFastPFOR</artifactId>
-     <version>0.0.4</version>
-     </dependency>
-    </dependencies>
+         <dependency>
+	     <groupId>me.lemire.integercompression</groupId>
+	     <artifactId>JavaFastPFOR</artifactId>
+	     <version>0.0.5</version>
+         </dependency>
+     </dependencies>
+
+Naturally, you should replace "version" by the version
+you desire.
+
+
+
+You can also download JavaFastPFOR from the Maven central repository:
+http://repo1.maven.org/maven2/me/lemire/integercompression/JavaFastPFOR/
+
 
 Why?
 ----
 
-I found a few libraries that implemented Binary Packing, NewPFD, OptPFD,
-Variable Byte, Simple 9 and so on in Java. However, I could not find
-one that I liked.
-
-I threw in a cool little benchmark program.
+We found no library that implemented state-of-the-art integer coding techniques
+such as Binary Packing, NewPFD, OptPFD, Variable Byte, Simple 9 and so on in Java.
+We wrote one. 
 
 
 Authors
@@ -74,37 +86,18 @@ Good instructions on installing Java 7 on Linux:
 
 http://forums.linuxmint.com/viewtopic.php?f=42&t=93052
 
-Maven central repository
-------------------------
+Usage 
+-----
 
-Using this code in your own project is easy with maven, just add
-the following code in your pom.xml file:
-
-
-    <dependencies>
-         <dependency>
-	     <groupId>me.lemire.integercompression</groupId>
-	     <artifactId>JavaFastPFOR</artifactId>
-	     <version>0.0.3</version>
-         </dependency>
-     </dependencies>
-
-Naturally, you should replace "version" by the version
-you desire.
+See example.java for a simple demonstration.
 
 
-
-You can also download JavaFastPFOR from the Maven central repository:
-http://repo1.maven.org/maven2/me/lemire/integercompression/JavaFastPFOR/
-
-
-
-What can I do?
---------------
+How fast is it?
+---------------
 
 Compile the code and execute me.lemire.integercompression.Benchmark.
 
-I recommend running all the benchmarks with the "-server" flag.
+I recommend running all the benchmarks with the "-server" flag on a desktop machine.
 
 Speed is always reported in millions of integers per second.
 
@@ -127,11 +120,6 @@ or:
 
     $ ant Benchmark -Dbenchmark.target=BenchmarkBitPacking
 
-
-Usage 
------
-
-See example.java for a simple demonstration.
 
 Want to read more?
 ------------------
