@@ -32,6 +32,10 @@ public class IntegratedComposition implements IntegratedIntegerCODEC {
                          IntWrapper outpos) {
         int init = inpos.get();
         F1.compress(in, inpos, inlength, out, outpos);
+        if (outpos.get() == 0) {
+            out[0] = 0;
+            outpos.increment();
+        }
         inlength -= inpos.get() - init;
         F2.compress(in, inpos, inlength, out, outpos);
     }
