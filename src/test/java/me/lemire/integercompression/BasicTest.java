@@ -3,6 +3,8 @@ package me.lemire.integercompression;
 import java.util.Arrays;
 import java.util.Random;
 
+import junit.framework.Assert;
+
 import me.lemire.integercompression.synth.ClusteredDataGenerator;
 
 import org.junit.Test;
@@ -128,7 +130,36 @@ public class BasicTest {
 		testSpurious(new OptPFD());
 		testSpurious(new OptPFDS9());
 		testSpurious(new FastPFOR());
+
 	}
+        /**
+         * check that an empty array generates an empty array
+         * after compression.
+         */
+        @SuppressWarnings("static-method")
+        @Test
+        public void zeroinzerouttest() {
+                testZeroInZeroOut(new IntegratedBinaryPacking());
+                testZeroInZeroOut(new BinaryPacking());
+                testZeroInZeroOut(new NewPFD());
+                testZeroInZeroOut(new NewPFDS9());
+                testZeroInZeroOut(new OptPFD());
+                testZeroInZeroOut(new OptPFDS9());
+                testZeroInZeroOut(new FastPFOR());
+                testZeroInZeroOut(new VariableByte());
+                testZeroInZeroOut(new Composition(new IntegratedBinaryPacking(), new VariableByte()));
+                testZeroInZeroOut(new Composition(new BinaryPacking(), new VariableByte()));
+                testZeroInZeroOut(new Composition(new NewPFD(), new VariableByte()));
+                testZeroInZeroOut(new Composition(new NewPFDS9(), new VariableByte()));
+                testZeroInZeroOut(new Composition(new OptPFD(), new VariableByte()));
+                testZeroInZeroOut(new Composition(new OptPFDS9(), new VariableByte()));
+                testZeroInZeroOut(new Composition(new FastPFOR(), new VariableByte()));
+                
+                testZeroInZeroOut(new IntegratedComposition(new IntegratedBinaryPacking(),
+                        new IntegratedVariableByte()));
+
+        }
+
 	
 	private static void testSpurious(IntegerCODEC c) {
 		int[] x = new int[1024];
@@ -137,8 +168,22 @@ public class BasicTest {
 		IntWrapper i1 = new IntWrapper(0);
 		for(int inlength = 0; inlength <128;++inlength) {
 			c.compress(x, i0, inlength,y,i1);
+			Assert.assertEquals(i1.intValue(), 0);
 		}
 	}
+
+        private static void testZeroInZeroOut(IntegerCODEC c) {
+                int[] x = new int[0];
+                int[] y = new int[0];
+                IntWrapper i0 = new IntWrapper(0);
+                IntWrapper i1 = new IntWrapper(0);
+                c.compress(x, i0, 0,y,i1);
+                Assert.assertEquals(i1.intValue(), 0);
+                int[] out = new int[0];
+                IntWrapper outpos = new IntWrapper(0);
+                c.uncompress(y, i1, 0, out, outpos);
+                Assert.assertEquals(outpos.intValue(), 0);
+        }
 
 	private static void test(int N, int nbr) {
 		ClusteredDataGenerator cdg = new ClusteredDataGenerator();

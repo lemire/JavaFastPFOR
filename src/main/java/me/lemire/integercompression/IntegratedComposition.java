@@ -19,6 +19,10 @@ public class IntegratedComposition implements IntegratedIntegerCODEC {
      * The first one is called first and then the second one tries to
      * compress whatever remains from the first run.
      * 
+     * By convention, the first scheme should be such that if, during
+     * decoding, a 32-bit zero is first encountered, then there is no
+     * output.
+     * 
      * @param f1 first codec
      * @param f2 second codec
      */
@@ -30,7 +34,8 @@ public class IntegratedComposition implements IntegratedIntegerCODEC {
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                          IntWrapper outpos) {
-        int init = inpos.get();
+        if(inlength == 0) return;
+        final int init = inpos.get();
         F1.compress(in, inpos, inlength, out, outpos);
         if (outpos.get() == 0) {
             out[0] = 0;
@@ -43,6 +48,7 @@ public class IntegratedComposition implements IntegratedIntegerCODEC {
     @Override
     public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
                            IntWrapper outpos) {
+        if(inlength == 0) return;
         int init = inpos.get();
         F1.uncompress(in, inpos, inlength, out, outpos);
         inlength -= inpos.get() - init;

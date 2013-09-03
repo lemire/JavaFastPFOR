@@ -118,6 +118,7 @@ public final class NewPFDS9 implements IntegerCODEC {
     @Override
     public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
                            IntWrapper outpos) {
+        if(inlength == 0) return;
         int mynvalue = in[inpos.get()];
         inpos.increment();
         int finalout = outpos.get() + mynvalue;

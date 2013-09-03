@@ -18,6 +18,7 @@ public class VariableByte implements IntegerCODEC {
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                          IntWrapper outpos) {
+        if(inlength == 0) return;
         ByteBuffer buf = ByteBuffer.allocateDirect(inlength * 8);
         for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
             int val = in[k];
