@@ -7,15 +7,7 @@ import static org.junit.Assert.*;
 
 public class BoundaryTest
 {
-    private IntegratedComposition newComposition() {
-        return new IntegratedComposition(
-                new IntegratedBinaryPacking(),
-                new IntegratedVariableByte());
-    }
-
-    private void compressAndUncompress(int length, IntegratedComposition c)
-        throws Exception
-    {
+    private static void compressAndUncompress(int length, IntegerCODEC c) {
         // Initialize array.
         int[] source = new int[length];
         for (int i = 0; i < source.length; ++i) {
@@ -41,19 +33,36 @@ public class BoundaryTest
         assertArrayEquals(source, target);
     }
 
-    @Test
-    public void around128() throws Exception {
-        IntegratedComposition c = newComposition();
+    private static void around128(IntegerCODEC c) {
         compressAndUncompress(127, c);
         compressAndUncompress(128, c);
         compressAndUncompress(129, c);
     }
 
-    @Test
-    public void around256() throws Exception {
-        IntegratedComposition c = newComposition();
+    private static void around256(IntegerCODEC c) {
         compressAndUncompress(255, c);
         compressAndUncompress(255, c);
         compressAndUncompress(257, c);
+    }
+
+    private static void testBoundary(IntegerCODEC c) {
+        around128(c);
+        around256(c);
+    }
+
+    @Test
+    public void testIntegratedComposition() throws Exception {
+        IntegratedComposition c = new IntegratedComposition(
+                new IntegratedBinaryPacking(),
+                new IntegratedVariableByte());
+        testBoundary(c);
+    }
+
+    @Test
+    public void testComposition() throws Exception {
+        Composition c = new Composition(
+                new BinaryPacking(),
+                new VariableByte());
+        testBoundary(c);
     }
 }
