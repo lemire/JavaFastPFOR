@@ -26,8 +26,8 @@ import java.util.Arrays;
  */
 public final class FastPFOR implements IntegerCODEC {
     int PageSize;
-    final static int BlockSize = 128;
-    final static int overheadofeachexcept = 8;
+    final static int BLOCK_SIZE = 128;
+    final static int OVERHEAD_OF_EACH_EXCEPT = 8;
 
     int[][] datatobepacked = new int[32][];
     ByteBuffer bytecontainer;
@@ -50,7 +50,7 @@ public final class FastPFOR implements IntegerCODEC {
     }
 
     private void initArrays() {
-        bytecontainer = ByteBuffer.allocateDirect(3 * PageSize / BlockSize
+        bytecontainer = ByteBuffer.allocateDirect(3 * PageSize / BLOCK_SIZE
                 + PageSize);
         for (int k = 1; k < 32; ++k)
             datatobepacked[k] = new int[PageSize / 32 * 4];// heuristic
@@ -66,7 +66,7 @@ public final class FastPFOR implements IntegerCODEC {
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                          IntWrapper outpos) {
         inlength = Util.lcm(inlength, 128);
-        if(inlength == 0) return;
+        if (inlength == 0) return;
 
         final int finalinpos = inpos.get() + inlength;
         out[outpos.get()] = inlength;
@@ -81,14 +81,14 @@ public final class FastPFOR implements IntegerCODEC {
     private static void getBestBFromData(int[] in, int pos,
                                         byte[] bestbbestcexceptmaxb) {
         int freqs[] = new int[33];
-        for (int k = pos; k < BlockSize + pos; ++k) {
+        for (int k = pos; k < BLOCK_SIZE + pos; ++k) {
             freqs[Util.bits(in[k])]++;
         }
         bestbbestcexceptmaxb[0] = 32;
         while (freqs[bestbbestcexceptmaxb[0]] == 0)
             bestbbestcexceptmaxb[0]--;
         bestbbestcexceptmaxb[2] = bestbbestcexceptmaxb[0];
-        int bestcost = bestbbestcexceptmaxb[0] * BlockSize;
+        int bestcost = bestbbestcexceptmaxb[0] * BLOCK_SIZE;
         byte cexcept = 0;
         bestbbestcexceptmaxb[1] = cexcept;
         for (int b = bestbbestcexceptmaxb[0] - 1; b >= 0; --b) {
@@ -96,8 +96,8 @@ public final class FastPFOR implements IntegerCODEC {
             if (cexcept < 0)
                 break;
             // the extra 8 is the cost of storing maxbits
-            int thiscost = cexcept * overheadofeachexcept + cexcept
-                    * (bestbbestcexceptmaxb[2] - b) + b * BlockSize + 8;
+            int thiscost = cexcept * OVERHEAD_OF_EACH_EXCEPT + cexcept
+                    * (bestbbestcexceptmaxb[2] - b) + b * BLOCK_SIZE + 8;
             if (thiscost < bestcost) {
                 bestcost = thiscost;
                 bestbbestcexceptmaxb[0] = (byte) b;
@@ -115,7 +115,7 @@ public final class FastPFOR implements IntegerCODEC {
         bytecontainer.clear();
         final byte[] bestbbestcexceptmaxb = new byte[3];
         int tmpinpos = inpos.get();
-        for (final int finalinpos = tmpinpos + thissize; tmpinpos + BlockSize <= finalinpos; tmpinpos += BlockSize) {
+        for (final int finalinpos = tmpinpos + thissize; tmpinpos + BLOCK_SIZE <= finalinpos; tmpinpos += BLOCK_SIZE) {
             getBestBFromData(in, tmpinpos, bestbbestcexceptmaxb);
             final int tmpbestb = bestbbestcexceptmaxb[0];
             bytecontainer.put(bestbbestcexceptmaxb[0]);
@@ -131,7 +131,7 @@ public final class FastPFOR implements IntegerCODEC {
                     datatobepacked[index] = Arrays.copyOf(
                             datatobepacked[index], newsize);
                 }
-                for (int k = 0; k < BlockSize; ++k) {
+                for (int k = 0; k < BLOCK_SIZE; ++k) {
                     if ((in[k + tmpinpos] >>> bestbbestcexceptmaxb[0]) != 0) {
                         // we have an exception
                         bytecontainer.put((byte) k);
@@ -224,7 +224,7 @@ public final class FastPFOR implements IntegerCODEC {
         int tmpoutpos = outpos.get();
         int tmpinpos = inpos.get();
 
-        for (int run = 0; run < thissize / BlockSize; ++run, tmpoutpos += BlockSize) {
+        for (int run = 0; run < thissize / BLOCK_SIZE; ++run, tmpoutpos += BLOCK_SIZE) {
             final byte b = bytecontainer.get();
             final byte cexcept = bytecontainer.get();
             for (int k = 0; k < 128; k += 32) {
