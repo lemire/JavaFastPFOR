@@ -25,19 +25,19 @@ import java.util.Arrays;
  * @author Daniel Lemire
  */
 public final class FastPFOR implements IntegerCODEC {
-    int PageSize;
     final static int BLOCK_SIZE = 128;
     final static int OVERHEAD_OF_EACH_EXCEPT = 8;
 
-    int[][] datatobepacked = new int[32][];
-    ByteBuffer bytecontainer;
+    int pageSize;
+    int[][] dataTobePacked = new int[32][];
+    ByteBuffer byteContainer;
 
     /**
      * Construct the FastPFOR CODEC. 
      * @param pagesize the desired page size (for expert use)
      */
     public FastPFOR(int pagesize) {
-        PageSize = pagesize;
+        pageSize = pagesize;
         initArrays();
     }
 
@@ -45,15 +45,15 @@ public final class FastPFOR implements IntegerCODEC {
      * Construct the fastPFOR CODEC with default parameters.
      */
     public FastPFOR() {
-        PageSize = 65536;
+        pageSize = 65536;
         initArrays();
     }
 
     private void initArrays() {
-        bytecontainer = ByteBuffer.allocateDirect(3 * PageSize / BLOCK_SIZE
-                + PageSize);
+        byteContainer = ByteBuffer.allocateDirect(3 * pageSize / BLOCK_SIZE
+                + pageSize);
         for (int k = 1; k < 32; ++k)
-            datatobepacked[k] = new int[PageSize / 32 * 4];// heuristic
+            dataTobePacked[k] = new int[pageSize / 32 * 4];// heuristic
     }
 
     /**
@@ -72,7 +72,7 @@ public final class FastPFOR implements IntegerCODEC {
         out[outpos.get()] = inlength;
         outpos.increment();
         while (inpos.get() != finalinpos) {
-            int thissize = finalinpos > PageSize + inpos.get() ? PageSize
+            int thissize = finalinpos > pageSize + inpos.get() ? pageSize
                     : (finalinpos - inpos.get());
             encodePage(in, inpos, thissize, out, outpos);
         }
@@ -112,30 +112,30 @@ public final class FastPFOR implements IntegerCODEC {
         outpos.increment();
         int tmpoutpos = outpos.get();
         int[] datapointers = new int[33];
-        bytecontainer.clear();
+        byteContainer.clear();
         final byte[] bestbbestcexceptmaxb = new byte[3];
         int tmpinpos = inpos.get();
         for (final int finalinpos = tmpinpos + thissize; tmpinpos + BLOCK_SIZE <= finalinpos; tmpinpos += BLOCK_SIZE) {
             getBestBFromData(in, tmpinpos, bestbbestcexceptmaxb);
             final int tmpbestb = bestbbestcexceptmaxb[0];
-            bytecontainer.put(bestbbestcexceptmaxb[0]);
-            bytecontainer.put(bestbbestcexceptmaxb[1]);
+            byteContainer.put(bestbbestcexceptmaxb[0]);
+            byteContainer.put(bestbbestcexceptmaxb[1]);
             if (bestbbestcexceptmaxb[1] > 0) {
-                    bytecontainer.put(bestbbestcexceptmaxb[2]);
+                    byteContainer.put(bestbbestcexceptmaxb[2]);
                     final int index = bestbbestcexceptmaxb[2]
                         - bestbbestcexceptmaxb[0];
-                if (datapointers[index] + bestbbestcexceptmaxb[1] >= datatobepacked[index].length) {
+                if (datapointers[index] + bestbbestcexceptmaxb[1] >= dataTobePacked[index].length) {
                     int newsize = 2 * (datapointers[index] + bestbbestcexceptmaxb[1]);
                     // make sure it is a multiple of 32
                     newsize = (newsize + 31) / 32 * 32;
-                    datatobepacked[index] = Arrays.copyOf(
-                            datatobepacked[index], newsize);
+                    dataTobePacked[index] = Arrays.copyOf(
+                            dataTobePacked[index], newsize);
                 }
                 for (int k = 0; k < BLOCK_SIZE; ++k) {
                     if ((in[k + tmpinpos] >>> bestbbestcexceptmaxb[0]) != 0) {
                         // we have an exception
-                        bytecontainer.put((byte) k);
-                        datatobepacked[index][datapointers[index]++] = in[k
+                        byteContainer.put((byte) k);
+                        dataTobePacked[index][datapointers[index]++] = in[k
                                 + tmpinpos] >>> tmpbestb;
                     }
                 }
@@ -148,13 +148,13 @@ public final class FastPFOR implements IntegerCODEC {
         }
         inpos.set(tmpinpos);
         out[headerpos] = tmpoutpos - headerpos;
-        while ((bytecontainer.position() & 3) != 0)
-            bytecontainer.put((byte) 0);
-        final int bytesize = bytecontainer.position();
+        while ((byteContainer.position() & 3) != 0)
+            byteContainer.put((byte) 0);
+        final int bytesize = byteContainer.position();
         out[tmpoutpos++] = bytesize;
         final int howmanyints = bytesize / 4;
-        bytecontainer.flip();
-        bytecontainer.asIntBuffer().get(out, tmpoutpos, howmanyints);
+        byteContainer.flip();
+        byteContainer.asIntBuffer().get(out, tmpoutpos, howmanyints);
         tmpoutpos += howmanyints;
         int bitmap = 0;
         for (int k = 1; k <= 32; ++k) {
@@ -167,7 +167,7 @@ public final class FastPFOR implements IntegerCODEC {
                 out[tmpoutpos++] = datapointers[k];// size
                 for (int j = 0; j < datapointers[k]; j += 32) {
                     BitPacking
-                            .fastpack(datatobepacked[k], j, out, tmpoutpos, k);
+                            .fastpack(dataTobePacked[k], j, out, tmpoutpos, k);
                     tmpoutpos += k;
                 }
             }
@@ -190,7 +190,7 @@ public final class FastPFOR implements IntegerCODEC {
         inpos.increment();
         int finalout = outpos.get() + mynvalue;
         while (outpos.get() != finalout) {
-            int thissize = finalout > PageSize + outpos.get() ? PageSize
+            int thissize = finalout > pageSize + outpos.get() ? pageSize
                     : (finalout - outpos.get());
             decodePage(in, inpos, out, outpos, thissize);
         }
@@ -203,19 +203,19 @@ public final class FastPFOR implements IntegerCODEC {
         inpos.increment();
         int inexcept = initpos + wheremeta;
         final int bytesize = in[inexcept++];
-        bytecontainer.clear();
-        bytecontainer.asIntBuffer().put(in, inexcept, bytesize / 4);
+        byteContainer.clear();
+        byteContainer.asIntBuffer().put(in, inexcept, bytesize / 4);
         inexcept += bytesize / 4;
 
         final int bitmap = in[inexcept++];
         for (int k = 1; k <= 31; ++k) {
             if ((bitmap & (1 << (k - 1))) != 0) {
                 int size = in[inexcept++];
-                if (datatobepacked[k].length < size)
-                    datatobepacked[k] = new int[(size + 31) / 32 * 32];
+                if (dataTobePacked[k].length < size)
+                    dataTobePacked[k] = new int[(size + 31) / 32 * 32];
                 for (int j = 0; j < size; j += 32) {
                     BitPacking
-                            .fastunpack(in, inexcept, datatobepacked[k], j, k);
+                            .fastunpack(in, inexcept, dataTobePacked[k], j, k);
                     inexcept += k;
                 }
             }
@@ -225,18 +225,18 @@ public final class FastPFOR implements IntegerCODEC {
         int tmpinpos = inpos.get();
 
         for (int run = 0; run < thissize / BLOCK_SIZE; ++run, tmpoutpos += BLOCK_SIZE) {
-            final byte b = bytecontainer.get();
-            final byte cexcept = bytecontainer.get();
+            final byte b = byteContainer.get();
+            final byte cexcept = byteContainer.get();
             for (int k = 0; k < 128; k += 32) {
                 BitPacking.fastunpack(in, tmpinpos, out, tmpoutpos + k, b);
                 tmpinpos += b;
             }
             if (cexcept > 0) {
-                final byte maxbits = bytecontainer.get();
+                final byte maxbits = byteContainer.get();
                 final int index = maxbits - b;
                 for (int k = 0; k < cexcept; ++k) {
-                    final byte pos = bytecontainer.get();
-                    final int exceptvalue = datatobepacked[index][datapointers[index]++];
+                    final byte pos = byteContainer.get();
+                    final int exceptvalue = dataTobePacked[index][datapointers[index]++];
                     out[pos + tmpoutpos] |= exceptvalue << b;
                 }
 
