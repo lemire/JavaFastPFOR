@@ -33,6 +33,11 @@ public final class FastPFOR implements IntegerCODEC {
     int[][] dataTobePacked = new int[32][];
     ByteBuffer byteContainer;
 
+    // Working area for compress and uncompress.
+    int[] dataPointers;
+    int[] freqs;
+    byte[] bestbbestcexceptmaxb;
+
     /**
      * Construct the FastPFOR CODEC. 
      * @param pagesize the desired page size (for expert use)
@@ -65,18 +70,27 @@ public final class FastPFOR implements IntegerCODEC {
         inlength = Util.lcm(inlength, 128);
         if (inlength == 0) return;
 
-        final int finalinpos = inpos.get() + inlength;
         out[outpos.get()] = inlength;
         outpos.increment();
+
+        // Allocate memory for working area.
+        dataPointers = new int[33];
+        freqs = new int[33];
+        bestbbestcexceptmaxb = new byte[3];
+
+        final int finalinpos = inpos.get() + inlength;
         while (inpos.get() != finalinpos) {
             int thissize = Math.min(pageSize, finalinpos - inpos.get());
             encodePage(in, inpos, thissize, out, outpos);
         }
+
+        dataPointers = null;
+        freqs = null;
+        bestbbestcexceptmaxb = null;
     }
 
-    private static void getBestBFromData(int[] in, int pos,
-                                        byte[] bestbbestcexceptmaxb) {
-        int freqs[] = new int[33];
+    private void getBestBFromData(int[] in, int pos) {
+        Arrays.fill(freqs, 0);
         for (int k = pos, k_end = pos + BLOCK_SIZE; k < k_end; ++k) {
             freqs[Util.bits(in[k])]++;
         }
@@ -107,12 +121,15 @@ public final class FastPFOR implements IntegerCODEC {
         final int headerpos = outpos.get();
         outpos.increment();
         int tmpoutpos = outpos.get();
-        int[] datapointers = new int[33];
+
+        // Clear working area.
+        Arrays.fill(dataPointers, 0);
+        Arrays.fill(bestbbestcexceptmaxb, (byte)0);
         byteContainer.clear();
-        final byte[] bestbbestcexceptmaxb = new byte[3];
+
         int tmpinpos = inpos.get();
         for (final int finalinpos = tmpinpos + thissize - BLOCK_SIZE; tmpinpos <= finalinpos; tmpinpos += BLOCK_SIZE) {
-            getBestBFromData(in, tmpinpos, bestbbestcexceptmaxb);
+            getBestBFromData(in, tmpinpos);
             final int tmpbestb = bestbbestcexceptmaxb[0];
             byteContainer.put(bestbbestcexceptmaxb[0]);
             byteContainer.put(bestbbestcexceptmaxb[1]);
@@ -120,10 +137,10 @@ public final class FastPFOR implements IntegerCODEC {
                     byteContainer.put(bestbbestcexceptmaxb[2]);
                     final int index = bestbbestcexceptmaxb[2]
                         - bestbbestcexceptmaxb[0];
-                if (datapointers[index] + bestbbestcexceptmaxb[1] >= dataTobePacked[index].length) {
-                    int newsize = 2 * (datapointers[index] + bestbbestcexceptmaxb[1]);
+                if (dataPointers[index] + bestbbestcexceptmaxb[1] >= dataTobePacked[index].length) {
+                    int newsize = 2 * (dataPointers[index] + bestbbestcexceptmaxb[1]);
                     // make sure it is a multiple of 32
-                    newsize = (newsize + 31) / 32 * 32;
+                    newsize = Util.lcm(newsize + 31, 32);
                     dataTobePacked[index] = Arrays.copyOf(
                             dataTobePacked[index], newsize);
                 }
@@ -131,7 +148,7 @@ public final class FastPFOR implements IntegerCODEC {
                     if ((in[k + tmpinpos] >>> bestbbestcexceptmaxb[0]) != 0) {
                         // we have an exception
                         byteContainer.put((byte) k);
-                        dataTobePacked[index][datapointers[index]++] = in[k
+                        dataTobePacked[index][dataPointers[index]++] = in[k
                                 + tmpinpos] >>> tmpbestb;
                     }
                 }
@@ -154,16 +171,15 @@ public final class FastPFOR implements IntegerCODEC {
         tmpoutpos += howmanyints;
         int bitmap = 0;
         for (int k = 1; k <= 32; ++k) {
-            if (datapointers[k] != 0)
+            if (dataPointers[k] != 0)
                 bitmap |= (1 << (k - 1));
         }
         out[tmpoutpos++] = bitmap;
         for (int k = 1; k <= 31; ++k) {
-            if (datapointers[k] != 0) {
-                out[tmpoutpos++] = datapointers[k];// size
-                for (int j = 0; j < datapointers[k]; j += 32) {
-                    BitPacking
-                            .fastpack(dataTobePacked[k], j, out, tmpoutpos, k);
+            if (dataPointers[k] != 0) {
+                out[tmpoutpos++] = dataPointers[k];// size
+                for (int j = 0; j < dataPointers[k]; j += 32) {
+                    BitPacking.fastpack(dataTobePacked[k], j, out, tmpoutpos, k);
                     tmpoutpos += k;
                 }
             }
@@ -181,14 +197,20 @@ public final class FastPFOR implements IntegerCODEC {
     @Override
     public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
                            IntWrapper outpos) {
-        if(inlength == 0) return;
+        if (inlength == 0) return;
+
         int mynvalue = in[inpos.get()];
         inpos.increment();
+
+        dataPointers = new int[33];
+
         int finalout = outpos.get() + mynvalue;
         while (outpos.get() != finalout) {
             int thissize = Math.min(pageSize, finalout - outpos.get());
             decodePage(in, inpos, out, outpos, thissize);
         }
+
+        dataPointers = null;
     }
 
     private void decodePage(int[] in, IntWrapper inpos, int[] out,
@@ -207,7 +229,7 @@ public final class FastPFOR implements IntegerCODEC {
             if ((bitmap & (1 << (k - 1))) != 0) {
                 int size = in[inexcept++];
                 if (dataTobePacked[k].length < size)
-                    dataTobePacked[k] = new int[(size + 31) / 32 * 32];
+                    dataTobePacked[k] = new int[Util.lcm(size + 31, 32)];
                 for (int j = 0; j < size; j += 32) {
                     BitPacking
                             .fastunpack(in, inexcept, dataTobePacked[k], j, k);
@@ -215,7 +237,7 @@ public final class FastPFOR implements IntegerCODEC {
                 }
             }
         }
-        int[] datapointers = new int[32];
+        Arrays.fill(dataPointers, 0);
         int tmpoutpos = outpos.get();
         int tmpinpos = inpos.get();
 
@@ -231,7 +253,7 @@ public final class FastPFOR implements IntegerCODEC {
                 final int index = maxbits - b;
                 for (int k = 0; k < cexcept; ++k) {
                     final byte pos = byteContainer.get();
-                    final int exceptvalue = dataTobePacked[index][datapointers[index]++];
+                    final int exceptvalue = dataTobePacked[index][dataPointers[index]++];
                     out[pos + tmpoutpos] |= exceptvalue << b;
                 }
 
