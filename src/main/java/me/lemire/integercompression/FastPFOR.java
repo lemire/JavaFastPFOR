@@ -67,7 +67,7 @@ public final class FastPFOR implements IntegerCODEC {
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                          IntWrapper outpos) {
-        inlength = Util.lcm(inlength, 128);
+        inlength = Util.floorBy(inlength, 128);
         if (inlength == 0) return;
 
         out[outpos.get()] = inlength;
@@ -140,7 +140,7 @@ public final class FastPFOR implements IntegerCODEC {
                 if (dataPointers[index] + bestbbestcexceptmaxb[1] >= dataTobePacked[index].length) {
                     int newsize = 2 * (dataPointers[index] + bestbbestcexceptmaxb[1]);
                     // make sure it is a multiple of 32
-                    newsize = Util.lcm(newsize + 31, 32);
+                    newsize = Util.floorBy(newsize + 31, 32);
                     dataTobePacked[index] = Arrays.copyOf(
                             dataTobePacked[index], newsize);
                 }
@@ -229,7 +229,7 @@ public final class FastPFOR implements IntegerCODEC {
             if ((bitmap & (1 << (k - 1))) != 0) {
                 int size = in[inexcept++];
                 if (dataTobePacked[k].length < size)
-                    dataTobePacked[k] = new int[Util.lcm(size + 31, 32)];
+                    dataTobePacked[k] = new int[Util.floorBy(size + 31, 32)];
                 for (int j = 0; j < size; j += 32) {
                     BitPacking
                             .fastunpack(in, inexcept, dataTobePacked[k], j, k);
