@@ -77,7 +77,7 @@ public final class FastPFOR implements IntegerCODEC {
     private static void getBestBFromData(int[] in, int pos,
                                         byte[] bestbbestcexceptmaxb) {
         int freqs[] = new int[33];
-        for (int k = pos; k < BLOCK_SIZE + pos; ++k) {
+        for (int k = pos, k_end = pos + BLOCK_SIZE; k < k_end; ++k) {
             freqs[Util.bits(in[k])]++;
         }
         bestbbestcexceptmaxb[0] = 32;
@@ -111,7 +111,7 @@ public final class FastPFOR implements IntegerCODEC {
         byteContainer.clear();
         final byte[] bestbbestcexceptmaxb = new byte[3];
         int tmpinpos = inpos.get();
-        for (final int finalinpos = tmpinpos + thissize; tmpinpos + BLOCK_SIZE <= finalinpos; tmpinpos += BLOCK_SIZE) {
+        for (final int finalinpos = tmpinpos + thissize - BLOCK_SIZE; tmpinpos <= finalinpos; tmpinpos += BLOCK_SIZE) {
             getBestBFromData(in, tmpinpos, bestbbestcexceptmaxb);
             final int tmpbestb = bestbbestcexceptmaxb[0];
             byteContainer.put(bestbbestcexceptmaxb[0]);
@@ -220,7 +220,7 @@ public final class FastPFOR implements IntegerCODEC {
         int tmpoutpos = outpos.get();
         int tmpinpos = inpos.get();
 
-        for (int run = 0; run < thissize / BLOCK_SIZE; ++run, tmpoutpos += BLOCK_SIZE) {
+        for (int run = 0, run_end = thissize / BLOCK_SIZE; run < run_end; ++run, tmpoutpos += BLOCK_SIZE) {
             final byte b = byteContainer.get();
             final byte cexcept = byteContainer.get();
             for (int k = 0; k < 128; k += 32) {
