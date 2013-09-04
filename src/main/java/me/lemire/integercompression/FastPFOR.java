@@ -95,15 +95,9 @@ public final class FastPFOR implements IntegerCODEC {
             cexcept += freqs[b + 1];
             if (cexcept < 0)
                 break;
+            // the extra 8 is the cost of storing maxbits
             int thiscost = cexcept * overheadofeachexcept + cexcept
-                    * (bestbbestcexceptmaxb[2] - b) + b * BlockSize + 8;// the
-            // extra
-            // 8 is
-            // the
-            // cost
-            // of
-            // storing
-            // maxbits
+                    * (bestbbestcexceptmaxb[2] - b) + b * BlockSize + 8;
             if (thiscost < bestcost) {
                 bestcost = thiscost;
                 bestbbestcexceptmaxb[0] = (byte) b;
@@ -132,9 +126,8 @@ public final class FastPFOR implements IntegerCODEC {
                         - bestbbestcexceptmaxb[0];
                 if (datapointers[index] + bestbbestcexceptmaxb[1] >= datatobepacked[index].length) {
                     int newsize = 2 * (datapointers[index] + bestbbestcexceptmaxb[1]);
-                    newsize = (newsize + 31) / 32 * 32;// make sure it is a
-                    // multiple of
-                    // 32
+                    // make sure it is a multiple of 32
+                    newsize = (newsize + 31) / 32 * 32;
                     datatobepacked[index] = Arrays.copyOf(
                             datatobepacked[index], newsize);
                 }
