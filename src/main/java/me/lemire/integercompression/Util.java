@@ -33,4 +33,7 @@ public class Util {
         return 32 - Integer.numberOfLeadingZeros(i);
     }
 
+    protected static int floorBy(int value, int factor) {
+        return value - value % factor;
+    }
 }
