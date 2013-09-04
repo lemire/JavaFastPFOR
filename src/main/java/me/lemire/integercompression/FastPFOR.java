@@ -186,8 +186,7 @@ public final class FastPFOR implements IntegerCODEC {
         inpos.increment();
         int finalout = outpos.get() + mynvalue;
         while (outpos.get() != finalout) {
-            int thissize = finalout > pageSize + outpos.get() ? pageSize
-                    : (finalout - outpos.get());
+            int thissize = Math.min(pageSize, finalout - outpos.get());
             decodePage(in, inpos, out, outpos, thissize);
         }
     }
