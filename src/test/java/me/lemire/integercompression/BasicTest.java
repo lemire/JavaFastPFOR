@@ -127,8 +127,10 @@ public class BasicTest {
 		testSpurious(new BinaryPacking());
 		testSpurious(new NewPFD());
 		testSpurious(new NewPFDS9());
+                testSpurious(new NewPFDS16());
 		testSpurious(new OptPFD());
 		testSpurious(new OptPFDS9());
+                testSpurious(new OptPFDS16());
 		testSpurious(new FastPFOR());
 
 	}
@@ -140,19 +142,24 @@ public class BasicTest {
         @Test
         public void zeroinzerouttest() {
                 testZeroInZeroOut(new IntegratedBinaryPacking());
+                testZeroInZeroOut(new IntegratedVariableByte());
                 testZeroInZeroOut(new BinaryPacking());
                 testZeroInZeroOut(new NewPFD());
                 testZeroInZeroOut(new NewPFDS9());
+                testZeroInZeroOut(new NewPFDS16());
                 testZeroInZeroOut(new OptPFD());
                 testZeroInZeroOut(new OptPFDS9());
+                testZeroInZeroOut(new OptPFDS16());
                 testZeroInZeroOut(new FastPFOR());
                 testZeroInZeroOut(new VariableByte());
                 testZeroInZeroOut(new Composition(new IntegratedBinaryPacking(), new VariableByte()));
                 testZeroInZeroOut(new Composition(new BinaryPacking(), new VariableByte()));
                 testZeroInZeroOut(new Composition(new NewPFD(), new VariableByte()));
                 testZeroInZeroOut(new Composition(new NewPFDS9(), new VariableByte()));
+                testZeroInZeroOut(new Composition(new NewPFDS16(), new VariableByte()));
                 testZeroInZeroOut(new Composition(new OptPFD(), new VariableByte()));
                 testZeroInZeroOut(new Composition(new OptPFDS9(), new VariableByte()));
+                testZeroInZeroOut(new Composition(new OptPFDS16(), new VariableByte()));
                 testZeroInZeroOut(new Composition(new FastPFOR(), new VariableByte()));
                 
                 testZeroInZeroOut(new IntegratedComposition(new IntegratedBinaryPacking(),
@@ -206,10 +213,14 @@ public class BasicTest {
 					Max);
 			testCodec(new Composition(new NewPFDS9(), new VariableByte()),
 					data, Max);
+                        testCodec(new Composition(new NewPFDS16(), new VariableByte()),
+                                data, Max);
 			testCodec(new Composition(new OptPFD(), new VariableByte()), data,
 					Max);
 			testCodec(new Composition(new OptPFDS9(), new VariableByte()),
 					data, Max);
+                        testCodec(new Composition(new OptPFDS16(), new VariableByte()),
+                                data, Max);
 			testCodec(new Composition(new FastPFOR(), new VariableByte()),
 					data, Max);
 			testCodec(new Simple9(), data, Max);
@@ -269,11 +280,14 @@ public class BasicTest {
         public void testUnsortedExample() {
 
                 testUnsorted(new VariableByte());
+                testUnsorted(new IntegratedVariableByte());
                 testUnsorted(new Composition(new BinaryPacking(), new VariableByte()));
                 testUnsorted(new Composition(new NewPFD(), new VariableByte()));
                 testUnsorted(new Composition(new NewPFDS9(), new VariableByte()));
+                testUnsorted(new Composition(new NewPFDS16(), new VariableByte()));
                 testUnsorted(new Composition(new OptPFD(), new VariableByte()));
                 testUnsorted(new Composition(new OptPFDS9(), new VariableByte()));
+                testUnsorted(new Composition(new OptPFDS16(), new VariableByte()));
                 testUnsorted(new Composition(new FastPFOR(), new VariableByte()));
                 
                 testUnsorted(new IntegratedComposition(new IntegratedBinaryPacking(),

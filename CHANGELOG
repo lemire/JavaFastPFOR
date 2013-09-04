@@ -1,3 +1,6 @@
+upcoming
+  - added two new (minor) codecs NewPFD16 and OptPFD16
+
 0.0.6  (Sept. 4th 2013)
   - Refactoring (MURAOKA Taro)
   - Fixed issues with NewPFD and OptPFD when data is locally uncompressible.

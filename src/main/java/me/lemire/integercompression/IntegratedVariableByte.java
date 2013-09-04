@@ -18,6 +18,7 @@ public class IntegratedVariableByte implements IntegratedIntegerCODEC {
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                          IntWrapper outpos) {
+        if(inlength == 0) return;
         int initoffset = 0;
         ByteBuffer buf = ByteBuffer.allocateDirect(inlength * 8);
         for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
@@ -45,6 +46,7 @@ public class IntegratedVariableByte implements IntegratedIntegerCODEC {
     @Override
     public void uncompress(int[] in, IntWrapper inpos, int inlength,
                            int[] out, IntWrapper outpos) {
+        if(inlength == 0) return;
         int s = 0;
         int p = inpos.get();
         int finalp = inpos.get() + inlength;
@@ -73,7 +75,7 @@ public class IntegratedVariableByte implements IntegratedIntegerCODEC {
 
     @Override
     public String toString() {
-        return this.getClass().getName();
+        return this.getClass().getSimpleName();
     }
 
 }

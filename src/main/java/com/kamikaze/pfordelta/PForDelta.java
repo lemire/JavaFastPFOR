@@ -11,20 +11,20 @@ import java.util.Arrays;
 
 /**
  * Implementation of the optimized PForDelta algorithm for sorted integer arrays. The basic ideas are based on
- * <p/>
+ * 
  * 1. Original algorithm from
  * http://homepages.cwi.nl/~heman/downloads/msthesis.pdf
- * <p/>
+ * 
  * 2. Optimization and
  * variation from http://www2008.org/papers/pdf/p387-zhangA.pdf
- * <p/>
+ * 
  * 3. Further optimization
  * http://www2009.org/proceedings/pdf/p401.pdf
- * <p/>
+ * 
  * As a part of the PForDelta implementation, Simple16 is used to compress exceptions. The original Simple16 algorithm can also be found in the above literatures.
- * <p/>
+ * 
  * This implementation overcomes the problem that Simple16 cannot deal with >2^28 numbers.
- * <p/>
+ * 
  * Author: hao yan hyan2008@gmail.com
  */
 

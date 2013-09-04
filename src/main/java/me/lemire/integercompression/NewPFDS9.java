@@ -155,7 +155,7 @@ public final class NewPFDS9 implements IntegerCODEC {
 
     @Override
     public String toString() {
-        return this.getClass().getName();
+        return this.getClass().getSimpleName();
     }
 
 }

@@ -283,6 +283,14 @@ public class Benchmark {
                      repeat, true);
             System.out.println();
 
+            testCodec(new Composition(new NewPFDS16(), new VariableByte()), data,
+                    repeat, false);
+           testCodec(new Composition(new NewPFDS16(), new VariableByte()), data,
+                    repeat, false);
+           testCodec(new Composition(new NewPFDS16(), new VariableByte()), data,
+                    repeat, true);
+           System.out.println();
+
             testCodec(new Composition(new OptPFD(), new VariableByte()), data,
                      repeat, false);
             testCodec(new Composition(new OptPFD(), new VariableByte()), data,
@@ -299,6 +307,13 @@ public class Benchmark {
                      repeat, true);
             System.out.println();
 
+            testCodec(new Composition(new OptPFDS16(), new VariableByte()), data,
+                    repeat, false);
+           testCodec(new Composition(new OptPFDS16(), new VariableByte()), data,
+                    repeat, false);
+           testCodec(new Composition(new OptPFDS16(), new VariableByte()), data,
+                    repeat, true);
+           System.out.println();
 
             testCodec(new Composition(new FastPFOR(), new VariableByte()),
                     data,  repeat, false);

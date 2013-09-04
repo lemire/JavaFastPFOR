@@ -8,26 +8,27 @@
 package me.lemire.integercompression;
 
 /**
- * OptPFD implemented by Daniel Lemire
+ * NewPFD/NewPFOR implemented by Daniel Lemire
  * <p/>
  * Follows:
  * <p/>
  * H. Yan, S. Ding, T. Suel, Inverted index compression and query processing
- * with optimized document ordering, in: WWW 09, 2009, pp. 401--410.
+ * with optimized document ordering, in: WWW 09, 2009, pp. 401-410.
  * <p/>
- * using Simple9 as the secondary coder.
+ * using Simple16 as the secondary coder.
  *
  * @author Daniel Lemire
  */
-public final class OptPFDS9 implements IntegerCODEC {
+public final class NewPFDS16 implements IntegerCODEC {
     final int PageSize;
     final static int BlockSize = 128;
+
     int[] exceptbuffer = new int[2 * BlockSize];
 
     /**
-     * Constructor for the OptPFDS9 CODEC.
+     * Constructor for the NewPFDS16 CODEC.
      */
-    public OptPFDS9() {
+    public NewPFDS16() {
         PageSize = 65536;
     }
 
@@ -36,7 +37,6 @@ public final class OptPFDS9 implements IntegerCODEC {
                          IntWrapper outpos) {
         inlength = inlength / BlockSize * BlockSize;
         if(inlength == 0) return;
-
         final int finalinpos = inpos.get() + inlength;
         out[outpos.get()] = inlength;
         outpos.increment();
@@ -54,36 +54,23 @@ public final class OptPFDS9 implements IntegerCODEC {
             12, 13, 14, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16,
             16, 16, 16, 16};
 
-    protected void getBestBFromData(int[] in, int pos, IntWrapper bestb,
-                          IntWrapper bestexcept) {
+    protected static void getBestBFromData(int[] in, int pos, IntWrapper bestb,
+                                        IntWrapper bestexcept) {
         final int mb = Util.maxbits(in, pos, BlockSize);
         int mini = 0;
         if (mini + 28 < bits[invbits[mb]])
             mini = bits[invbits[mb]] - 28; // 28 is the max for exceptions
         int besti = bits.length - 1;
-        int bestcost = bits[besti] * 4;
         int exceptcounter = 0;
         for (int i = mini; i < bits.length - 1; ++i) {
             int tmpcounter = 0;
             for (int k = pos; k < BlockSize + pos; ++k)
-                if ((in[k] >>> bits[i]) !=0) {
+                if ((in[k] >>> bits[i])!=0)
                     ++tmpcounter;
-                }
-            if (tmpcounter == BlockSize)
-                continue; // no need
-            for (int k = pos, c = 0; k < pos + BlockSize; ++k)
-                if ((in[k] >>> bits[i]) !=0) {
-                    exceptbuffer[tmpcounter + c] = k - pos;
-                    exceptbuffer[c] = in[k] >>> bits[i];
-                    ++c;
-                }
-
-            final int thiscost = bits[i] * 4
-                    + S9.estimatecompress(exceptbuffer, 0, 2 * tmpcounter);
-            if (thiscost <= bestcost) {
-                bestcost = thiscost;
+            if (tmpcounter * 10 <= BlockSize) {
                 besti = i;
                 exceptcounter = tmpcounter;
+                break;
             }
         }
         bestb.set(besti);
@@ -104,15 +91,14 @@ public final class OptPFDS9 implements IntegerCODEC {
             final int remember = tmpoutpos;
             tmpoutpos++;
             if (nbrexcept > 0) {
-                int c = 0;
-                for (int i = 0; i < BlockSize; ++i) {
-                    if ((in[tmpinpos + i] >>> bits[tmpbestb]) != 0) {
+                for (int i = 0, c = 0; i < BlockSize; ++i) {
+                    if ((in[tmpinpos + i]>>> bits[tmpbestb])!= 0) {
                         exceptbuffer[c + nbrexcept] = i;
                         exceptbuffer[c] = in[tmpinpos + i] >>> bits[tmpbestb];
                         ++c;
                     }
                 }
-                exceptsize = S9.compress(exceptbuffer, 0, 2 * nbrexcept, out,
+                exceptsize = S16.compress(exceptbuffer, 0, 2 * nbrexcept, out,
                         tmpoutpos);
                 tmpoutpos += exceptsize;
             }
@@ -133,7 +119,7 @@ public final class OptPFDS9 implements IntegerCODEC {
         if(inlength == 0) return;
         final int mynvalue = in[inpos.get()];
         inpos.increment();
-        final int finalout = outpos.get() + mynvalue;
+        int finalout = outpos.get() + mynvalue;
         while (outpos.get() != finalout) {
             int thissize = finalout > PageSize + outpos.get() ? PageSize
                     : (finalout - outpos.get());
@@ -151,7 +137,7 @@ public final class OptPFDS9 implements IntegerCODEC {
             final int cexcept = (in[tmpinpos] >>> 8) & 0xFF;
             final int exceptsize = (in[tmpinpos] >>> 16);
             ++tmpinpos;
-            S9.uncompress(in, tmpinpos, exceptsize, exceptbuffer, 0,
+            S16.uncompress(in, tmpinpos, exceptsize, exceptbuffer, 0,
                     2 * cexcept);
             tmpinpos += exceptsize;
             for (int k = 0; k < BlockSize; k += 32) {

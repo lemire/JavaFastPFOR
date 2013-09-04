@@ -15,19 +15,19 @@ package me.lemire.integercompression;
  * H. Yan, S. Ding, T. Suel, Inverted index compression and query processing
  * with optimized document ordering, in: WWW 09, 2009, pp. 401--410.
  * <p/>
- * using Simple9 as the secondary coder.
+ * using Simple16 as the secondary coder.
  *
  * @author Daniel Lemire
  */
-public final class OptPFDS9 implements IntegerCODEC {
+public final class OptPFDS16 implements IntegerCODEC {
     final int PageSize;
     final static int BlockSize = 128;
     int[] exceptbuffer = new int[2 * BlockSize];
 
     /**
-     * Constructor for the OptPFDS9 CODEC.
+     * Constructor for the OptPFDS16 CODEC.
      */
-    public OptPFDS9() {
+    public OptPFDS16() {
         PageSize = 65536;
     }
 
@@ -79,7 +79,7 @@ public final class OptPFDS9 implements IntegerCODEC {
                 }
 
             final int thiscost = bits[i] * 4
-                    + S9.estimatecompress(exceptbuffer, 0, 2 * tmpcounter);
+                    + S16.estimatecompress(exceptbuffer, 0, 2 * tmpcounter);
             if (thiscost <= bestcost) {
                 bestcost = thiscost;
                 besti = i;
@@ -112,7 +112,7 @@ public final class OptPFDS9 implements IntegerCODEC {
                         ++c;
                     }
                 }
-                exceptsize = S9.compress(exceptbuffer, 0, 2 * nbrexcept, out,
+                exceptsize = S16.compress(exceptbuffer, 0, 2 * nbrexcept, out,
                         tmpoutpos);
                 tmpoutpos += exceptsize;
             }
@@ -151,7 +151,7 @@ public final class OptPFDS9 implements IntegerCODEC {
             final int cexcept = (in[tmpinpos] >>> 8) & 0xFF;
             final int exceptsize = (in[tmpinpos] >>> 16);
             ++tmpinpos;
-            S9.uncompress(in, tmpinpos, exceptsize, exceptbuffer, 0,
+            S16.uncompress(in, tmpinpos, exceptsize, exceptbuffer, 0,
                     2 * cexcept);
             tmpinpos += exceptsize;
             for (int k = 0; k < BlockSize; k += 32) {

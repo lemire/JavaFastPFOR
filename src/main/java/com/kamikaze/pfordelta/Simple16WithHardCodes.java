@@ -8,18 +8,18 @@ package com.kamikaze.pfordelta;
 
 /**
  * Implementation of the Simple16 algorithm for sorted integer arrays. The basic ideas are based on papers from
- * <p/>
+ * 
  * 1. http://www2008.org/papers/pdf/p387-zhangA.pdf
- * <p/>
+ * 
  * 2. http://www2009.org/proceedings/pdf/p401.pdf
- * <p/>
+ * 
  * The maximum possible integer value Simple16 can encode is < 2^28 (this is dertermined by the Simple16 algorithm itself).
  * Therefore, in order to use Simple16, the application must write their own code to encode numbers in the range of [2^28, 2^32).
  * A simple way is just write those numbers as 32-bit integers (that is, no compression for very big numbers).
- * <p/>
+ * 
  * Compared to Simple16, Simple16WithHardCodes will decompress each compressed integer using hardwired codes,
  * resulting in faster decompression speed. However, it will sacrifice with slightly larger index size.
- * <p/>
+ * 
  * Author: Hao Yan, hyan2008@gmail.com
  */
 @SuppressWarnings("javadoc")

@@ -69,7 +69,7 @@ public class VariableByte implements IntegerCODEC {
 
     @Override
     public String toString() {
-        return this.getClass().getName();
+        return this.getClass().getSimpleName();
     }
 
 }
