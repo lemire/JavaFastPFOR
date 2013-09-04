@@ -17,7 +17,7 @@ package com.kamikaze.pfordelta;
  * Therefore, in order to use Simple16, the application must write their own code to encode numbers in the range of [2^28, 2^32).
  * A simple way is just write those numbers as 32-bit integers (that is, no compression for very big numbers).
  */
-
+@SuppressWarnings("javadoc")
 public class Simple16 {
 
     private static final int S16_NUMSIZE = 16;

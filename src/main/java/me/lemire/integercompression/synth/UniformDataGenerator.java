@@ -72,6 +72,9 @@ public class UniformDataGenerator {
 
         /**
          * generates randomly N distinct integers from 0 to Max.
+         * @param N number of integers to generate
+         * @param Max bound on the value of integers
+         * @return an array containing randomly selected integers
          */
         public int[] generateUniform(int N, int Max) {
                 if(N * 2 > Max) {

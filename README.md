@@ -17,11 +17,6 @@ your array use less than 32 bits. These sort of arrays often come up
 when using differential coding in databases and information
 retrieval (e.g., in inverted indexes or column stores).
 
-This library is used by the Columnar file format for Hadoop "Parquet" 
-(http://parquet.io/). It is also used by Jimmy Lin's 
-Hadoop tools for manipulating ClueWeb collections
-(https://github.com/lintool/clueweb).
-
 Some CODECs ("integrated codecs") assume that the integers are
 in sorted orders. Most others do not.
 
@@ -37,7 +32,7 @@ the following code in your pom.xml file:
          <dependency>
 	     <groupId>me.lemire.integercompression</groupId>
 	     <artifactId>JavaFastPFOR</artifactId>
-	     <version>0.0.5</version>
+	     <version>0.0.6</version>
          </dependency>
      </dependencies>
 
@@ -61,12 +56,12 @@ We wrote one.
 Authors
 -------
 
-Main contributor
+Main contributors
 Daniel Lemire, http://lemire.me/en/
-
-Contributions by 
-Di Wu, http://www.facebook.com/diwu1989
 Muraoka Taro, https://github.com/koron
+
+with contributions by 
+Di Wu, http://www.facebook.com/diwu1989
 
 
 How does it compare to the Kamikaze PForDelta library?

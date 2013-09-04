@@ -30,8 +30,8 @@ public final class FastPFOR implements IntegerCODEC {
     final static int DEFAULT_PAGE_SIZE = 65536;
 
     int pageSize;
-    int[][] dataTobePacked = new int[32][];
-    ByteBuffer byteContainer;
+    final int[][] dataTobePacked = new int[32][];
+    final ByteBuffer byteContainer;
 
     // Working area for compress and uncompress.
     int[] dataPointers;
@@ -124,7 +124,7 @@ public final class FastPFOR implements IntegerCODEC {
 
         // Clear working area.
         Arrays.fill(dataPointers, 0);
-        Arrays.fill(bestbbestcexceptmaxb, (byte)0);
+        //Arrays.fill(bestbbestcexceptmaxb, (byte)0);//DL:unncessary
         byteContainer.clear();
 
         int tmpinpos = inpos.get();

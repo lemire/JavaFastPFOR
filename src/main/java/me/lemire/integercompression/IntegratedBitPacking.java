@@ -4797,7 +4797,10 @@ public final class IntegratedBitPacking {
                 integratedpack31(initoffset, in, inpos, out, outpos);
                 break;
             case 32:
-                integratedpack32(initoffset, in, inpos, out, outpos);
+if(out.length < outpos + 32) throw new RuntimeException(outpos + " "+out.length);
+if(in.length < inpos + 32) throw new RuntimeException();
+
+integratedpack32(initoffset, in, inpos, out, outpos);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported bit width.");

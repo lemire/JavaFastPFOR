@@ -1,3 +1,7 @@
+0.0.6  (Sept. 4th 2013)
+  - Refactoring (MURAOKA Taro)
+  - Fixed issues with NewPFD and OptPFD when data is locally uncompressible.
+
 0.0.5  (Sept. 3rd 2013)
   - Fixed problem with FastPFOR when integers contain negatives (samuelbosch)
   - Fixed problem with composition with short arrays (MURAOKA Taro)

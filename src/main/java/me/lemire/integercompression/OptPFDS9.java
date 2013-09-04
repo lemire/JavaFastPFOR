@@ -65,15 +65,14 @@ public final class OptPFDS9 implements IntegerCODEC {
         int exceptcounter = 0;
         for (int i = mini; i < bits.length - 1; ++i) {
             int tmpcounter = 0;
-            final int maxv = 1 << bits[i];
             for (int k = pos; k < BlockSize + pos; ++k)
-                if (in[k] >= maxv) {
+                if ((in[k] >>> bits[i]) !=0) {
                     ++tmpcounter;
                 }
             if (tmpcounter == BlockSize)
                 continue; // no need
             for (int k = pos, c = 0; k < pos + BlockSize; ++k)
-                if (in[k] >= maxv) {
+                if ((in[k] >>> bits[i]) !=0) {
                     exceptbuffer[tmpcounter + c] = k - pos;
                     exceptbuffer[c] = in[k] >>> bits[i];
                     ++c;
@@ -99,16 +98,15 @@ public final class OptPFDS9 implements IntegerCODEC {
         IntWrapper bestexcept = new IntWrapper();
         for (final int finalinpos = tmpinpos + thissize; tmpinpos + BlockSize <= finalinpos; tmpinpos += BlockSize) {
             getBestBFromData(in, tmpinpos, bestb, bestexcept);
-            int tmpbestb = bestb.get();
-            int nbrexcept = bestexcept.get();
+            final int tmpbestb = bestb.get();
+            final int nbrexcept = bestexcept.get();
             int exceptsize = 0;
-            int remember = tmpoutpos;
+            final int remember = tmpoutpos;
             tmpoutpos++;
             if (nbrexcept > 0) {
-                final int maxv = 1 << bits[tmpbestb];
                 int c = 0;
                 for (int i = 0; i < BlockSize; ++i) {
-                    if (in[tmpinpos + i] >= maxv) {
+                    if ((in[tmpinpos + i] >>> bits[tmpbestb]) != 0) {
                         exceptbuffer[c + nbrexcept] = i;
                         exceptbuffer[c] = in[tmpinpos + i] >>> bits[tmpbestb];
                         ++c;
@@ -133,9 +131,9 @@ public final class OptPFDS9 implements IntegerCODEC {
     public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
                            IntWrapper outpos) {
         if(inlength == 0) return;
-        int mynvalue = in[inpos.get()];
+        final int mynvalue = in[inpos.get()];
         inpos.increment();
-        int finalout = outpos.get() + mynvalue;
+        final int finalout = outpos.get() + mynvalue;
         while (outpos.get() != finalout) {
             int thissize = finalout > PageSize + outpos.get() ? PageSize
                     : (finalout - outpos.get());

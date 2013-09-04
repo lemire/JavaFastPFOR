@@ -12,7 +12,7 @@ package me.lemire.integercompression;
  * @author Daniel Lemire
  *
  */
-public class Util {
+public final class Util {
     protected static int maxbits(int[] i, int pos, int length) {
         int mask = 0;
         for (int k = pos; k < pos + length; ++k)
