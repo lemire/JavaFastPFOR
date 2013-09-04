@@ -65,7 +65,7 @@ public final class FastPFOR implements IntegerCODEC {
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                          IntWrapper outpos) {
-        inlength = inlength / 128 * 128;
+        inlength = Util.lcm(inlength, 128);
         if(inlength == 0) return;
 
         final int finalinpos = inpos.get() + inlength;
