@@ -27,6 +27,7 @@ import java.util.Arrays;
 public final class FastPFOR implements IntegerCODEC {
     final static int BLOCK_SIZE = 128;
     final static int OVERHEAD_OF_EACH_EXCEPT = 8;
+    final static int DEFAULT_PAGE_SIZE = 65536;
 
     int pageSize;
     int[][] dataTobePacked = new int[32][];
@@ -45,7 +46,7 @@ public final class FastPFOR implements IntegerCODEC {
      * Construct the fastPFOR CODEC with default parameters.
      */
     public FastPFOR() {
-        pageSize = 65536;
+        pageSize = DEFAULT_PAGE_SIZE;
         initArrays();
     }
 
