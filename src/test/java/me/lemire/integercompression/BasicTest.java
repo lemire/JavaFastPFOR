@@ -64,6 +64,12 @@ public class BasicTest
         }
     }
 
+    public static void maskArray(int[] array, int mask) {
+        for (int i = 0, end = array.length; i < end; ++i) {
+            array[i] &= mask;
+        }
+    }
+
     /**
      * Verify bitpacking with exception.
      */
@@ -85,17 +91,8 @@ public class BasicTest
                 BitPacking.fastunpack(compressed, 0, uncompressed, 0, bit);
 
                 // Check assertions.
-                // FIXME: rewrite using assert* method.
-                for (int k = 0; k < N; ++k) {
-                    if ((data[k] & ((1 << bit) - 1)) != uncompressed[k]) {
-                        System.err.println("ERROR: detected a problem, dump debugging info:");
-                        for (int k2 = 0; k2 < N; ++k2) {
-                            System.err.println((data[k] & ((1 << bit) - 1)) + " " + uncompressed[k]);
-                        }
-                        System.err.println(compressed[0]);
-                        throw new RuntimeException("bug " + bit);
-                    }
-                }
+                maskArray(data, ((1 << bit) - 1));
+                assertArrayEquals(data, uncompressed);
             }
         }
     }
@@ -250,18 +247,10 @@ public class BasicTest
                 Delta.fastinverseDelta(buffer);
 
             // Check assertions.
-            // FIXME: rewrite using assert* method.
-            if (outpos.get() != data[k].length)
-                throw new RuntimeException("we have a bug (diff length) " + c
-                        + " expected " + data[k].length + " got "
-                        + outpos.get());
-            for (int m = 0; m < outpos.get(); ++m)
-                if (buffer[m] != data[k][m]) {
-                    throw new RuntimeException(
-                            "we have a bug (actual difference), expected "
-                            + data[k][m] + " found " + buffer[m]
-                            + " at " + m);
-                }
+            assertEquals("length is not match", outpos.get(), data[k].length);
+            int[] bufferCutout = Arrays.copyOf(buffer, outpos.get());
+            assertArrayEquals("failed to reconstruct original data",
+                    data[k], bufferCutout);
         }
     }
 
