@@ -277,7 +277,6 @@ public class BasicTest
     @SuppressWarnings("static-method")
     @Test
     public void testUnsortedExample() {
-
         testUnsorted(new VariableByte());
         testUnsorted(new IntegratedVariableByte());
         testUnsorted(new Composition(new BinaryPacking(), new VariableByte()));
@@ -308,10 +307,8 @@ public class BasicTest
             for (int k = 0; k < N; k += 533)
                 data[k] = 10000;
             data[5] = -311;
-            int[] compressed = new int[(int) Math.ceil(N * 1.01) + 1024];// could
-            // need
-            // more
-            // compressing
+            // could need more compressing
+            int[] compressed = new int[(int) Math.ceil(N * 1.01) + 1024];
             IntWrapper inputoffset = new IntWrapper(0);
             IntWrapper outputoffset = new IntWrapper(0);
             codec.compress(data, inputoffset, data.length,
