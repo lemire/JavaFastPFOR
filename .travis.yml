@@ -5,6 +5,6 @@ jdk:
   - openjdk7
   - openjdk6
 
-install:
+install: true
 
 script: mvn test
