@@ -73,13 +73,13 @@ public class BasicTest
     @Test
     public void verifyWithExceptions() {
         final int N = 32;
-        final int times = 1000;
+        final int TIMES = 1000;
         Random r = new Random();
         int[] data = new int[N];
         int[] compressed = new int[N];
         int[] uncompressed = new int[N];
         for (int bit = 0; bit < 31; ++bit) {
-            for (int t = 0; t < times; ++t) {
+            for (int t = 0; t < TIMES; ++t) {
                 for (int k = 0; k < N; ++k) {
                     data[k] = r.nextInt();
                 }
@@ -87,6 +87,7 @@ public class BasicTest
                 BitPacking.fastunpack(compressed, 0, uncompressed, 0, bit);
                 for (int k = 0; k < N; ++k) {
                     if ((data[k] & ((1 << bit) - 1)) != uncompressed[k]) {
+                        // TODO: use Assert
                         System.err.println("ERROR: detected a problem, dump debugging info:");
                         for (int k2 = 0; k2 < N; ++k2) {
                             System.err.println((data[k] & ((1 << bit) - 1)) + " " + uncompressed[k]);
@@ -155,8 +156,7 @@ public class BasicTest
         testZeroInZeroOut(new Composition(new OptPFDS16(), new VariableByte()));
         testZeroInZeroOut(new Composition(new FastPFOR(), new VariableByte()));
 
-        testZeroInZeroOut(new IntegratedComposition(new IntegratedBinaryPacking(),
-                    new IntegratedVariableByte()));
+        testZeroInZeroOut(new IntegratedComposition(new IntegratedBinaryPacking(), new IntegratedVariableByte()));
     }
 
     private static void testSpurious(IntegerCODEC c) {
@@ -164,9 +164,9 @@ public class BasicTest
         int[] y = new int[0];
         IntWrapper i0 = new IntWrapper(0);
         IntWrapper i1 = new IntWrapper(0);
-        for(int inlength = 0; inlength <128;++inlength) {
-            c.compress(x, i0, inlength,y,i1);
-            Assert.assertEquals(i1.intValue(), 0);
+        for (int inlength = 0; inlength < 128; ++inlength) {
+            c.compress(x, i0, inlength, y, i1);
+            assertEquals(0, i1.intValue());
         }
     }
 
@@ -175,12 +175,12 @@ public class BasicTest
         int[] y = new int[0];
         IntWrapper i0 = new IntWrapper(0);
         IntWrapper i1 = new IntWrapper(0);
-        c.compress(x, i0, 0,y,i1);
-        Assert.assertEquals(i1.intValue(), 0);
+        c.compress(x, i0, 0, y, i1);
+        assertEquals(0, i1.intValue());
         int[] out = new int[0];
         IntWrapper outpos = new IntWrapper(0);
         c.uncompress(y, i1, 0, out, outpos);
-        Assert.assertEquals(outpos.intValue(), 0);
+        assertEquals(0, outpos.intValue());
     }
 
     private static void test(int N, int nbr) {
