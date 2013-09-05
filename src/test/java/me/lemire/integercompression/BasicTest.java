@@ -3,8 +3,6 @@ package me.lemire.integercompression;
 import java.util.Arrays;
 import java.util.Random;
 
-import junit.framework.Assert;
-
 import me.lemire.integercompression.synth.ClusteredDataGenerator;
 
 import org.junit.Test;
@@ -85,9 +83,11 @@ public class BasicTest
                 }
                 BitPacking.fastpack(data, 0, compressed, 0, bit);
                 BitPacking.fastunpack(compressed, 0, uncompressed, 0, bit);
+
+                // Check assertions.
+                // FIXME: rewrite using assert* method.
                 for (int k = 0; k < N; ++k) {
                     if ((data[k] & ((1 << bit) - 1)) != uncompressed[k]) {
-                        // TODO: use Assert
                         System.err.println("ERROR: detected a problem, dump debugging info:");
                         for (int k2 = 0; k2 < N; ++k2) {
                             System.err.println((data[k] & ((1 << bit) - 1)) + " " + uncompressed[k]);
@@ -177,6 +177,7 @@ public class BasicTest
         IntWrapper i1 = new IntWrapper(0);
         c.compress(x, i0, 0, y, i1);
         assertEquals(0, i1.intValue());
+
         int[] out = new int[0];
         IntWrapper outpos = new IntWrapper(0);
         c.uncompress(y, i1, 0, out, outpos);
@@ -187,37 +188,37 @@ public class BasicTest
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
         for (int sparsity = 1; sparsity < 31 - nbr; sparsity += 4) {
             int[][] data = new int[N][];
-            int Max = (1 << (nbr + sparsity));
+            int max = (1 << (nbr + sparsity));
             for (int k = 0; k < N; ++k) {
-                data[k] = cdg.generateClustered((1 << nbr), Max);
+                data[k] = cdg.generateClustered((1 << nbr), max);
             }
 
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
-                        new IntegratedVariableByte()), data, Max);
-            testCodec(new JustCopy(), data, Max);
-            testCodec(new VariableByte(), data, Max);
-            testCodec(new IntegratedVariableByte(), data, Max);
+                        new IntegratedVariableByte()), data, max);
+            testCodec(new JustCopy(), data, max);
+            testCodec(new VariableByte(), data, max);
+            testCodec(new IntegratedVariableByte(), data, max);
             testCodec(new Composition(new BinaryPacking(), new VariableByte()),
-                    data, Max);
+                    data, max);
             testCodec(new Composition(new NewPFD(), new VariableByte()), data,
-                    Max);
+                    max);
             testCodec(new Composition(new NewPFDS9(), new VariableByte()),
-                    data, Max);
+                    data, max);
             testCodec(new Composition(new NewPFDS16(), new VariableByte()),
-                    data, Max);
+                    data, max);
             testCodec(new Composition(new OptPFD(), new VariableByte()), data,
-                    Max);
+                    max);
             testCodec(new Composition(new OptPFDS9(), new VariableByte()),
-                    data, Max);
+                    data, max);
             testCodec(new Composition(new OptPFDS16(), new VariableByte()),
-                    data, Max);
+                    data, max);
             testCodec(new Composition(new FastPFOR(), new VariableByte()),
-                    data, Max);
-            testCodec(new Simple9(), data, Max);
+                    data, max);
+            testCodec(new Simple9(), data, max);
         }
     }
 
-    private static void testCodec(IntegerCODEC c, int[][] data, int Max) {
+    private static void testCodec(IntegerCODEC c, int[][] data, int max) {
         int N = data.length;
         int maxlength = 0;
         for (int k = 0; k < N; ++k) {
@@ -226,12 +227,13 @@ public class BasicTest
         }
         int[] buffer = new int[maxlength + 1024];
         int[] dataout = new int[4 * maxlength + 1024];
-        /* 4x + 1024 to account for the possibility of some negative compression */
+        // 4x + 1024 to account for the possibility of some negative
+        // compression.
         IntWrapper inpos = new IntWrapper();
         IntWrapper outpos = new IntWrapper();
         for (int k = 0; k < N; ++k) {
             int[] backupdata = Arrays.copyOf(data[k], data[k].length);
-            //
+
             inpos.set(1);
             outpos.set(0);
             if (!(c instanceof IntegratedIntegerCODEC)) {
@@ -246,7 +248,9 @@ public class BasicTest
             c.uncompress(dataout, inpos, thiscompsize - 1, buffer, outpos);
             if (!(c instanceof IntegratedIntegerCODEC))
                 Delta.fastinverseDelta(buffer);
-            //
+
+            // Check assertions.
+            // FIXME: rewrite using assert* method.
             if (outpos.get() != data[k].length)
                 throw new RuntimeException("we have a bug (diff length) " + c
                         + " expected " + data[k].length + " got "
@@ -258,7 +262,6 @@ public class BasicTest
                             + data[k][m] + " found " + buffer[m]
                             + " at " + m);
                 }
-
         }
     }
 
@@ -286,8 +289,8 @@ public class BasicTest
 
     public void testUnsorted(IntegerCODEC codec)
     {
-        int[] lengths = {133,1333333};
-        for (int N : lengths ) {
+        int[] lengths = { 133, 1333333 };
+        for (int N : lengths) {
             int[] data = new int[N];
             // initialize the data (most will be small
             for (int k = 0; k < N; k += 1)
@@ -302,17 +305,15 @@ public class BasicTest
             int[] compressed = new int[(int) Math.ceil(N * 1.01) + 1024];
             IntWrapper inputoffset = new IntWrapper(0);
             IntWrapper outputoffset = new IntWrapper(0);
-            codec.compress(data, inputoffset, data.length,
-                    compressed, outputoffset);
+            codec.compress(data, inputoffset, data.length, compressed, outputoffset);
             // we can repack the data: (optional)
-            compressed = Arrays.copyOf(compressed,
-                    outputoffset.intValue());
+            compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
             int[] recovered = new int[N];
             IntWrapper recoffset = new IntWrapper(0);
             codec.uncompress(compressed, new IntWrapper(0),
                     compressed.length, recovered, recoffset);
-            Assert.assertTrue(Arrays.equals(data, recovered));
+            assertArrayEquals(data, recovered);
         }
     }
 
