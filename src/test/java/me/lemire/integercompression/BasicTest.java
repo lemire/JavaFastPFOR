@@ -23,7 +23,6 @@ public class BasicTest
     @SuppressWarnings("static-method")
     @Test
     public void verify() {
-        System.out.println("Checking the code...");
         final int N = 32;
         final int times = 1000;
         Random r = new Random();
@@ -42,7 +41,6 @@ public class BasicTest
                 }
             }
         }
-        System.out.println("Code appears to be correct.");
     }
 
     /**
@@ -51,7 +49,6 @@ public class BasicTest
     @SuppressWarnings("static-method")
     @Test
     public void verifyWithoutMask() {
-        System.out.println("Checking the code...");
         final int N = 32;
         final int times = 1000;
         Random r = new Random();
@@ -70,7 +67,6 @@ public class BasicTest
                 }
             }
         }
-        System.out.println("Code appears to be correct.");
     }
 
     /**
@@ -79,7 +75,6 @@ public class BasicTest
     @SuppressWarnings("static-method")
     @Test
     public void verifyWithExceptions() {
-        System.out.println("Checking the code...");
         final int N = 32;
         final int times = 1000;
         Random r = new Random();
@@ -95,16 +90,16 @@ public class BasicTest
                 BitPacking.fastunpack(compressed, 0, uncompressed, 0, bit);
                 for (int k = 0; k < N; ++k) {
                     if ((data[k] & ((1 << bit) - 1)) != uncompressed[k]) {
+                        System.err.println("ERROR: detected a problem, dump debugging info:");
                         for (int k2 = 0; k2 < N; ++k2) {
-                            System.out.println((data[k] & ((1 << bit) - 1)) + " " + uncompressed[k]);
+                            System.err.println((data[k] & ((1 << bit) - 1)) + " " + uncompressed[k]);
                         }
-                        System.out.println(compressed[0]);
+                        System.err.println(compressed[0]);
                         throw new RuntimeException("bug " + bit);
                     }
                 }
             }
         }
-        System.out.println("Code with overflow appears to be correct.");
     }
 
     /**
@@ -194,7 +189,6 @@ public class BasicTest
     private static void test(int N, int nbr) {
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
         for (int sparsity = 1; sparsity < 31 - nbr; sparsity += 4) {
-            System.out.println("#testing sparsity "+sparsity);
             int[][] data = new int[N][];
             int Max = (1 << (nbr + sparsity));
             for (int k = 0; k < N; ++k) {
