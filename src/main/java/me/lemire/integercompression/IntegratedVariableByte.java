@@ -1,4 +1,3 @@
-
 /**
  * This code is released under the
  * Apache License Version 2.0 http://www.apache.org/licenses/.
@@ -33,7 +32,7 @@ public class IntegratedVariableByte implements IntegratedIntegerCODEC {
                 buf.put((byte) b);
             } while (val != 0);
         }
-        while (buf.position() % 4 != 0)
+        while ((buf.position() >> 2) != 0)
             buf.put((byte) 128);
         final int length = buf.position();
         buf.flip();
