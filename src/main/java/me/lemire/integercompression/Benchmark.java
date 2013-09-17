@@ -10,9 +10,14 @@ package me.lemire.integercompression;
 import com.kamikaze.pfordelta.PForDelta;
 import me.lemire.integercompression.synth.ClusteredDataGenerator;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.FileNotFoundException;
 
 /**
  *
@@ -25,15 +30,19 @@ public class Benchmark {
     /**
      * Standard benchmark
      *
+     * @param csvLog Writer for CSV log.
      * @param c the codec
      * @param data arrays of input data
      * @param repeat How many times to repeat the test
      * @param verbose whether to output result on screen
      */
     private static void testCodec(
+            PrintWriter csvLog,
+            int sparsity,
             IntegerCODEC c,
             int[][] data,
-            int repeat, boolean verbose)
+            int repeat,
+            boolean verbose)
     {
         if (verbose) {
             System.out.println("# " + c.toString());
@@ -117,10 +126,14 @@ public class Benchmark {
         }
 
         if (verbose) {
+            double bitsPerInt = size * 32.0 / totalSize;
+            long compressSpeed = totalSize * repeat / (compressTime);
+            long decompressSpeed = totalSize * repeat / (decompressTime);
             System.out.println(String.format("\t%1$.2f\t%2$d\t%3$d",
-                        size * 32.0 / totalSize,
-                        totalSize * repeat / (compressTime),
-                        totalSize * repeat / (decompressTime)));
+                        bitsPerInt, compressSpeed, decompressSpeed));
+            csvLog.format("\"%1$s\",%2$d,%3$.2f,%4$d,%5$d\n", c.toString(),
+                    sparsity, bitsPerInt, compressSpeed, decompressSpeed);
+            csvLog.flush();
         }
     }
 
@@ -129,13 +142,26 @@ public class Benchmark {
      *
      * @param args command-line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws Exception
+    {
         System.out.println("# benchmark based on the ClusterData model from:");
         System.out.println("# 	 Vo Ngoc Anh and Alistair Moffat. ");
         System.out.println("#	 Index compression using 64-bit words.") ;
         System.out.println("# 	 Softw. Pract. Exper.40, 2 (February 2010), 131-147. ");
         System.out.println();
-        test(20, 18, 10);
+
+        PrintWriter writer = null;
+        try {
+            File csvFile = new File(String.format(
+                        "benchmark-%1$tY%1$tm%1$tdT%1$tH%1$tM%1$tS.csv",
+                        System.currentTimeMillis()));
+            writer = new PrintWriter(csvFile);
+            test(writer, 20, 18, 10);
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
+        }
     }
 
     /**
@@ -251,13 +277,15 @@ public class Benchmark {
     /**
      * Generates data and calls other tests.
      *
+     * @param csvLog Writer for CSV log.
      * @param N How many input arrays to generate
      * @param nbr how big (in log2) should the arrays be
      * @param repeat How many times should we repeat tests.
      */
-    private static void test(int N, int nbr, int repeat) {
+    private static void test(PrintWriter csvLog, int N, int nbr, int repeat)
+    {
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
-        final int max_sparsity = 31 - nbr;
+        final int max_sparsity = 2;
         for (int sparsity = 1; sparsity < max_sparsity; ++sparsity) {
             System.out.println("# sparsity " + sparsity);
             System.out.println("# generating random data...");
@@ -269,96 +297,96 @@ public class Benchmark {
             testKamikaze(data, repeat, true);
             System.out.println();
 
-            testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
+            testCodec(csvLog, sparsity, new IntegratedComposition(new IntegratedBinaryPacking(),
                         new IntegratedVariableByte()), data, repeat, false);
-            testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
+            testCodec(csvLog, sparsity, new IntegratedComposition(new IntegratedBinaryPacking(),
                         new IntegratedVariableByte()), data, repeat, false);
-            testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
+            testCodec(csvLog, sparsity, new IntegratedComposition(new IntegratedBinaryPacking(),
                         new IntegratedVariableByte()), data, repeat, true);
             System.out.println();
 
-            testCodec(new JustCopy(), data, repeat, false);
-            testCodec(new JustCopy(), data, repeat, false);
-            testCodec(new JustCopy(), data, repeat, true);
+            testCodec(csvLog, sparsity, new JustCopy(), data, repeat, false);
+            testCodec(csvLog, sparsity, new JustCopy(), data, repeat, false);
+            testCodec(csvLog, sparsity, new JustCopy(), data, repeat, true);
             System.out.println();
 
-            testCodec(new VariableByte(), data, repeat, false);
-            testCodec(new VariableByte(), data, repeat, false);
-            testCodec(new VariableByte(), data, repeat, true);
+            testCodec(csvLog, sparsity, new VariableByte(), data, repeat, false);
+            testCodec(csvLog, sparsity, new VariableByte(), data, repeat, false);
+            testCodec(csvLog, sparsity, new VariableByte(), data, repeat, true);
             System.out.println();
 
-            testCodec(new IntegratedVariableByte(), data, repeat, false);
-            testCodec(new IntegratedVariableByte(), data, repeat, false);
-            testCodec(new IntegratedVariableByte(), data, repeat, true);
+            testCodec(csvLog, sparsity, new IntegratedVariableByte(), data, repeat, false);
+            testCodec(csvLog, sparsity, new IntegratedVariableByte(), data, repeat, false);
+            testCodec(csvLog, sparsity, new IntegratedVariableByte(), data, repeat, true);
             System.out.println();
 
-            testCodec(new Composition(new BinaryPacking(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new BinaryPacking(), new VariableByte()),
                     data, repeat, false);
-            testCodec(new Composition(new BinaryPacking(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new BinaryPacking(), new VariableByte()),
                     data, repeat, false);
-            testCodec(new Composition(new BinaryPacking(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new BinaryPacking(), new VariableByte()),
                     data, repeat, true);
             System.out.println();
 
-            testCodec(new Composition(new NewPFD(), new VariableByte()), data,
+            testCodec(csvLog, sparsity, new Composition(new NewPFD(), new VariableByte()), data,
                     repeat, false);
-            testCodec(new Composition(new NewPFD(), new VariableByte()), data,
+            testCodec(csvLog, sparsity, new Composition(new NewPFD(), new VariableByte()), data,
                     repeat, false);
-            testCodec(new Composition(new NewPFD(), new VariableByte()), data,
+            testCodec(csvLog, sparsity, new Composition(new NewPFD(), new VariableByte()), data,
                     repeat, true);
             System.out.println();
 
-            testCodec(new Composition(new NewPFDS9(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new NewPFDS9(), new VariableByte()),
                     data, repeat, false);
-            testCodec(new Composition(new NewPFDS9(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new NewPFDS9(), new VariableByte()),
                     data, repeat, false);
-            testCodec(new Composition(new NewPFDS9(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new NewPFDS9(), new VariableByte()),
                     data, repeat, true);
             System.out.println();
 
-            testCodec(new Composition(new NewPFDS16(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new NewPFDS16(), new VariableByte()),
                     data, repeat, false);
-            testCodec(new Composition(new NewPFDS16(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new NewPFDS16(), new VariableByte()),
                     data, repeat, false);
-            testCodec(new Composition(new NewPFDS16(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new NewPFDS16(), new VariableByte()),
                     data, repeat, true);
             System.out.println();
 
-            testCodec(new Composition(new OptPFD(), new VariableByte()), data,
+            testCodec(csvLog, sparsity, new Composition(new OptPFD(), new VariableByte()), data,
                     repeat, false);
-            testCodec(new Composition(new OptPFD(), new VariableByte()), data,
+            testCodec(csvLog, sparsity, new Composition(new OptPFD(), new VariableByte()), data,
                     repeat, false);
-            testCodec(new Composition(new OptPFD(), new VariableByte()), data,
+            testCodec(csvLog, sparsity, new Composition(new OptPFD(), new VariableByte()), data,
                     repeat, true);
             System.out.println();
 
-            testCodec(new Composition(new OptPFDS9(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new OptPFDS9(), new VariableByte()),
                     data, repeat, false);
-            testCodec(new Composition(new OptPFDS9(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new OptPFDS9(), new VariableByte()),
                     data, repeat, false);
-            testCodec(new Composition(new OptPFDS9(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new OptPFDS9(), new VariableByte()),
                     data, repeat, true);
             System.out.println();
 
-            testCodec(new Composition(new OptPFDS16(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new OptPFDS16(), new VariableByte()),
                     data, repeat, false);
-            testCodec(new Composition(new OptPFDS16(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new OptPFDS16(), new VariableByte()),
                     data, repeat, false);
-            testCodec(new Composition(new OptPFDS16(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new OptPFDS16(), new VariableByte()),
                     data, repeat, true);
             System.out.println();
 
-            testCodec(new Composition(new FastPFOR(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new FastPFOR(), new VariableByte()),
                     data, repeat, false);
-            testCodec(new Composition(new FastPFOR(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new FastPFOR(), new VariableByte()),
                     data, repeat, false);
-            testCodec(new Composition(new FastPFOR(), new VariableByte()),
+            testCodec(csvLog, sparsity, new Composition(new FastPFOR(), new VariableByte()),
                     data, repeat, true);
             System.out.println();
 
-            testCodec(new Simple9(), data, repeat, false);
-            testCodec(new Simple9(), data, repeat, false);
-            testCodec(new Simple9(), data, repeat, true);
+            testCodec(csvLog, sparsity, new Simple9(), data, repeat, false);
+            testCodec(csvLog, sparsity, new Simple9(), data, repeat, false);
+            testCodec(csvLog, sparsity, new Simple9(), data, repeat, true);
             System.out.println();
         }
     }
