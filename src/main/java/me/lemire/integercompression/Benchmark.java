@@ -245,42 +245,40 @@ public class Benchmark {
             System.out.println("# generating random data...");
             int[][] data = generateTestData(cdg, N, nbr, sparsity);
             System.out.println("# generating random data... ok.");
-            testKamikaze(data,  repeat, false);
-            testKamikaze(data,  repeat, false);
-            testKamikaze(data,  repeat, true);
+            testKamikaze(data, repeat, false);
+            testKamikaze(data, repeat, false);
+            testKamikaze(data, repeat, true);
             System.out.println();
 
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
-                        new IntegratedVariableByte()), data,  repeat, false);
+                        new IntegratedVariableByte()), data, repeat, false);
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
-                        new IntegratedVariableByte()), data,  repeat, false);
+                        new IntegratedVariableByte()), data, repeat, false);
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
-                        new IntegratedVariableByte()), data,  repeat, true);
+                        new IntegratedVariableByte()), data, repeat, true);
             System.out.println();
 
-
-            testCodec(new JustCopy(), data,  repeat, false);
-            testCodec(new JustCopy(), data,  repeat, false);
-            testCodec(new JustCopy(), data,  repeat, true);
+            testCodec(new JustCopy(), data, repeat, false);
+            testCodec(new JustCopy(), data, repeat, false);
+            testCodec(new JustCopy(), data, repeat, true);
             System.out.println();
 
-            testCodec(new VariableByte(), data,  repeat, false);
-            testCodec(new VariableByte(), data,  repeat, false);
-            testCodec(new VariableByte(), data,  repeat, true);
+            testCodec(new VariableByte(), data, repeat, false);
+            testCodec(new VariableByte(), data, repeat, false);
+            testCodec(new VariableByte(), data, repeat, true);
             System.out.println();
 
-            testCodec(new IntegratedVariableByte(), data,  repeat, false);
-            testCodec(new IntegratedVariableByte(), data,  repeat, false);
-            testCodec(new IntegratedVariableByte(), data,  repeat, true);
+            testCodec(new IntegratedVariableByte(), data, repeat, false);
+            testCodec(new IntegratedVariableByte(), data, repeat, false);
+            testCodec(new IntegratedVariableByte(), data, repeat, true);
             System.out.println();
-
 
             testCodec(new Composition(new BinaryPacking(), new VariableByte()),
-                    data,  repeat, false);
+                    data, repeat, false);
             testCodec(new Composition(new BinaryPacking(), new VariableByte()),
-                    data,  repeat, false);
+                    data, repeat, false);
             testCodec(new Composition(new BinaryPacking(), new VariableByte()),
-                    data,  repeat, true);
+                    data, repeat, true);
             System.out.println();
 
             testCodec(new Composition(new NewPFD(), new VariableByte()), data,
@@ -291,21 +289,20 @@ public class Benchmark {
                     repeat, true);
             System.out.println();
 
-
-            testCodec(new Composition(new NewPFDS9(), new VariableByte()), data,
-                    repeat, false);
-            testCodec(new Composition(new NewPFDS9(), new VariableByte()), data,
-                    repeat, false);
-            testCodec(new Composition(new NewPFDS9(), new VariableByte()), data,
-                    repeat, true);
+            testCodec(new Composition(new NewPFDS9(), new VariableByte()),
+                    data, repeat, false);
+            testCodec(new Composition(new NewPFDS9(), new VariableByte()),
+                    data, repeat, false);
+            testCodec(new Composition(new NewPFDS9(), new VariableByte()),
+                    data, repeat, true);
             System.out.println();
 
-            testCodec(new Composition(new NewPFDS16(), new VariableByte()), data,
-                    repeat, false);
-            testCodec(new Composition(new NewPFDS16(), new VariableByte()), data,
-                    repeat, false);
-            testCodec(new Composition(new NewPFDS16(), new VariableByte()), data,
-                    repeat, true);
+            testCodec(new Composition(new NewPFDS16(), new VariableByte()),
+                    data, repeat, false);
+            testCodec(new Composition(new NewPFDS16(), new VariableByte()),
+                    data, repeat, false);
+            testCodec(new Composition(new NewPFDS16(), new VariableByte()),
+                    data, repeat, true);
             System.out.println();
 
             testCodec(new Composition(new OptPFD(), new VariableByte()), data,
@@ -316,33 +313,33 @@ public class Benchmark {
                     repeat, true);
             System.out.println();
 
-            testCodec(new Composition(new OptPFDS9(), new VariableByte()), data,
-                    repeat, false);
-            testCodec(new Composition(new OptPFDS9(), new VariableByte()), data,
-                    repeat, false);
-            testCodec(new Composition(new OptPFDS9(), new VariableByte()), data,
-                    repeat, true);
+            testCodec(new Composition(new OptPFDS9(), new VariableByte()),
+                    data, repeat, false);
+            testCodec(new Composition(new OptPFDS9(), new VariableByte()),
+                    data, repeat, false);
+            testCodec(new Composition(new OptPFDS9(), new VariableByte()),
+                    data, repeat, true);
             System.out.println();
 
-            testCodec(new Composition(new OptPFDS16(), new VariableByte()), data,
-                    repeat, false);
-            testCodec(new Composition(new OptPFDS16(), new VariableByte()), data,
-                    repeat, false);
-            testCodec(new Composition(new OptPFDS16(), new VariableByte()), data,
-                    repeat, true);
+            testCodec(new Composition(new OptPFDS16(), new VariableByte()),
+                    data, repeat, false);
+            testCodec(new Composition(new OptPFDS16(), new VariableByte()),
+                    data, repeat, false);
+            testCodec(new Composition(new OptPFDS16(), new VariableByte()),
+                    data, repeat, true);
             System.out.println();
 
             testCodec(new Composition(new FastPFOR(), new VariableByte()),
-                    data,  repeat, false);
+                    data, repeat, false);
             testCodec(new Composition(new FastPFOR(), new VariableByte()),
-                    data,  repeat, false);
+                    data, repeat, false);
             testCodec(new Composition(new FastPFOR(), new VariableByte()),
-                    data,  repeat, true);
+                    data, repeat, true);
             System.out.println();
 
-            testCodec(new Simple9(), data,  repeat, false);
-            testCodec(new Simple9(), data,  repeat, false);
-            testCodec(new Simple9(), data,  repeat, true);
+            testCodec(new Simple9(), data, repeat, false);
+            testCodec(new Simple9(), data, repeat, false);
+            testCodec(new Simple9(), data, repeat, true);
             System.out.println();
         }
     }
