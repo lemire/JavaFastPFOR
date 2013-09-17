@@ -23,7 +23,26 @@ public class BasicTest
         IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),
                 new IntegratedVariableByte());
         testZeroInZeroOut(c);
+    }
+
+    @Test
+    public void checkXorBinaryPacking1() {
+        IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),
+                new IntegratedVariableByte());
+        testZeroInZeroOut(c);
+    }
+
+    @Test
+    public void checkXorBinaryPacking2() {
+        IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),
+                new IntegratedVariableByte());
         testUnsorted(c);
+    }
+
+    @Test
+    public void checkXorBinaryPacking3() {
+        IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),
+                new IntegratedVariableByte());
         test(c, 5, 10);
         test(c, 5, 14);
         test(c, 2, 18);

@@ -9,6 +9,17 @@ import static org.junit.Assert.*;
  */
 public class TestUtils {
 
+    private static void dumpIntArray(int[] data, String label) {
+        System.out.println(label);
+        for (int i = 0; i < 32; ++i) {
+            System.out.format(" %1$11d", data[i]);
+            if ((i + 1) % 6 == 0) {
+                System.out.println();
+            }
+        }
+        System.out.println();
+    }
+
     /**
      * Check that compress and uncompress keep original array.
      *
