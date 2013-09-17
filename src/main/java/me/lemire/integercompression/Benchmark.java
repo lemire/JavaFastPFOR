@@ -30,27 +30,31 @@ public class Benchmark {
      * @param repeat How many times to repeat the test
      * @param verbose whether to output result on screen
      */
-    private static void testCodec(IntegerCODEC c, int[][] data,
-            int repeat, boolean verbose) {
+    private static void testCodec(
+            IntegerCODEC c,
+            int[][] data,
+            int repeat, boolean verbose)
+    {
         DecimalFormat df = new DecimalFormat("0.00");
         DecimalFormat dfspeed = new DecimalFormat("0");
-        if (verbose)
+        if (verbose) {
             System.out.println("# " + c.toString());
-        if (verbose)
             System.out.println("# bits per int, compress speed (mis), decompression speed (mis) ");
+        }
         long bef, aft;
-        String line = "";
         int N = data.length;
         int totalsize = 0;
         int maxlength = 0;
         for (int k = 0; k < N; ++k) {
             totalsize += data[k].length;
-            if (data[k].length > maxlength)
+            if (data[k].length > maxlength) {
                 maxlength = data[k].length;
+            }
         }
         int[] buffer = new int[maxlength + 1024];
         int[] dataout = new int[4 * maxlength + 1024];
-        /* 4x + 1024 to account for the possibility of some negative compression */
+        // 4x + 1024 to account for the possibility of some negative
+        // compression.
         int size = 0;
         int comptime = 0;
         long decomptime = 0;
@@ -60,7 +64,8 @@ public class Benchmark {
             size = 0;
             for (int k = 0; k < N; ++k) {
                 int[] backupdata = Arrays.copyOf(data[k], data[k].length);
-                //
+
+                // compress data.
                 bef = System.nanoTime() / 1000;
                 inpos.set(1);
                 outpos.set(0);
@@ -70,11 +75,13 @@ public class Benchmark {
                 c.compress(backupdata, inpos, backupdata.length - inpos.get(),
                         dataout, outpos);
                 aft = System.nanoTime() / 1000;
-                //
+
+                // measure time of compression.
                 comptime += aft - bef;
                 final int thiscompsize = outpos.get() + 1;
                 size += thiscompsize;
-                //
+
+                // extract (uncompress) data
                 bef = System.nanoTime() / 1000;
                 inpos.set(0);
                 outpos.set(1);
@@ -83,27 +90,32 @@ public class Benchmark {
                 if (!(c instanceof IntegratedIntegerCODEC))
                     Delta.fastinverseDelta(buffer);
                 aft = System.nanoTime() / 1000;
-                //
+
+                // measure time of extraction (uncompression).
                 decomptime += aft - bef;
                 if (outpos.get() != data[k].length)
                     throw new RuntimeException("we have a bug (diff length) "
                             + c + " expected " + data[k].length + " got "
                             + outpos.get());
-                for (int m = 0; m < outpos.get(); ++m)
+
+                // verify: compare original array with compressed and
+                // uncompressed.
+                for (int m = 0; m < outpos.get(); ++m) {
                     if (buffer[m] != data[k][m]) {
                         throw new RuntimeException(
                                 "we have a bug (actual difference), expected "
                                 + data[k][m] + " found " + buffer[m]
                                 + " at " + m);
                     }
-
+                }
             }
         }
-        line += "\t" + df.format(size * 32.0 / totalsize);
-        line += "\t" + dfspeed.format(totalsize * repeat / (comptime));
-        line += "\t" + dfspeed.format(totalsize * repeat / (decomptime));
-        if (verbose)
-            System.out.println(line);
+        if (verbose) {
+            System.out.println(String.format("\t%1$.2f\t%2$d\t%3$d",
+                        size * 32.0 / totalsize,
+                        totalsize * repeat / (comptime),
+                        totalsize * repeat / (decomptime)));
+        }
     }
 
     /**
