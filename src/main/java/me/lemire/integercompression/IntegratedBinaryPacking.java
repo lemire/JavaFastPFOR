@@ -75,5 +75,8 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC {
         inpos.set(tmpinpos);
     }
 
-
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }
