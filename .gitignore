@@ -1,4 +1,5 @@
 *.class
+*.csv
 tags
 target/
 tmp/
