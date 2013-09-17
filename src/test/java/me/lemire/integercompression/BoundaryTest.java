@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+@SuppressWarnings({ "static-method", "javadoc" })
 public class BoundaryTest
 {
     private static void compressAndUncompress(int length, IntegerCODEC c) {
@@ -30,6 +31,11 @@ public class BoundaryTest
 
         // Compare between uncompressed and original arrays.
         int[] target = Arrays.copyOf(uncompressed, u_outpos.get());
+        if(!Arrays.equals(source, target)) {
+                System.out.println("problem with length = "+length+" and "+c);
+                System.out.println(Arrays.toString(source));
+                System.out.println(Arrays.toString(target));
+        }
         assertArrayEquals(source, target);
     }
 
@@ -56,9 +62,13 @@ public class BoundaryTest
                 new IntegratedBinaryPacking(),
                 new IntegratedVariableByte());
         testBoundary(c);
+        IntegratedComposition c2 = new IntegratedComposition(
+                new IntegratedFastPFOR(),
+                new IntegratedVariableByte());
+        testBoundary(c2);
     }
 
-    @Test
+   @Test
     public void testComposition() throws Exception {
         Composition c = new Composition(
                 new BinaryPacking(),

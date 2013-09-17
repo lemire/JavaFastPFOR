@@ -19,6 +19,9 @@ public class ClusteredDataGenerator {
 
     UniformDataGenerator unidg = new UniformDataGenerator();
 
+    /**
+    * Creating random array generator. 
+    */
     public ClusteredDataGenerator() {
     }
 
@@ -56,6 +59,9 @@ public class ClusteredDataGenerator {
 
     /**
      * generates randomly N distinct integers from 0 to Max.
+     * @param N number of integers to generate 
+     * @param Max maximal value of the integers
+     * @return  array containing the integers
      */
     public int[] generateClustered(int N, int Max) {
         int[] array = new int[N];
@@ -63,7 +69,12 @@ public class ClusteredDataGenerator {
         return array;
     }
 
-    public static void main(String[] args) {
+    /**
+     * Little test program.
+     * 
+     * @param args arguments are ignored
+     */
+     public static void main(final String[] args) {
         int[] example = (new ClusteredDataGenerator()).generateClustered(20, 1000);
         for (int k = 0; k < example.length; ++k)
             System.out.println(example[k]);

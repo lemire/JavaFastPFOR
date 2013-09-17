@@ -11,7 +11,6 @@ import java.util.BitSet;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.TreeSet;
 
 /**
  * This class will generate "uniform" lists of random integers. 

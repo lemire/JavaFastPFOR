@@ -17,6 +17,8 @@ package me.lemire.integercompression;
  * <p/>
  * using Simple9 as the secondary coder.
  *
+ * For multi-threaded applications, each thread should use its own OptPFDS9 object.
+ *
  * @author Daniel Lemire
  */
 public final class OptPFDS9 implements IntegerCODEC {

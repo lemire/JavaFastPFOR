@@ -8,7 +8,7 @@
 package me.lemire.integercompression;
 
 /**
- * NewPFD/NewPFOR implemented by Daniel Lemire
+ * NewPFD/NewPFOR 
  * <p/>
  * Follows:
  * <p/>
@@ -16,6 +16,8 @@ package me.lemire.integercompression;
  * with optimized document ordering, in: WWW 09, 2009, pp. 401-410.
  * <p/>
  * using Simple16 as the secondary coder.
+ * 
+ * For multi-threaded applications, each thread should use its own NewPFDS16 object.
  *
  * @author Daniel Lemire
  */

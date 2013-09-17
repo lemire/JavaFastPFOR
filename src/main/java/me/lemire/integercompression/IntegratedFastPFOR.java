@@ -10,28 +10,28 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 /**
- * This is a  PFOR Scheme designed by D. Lemire called FastPFOR.
- * <p/>
- * For details, please see
- * <p/>
+ * <p>This is an integrated version of FastPFOR meaning that it computes differential coding
+ * as part of the compression.</p>
+ * 
+ * <p>For details, please see
+ * </p>
+ * <p>
  * Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second through vectorization
  * Software: Practice &amp; Experience 
  * http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract
  * http://arxiv.org/abs/1209.2137
- * <p/>
- * For sufficiently compressible arrays, it is faster and better than other PFOR
- * schemes.
- * 
- * For multi-threaded applications, each thread should use its own FastPFOR object.
+ * </p>
+ * <p>For multi-threaded applications, each thread should use its own IntegratedFastPFOR object.</p>
  *
  * @author Daniel Lemire
  */
-public final class FastPFOR implements IntegerCODEC {
+public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
     final static int BLOCK_SIZE = 128;
     final static int OVERHEAD_OF_EACH_EXCEPT = 8;
     final static int DEFAULT_PAGE_SIZE = 65536;
 
     int pageSize;
+    final int[] buffer = new int[BLOCK_SIZE];
     final int[][] dataTobePacked = new int[32][];
     final ByteBuffer byteContainer;
 
@@ -44,7 +44,7 @@ public final class FastPFOR implements IntegerCODEC {
      * Construct the FastPFOR CODEC. 
      * @param pagesize the desired page size (for expert use)
      */
-    public FastPFOR(int pagesize) {
+    public IntegratedFastPFOR(int pagesize) {
         pageSize = pagesize;
         // Initiate arrrays.
         byteContainer = ByteBuffer.allocateDirect(3 * pageSize / BLOCK_SIZE
@@ -56,7 +56,7 @@ public final class FastPFOR implements IntegerCODEC {
     /**
      * Construct the fastPFOR CODEC with default parameters.
      */
-    public FastPFOR() {
+    public IntegratedFastPFOR() {
         this(DEFAULT_PAGE_SIZE);
     }
 
@@ -74,6 +74,8 @@ public final class FastPFOR implements IntegerCODEC {
 
         out[outpos.get()] = inlength;
         outpos.increment();
+        IntWrapper initoffset = new IntWrapper(0);
+
 
         // Allocate memory for working area.
         dataPointers = new int[33];
@@ -83,7 +85,7 @@ public final class FastPFOR implements IntegerCODEC {
         final int finalinpos = inpos.get() + inlength;
         while (inpos.get() != finalinpos) {
             int thissize = Math.min(pageSize, finalinpos - inpos.get());
-            encodePage(in, inpos, thissize, out, outpos);
+            encodePage(in, inpos, thissize, out, outpos,initoffset);
         }
 
         dataPointers = null;
@@ -118,8 +120,8 @@ public final class FastPFOR implements IntegerCODEC {
         }
     }
 
-    private void encodePage(int[] in, IntWrapper inpos, int thissize,
-                            int[] out, IntWrapper outpos) {
+    private void encodePage(int[] constin, IntWrapper constinpos, int thissize,
+                            int[] out, IntWrapper outpos,IntWrapper initoffset) {
         final int headerpos = outpos.get();
         outpos.increment();
         int tmpoutpos = outpos.get();
@@ -129,12 +131,15 @@ public final class FastPFOR implements IntegerCODEC {
         //Arrays.fill(bestbbestcexceptmaxb, (byte)0);//DL:unncessary
         byteContainer.clear();
 
-        int tmpinpos = inpos.get();
-        for (final int finalinpos = tmpinpos + thissize - BLOCK_SIZE; tmpinpos <= finalinpos; tmpinpos += BLOCK_SIZE) {
-            getBestBFromData(in, tmpinpos);
+        int tmpconstinpos = constinpos.get();
+        for (final int finalconstinpos = tmpconstinpos + thissize - BLOCK_SIZE; tmpconstinpos <= finalconstinpos; tmpconstinpos += BLOCK_SIZE) {
+           initoffset.set(Delta.delta(constin, tmpconstinpos,
+                                BLOCK_SIZE, initoffset.intValue(), buffer));
+            getBestBFromData(buffer, 0);
             final int tmpbestb = bestbbestcexceptmaxb[0];
             byteContainer.put(bestbbestcexceptmaxb[0]);
             byteContainer.put(bestbbestcexceptmaxb[1]);
+
             if (bestbbestcexceptmaxb[1] > 0) {
                     byteContainer.put(bestbbestcexceptmaxb[2]);
                     final int index = bestbbestcexceptmaxb[2]
@@ -147,21 +152,20 @@ public final class FastPFOR implements IntegerCODEC {
                             dataTobePacked[index], newsize);
                 }
                 for (int k = 0; k < BLOCK_SIZE; ++k) {
-                    if ((in[k + tmpinpos] >>> bestbbestcexceptmaxb[0]) != 0) {
+                    if ((buffer[k] >>> bestbbestcexceptmaxb[0]) != 0) {
                         // we have an exception
                         byteContainer.put((byte) k);
-                        dataTobePacked[index][dataPointers[index]++] = in[k
-                                + tmpinpos] >>> tmpbestb;
+                        dataTobePacked[index][dataPointers[index]++] = buffer[k] >>> tmpbestb;
                     }
                 }
 
             }
             for (int k = 0; k < 128; k += 32) {
-                BitPacking.fastpack(in, tmpinpos + k, out, tmpoutpos, tmpbestb);
+                BitPacking.fastpack(buffer, k, out, tmpoutpos, tmpbestb);                
                 tmpoutpos += tmpbestb;
             }
         }
-        inpos.set(tmpinpos);
+        constinpos.set(tmpconstinpos);
         out[headerpos] = tmpoutpos - headerpos;
         while ((byteContainer.position() & 3) != 0)
             byteContainer.put((byte) 0);
@@ -205,18 +209,19 @@ public final class FastPFOR implements IntegerCODEC {
         inpos.increment();
 
         dataPointers = new int[33];
+        IntWrapper initoffset = new IntWrapper(0);
 
         int finalout = outpos.get() + mynvalue;
         while (outpos.get() != finalout) {
             int thissize = Math.min(pageSize, finalout - outpos.get());
-            decodePage(in, inpos, out, outpos, thissize);
+            decodePage(in, inpos, out, outpos, thissize,initoffset);
         }
 
         dataPointers = null;
     }
 
     private void decodePage(int[] in, IntWrapper inpos, int[] out,
-                            IntWrapper outpos, int thissize) {
+                            IntWrapper outpos, int thissize,IntWrapper initoffset) {
         final int initpos = inpos.get();
         final int wheremeta = in[inpos.get()];
         inpos.increment();
@@ -247,7 +252,7 @@ public final class FastPFOR implements IntegerCODEC {
             final byte b = byteContainer.get();
             final byte cexcept = byteContainer.get();
             for (int k = 0; k < 128; k += 32) {
-                BitPacking.fastunpack(in, tmpinpos, out, tmpoutpos + k, b);
+                    BitPacking.fastunpack(in, tmpinpos, out, tmpoutpos + k, b);
                 tmpinpos += b;
             }
             if (cexcept > 0) {
@@ -258,8 +263,8 @@ public final class FastPFOR implements IntegerCODEC {
                     final int exceptvalue = dataTobePacked[index][dataPointers[index]++];
                     out[pos + tmpoutpos] |= exceptvalue << b;
                 }
-
             }
+            initoffset.set(Delta.fastinverseDelta(out,tmpoutpos,BLOCK_SIZE, initoffset.intValue()));    
         }
         outpos.set(tmpoutpos);
         inpos.set(inexcept);

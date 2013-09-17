@@ -15,12 +15,12 @@ import org.junit.Test;
  * @author Daniel Lemire
  *
  */
+@SuppressWarnings({"static-method","javadoc"})
 public class BasicTest {
 	
 	/**
 	 * Verify bitpacking
 	 */
-	@SuppressWarnings("static-method")
 	@Test
 	public void verify() {
         System.out.println("Checking the code...");
@@ -48,7 +48,6 @@ public class BasicTest {
 	/**
 	 * Verify bitpacking without mask
 	 */
-	@SuppressWarnings("static-method")
 	@Test
 	public void verifyWithoutMask() {
         System.out.println("Checking the code...");
@@ -76,7 +75,6 @@ public class BasicTest {
 	/**
 	 * Verify bitpacking with exception
 	 */
-	@SuppressWarnings("static-method")
 	@Test
 	public void verifyWithExceptions() {
         System.out.println("Checking the code...");
@@ -110,7 +108,6 @@ public class BasicTest {
 	/**
 	 * check that the codecs can be inverted.
 	 */
-	@SuppressWarnings("static-method")
 	@Test
 	public void basictest() {
 		test(5, 10);
@@ -120,10 +117,10 @@ public class BasicTest {
 	/**
 	 * check that there is no spurious output.
 	 */
-	@SuppressWarnings("static-method")
 	@Test
 	public void spuriousouttest() {
 		testSpurious(new IntegratedBinaryPacking());
+                testSpurious(new IntegratedFastPFOR());
 		testSpurious(new BinaryPacking());
 		testSpurious(new NewPFD());
 		testSpurious(new NewPFDS9());
@@ -138,11 +135,11 @@ public class BasicTest {
          * check that an empty array generates an empty array
          * after compression.
          */
-        @SuppressWarnings("static-method")
         @Test
         public void zeroinzerouttest() {
                 testZeroInZeroOut(new IntegratedBinaryPacking());
                 testZeroInZeroOut(new IntegratedVariableByte());
+                testZeroInZeroOut(new IntegratedFastPFOR());
                 testZeroInZeroOut(new BinaryPacking());
                 testZeroInZeroOut(new NewPFD());
                 testZeroInZeroOut(new NewPFDS9());
@@ -153,6 +150,7 @@ public class BasicTest {
                 testZeroInZeroOut(new FastPFOR());
                 testZeroInZeroOut(new VariableByte());
                 testZeroInZeroOut(new Composition(new IntegratedBinaryPacking(), new VariableByte()));
+                testZeroInZeroOut(new Composition(new IntegratedFastPFOR(), new VariableByte()));
                 testZeroInZeroOut(new Composition(new BinaryPacking(), new VariableByte()));
                 testZeroInZeroOut(new Composition(new NewPFD(), new VariableByte()));
                 testZeroInZeroOut(new Composition(new NewPFDS9(), new VariableByte()));
@@ -163,6 +161,8 @@ public class BasicTest {
                 testZeroInZeroOut(new Composition(new FastPFOR(), new VariableByte()));
                 
                 testZeroInZeroOut(new IntegratedComposition(new IntegratedBinaryPacking(),
+                        new IntegratedVariableByte()));
+                testZeroInZeroOut(new IntegratedComposition(new IntegratedFastPFOR(),
                         new IntegratedVariableByte()));
 
         }
@@ -201,7 +201,8 @@ public class BasicTest {
 			for (int k = 0; k < N; ++k) {
 				data[k] = cdg.generateClustered((1 << nbr), Max);
 			}
-
+                        testCodec(new IntegratedComposition(new IntegratedFastPFOR(),
+                                new IntegratedVariableByte()), data, Max);
 			testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
 					new IntegratedVariableByte()), data, Max);
 			testCodec(new JustCopy(), data, Max);
@@ -263,7 +264,9 @@ public class BasicTest {
 						+ outpos.get());
 			for (int m = 0; m < outpos.get(); ++m)
 				if (buffer[m] != data[k][m]) {
-					throw new RuntimeException(
+				        System.out.println(Arrays.toString(buffer));
+				        System.out.println(Arrays.toString(data[k]));
+				        throw new RuntimeException(
 							"we have a bug (actual difference), expected "
 									+ data[k][m] + " found " + buffer[m]
 									+ " at " + m);
@@ -275,7 +278,6 @@ public class BasicTest {
         /**
          * Test 
          */
-        @SuppressWarnings("static-method")
         @Test
         public void testUnsortedExample() {
 
@@ -293,6 +295,9 @@ public class BasicTest {
                 testUnsorted(new IntegratedComposition(new IntegratedBinaryPacking(),
                         new IntegratedVariableByte()));
                 testUnsorted(new Composition(new IntegratedBinaryPacking(), new VariableByte()));
+                testUnsorted(new IntegratedComposition(new IntegratedFastPFOR(),
+                        new IntegratedVariableByte()));
+                testUnsorted(new Composition(new IntegratedFastPFOR(), new VariableByte()));
 
         }
         

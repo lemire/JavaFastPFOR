@@ -76,4 +76,9 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC {
     }
 
 
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
 }

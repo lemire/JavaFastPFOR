@@ -232,7 +232,7 @@ public class Benchmark {
             testKamikaze(data,  repeat, false);
             testKamikaze(data,  repeat, true);
             System.out.println();
-
+            
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
                     new IntegratedVariableByte()), data,  repeat, false);
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
@@ -315,13 +315,23 @@ public class Benchmark {
                     repeat, true);
            System.out.println();
 
-            testCodec(new Composition(new FastPFOR(), new VariableByte()),
-                    data,  repeat, false);
-            testCodec(new Composition(new FastPFOR(), new VariableByte()),
-                    data,  repeat, false);
-            testCodec(new Composition(new FastPFOR(), new VariableByte()),
-                    data,  repeat, true);
-            System.out.println();
+
+           testCodec(new IntegratedComposition(new IntegratedFastPFOR(),
+                   new IntegratedVariableByte()), data,  repeat, false);
+           testCodec(new IntegratedComposition(new IntegratedFastPFOR(),
+                   new IntegratedVariableByte()), data,  repeat, false);
+           testCodec(new IntegratedComposition(new IntegratedFastPFOR(),
+                   new IntegratedVariableByte()), data,  repeat, true);
+           System.out.println();
+
+           testCodec(new Composition(new FastPFOR(), new VariableByte()),
+                   data,  repeat, false);
+           testCodec(new Composition(new FastPFOR(), new VariableByte()),
+                   data,  repeat, false);
+           testCodec(new Composition(new FastPFOR(), new VariableByte()),
+                   data,  repeat, true);
+           System.out.println();
+
 
             testCodec(new Simple9(), data,  repeat, false);
             testCodec(new Simple9(), data,  repeat, false);
