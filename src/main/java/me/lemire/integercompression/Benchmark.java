@@ -156,7 +156,13 @@ public class Benchmark {
                         "benchmark-%1$tY%1$tm%1$tdT%1$tH%1$tM%1$tS.csv",
                         System.currentTimeMillis()));
             writer = new PrintWriter(csvFile);
+            System.out.println("# Results will be written into a CSV file: "
+                    + csvFile.getName());
+            System.out.println();
             test(writer, 20, 18, 10);
+            System.out.println();
+            System.out.println("Results were written into a CSV file: "
+                    + csvFile.getName());
         } finally {
             if (writer != null) {
                 writer.close();
@@ -284,6 +290,7 @@ public class Benchmark {
      */
     private static void test(PrintWriter csvLog, int N, int nbr, int repeat)
     {
+        csvLog.format("\"Algorithm\",\"Sparsity\",\"Bits per int\",\"Compress speed (MiS)\",\"Decompress speed (MiS)\"\n");
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
         final int max_sparsity = 31 - nbr;
         for (int sparsity = 1; sparsity < max_sparsity; ++sparsity) {
