@@ -263,6 +263,7 @@ public class Benchmark {
             System.out.println("# generating random data...");
             int[][] data = generateTestData(cdg, N, nbr, sparsity);
             System.out.println("# generating random data... ok.");
+
             testKamikaze(data, repeat, false);
             testKamikaze(data, repeat, false);
             testKamikaze(data, repeat, true);
