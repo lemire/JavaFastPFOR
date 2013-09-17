@@ -285,7 +285,7 @@ public class Benchmark {
     private static void test(PrintWriter csvLog, int N, int nbr, int repeat)
     {
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
-        final int max_sparsity = 2;
+        final int max_sparsity = 31 - nbr;
         for (int sparsity = 1; sparsity < max_sparsity; ++sparsity) {
             System.out.println("# sparsity " + sparsity);
             System.out.println("# generating random data...");
