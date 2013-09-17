@@ -20,9 +20,6 @@ public class BasicTest
     public void checkXorBinaryPacking() {
         testZeroInZeroOut(new XorBinaryPacking());
         testSpurious(new XorBinaryPacking());
-        IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),
-                new IntegratedVariableByte());
-        testZeroInZeroOut(c);
     }
 
     @Test

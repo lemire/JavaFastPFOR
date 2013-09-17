@@ -104,21 +104,29 @@ public final class XorBinaryPacking implements IntegratedIntegerCODEC {
             int[] outBuf, int outOff, int validBits, int context, int[] work)
     {
         work[0] = inBuf[inOff] ^ context;
-        for (int i = 1; i < 32; ++i) {
-            work[i] = inBuf[i] ^ inBuf[i - 1];
+        for (int i = 1, p = inOff + 1; i < 32; ++i, ++p) {
+            work[i] = inBuf[p] ^ inBuf[p - 1];
         }
         BitPacking.fastpackwithoutmask(work, 0, outBuf, outOff, validBits);
         return validBits;
+        //for (int i = 0; i < 32; ++i) {
+        //    outBuf[outOff + i] = work[i];
+        //}
+        //return 32;
     }
 
     public static int xorUnpack(int[] inBuf, int inOff,
             int[] outBuf, int outOff, int validBits, int context, int[] work)
     {
         BitPacking.fastunpack(inBuf, inOff, work, 0, validBits);
+        //for (int i = 0; i < 32; ++i) {
+        //    work[i] = inBuf[inOff + i];
+        //}
         outBuf[outOff] = work[0] ^ context;
         for (int i = 1, p = outOff + 1; i < 32; ++i, ++p) {
             outBuf[p] = work[i] ^ outBuf[p - 1];
         }
         return validBits;
+        //return 32;
     }
 }

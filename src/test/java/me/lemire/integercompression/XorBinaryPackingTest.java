@@ -78,6 +78,13 @@ public final class XorBinaryPackingTest
         }
     }
 
+    public static void checkCompressAndUncompress(String label, int[] data) {
+        XorBinaryPacking codec = new XorBinaryPacking();
+        int[] compBuf = TestUtils.compress(codec, data);
+        int[] decompBuf = TestUtils.uncompress(codec, compBuf, data.length);
+        assertArrayEquals(data, decompBuf);
+    }
+
     @Test
     public void compressAndUncompress0() {
         int[] data = new int[128];
@@ -85,13 +92,7 @@ public final class XorBinaryPackingTest
         Arrays.fill(data, 32,  63, 2);
         Arrays.fill(data, 64,  95, 4);
         Arrays.fill(data, 96, 127, 8);
-
-        XorBinaryPacking codec = new XorBinaryPacking();
-        int[] compBuf = TestUtils.compress(codec, data);
-        TestUtils.dumpIntArray(compBuf, "compBuf0");
-        int[] decompBuf = TestUtils.uncompress(codec, compBuf, data.length);
-        TestUtils.dumpIntArray(decompBuf, "decompBuf0");
-        assertArrayEquals(data, decompBuf);
+        checkCompressAndUncompress("compressAndUncompress0", data);
     }
 
     @Test
@@ -100,12 +101,7 @@ public final class XorBinaryPackingTest
         for (int i = 0; i < data.length; ++i) {
             data[i] = i;
         }
-
-        XorBinaryPacking codec = new XorBinaryPacking();
-        int[] compBuf = TestUtils.compress(codec, data);
-        TestUtils.dumpIntArray(compBuf, "compBuf1");
-        int[] decompBuf = TestUtils.uncompress(codec, compBuf, data.length);
-        assertArrayEquals(data, decompBuf);
+        checkCompressAndUncompress("compressAndUncompress1", data);
     }
 
     @Test
@@ -114,11 +110,22 @@ public final class XorBinaryPackingTest
         for (int i = 0; i < data.length; ++i) {
             data[i] = i * (i + 1) / 2;
         }
+        checkCompressAndUncompress("compressAndUncompress2", data);
+    }
 
-        XorBinaryPacking codec = new XorBinaryPacking();
-        int[] compBuf = TestUtils.compress(codec, data);
-        TestUtils.dumpIntArray(compBuf, "compBuf2");
-        int[] decompBuf = TestUtils.uncompress(codec, compBuf, data.length);
-        assertArrayEquals(data, decompBuf);
+    @Test
+    public void compressAndUncompress3() {
+        int[] data = new int[256];
+        Arrays.fill(data,   0, 127, 2);
+        Arrays.fill(data, 128, 255, 3);
+        checkCompressAndUncompress("compressAndUncompress3", data);
+    }
+
+    @Test
+    public void compressAndUncompress4() {
+        int[] data = new int[256];
+        Arrays.fill(data,   0, 127, 3);
+        Arrays.fill(data, 128, 255, 2);
+        checkCompressAndUncompress("compressAndUncompress4", data);
     }
 }

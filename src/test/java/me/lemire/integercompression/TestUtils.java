@@ -20,6 +20,17 @@ public class TestUtils {
         System.out.println();
     }
 
+    public static void dumpIntArrayAsHex(int[] data, String label) {
+        System.out.print(label);
+        for (int i = 0; i < data.length; ++i) {
+            if (i % 8 == 0) {
+                System.out.println();
+            }
+            System.out.format(" %1$8X", data[i]);
+        }
+        System.out.println();
+    }
+
     /**
      * Check that compress and uncompress keep original array.
      *
