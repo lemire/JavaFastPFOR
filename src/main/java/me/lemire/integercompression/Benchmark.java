@@ -35,8 +35,6 @@ public class Benchmark {
             int[][] data,
             int repeat, boolean verbose)
     {
-        DecimalFormat df = new DecimalFormat("0.00");
-        DecimalFormat dfspeed = new DecimalFormat("0");
         if (verbose) {
             System.out.println("# " + c.toString());
             System.out.println("# bits per int, compress speed (mis), decompression speed (mis) ");
