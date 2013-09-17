@@ -67,4 +67,8 @@ public final class BinaryPacking implements IntegerCODEC {
         inpos.set(tmpinpos);
     }
 
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }
