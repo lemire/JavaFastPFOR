@@ -9,13 +9,13 @@ import static org.junit.Assert.*;
  */
 public class TestUtils {
 
-    private static void dumpIntArray(int[] data, String label) {
-        System.out.println(label);
-        for (int i = 0; i < 32; ++i) {
-            System.out.format(" %1$11d", data[i]);
-            if ((i + 1) % 6 == 0) {
+    public static void dumpIntArray(int[] data, String label) {
+        System.out.print(label);
+        for (int i = 0; i < data.length; ++i) {
+            if (i % 6 == 0) {
                 System.out.println();
             }
+            System.out.format(" %1$11d", data[i]);
         }
         System.out.println();
     }
@@ -55,4 +55,19 @@ public class TestUtils {
         assertArrayEquals(orig, target);
     }
 
+    public static int[] compress(IntegerCODEC codec, int[] data) {
+        int[] outBuf = new int[data.length * 4];
+        IntWrapper inPos = new IntWrapper();
+        IntWrapper outPos = new IntWrapper();
+        codec.compress(data, inPos, data.length, outBuf, outPos);
+        return Arrays.copyOf(outBuf, outPos.get());
+    }
+
+    public static int[] uncompress(IntegerCODEC codec, int[] data, int len) {
+        int[] outBuf = new int[len + 1024];
+        IntWrapper inPos = new IntWrapper();
+        IntWrapper outPos = new IntWrapper();
+        codec.uncompress(data, inPos, data.length, outBuf, outPos);
+        return Arrays.copyOf(outBuf, outPos.get());
+    }
 }

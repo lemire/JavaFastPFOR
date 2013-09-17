@@ -4,6 +4,8 @@
  */
 package me.lemire.integercompression;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -61,5 +63,49 @@ public final class XorBinaryPackingTest
             assertEquals(i,
                     XorBinaryPacking.xorMaxBits(data, 0, data.length, 0));
         }
+    }
+
+    @Test
+    public void compressAndUncompress0() {
+        int[] data = new int[128];
+        Arrays.fill(data,  0,  31, 1);
+        Arrays.fill(data, 32,  63, 2);
+        Arrays.fill(data, 64,  95, 4);
+        Arrays.fill(data, 96, 127, 8);
+
+        XorBinaryPacking codec = new XorBinaryPacking();
+        int[] compBuf = TestUtils.compress(codec, data);
+        TestUtils.dumpIntArray(compBuf, "compBuf0");
+        int[] decompBuf = TestUtils.uncompress(codec, compBuf, data.length);
+        TestUtils.dumpIntArray(decompBuf, "decompBuf0");
+        assertArrayEquals(data, decompBuf);
+    }
+
+    @Test
+    public void compressAndUncompress1() {
+        int[] data = new int[128];
+        for (int i = 0; i < data.length; ++i) {
+            data[i] = i;
+        }
+
+        XorBinaryPacking codec = new XorBinaryPacking();
+        int[] compBuf = TestUtils.compress(codec, data);
+        TestUtils.dumpIntArray(compBuf, "compBuf1");
+        int[] decompBuf = TestUtils.uncompress(codec, compBuf, data.length);
+        assertArrayEquals(data, decompBuf);
+    }
+
+    @Test
+    public void compressAndUncompress2() {
+        int[] data = new int[128];
+        for (int i = 0; i < data.length; ++i) {
+            data[i] = i * (i + 1) / 2;
+        }
+
+        XorBinaryPacking codec = new XorBinaryPacking();
+        int[] compBuf = TestUtils.compress(codec, data);
+        TestUtils.dumpIntArray(compBuf, "compBuf2");
+        int[] decompBuf = TestUtils.uncompress(codec, compBuf, data.length);
+        assertArrayEquals(data, decompBuf);
     }
 }
