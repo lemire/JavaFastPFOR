@@ -30,6 +30,7 @@ public final class XorBinaryPacking implements IntegratedIntegerCODEC {
             final int bits2 = xorMaxBits(inBuf, ip + 32, 32, inBuf[ip + 31]);
             final int bits3 = xorMaxBits(inBuf, ip + 64, 32, inBuf[ip + 63]);
             final int bits4 = xorMaxBits(inBuf, ip + 96, 32, inBuf[ip + 95]);
+            //System.out.format("compress bits: %d %d %d %d\n", bits1, bits2, bits3, bits4);
             outBuf[op++] = (bits1 << 24) | (bits2 << 16) |
                 (bits3 << 8) | (bits4 << 0);
             op += xorPack(inBuf, ip +  0, outBuf, op, bits1, 0, work);
@@ -67,6 +68,7 @@ public final class XorBinaryPacking implements IntegratedIntegerCODEC {
             final int bits2 = (inBuf[ip] >>> 16) & 0xFF;
             final int bits3 = (inBuf[ip] >>>  8) & 0xFF;
             final int bits4 = (inBuf[ip] >>>  0) & 0xFF;
+            //System.out.format("uncompress bits: %d %d %d %d\n", bits1, bits2, bits3, bits4);
             ++ip;
             ip += xorUnpack(inBuf, ip, outBuf, op +  0, bits1, context, work);
             ip += xorUnpack(inBuf, ip, outBuf, op + 32, bits2, outBuf[op + 31],

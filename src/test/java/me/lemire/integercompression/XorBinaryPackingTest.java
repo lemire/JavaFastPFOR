@@ -12,12 +12,25 @@ import static org.junit.Assert.*;
 public final class XorBinaryPackingTest
 {
     @Test
-    public void packAndUnpack() {
+    public void packAndUnpack0() {
         int[] data = new int[] {
              0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
             16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
         };
         checkPack(data, 6, 0);
+    }
+
+    @Test
+    public void packAndUnpack1() {
+        int[] data = new int[32];
+        Arrays.fill(data, 1);
+        checkPack(data, 1, 0);
+        Arrays.fill(data, 2);
+        checkPack(data, 2, 1);
+        Arrays.fill(data, 4);
+        checkPack(data, 3, 2);
+        Arrays.fill(data, 8);
+        checkPack(data, 4, 4);
     }
 
     public void checkPack(int[] data, int validBits, int context) {
