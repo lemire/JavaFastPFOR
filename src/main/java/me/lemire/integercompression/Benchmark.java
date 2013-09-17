@@ -39,58 +39,65 @@ public class Benchmark {
             System.out.println("# " + c.toString());
             System.out.println("# bits per int, compress speed (mis), decompression speed (mis) ");
         }
-        long bef, aft;
+
         int N = data.length;
-        int totalsize = 0;
-        int maxlength = 0;
+
+        int totalSize = 0;
+        int maxLength = 0;
         for (int k = 0; k < N; ++k) {
-            totalsize += data[k].length;
-            if (data[k].length > maxlength) {
-                maxlength = data[k].length;
+            totalSize += data[k].length;
+            if (data[k].length > maxLength) {
+                maxLength = data[k].length;
             }
         }
-        int[] buffer = new int[maxlength + 1024];
-        int[] dataout = new int[4 * maxlength + 1024];
+
         // 4x + 1024 to account for the possibility of some negative
         // compression.
+        int[] compressBuffer = new int[4 * maxLength + 1024];
+        int[] decompressBuffer = new int[maxLength + 1024];
+
+        // These variables hold time in microseconds (10^-6).
+        long compressTime = 0;
+        long decompressTime = 0;
+
         int size = 0;
-        int comptime = 0;
-        long decomptime = 0;
         IntWrapper inpos = new IntWrapper();
         IntWrapper outpos = new IntWrapper();
+
         for (int r = 0; r < repeat; ++r) {
             size = 0;
             for (int k = 0; k < N; ++k) {
                 int[] backupdata = Arrays.copyOf(data[k], data[k].length);
 
                 // compress data.
-                bef = System.nanoTime() / 1000;
+                long beforeCompress = System.nanoTime() / 1000;
                 inpos.set(1);
                 outpos.set(0);
                 if (!(c instanceof IntegratedIntegerCODEC)) {
                     Delta.delta(backupdata);
                 }
                 c.compress(backupdata, inpos, backupdata.length - inpos.get(),
-                        dataout, outpos);
-                aft = System.nanoTime() / 1000;
+                        compressBuffer, outpos);
+                long afterCompress = System.nanoTime() / 1000;
 
                 // measure time of compression.
-                comptime += aft - bef;
+                compressTime += afterCompress - beforeCompress;
                 final int thiscompsize = outpos.get() + 1;
                 size += thiscompsize;
 
                 // extract (uncompress) data
-                bef = System.nanoTime() / 1000;
+                long beforeDecompress = System.nanoTime() / 1000;
                 inpos.set(0);
                 outpos.set(1);
-                buffer[0] = backupdata[0];
-                c.uncompress(dataout, inpos, thiscompsize - 1, buffer, outpos);
+                decompressBuffer[0] = backupdata[0];
+                c.uncompress(compressBuffer, inpos, thiscompsize - 1,
+                        decompressBuffer, outpos);
                 if (!(c instanceof IntegratedIntegerCODEC))
-                    Delta.fastinverseDelta(buffer);
-                aft = System.nanoTime() / 1000;
+                    Delta.fastinverseDelta(decompressBuffer);
+                long afterDecompress = System.nanoTime() / 1000;
 
                 // measure time of extraction (uncompression).
-                decomptime += aft - bef;
+                decompressTime += afterDecompress - beforeDecompress;
                 if (outpos.get() != data[k].length)
                     throw new RuntimeException("we have a bug (diff length) "
                             + c + " expected " + data[k].length + " got "
@@ -99,20 +106,21 @@ public class Benchmark {
                 // verify: compare original array with compressed and
                 // uncompressed.
                 for (int m = 0; m < outpos.get(); ++m) {
-                    if (buffer[m] != data[k][m]) {
+                    if (decompressBuffer[m] != data[k][m]) {
                         throw new RuntimeException(
                                 "we have a bug (actual difference), expected "
-                                + data[k][m] + " found " + buffer[m]
+                                + data[k][m] + " found " + decompressBuffer[m]
                                 + " at " + m);
                     }
                 }
             }
         }
+
         if (verbose) {
             System.out.println(String.format("\t%1$.2f\t%2$d\t%3$d",
-                        size * 32.0 / totalsize,
-                        totalsize * repeat / (comptime),
-                        totalsize * repeat / (decomptime)));
+                        size * 32.0 / totalSize,
+                        totalSize * repeat / (compressTime),
+                        totalSize * repeat / (decompressTime)));
         }
     }
 
