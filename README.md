@@ -57,11 +57,11 @@ Authors
 -------
 
 Main contributors
-Daniel Lemire, http://lemire.me/en/
-Muraoka Taro, https://github.com/koron
+* Daniel Lemire, http://lemire.me/en/
+* Muraoka Taro, https://github.com/koron
 
 with contributions by 
-Di Wu, http://www.facebook.com/diwu1989
+* Di Wu, http://www.facebook.com/diwu1989
 
 
 How does it compare to the Kamikaze PForDelta library?
