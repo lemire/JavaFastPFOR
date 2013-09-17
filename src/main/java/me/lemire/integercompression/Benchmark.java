@@ -210,6 +210,27 @@ public class Benchmark {
     }
 
     /**
+     * Generate test data.
+     *
+     * @param N How many input arrays to generate
+     * @param nbr How big (in log2) should the arrays be
+     * @param sparsity How sparse test data generated
+     */
+    private static int[][] generateTestData(
+            ClusteredDataGenerator dataGen,
+            int N,
+            int nbr,
+            int sparsity)
+    {
+        final int[][] data = new int[N][];
+        final int dataSize = (1 << (nbr + sparsity));
+        for (int i = 0; i < N; ++i) {
+            data[i] = dataGen.generateClustered((1 << nbr), dataSize);
+        }
+        return data;
+    }
+
+    /**
      * Generates data and calls other tests.
      *
      * @param N How many input arrays to generate
@@ -218,14 +239,11 @@ public class Benchmark {
      */
     private static void test(int N, int nbr, int repeat) {
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
-        for (int sparsity = 1; sparsity < 31 - nbr; sparsity += 1) {
+        final int max_sparsity = 31 - nbr;
+        for (int sparsity = 1; sparsity < max_sparsity; ++sparsity) {
             System.out.println("# sparsity " + sparsity);
-            int[][] data = new int[N][];
-            int Max = (1 << (nbr + sparsity));
             System.out.println("# generating random data...");
-            for (int k = 0; k < N; ++k) {
-                data[k] = cdg.generateClustered((1 << nbr), Max);
-            }
+            int[][] data = generateTestData(cdg, N, nbr, sparsity);
             System.out.println("# generating random data... ok.");
             testKamikaze(data,  repeat, false);
             testKamikaze(data,  repeat, false);
