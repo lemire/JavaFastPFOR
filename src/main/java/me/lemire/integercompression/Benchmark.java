@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * 
+ *
  * Simple class meant to compare the speed of different schemes.
  * @author Daniel Lemire
  *
@@ -24,21 +24,20 @@ public class Benchmark {
 
     /**
      * Standard benchmark
-     * 
+     *
      * @param c the codec
      * @param data arrays of input data
      * @param repeat How many times to repeat the test
      * @param verbose whether to output result on screen
      */
-    private static void testCodec(IntegerCODEC c, int[][] data, 
-                                 int repeat, boolean verbose) {
+    private static void testCodec(IntegerCODEC c, int[][] data,
+            int repeat, boolean verbose) {
         DecimalFormat df = new DecimalFormat("0.00");
         DecimalFormat dfspeed = new DecimalFormat("0");
         if (verbose)
             System.out.println("# " + c.toString());
         if (verbose)
-            System.out
-                    .println("# bits per int, compress speed (mis), decompression speed (mis) ");
+            System.out.println("# bits per int, compress speed (mis), decompression speed (mis) ");
         long bef, aft;
         String line = "";
         int N = data.length;
@@ -94,8 +93,8 @@ public class Benchmark {
                     if (buffer[m] != data[k][m]) {
                         throw new RuntimeException(
                                 "we have a bug (actual difference), expected "
-                                        + data[k][m] + " found " + buffer[m]
-                                        + " at " + m);
+                                + data[k][m] + " found " + buffer[m]
+                                + " at " + m);
                     }
 
             }
@@ -107,36 +106,36 @@ public class Benchmark {
             System.out.println(line);
     }
 
-	/**
-	 * Main method.
-	 * 
-	 * @param args command-line arguments
-	 */
-	public static void main(String args[]) {
-		System.out.println("# benchmark based on the ClusterData model from:");
-		System.out.println("# 	 Vo Ngoc Anh and Alistair Moffat. ");
-		System.out.println("#	 Index compression using 64-bit words.") ;
-		System.out.println("# 	 Softw. Pract. Exper.40, 2 (February 2010), 131-147. ");
-		System.out.println();
-		test(20, 18, 10);
-	}
+    /**
+     * Main method.
+     *
+     * @param args command-line arguments
+     */
+    public static void main(String args[]) {
+        System.out.println("# benchmark based on the ClusterData model from:");
+        System.out.println("# 	 Vo Ngoc Anh and Alistair Moffat. ");
+        System.out.println("#	 Index compression using 64-bit words.") ;
+        System.out.println("# 	 Softw. Pract. Exper.40, 2 (February 2010), 131-147. ");
+        System.out.println();
+        test(20, 18, 10);
+    }
 
     /**
      * Standard test for the Kamikaze library
-     * 
+     *
      * @param data input data
      * @param repeat how many times to repeat
      * @param verbose whether to output data on screen
      */
     public static void testKamikaze(int[][] data,
-                                    int repeat, boolean verbose) {
+            int repeat, boolean verbose) {
         DecimalFormat df = new DecimalFormat("0.00");
         DecimalFormat dfspeed = new DecimalFormat("0");
         if (verbose)
             System.out.println("# kamikaze PForDelta");
         if (verbose)
             System.out
-                    .println("# bits per int, compress speed (mis), decompression speed (mis) ");
+                .println("# bits per int, compress speed (mis), decompression speed (mis) ");
         long bef, aft;
         String line = "";
         int N = data.length;
@@ -148,7 +147,7 @@ public class Benchmark {
                 maxlength = data[k].length;
         }
         int[] buffer = new int[maxlength + 1024];
-		/* 4x + 1024 to account for the possibility of some negative compression */
+        /* 4x + 1024 to account for the possibility of some negative compression */
         int size = 0;
         int comptime = 0;
         long decomptime = 0;
@@ -196,8 +195,8 @@ public class Benchmark {
                     if (datauncomp.get(m / 128)[m % 128] != data[k][m]) {
                         throw new RuntimeException(
                                 "we have a bug (actual difference), expected "
-                                        + data[k][m] + " found " + buffer[m]
-                                        + " at " + m);
+                                + data[k][m] + " found " + buffer[m]
+                                + " at " + m);
                     }
 
             }
@@ -212,7 +211,7 @@ public class Benchmark {
 
     /**
      * Generates data and calls other tests.
-     * 
+     *
      * @param N How many input arrays to generate
      * @param nbr how big (in log2) should the arrays be
      * @param repeat How many times should we repeat tests.
@@ -234,11 +233,11 @@ public class Benchmark {
             System.out.println();
 
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
-                    new IntegratedVariableByte()), data,  repeat, false);
+                        new IntegratedVariableByte()), data,  repeat, false);
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
-                    new IntegratedVariableByte()), data,  repeat, false);
+                        new IntegratedVariableByte()), data,  repeat, false);
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
-                    new IntegratedVariableByte()), data,  repeat, true);
+                        new IntegratedVariableByte()), data,  repeat, true);
             System.out.println();
 
 
@@ -267,53 +266,53 @@ public class Benchmark {
             System.out.println();
 
             testCodec(new Composition(new NewPFD(), new VariableByte()), data,
-                     repeat, false);
+                    repeat, false);
             testCodec(new Composition(new NewPFD(), new VariableByte()), data,
-                     repeat, false);
+                    repeat, false);
             testCodec(new Composition(new NewPFD(), new VariableByte()), data,
-                     repeat, true);
+                    repeat, true);
             System.out.println();
 
 
             testCodec(new Composition(new NewPFDS9(), new VariableByte()), data,
-                     repeat, false);
+                    repeat, false);
             testCodec(new Composition(new NewPFDS9(), new VariableByte()), data,
-                     repeat, false);
+                    repeat, false);
             testCodec(new Composition(new NewPFDS9(), new VariableByte()), data,
-                     repeat, true);
+                    repeat, true);
             System.out.println();
 
             testCodec(new Composition(new NewPFDS16(), new VariableByte()), data,
                     repeat, false);
-           testCodec(new Composition(new NewPFDS16(), new VariableByte()), data,
+            testCodec(new Composition(new NewPFDS16(), new VariableByte()), data,
                     repeat, false);
-           testCodec(new Composition(new NewPFDS16(), new VariableByte()), data,
+            testCodec(new Composition(new NewPFDS16(), new VariableByte()), data,
                     repeat, true);
-           System.out.println();
+            System.out.println();
 
             testCodec(new Composition(new OptPFD(), new VariableByte()), data,
-                     repeat, false);
+                    repeat, false);
             testCodec(new Composition(new OptPFD(), new VariableByte()), data,
-                     repeat, false);
+                    repeat, false);
             testCodec(new Composition(new OptPFD(), new VariableByte()), data,
-                     repeat, true);
+                    repeat, true);
             System.out.println();
 
             testCodec(new Composition(new OptPFDS9(), new VariableByte()), data,
-                     repeat, false);
+                    repeat, false);
             testCodec(new Composition(new OptPFDS9(), new VariableByte()), data,
-                     repeat, false);
+                    repeat, false);
             testCodec(new Composition(new OptPFDS9(), new VariableByte()), data,
-                     repeat, true);
+                    repeat, true);
             System.out.println();
 
             testCodec(new Composition(new OptPFDS16(), new VariableByte()), data,
                     repeat, false);
-           testCodec(new Composition(new OptPFDS16(), new VariableByte()), data,
+            testCodec(new Composition(new OptPFDS16(), new VariableByte()), data,
                     repeat, false);
-           testCodec(new Composition(new OptPFDS16(), new VariableByte()), data,
+            testCodec(new Composition(new OptPFDS16(), new VariableByte()), data,
                     repeat, true);
-           System.out.println();
+            System.out.println();
 
             testCodec(new Composition(new FastPFOR(), new VariableByte()),
                     data,  repeat, false);
