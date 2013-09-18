@@ -26,7 +26,7 @@ public class TestUtils {
             if (i % 8 == 0) {
                 System.out.println();
             }
-            System.out.format(" %1$8X", data[i]);
+            System.out.format(" %1$08X", data[i]);
         }
         System.out.println();
     }

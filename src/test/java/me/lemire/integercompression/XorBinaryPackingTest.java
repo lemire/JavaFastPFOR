@@ -79,9 +79,12 @@ public final class XorBinaryPackingTest
     }
 
     public static void checkCompressAndUncompress(String label, int[] data) {
+        //TestUtils.dumpIntArrayAsHex(data, label + " - original");
         XorBinaryPacking codec = new XorBinaryPacking();
         int[] compBuf = TestUtils.compress(codec, data);
+        //TestUtils.dumpIntArrayAsHex(compBuf, label + " - compBuf");
         int[] decompBuf = TestUtils.uncompress(codec, compBuf, data.length);
+        //TestUtils.dumpIntArrayAsHex(decompBuf, label + " - decompBuf");
         assertArrayEquals(data, decompBuf);
     }
 
@@ -127,5 +130,14 @@ public final class XorBinaryPackingTest
         Arrays.fill(data,   0, 127, 3);
         Arrays.fill(data, 128, 255, 2);
         checkCompressAndUncompress("compressAndUncompress4", data);
+    }
+
+    @Test
+    public void compressAndUncompress5() {
+        int[] data = new int[256];
+        for (int i = 0; i < data.length; ++i) {
+            data[i] = i;
+        }
+        checkCompressAndUncompress("compressAndUncompress5", data);
     }
 }

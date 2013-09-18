@@ -6,6 +6,9 @@ package me.lemire.integercompression;
 
 public final class XorBinaryPacking implements IntegratedIntegerCODEC {
 
+    /** A flag for debugging. */
+    public static final boolean DEBUG_DISABLE_BITPACKING = false;
+
     public static final int BLOCK_LENGTH = 128;
 
     public void compress(
@@ -33,7 +36,7 @@ public final class XorBinaryPacking implements IntegratedIntegerCODEC {
             //System.out.format("compress bits: %d %d %d %d\n", bits1, bits2, bits3, bits4);
             outBuf[op++] = (bits1 << 24) | (bits2 << 16) |
                 (bits3 << 8) | (bits4 << 0);
-            op += xorPack(inBuf, ip +  0, outBuf, op, bits1, 0, work);
+            op += xorPack(inBuf, ip +  0, outBuf, op, bits1, context, work);
             op += xorPack(inBuf, ip + 32, outBuf, op, bits2, inBuf[ip + 31],
                     work);
             op += xorPack(inBuf, ip + 64, outBuf, op, bits3, inBuf[ip + 63],
@@ -97,7 +100,11 @@ public final class XorBinaryPacking implements IntegratedIntegerCODEC {
         for (int i = offset + 1, prev = offset; i < M; ++i, ++prev) {
             mask |= buf[i] ^ buf[prev];
         }
-        return 32 - Integer.numberOfLeadingZeros(mask);
+        if (DEBUG_DISABLE_BITPACKING) {
+            return 32;
+        } else {
+            return 32 - Integer.numberOfLeadingZeros(mask);
+        }
     }
 
     public static int xorPack(int[] inBuf, int inOff,
@@ -107,26 +114,30 @@ public final class XorBinaryPacking implements IntegratedIntegerCODEC {
         for (int i = 1, p = inOff + 1; i < 32; ++i, ++p) {
             work[i] = inBuf[p] ^ inBuf[p - 1];
         }
-        BitPacking.fastpackwithoutmask(work, 0, outBuf, outOff, validBits);
+        if (DEBUG_DISABLE_BITPACKING) {
+            for (int i = 0; i < 32; ++i) {
+                outBuf[outOff + i] = work[i];
+            }
+        } else {
+            BitPacking.fastpackwithoutmask(work, 0, outBuf, outOff, validBits);
+        }
         return validBits;
-        //for (int i = 0; i < 32; ++i) {
-        //    outBuf[outOff + i] = work[i];
-        //}
-        //return 32;
     }
 
     public static int xorUnpack(int[] inBuf, int inOff,
             int[] outBuf, int outOff, int validBits, int context, int[] work)
     {
-        BitPacking.fastunpack(inBuf, inOff, work, 0, validBits);
-        //for (int i = 0; i < 32; ++i) {
-        //    work[i] = inBuf[inOff + i];
-        //}
+        if (DEBUG_DISABLE_BITPACKING) {
+            for (int i = 0; i < 32; ++i) {
+                work[i] = inBuf[inOff + i];
+            }
+        } else {
+            BitPacking.fastunpack(inBuf, inOff, work, 0, validBits);
+        }
         outBuf[outOff] = work[0] ^ context;
         for (int i = 1, p = outOff + 1; i < 32; ++i, ++p) {
             outBuf[p] = work[i] ^ outBuf[p - 1];
         }
         return validBits;
-        //return 32;
     }
 }
