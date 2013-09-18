@@ -132,9 +132,9 @@ public final class XorBinaryPacking implements IntegratedIntegerCODEC {
         } else {
             BitPacking.fastunpack(inBuf, inOff, work, 0, validBits);
         }
-        outBuf[outOff] = work[0] ^ context;
+        outBuf[outOff] = context = work[0] ^ context;
         for (int i = 1, p = outOff + 1; i < 32; ++i, ++p) {
-            outBuf[p] = work[i] ^ outBuf[p - 1];
+            outBuf[p] = context = work[i] ^ context;
         }
         return validBits;
     }
