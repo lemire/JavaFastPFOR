@@ -242,7 +242,7 @@ public class BenchmarkOffsettedSeries
                     + csvFile.getName());
             System.out.println();
             BenchmarkOffsettedSeries b = new BenchmarkOffsettedSeries();
-            b.run(writer, 16 * 1000, 1000);
+            b.run(writer, 16 * 1024, 1024);
             System.out.println();
             System.out.println("# Results were written into a CSV file: "
                     + csvFile.getName());
