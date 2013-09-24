@@ -7,13 +7,14 @@ package me.lemire.integercompression;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Random;
 
 public class BenchmarkOffsettedSeries
 {
     public static final int DEFAULT_MEAN = 1 << 20;
     public static final int DEFAULT_RANGE = 1 << 10;
-    public static final int DEFAULT_REPEAT = 10;
+    public static final int DEFAULT_REPEAT = 5;
     public static final int DEFAULT_WARMUP = 2;
 
     public BenchmarkOffsettedSeries() {
@@ -29,45 +30,76 @@ public class BenchmarkOffsettedSeries
     public void run(PrintWriter csvWriter, int count, int length)
     {
         IntegerCODEC[] codecs = {
-            new Composition(new XorBinaryPacking(), new VariableByte()),
-            new IntegratedComposition(
-                    new XorBinaryPacking(), new IntegratedVariableByte()),
+            new Composition(new BinaryPacking(), new VariableByte()),
+            new Composition(new FastPFOR(), new VariableByte()),
             new Composition(
                     new IntegratedBinaryPacking(), new VariableByte()),
             new IntegratedComposition(
                     new IntegratedBinaryPacking(),
                     new IntegratedVariableByte()),
+            new Composition(new XorBinaryPacking(), new VariableByte()),
+            new IntegratedComposition(
+                    new XorBinaryPacking(), new IntegratedVariableByte()),
         };
 
-        csvWriter.format("\"Algorithm\",\"Bits per int\"," +
+        csvWriter.format("\"Dataset\",\"CODEC\",\"Bits per int\"," +
                 "\"Compress speed (MiS)\",\"Decompress speed (MiS)\"\n");
 
-        int[][] randData = generateDataChunks(0, count, length,
-                DEFAULT_MEAN, DEFAULT_RANGE);
-        benchmark(csvWriter, "Random (mean=2^20 range=2^10)",
-                codecs, randData, DEFAULT_REPEAT, DEFAULT_WARMUP);
+        benchmark(csvWriter, codecs, count, length, DEFAULT_MEAN,
+                DEFAULT_RANGE);
+        benchmark(csvWriter, codecs, count, length, DEFAULT_MEAN >> 5,
+                DEFAULT_RANGE);
     }
 
     private void benchmark(
             PrintWriter csvWriter,
-            String labelPrefix,
+            IntegerCODEC[] codecs,
+            int count,
+            int length,
+            int mean,
+            int range)
+    {
+        String dataProp = String.format("(mean=%1$d range=%2$d)", mean,
+                range);
+
+        int[][] randData = generateDataChunks(0, count, length, mean, range);
+        int[][] deltaData = deltaDataChunks(randData);
+        int[][] sortedData = sortDataChunks(randData);
+        int[][] sortedDeltaData = deltaDataChunks(sortedData);
+
+        benchmark(csvWriter, "Random " + dataProp,
+                codecs, randData, DEFAULT_REPEAT, DEFAULT_WARMUP);
+        benchmark(csvWriter, "Random+delta " + dataProp,
+                codecs, deltaData, DEFAULT_REPEAT, DEFAULT_WARMUP);
+        benchmark(csvWriter, "Sorted " + dataProp,
+                codecs, sortedData, DEFAULT_REPEAT, DEFAULT_WARMUP);
+        benchmark(csvWriter, "Sorted+delta " + dataProp,
+                codecs, sortedDeltaData, DEFAULT_REPEAT, DEFAULT_WARMUP);
+    }
+
+    private void benchmark(
+            PrintWriter csvWriter,
+            String dataName,
             IntegerCODEC[] codecs,
             int[][] data,
             int repeat,
             int warmup)
     {
+        System.out.println("Processing: " + dataName);
         for (IntegerCODEC codec : codecs) {
-            String label = labelPrefix + " - " + codec.toString();
+            String codecName = codec.toString();
             for (int i = 0; i < warmup; ++i) {
-                benchmark(null, label, codec, data, repeat);
+                benchmark(null, null, null, codec, data, repeat);
             }
-            benchmark(csvWriter, label, codec, data, repeat);
+            benchmark(csvWriter, dataName, codecName, codec, data,
+                    repeat);
         }
     }
 
     private void benchmark(
             PrintWriter csvWriter,
-            String label,
+            String dataName,
+            String codecName,
             IntegerCODEC codec,
             int[][] data,
             int repeat)
@@ -88,9 +120,9 @@ public class BenchmarkOffsettedSeries
         }
 
         if (csvWriter != null) {
-            csvWriter.format("\"%1$s\",%2$.2f,%3$.0f,%4$.0f\n",
-                    label, logger.getBitPerInt(), logger.getCompressSpeed(),
-                    logger.getDecompressSpeed());
+            csvWriter.format("\"%1$s\",\"%2$s\",%3$.2f,%4$.0f,%5$.0f\n",
+                    dataName, codecName, logger.getBitPerInt(),
+                    logger.getCompressSpeed(), logger.getDecompressSpeed());
         }
     }
 
@@ -170,10 +202,33 @@ public class BenchmarkOffsettedSeries
         for (int i = 0; i < count; ++i) {
             int[] chunk = chunks[i] = new int[length];
             for (int j = 0; j < length; ++j) {
-                chunk[j] = (r.nextInt() % range) + offset;
+                chunk[j] = r.nextInt(range) + offset;
             }
         }
         return chunks;
+    }
+
+    public static int[][] deltaDataChunks(int[][] src) {
+        int[][] dst = new int[src.length][];
+        for (int i = 0; i < src.length; ++i) {
+            int[] s = src[i];
+            int[] d = dst[i] = new int[s.length];
+            int prev = 0;
+            for (int j = 0; j < s.length; ++j) {
+                d[j] = s[j] - prev;
+                prev = s[j];
+            }
+        }
+        return dst;
+    }
+
+    public static int[][] sortDataChunks(int[][] src) {
+        int[][] dst = new int[src.length][];
+        for (int i = 0; i < src.length; ++i) {
+            dst[i] = Arrays.copyOf(src[i], src[i].length);
+            Arrays.sort(dst[i]);
+        }
+        return dst;
     }
 
     public static void main(String[] args) throws Exception {
