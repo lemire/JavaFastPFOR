@@ -13,6 +13,8 @@ public class BenchmarkOffsettedSeries
 {
     public static final int DEFAULT_MEAN = 1 << 20;
     public static final int DEFAULT_RANGE = 1 << 10;
+    public static final int DEFAULT_REPEAT = 10;
+    public static final int DEFAULT_WARMUP = 2;
 
     public BenchmarkOffsettedSeries() {
     }
@@ -26,9 +28,6 @@ public class BenchmarkOffsettedSeries
      */
     public void run(PrintWriter csvWriter, int count, int length)
     {
-        int[][] data = generateDataChunks(0, count, length,
-                DEFAULT_MEAN, DEFAULT_RANGE);
-
         IntegerCODEC[] codecs = {
             new Composition(new XorBinaryPacking(), new VariableByte()),
             new IntegratedComposition(
@@ -42,8 +41,27 @@ public class BenchmarkOffsettedSeries
 
         csvWriter.format("\"Algorithm\",\"Bits per int\"," +
                 "\"Compress speed (MiS)\",\"Decompress speed (MiS)\"\n");
+
+        int[][] randData = generateDataChunks(0, count, length,
+                DEFAULT_MEAN, DEFAULT_RANGE);
+        benchmark(csvWriter, "Random (mean=2^20 range=2^10)",
+                codecs, randData, DEFAULT_REPEAT, DEFAULT_WARMUP);
+    }
+
+    private void benchmark(
+            PrintWriter csvWriter,
+            String labelPrefix,
+            IntegerCODEC[] codecs,
+            int[][] data,
+            int repeat,
+            int warmup)
+    {
         for (IntegerCODEC codec : codecs) {
-            benchmark(csvWriter, codec.toString(), codec, data);
+            String label = labelPrefix + " - " + codec.toString();
+            for (int i = 0; i < warmup; ++i) {
+                benchmark(null, label, codec, data, repeat);
+            }
+            benchmark(csvWriter, label, codec, data, repeat);
         }
     }
 
@@ -51,7 +69,8 @@ public class BenchmarkOffsettedSeries
             PrintWriter csvWriter,
             String label,
             IntegerCODEC codec,
-            int[][] data)
+            int[][] data,
+            int repeat)
     {
         PerformanceLogger logger = new PerformanceLogger();
 
@@ -59,11 +78,13 @@ public class BenchmarkOffsettedSeries
         int[] compressBuffer = new int[4 * maxLen + 1024];
         int[] decompressBuffer = new int[maxLen];
 
-        for (int[] array : data) {
-            int compSize = compress(logger, codec, array, compressBuffer);
-            int decompSize = decompress(logger, codec, compressBuffer,
-                    compSize, decompressBuffer);
-            checkArray(array, decompressBuffer, decompSize, codec);
+        for (int i = 0; i < repeat; ++i) {
+            for (int[] array : data) {
+                int compSize = compress(logger, codec, array, compressBuffer);
+                int decompSize = decompress(logger, codec, compressBuffer,
+                        compSize, decompressBuffer);
+                checkArray(array, decompressBuffer, decompSize, codec);
+            }
         }
 
         if (csvWriter != null) {
@@ -166,7 +187,7 @@ public class BenchmarkOffsettedSeries
                     + csvFile.getName());
             System.out.println();
             BenchmarkOffsettedSeries b = new BenchmarkOffsettedSeries();
-            b.run(writer, 16 * 1024, 1024);
+            b.run(writer, 16 * 1000, 1000);
             System.out.println();
             System.out.println("# Results were written into a CSV file: "
                     + csvFile.getName());

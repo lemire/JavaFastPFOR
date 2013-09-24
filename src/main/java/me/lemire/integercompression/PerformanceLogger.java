@@ -8,7 +8,7 @@ public final class PerformanceLogger
 {
     public static class Timer {
         private long startNano;
-        private long duration;
+        private long duration = 0;
 
         public Timer() {}
 
@@ -17,7 +17,7 @@ public final class PerformanceLogger
         }
 
         public long end() {
-            return this.duration = System.nanoTime() - this.startNano;
+            return this.duration += System.nanoTime() - this.startNano;
         }
 
         public long getDuration() {
@@ -53,11 +53,15 @@ public final class PerformanceLogger
         return this.compressedSize * 32.0 / this.originalSize;
     }
 
+    private static double getMiS(long size, long nanoTime) {
+        return (size * 1e-6) / (nanoTime * 1.0e-9);
+    }
+
     public double getCompressSpeed() {
-        return originalSize * 1.0e3 / this.compressionTimer.getDuration();
+        return getMiS(this.originalSize, this.compressionTimer.getDuration());
     }
 
     public double getDecompressSpeed() {
-        return originalSize * 1.0e3 / this.decompressionTimer.getDuration();
+        return getMiS(this.originalSize, this.decompressionTimer.getDuration());
     }
 }
