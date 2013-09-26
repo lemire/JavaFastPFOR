@@ -31,6 +31,7 @@ public class BenchmarkOffsettedSeries
     {
         IntegerCODEC[] codecs = {
           new BinaryPacking(),
+          new BinaryPacking2(),
           new FastPFOR(),
           new IntegratedBinaryPacking(),
           new XorBinaryPacking(),

@@ -12,7 +12,7 @@ package me.lemire.integercompression;
  *
  * @author Daniel Lemire
  */
-public final class BinaryPacking implements IntegerCODEC {
+public class BinaryPacking implements IntegerCODEC {
 
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
