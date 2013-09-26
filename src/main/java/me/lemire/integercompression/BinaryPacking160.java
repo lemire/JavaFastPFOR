@@ -20,27 +20,26 @@ public class BinaryPacking160 implements IntegerCODEC
 
         int op = outpos.get();
         out[op++] = inlength;
-        for (int ip = inpos.get(); ip < inpos.get() + inlength;
-                ip += CHUNK_SIZE)
+        for (int s = inpos.get(); s < inpos.get() + inlength; s += CHUNK_SIZE)
         {
-            final int mbits1 = Util.maxbits32(in, ip +   0);
-            final int mbits2 = Util.maxbits32(in, ip +  32);
-            final int mbits3 = Util.maxbits32(in, ip +  64);
-            final int mbits4 = Util.maxbits32(in, ip +  96);
-            final int mbits5 = Util.maxbits32(in, ip + 128);
+            final int mbits1 = Util.maxbits32(in, s +   0);
+            final int mbits2 = Util.maxbits32(in, s +  32);
+            final int mbits3 = Util.maxbits32(in, s +  64);
+            final int mbits4 = Util.maxbits32(in, s +  96);
+            final int mbits5 = Util.maxbits32(in, s + 128);
 
             out[op++] = (mbits1 << 24) | (mbits2 << 18) | (mbits3 << 12)
                 | (mbits4 << 6) | (mbits5 << 0);
 
-            BitPacking.fastpackwithoutmask(in, ip +   0, out, op, mbits1);
+            BitPacking.fastpackwithoutmask(in, s +   0, out, op, mbits1);
             op += mbits1;
-            BitPacking.fastpackwithoutmask(in, ip +  32, out, op, mbits2);
+            BitPacking.fastpackwithoutmask(in, s +  32, out, op, mbits2);
             op += mbits2;
-            BitPacking.fastpackwithoutmask(in, ip +  64, out, op, mbits3);
+            BitPacking.fastpackwithoutmask(in, s +  64, out, op, mbits3);
             op += mbits3;
-            BitPacking.fastpackwithoutmask(in, ip +  96, out, op, mbits4);
+            BitPacking.fastpackwithoutmask(in, s +  96, out, op, mbits4);
             op += mbits4;
-            BitPacking.fastpackwithoutmask(in, ip + 128, out, op, mbits5);
+            BitPacking.fastpackwithoutmask(in, s + 128, out, op, mbits5);
             op += mbits5;
         }
         inpos.add(inlength);
