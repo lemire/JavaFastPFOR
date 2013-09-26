@@ -30,16 +30,10 @@ public class BenchmarkOffsettedSeries
     public void run(PrintWriter csvWriter, int count, int length)
     {
         IntegerCODEC[] codecs = {
-            new Composition(new BinaryPacking(), new VariableByte()),
-            new Composition(new FastPFOR(), new VariableByte()),
-            new Composition(
-                    new IntegratedBinaryPacking(), new VariableByte()),
-            new IntegratedComposition(
-                    new IntegratedBinaryPacking(),
-                    new IntegratedVariableByte()),
-            new Composition(new XorBinaryPacking(), new VariableByte()),
-            new IntegratedComposition(
-                    new XorBinaryPacking(), new IntegratedVariableByte()),
+          new BinaryPacking(),
+          new FastPFOR(),
+          new IntegratedBinaryPacking(),
+          new XorBinaryPacking(),
         };
 
         csvWriter.format("\"Dataset\",\"CODEC\",\"Bits per int\"," +
@@ -242,7 +236,7 @@ public class BenchmarkOffsettedSeries
                     + csvFile.getName());
             System.out.println();
             BenchmarkOffsettedSeries b = new BenchmarkOffsettedSeries();
-            b.run(writer, 16 * 1024, 1024);
+            b.run(writer, 8 * 1024, 1280);
             System.out.println();
             System.out.println("# Results were written into a CSV file: "
                     + csvFile.getName());
