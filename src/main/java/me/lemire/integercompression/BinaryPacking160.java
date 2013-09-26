@@ -1,44 +1,50 @@
+/**
+ * This code is released under the
+ * Apache License Version 2.0 http://www.apache.org/licenses/.
+ */
 package me.lemire.integercompression;
 
 public class BinaryPacking160 implements IntegerCODEC
 {
+    public final static int CHUNK_SIZE = 160;
 
     @Override
     public void compress(
             int[] in, IntWrapper inpos, int inlength,
             int[] out, IntWrapper outpos)
     {
-        inlength = inlength - inlength % 160;
+        inlength = inlength - inlength % CHUNK_SIZE;
         if (inlength == 0) {
             return;
         }
 
-        out[outpos.get()] = inlength;
-        outpos.increment();
-        int tmpoutpos = outpos.get();
-        for (int s = inpos.get(); s < inpos.get() + inlength; s += 32 * 5) {
-            final int mbits1 = Util.maxbits32(in, s +   0);
-            final int mbits2 = Util.maxbits32(in, s +  32);
-            final int mbits3 = Util.maxbits32(in, s +  64);
-            final int mbits4 = Util.maxbits32(in, s +  96);
-            final int mbits5 = Util.maxbits32(in, s + 128);
+        int op = outpos.get();
+        out[op++] = inlength;
+        for (int ip = inpos.get(); ip < inpos.get() + inlength;
+                ip += CHUNK_SIZE)
+        {
+            final int mbits1 = Util.maxbits32(in, ip +   0);
+            final int mbits2 = Util.maxbits32(in, ip +  32);
+            final int mbits3 = Util.maxbits32(in, ip +  64);
+            final int mbits4 = Util.maxbits32(in, ip +  96);
+            final int mbits5 = Util.maxbits32(in, ip + 128);
 
-            out[tmpoutpos++] = (mbits1 << 24) | (mbits2 << 18) | (mbits3 << 12)
+            out[op++] = (mbits1 << 24) | (mbits2 << 18) | (mbits3 << 12)
                 | (mbits4 << 6) | (mbits5 << 0);
 
-            BitPacking.fastpackwithoutmask(in, s +   0, out, tmpoutpos, mbits1);
-            tmpoutpos += mbits1;
-            BitPacking.fastpackwithoutmask(in, s +  32, out, tmpoutpos, mbits2);
-            tmpoutpos += mbits2;
-            BitPacking.fastpackwithoutmask(in, s +  64, out, tmpoutpos, mbits3);
-            tmpoutpos += mbits3;
-            BitPacking.fastpackwithoutmask(in, s +  96, out, tmpoutpos, mbits4);
-            tmpoutpos += mbits4;
-            BitPacking.fastpackwithoutmask(in, s + 128, out, tmpoutpos, mbits5);
-            tmpoutpos += mbits5;
+            BitPacking.fastpackwithoutmask(in, ip +   0, out, op, mbits1);
+            op += mbits1;
+            BitPacking.fastpackwithoutmask(in, ip +  32, out, op, mbits2);
+            op += mbits2;
+            BitPacking.fastpackwithoutmask(in, ip +  64, out, op, mbits3);
+            op += mbits3;
+            BitPacking.fastpackwithoutmask(in, ip +  96, out, op, mbits4);
+            op += mbits4;
+            BitPacking.fastpackwithoutmask(in, ip + 128, out, op, mbits5);
+            op += mbits5;
         }
         inpos.add(inlength);
-        outpos.set(tmpoutpos);
+        outpos.set(op);
     }
 
 
@@ -53,13 +59,14 @@ public class BinaryPacking160 implements IntegerCODEC
         final int outlength = in[inpos.get()];
         inpos.increment();
         int tmpinpos = inpos.get();
-        for (int s = outpos.get(); s < outpos.get() + outlength; s += 32 * 5) {
+        for (int s = outpos.get(), e = s + outlength; s < e; s += CHUNK_SIZE)
+        {
             int head = in[tmpinpos++];
-            final int mbits1 = (head >>> 24) & 0x3F;
-            final int mbits2 = (head >>> 18) & 0x3F;
-            final int mbits3 = (head >>> 12) & 0x3F;
-            final int mbits4 = (head >>>  6) & 0x3F;
-            final int mbits5 = (head >>>  0) & 0x3F;
+            final int mbits1 = (head >> 24) & 0x3F;
+            final int mbits2 = (head >> 18) & 0x3F;
+            final int mbits3 = (head >> 12) & 0x3F;
+            final int mbits4 = (head >>  6) & 0x3F;
+            final int mbits5 = (head >>  0) & 0x3F;
             BitPacking.fastunpack(in, tmpinpos, out, s +   0, mbits1);
             tmpinpos += mbits1;
             BitPacking.fastunpack(in, tmpinpos, out, s +  32, mbits2);
