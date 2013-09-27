@@ -17,6 +17,22 @@ public class BasicTest
 {
 
     @Test
+    public void checkDeltaZigzagPacking() {
+        DeltaZigzagBinaryPacking codec = new DeltaZigzagBinaryPacking();
+        testZeroInZeroOut(codec);
+        testSpurious(codec);
+
+        IntegerCODEC compo = new Composition(
+                new DeltaZigzagBinaryPacking(),
+                new VariableByte());
+        testZeroInZeroOut(compo);
+        testUnsorted(compo);
+        test(compo, 5, 10);
+        test(compo, 5, 14);
+        test(compo, 2, 18);
+    }
+
+    @Test
     public void checkXorBinaryPacking() {
         testZeroInZeroOut(new XorBinaryPacking());
         testSpurious(new XorBinaryPacking());

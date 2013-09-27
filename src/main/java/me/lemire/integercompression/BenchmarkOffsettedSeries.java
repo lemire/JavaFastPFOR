@@ -33,9 +33,10 @@ public class BenchmarkOffsettedSeries
           new BinaryPacking(),
           new BinaryPacking2(),
           new BinaryPacking160(),
-          new FastPFOR(),
+          new DeltaZigzagBinaryPacking(),
           new IntegratedBinaryPacking(),
           new XorBinaryPacking(),
+          new FastPFOR(),
         };
 
         csvWriter.format("\"Dataset\",\"CODEC\",\"Bits per int\"," +
