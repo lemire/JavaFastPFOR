@@ -40,7 +40,10 @@ public final class DeltaZigzagEncoding {
         public int[] encodeArray(int[] src, int srcoff, int length,
                 int[] dst, int dstoff)
         {
-            return encodeArray1(src, srcoff, length, dst, dstoff);
+            for (int i = 0; i < length; ++i) {
+                dst[dstoff + i] = encodeInt(src[srcoff + i]);
+            }
+            return dst;
         }
 
         public int[] encodeArray(int[] src, int srcoff, int length,
@@ -55,28 +58,6 @@ public final class DeltaZigzagEncoding {
 
         public int[] encodeArray(int[] src) {
             return encodeArray(src, 0, src.length, new int[src.length], 0);
-        }
-
-        private int[] encodeArray1(int[] src, int srcoff, int length,
-                int[] dst, int dstoff)
-        {
-            for (int i = 0; i < length; ++i) {
-                dst[dstoff + i] = encodeInt(src[srcoff + i]);
-            }
-            return dst;
-        }
-
-        private int[] encodeArray2(int[] src, int srcoff, int length,
-                int[] dst, int dstoff)
-        {
-            int ctx = this.contextValue;
-            for (int i = 0; i < length; ++i) {
-                int n = src[srcoff + i] - ctx;
-                ctx = src[srcoff + i];
-                dst[dstoff + i] = (n << 1) ^ (n >> 31);
-            }
-            this.contextValue = ctx;
-            return dst;
         }
     }
 

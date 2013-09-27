@@ -65,15 +65,11 @@ public final class DeltaZigzagBinaryPacking implements IntegerCODEC {
         int op = outPos.get();
         final int outPosLast = op + outLen;
         for (; op < outPosLast; op += BLOCK_LENGTH) {
-            final int bits1 = (inBuf[ip] >>> 24);
-            final int bits2 = (inBuf[ip] >>> 16) & 0xFF;
-            final int bits3 = (inBuf[ip] >>>  8) & 0xFF;
-            final int bits4 = (inBuf[ip] >>>  0) & 0xFF;
-            ++ip;
-            ip += unpack(inBuf, ip, work,  0, bits1);
-            ip += unpack(inBuf, ip, work, 32, bits2);
-            ip += unpack(inBuf, ip, work, 64, bits3);
-            ip += unpack(inBuf, ip, work, 96, bits4);
+            int n = inBuf[ip++];
+            ip += unpack(inBuf, ip, work,  0, (n >> 24) & 0x3F);
+            ip += unpack(inBuf, ip, work, 32, (n >> 16) & 0x3F);
+            ip += unpack(inBuf, ip, work, 64, (n >>  8) & 0x3F);
+            ip += unpack(inBuf, ip, work, 96, (n >>  0) & 0x3F);
             ctx.decodeArray(work, 0, BLOCK_LENGTH, outBuf, op);
         }
 
