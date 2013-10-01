@@ -46,6 +46,54 @@ public class BenchmarkOffsettedSeries
                 DEFAULT_RANGE);
         benchmark(csvWriter, codecs, count, length, DEFAULT_MEAN >> 5,
                 DEFAULT_RANGE);
+
+        IntegerCODEC[] codecs2 = {
+          new BinaryPacking(),
+          new DeltaZigzagBinaryPacking(),
+          new IntegratedBinaryPacking(),
+          new XorBinaryPacking(),
+          new FastPFOR(),
+        };
+
+        int freq = length / 4;
+        benchmarkSine(csvWriter, codecs2, count, length,
+                DEFAULT_MEAN >>  0, DEFAULT_RANGE >> 0, freq);
+        benchmarkSine(csvWriter, codecs2, count, length,
+                DEFAULT_MEAN >>  5, DEFAULT_RANGE >> 0, freq);
+        benchmarkSine(csvWriter, codecs2, count, length,
+                DEFAULT_MEAN >> 10, DEFAULT_RANGE >> 0, freq);
+        benchmarkSine(csvWriter, codecs2, count, length,
+                DEFAULT_MEAN >>  0, DEFAULT_RANGE >> 2, freq);
+        benchmarkSine(csvWriter, codecs2, count, length,
+                DEFAULT_MEAN >>  5, DEFAULT_RANGE >> 2, freq);
+        benchmarkSine(csvWriter, codecs2, count, length,
+                DEFAULT_MEAN >> 10, DEFAULT_RANGE >> 2, freq);
+        benchmarkSine(csvWriter, codecs2, count, length,
+                DEFAULT_MEAN >>  0, DEFAULT_RANGE >> 4, freq);
+        benchmarkSine(csvWriter, codecs2, count, length,
+                DEFAULT_MEAN >>  5, DEFAULT_RANGE >> 4, freq);
+        benchmarkSine(csvWriter, codecs2, count, length,
+                DEFAULT_MEAN >> 10, DEFAULT_RANGE >> 4, freq);
+    }
+
+    private void benchmarkSine(
+            PrintWriter csvWriter,
+            IntegerCODEC[] codecs,
+            int count,
+            int length,
+            int mean,
+            int range,
+            int freq)
+    {
+        String dataProp = String.format("(mean=%1$d range=%2$d freq=%2$d)",
+                mean, range, freq);
+        int[][] data = generateSineDataChunks(0, count, length, mean, range,
+                freq);
+        int[][] delta = deltaDataChunks(data);
+        benchmark(csvWriter, "Sine " + dataProp,
+                codecs, data, DEFAULT_REPEAT, DEFAULT_WARMUP);
+        benchmark(csvWriter, "Sine+delta " + dataProp,
+                codecs, data, DEFAULT_REPEAT, DEFAULT_WARMUP);
     }
 
     private void benchmark(
@@ -184,6 +232,27 @@ public class BenchmarkOffsettedSeries
             }
         }
         return maxLen;
+    }
+
+    public static int[][] generateSineDataChunks(
+            long seed,
+            int count,
+            int length,
+            int mean,
+            int range,
+            int freq)
+    {
+        int[][] chunks = new int[count][];
+        Random r = new Random(seed);
+        for (int i = 0; i < count; ++i) {
+            int[] chunk = chunks[i] = new int[length];
+            int phase = r.nextInt(2 * freq);
+            for (int j = 0; j < length; ++j) {
+                double angle = 2.0 * Math.PI * (j + phase) / freq;
+                chunk[j] = (int)(mean + Math.sin(angle) * range);
+            }
+        }
+        return chunks;
     }
 
     public static int[][] generateDataChunks(
