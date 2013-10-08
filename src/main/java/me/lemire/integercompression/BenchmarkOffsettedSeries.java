@@ -30,13 +30,14 @@ public class BenchmarkOffsettedSeries
     public void run(PrintWriter csvWriter, int count, int length)
     {
         IntegerCODEC[] codecs = {
-          new BinaryPacking(),
-          new BinaryPacking2(),
-          new BinaryPacking160(),
-          new DeltaZigzagBinaryPacking(),
-          new IntegratedBinaryPacking(),
-          new XorBinaryPacking(),
-          new FastPFOR(),
+            new JustCopy(),
+            new BinaryPacking(),
+            //new BinaryPacking2(),
+            //new BinaryPacking160(),
+            new DeltaZigzagBinaryPacking(),
+            new IntegratedBinaryPacking(),
+            new XorBinaryPacking(),
+            new FastPFOR(),
         };
 
         csvWriter.format("\"Dataset\",\"CODEC\",\"Bits per int\"," +
@@ -48,11 +49,12 @@ public class BenchmarkOffsettedSeries
                 DEFAULT_RANGE);
 
         IntegerCODEC[] codecs2 = {
-          new BinaryPacking(),
-          new DeltaZigzagBinaryPacking(),
-          new IntegratedBinaryPacking(),
-          new XorBinaryPacking(),
-          new FastPFOR(),
+            new JustCopy(),
+            new BinaryPacking(),
+            new DeltaZigzagBinaryPacking(),
+            new IntegratedBinaryPacking(),
+            new XorBinaryPacking(),
+            new FastPFOR(),
         };
 
         int freq = length / 4;
