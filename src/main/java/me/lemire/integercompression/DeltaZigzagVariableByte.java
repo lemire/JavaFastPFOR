@@ -24,7 +24,7 @@ public final class DeltaZigzagVariableByte implements IntegerCODEC {
             return;
         }
 
-        ByteBuffer byteBuf = ByteBuffer.allocateDirect(inLen * 5);
+        ByteBuffer byteBuf = ByteBuffer.allocateDirect(inLen * 5 + 3);
         DeltaZigzagEncoding.Encoder ctx = new DeltaZigzagEncoding.Encoder();
 
         // Delta+Zigzag+VariableByte encoding.
@@ -53,13 +53,19 @@ public final class DeltaZigzagVariableByte implements IntegerCODEC {
         }
 
         // Padding buffer to considerable as IntBuffer.
-        for (int i = (4 - (byteBuf.position() % 4)) % 4; i > 0; ++i) {
+        for (int i = (4 - (byteBuf.position() % 4)) % 4; i > 0; --i) {
             byteBuf.put((byte)(0x80));
         }
 
         int outLen = byteBuf.position() / 4;
         byteBuf.flip();
         IntBuffer intBuf = byteBuf.asIntBuffer();
+        /*
+        System.out.println(String.format(
+                    "inLen=%d pos=%d limit=%d outLen=%d outBuf.len=%d",
+                    inLen, intBuf.position(), intBuf.limit(), outLen,
+                    outBuf.length));
+                    */
         intBuf.get(outBuf, outPos.get(), outLen);
         inPos.add(inLen);
         outPos.add(outLen);
@@ -70,31 +76,30 @@ public final class DeltaZigzagVariableByte implements IntegerCODEC {
             int[] inBuf, IntWrapper inPos, int inLen,
             int[] outBuf, IntWrapper outPos)
     {
-        /*
-        if (inLen == 0) {
-            return;
-        }
-
-        final int outLen = inBuf[inPos.get()];
-        inPos.increment();
-
         DeltaZigzagEncoding.Decoder ctx = new DeltaZigzagEncoding.Decoder();
-        int[] work = new int[BLOCK_LENGTH];
 
         int ip = inPos.get();
         int op = outPos.get();
-        final int outPosLast = op + outLen;
-        for (; op < outPosLast; op += BLOCK_LENGTH) {
-            int n = inBuf[ip++];
-            ip += unpack(inBuf, ip, work,  0, (n >> 24) & 0x3F);
-            ip += unpack(inBuf, ip, work, 32, (n >> 16) & 0x3F);
-            ip += unpack(inBuf, ip, work, 64, (n >>  8) & 0x3F);
-            ip += unpack(inBuf, ip, work, 96, (n >>  0) & 0x3F);
-            ctx.decodeArray(work, 0, BLOCK_LENGTH, outBuf, op);
+        int vbcNum = 0, vbcShift = 24; // Varialbe Byte Context.
+        final int inPosLast = ip + inLen;
+        while (ip < inPosLast) {
+            // Fetch a byte value.
+            int n = (inBuf[ip] >>> vbcShift) & 0xFF;
+            if (vbcShift > 0) {
+                vbcShift -= 8;
+            } else {
+                vbcShift = 24;
+                ip++;
+            }
+            // Decode variable byte and delta+zigzag.
+            vbcNum = (vbcNum << 7) + (n & 0x7F);
+            if ((n & 0x80) == 0) {
+                outBuf[op++] = ctx.decodeInt(vbcNum);
+                vbcNum = 0;
+            }
         }
 
-        outPos.add(outLen);
-        inPos.set(ip);
-        */
+        outPos.set(op);
+        inPos.set(inPosLast);
     }
 }

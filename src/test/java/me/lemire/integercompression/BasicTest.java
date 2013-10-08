@@ -17,6 +17,15 @@ public class BasicTest
 {
 
     @Test
+    public void checkDeltaZigzagVB() {
+        DeltaZigzagVariableByte codec = new DeltaZigzagVariableByte();
+        testZeroInZeroOut(codec);
+        test(codec, 5, 10);
+        test(codec, 5, 14);
+        test(codec, 2, 18);
+    }
+
+    @Test
     public void checkDeltaZigzagPacking() {
         DeltaZigzagBinaryPacking codec = new DeltaZigzagBinaryPacking();
         testZeroInZeroOut(codec);
