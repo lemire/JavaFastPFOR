@@ -8,7 +8,7 @@
 package me.lemire.integercompression;
 
 /**
- * OptPFD implemented by Daniel Lemire
+ * OptPFD 
  * <p/>
  * Follows:
  * <p/>
@@ -17,6 +17,9 @@ package me.lemire.integercompression;
  * <p/>
  * using Simple16 as the secondary coder.
  *
+ *
+ * For multi-threaded applications, each thread should use its own OptPFDS16 object.
+ * 
  * @author Daniel Lemire
  */
 public final class OptPFDS16 implements IntegerCODEC {
