@@ -32,8 +32,6 @@ public class BenchmarkOffsettedSeries
         IntegerCODEC[] codecs = {
             new JustCopy(),
             new BinaryPacking(),
-            //new BinaryPacking2(),
-            //new BinaryPacking160(),
             new DeltaZigzagBinaryPacking(),
             new DeltaZigzagVariableByte(),
             new IntegratedBinaryPacking(),

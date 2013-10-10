@@ -4,6 +4,11 @@
  */
 package me.lemire.integercompression;
 
+/**
+ * PerformanceLogger for IntegerCODEC.
+ *
+ * @author MURAOKA Taro http://github.com/koron
+ */
 public final class PerformanceLogger
 {
     public static class Timer {

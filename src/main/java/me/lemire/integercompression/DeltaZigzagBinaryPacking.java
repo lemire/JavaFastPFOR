@@ -5,6 +5,11 @@
 
 package me.lemire.integercompression;
 
+/**
+ * BinaryPacking with Delta+Zigzag Encoding.
+ *
+ * @author MURAOKA Taro http://github.com/koron
+ */
 public final class DeltaZigzagBinaryPacking implements IntegerCODEC {
 
     public static final int BLOCK_LENGTH = 128;

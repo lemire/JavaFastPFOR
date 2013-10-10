@@ -4,6 +4,11 @@
  */
 package me.lemire.integercompression;
 
+/**
+ * XOR + BinaryPacking.
+ *
+ * @author MURAOKA Taro http://github.com/koron
+ */
 public final class XorBinaryPacking implements IntegratedIntegerCODEC {
 
     /** A flag for debugging. */

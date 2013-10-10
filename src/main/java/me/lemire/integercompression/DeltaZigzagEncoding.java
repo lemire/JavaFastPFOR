@@ -4,6 +4,11 @@
  */
 package me.lemire.integercompression;
 
+/**
+ * Delta+Zigzag Encoding.
+ *
+ * @author MURAOKA Taro http://github.com/koron
+ */
 public final class DeltaZigzagEncoding {
 
     public static class Context {

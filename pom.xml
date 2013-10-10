@@ -82,7 +82,10 @@
   <artifactId>exec-maven-plugin</artifactId>
   <version>1.1</version>
   <configuration>
+    <mainClass>me.lemire.integercompression.Benchmark</mainClass>
+    <!--
     <mainClass>me.lemire.integercompression.BenchmarkOffsettedSeries</mainClass>
+    -->
   </configuration>
 </plugin>
 
