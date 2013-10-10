@@ -76,4 +76,30 @@ public class DeltaZigzagEncodingTest {
             new int[]{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
             new int[]{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
     }
+
+    public static class SpotChecker {
+
+        private final static DeltaZigzagEncoding.Encoder encoder =
+            new DeltaZigzagEncoding.Encoder();
+
+        private final static DeltaZigzagEncoding.Decoder decoder =
+            new DeltaZigzagEncoding.Decoder();
+
+        public void check(int value) {
+            this.encoder.setContextValue(0);
+            this.decoder.setContextValue(0);
+            int value2 = this.decoder.decodeInt(this.encoder.encodeInt(value));
+            assertEquals(value, value2);
+        }
+    }
+
+    @Test
+    public void checkSpots() {
+        SpotChecker c = new SpotChecker();
+        c.check(0);
+        c.check(1);
+        c.check(1375228800);
+        c.check(1 << 30);
+        c.check(1 << 31);
+    }
 }
