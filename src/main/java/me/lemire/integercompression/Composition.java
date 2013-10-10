@@ -59,7 +59,7 @@ public class Composition implements IntegerCODEC {
 
     @Override
     public String toString() {
-        return F1.toString() + "+" + F2.toString();
+        return F1.toString() + " + " + F2.toString();
     }
 
 }
