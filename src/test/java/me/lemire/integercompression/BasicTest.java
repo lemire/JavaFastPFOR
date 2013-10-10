@@ -16,6 +16,60 @@ import static org.junit.Assert.*;
 public class BasicTest
 {
 
+    @Test
+    public void checkDeltaZigzagVB() {
+        DeltaZigzagVariableByte codec = new DeltaZigzagVariableByte();
+        testZeroInZeroOut(codec);
+        test(codec, 5, 10);
+        test(codec, 5, 14);
+        test(codec, 2, 18);
+    }
+
+    @Test
+    public void checkDeltaZigzagPacking() {
+        DeltaZigzagBinaryPacking codec = new DeltaZigzagBinaryPacking();
+        testZeroInZeroOut(codec);
+        testSpurious(codec);
+
+        IntegerCODEC compo = new Composition(
+                new DeltaZigzagBinaryPacking(),
+                new VariableByte());
+        testZeroInZeroOut(compo);
+        testUnsorted(compo);
+        test(compo, 5, 10);
+        test(compo, 5, 14);
+        test(compo, 2, 18);
+    }
+
+    @Test
+    public void checkXorBinaryPacking() {
+        testZeroInZeroOut(new XorBinaryPacking());
+        testSpurious(new XorBinaryPacking());
+    }
+
+    @Test
+    public void checkXorBinaryPacking1() {
+        IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),
+                new IntegratedVariableByte());
+        testZeroInZeroOut(c);
+    }
+
+    @Test
+    public void checkXorBinaryPacking2() {
+        IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),
+                new IntegratedVariableByte());
+        testUnsorted(c);
+    }
+
+    @Test
+    public void checkXorBinaryPacking3() {
+        IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),
+                new IntegratedVariableByte());
+        test(c, 5, 10);
+        test(c, 5, 14);
+        test(c, 2, 18);
+    }
+
     /**
      * Verify bitpacking.
      */
@@ -179,6 +233,18 @@ public class BasicTest
         IntWrapper outpos = new IntWrapper(0);
         c.uncompress(y, i1, 0, out, outpos);
         assertEquals(0, outpos.intValue());
+    }
+
+    private static void test(IntegerCODEC c, int N, int nbr) {
+        ClusteredDataGenerator cdg = new ClusteredDataGenerator();
+        for (int sparsity = 1; sparsity < 31 - nbr; sparsity += 4) {
+            int[][] data = new int[N][];
+            int max = (1 << (nbr + sparsity));
+            for (int k = 0; k < N; ++k) {
+                data[k] = cdg.generateClustered((1 << nbr), max);
+            }
+            testCodec(c, data, max);
+        }
     }
 
     private static void test(int N, int nbr) {

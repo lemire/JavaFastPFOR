@@ -9,6 +9,28 @@ import static org.junit.Assert.*;
  */
 public class TestUtils {
 
+    public static void dumpIntArray(int[] data, String label) {
+        System.out.print(label);
+        for (int i = 0; i < data.length; ++i) {
+            if (i % 6 == 0) {
+                System.out.println();
+            }
+            System.out.format(" %1$11d", data[i]);
+        }
+        System.out.println();
+    }
+
+    public static void dumpIntArrayAsHex(int[] data, String label) {
+        System.out.print(label);
+        for (int i = 0; i < data.length; ++i) {
+            if (i % 8 == 0) {
+                System.out.println();
+            }
+            System.out.format(" %1$08X", data[i]);
+        }
+        System.out.println();
+    }
+
     /**
      * Check that compress and uncompress keep original array.
      *
@@ -44,4 +66,19 @@ public class TestUtils {
         assertArrayEquals(orig, target);
     }
 
+    public static int[] compress(IntegerCODEC codec, int[] data) {
+        int[] outBuf = new int[data.length * 4];
+        IntWrapper inPos = new IntWrapper();
+        IntWrapper outPos = new IntWrapper();
+        codec.compress(data, inPos, data.length, outBuf, outPos);
+        return Arrays.copyOf(outBuf, outPos.get());
+    }
+
+    public static int[] uncompress(IntegerCODEC codec, int[] data, int len) {
+        int[] outBuf = new int[len + 1024];
+        IntWrapper inPos = new IntWrapper();
+        IntWrapper outPos = new IntWrapper();
+        codec.uncompress(data, inPos, data.length, outBuf, outPos);
+        return Arrays.copyOf(outBuf, outPos.get());
+    }
 }

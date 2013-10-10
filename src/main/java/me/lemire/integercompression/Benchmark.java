@@ -304,6 +304,36 @@ public class Benchmark {
             testKamikaze(data, repeat, true);
             System.out.println();
 
+            {
+                IntegerCODEC c = new Composition(
+                        new XorBinaryPacking(),
+                        new VariableByte());
+                testCodec(csvLog, sparsity, c, data, repeat, false);
+                testCodec(csvLog, sparsity, c, data, repeat, false);
+                testCodec(csvLog, sparsity, c, data, repeat, true);
+                System.out.println();
+            }
+
+            {
+                IntegerCODEC c = new IntegratedComposition(
+                        new XorBinaryPacking(),
+                        new IntegratedVariableByte());
+                testCodec(csvLog, sparsity, c, data, repeat, false);
+                testCodec(csvLog, sparsity, c, data, repeat, false);
+                testCodec(csvLog, sparsity, c, data, repeat, true);
+                System.out.println();
+            }
+
+            {
+                IntegerCODEC c = new Composition(
+                        new IntegratedBinaryPacking(),
+                        new VariableByte());
+                testCodec(csvLog, sparsity, c, data, repeat, false);
+                testCodec(csvLog, sparsity, c, data, repeat, false);
+                testCodec(csvLog, sparsity, c, data, repeat, true);
+                System.out.println();
+            }
+
             testCodec(csvLog, sparsity, new IntegratedComposition(new IntegratedBinaryPacking(),
                         new IntegratedVariableByte()), data, repeat, false);
             testCodec(csvLog, sparsity, new IntegratedComposition(new IntegratedBinaryPacking(),

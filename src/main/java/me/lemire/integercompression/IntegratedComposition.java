@@ -57,7 +57,7 @@ public class IntegratedComposition implements IntegratedIntegerCODEC {
 
     @Override
     public String toString() {
-        return F1.toString() + "+" + F2.toString();
+        return F1.toString() + " + " + F2.toString() + " (Integrated)";
     }
 
 }
