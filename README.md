@@ -1,5 +1,7 @@
-JavaFastPFOR: A simple integer compression library in Java [![Build Status](https://travis-ci.org/lemire/JavaFastPFOR.png)](https://travis-ci.org/lemire/JavaFastPFOR)
+JavaFastPFOR: A simple integer compression library in Java
 ==========================================================
+
+[![Build Status](https://travis-ci.org/lemire/JavaFastPFOR.png?branch=master)](https://travis-ci.org/lemire/JavaFastPFOR)
 
 License
 -------
