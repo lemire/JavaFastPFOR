@@ -17,6 +17,14 @@ your array use less than 32 bits. These sort of arrays often come up
 when using differential coding in databases and information
 retrieval (e.g., in inverted indexes or column stores).
 
+This libary is used by ClueWeb Tools (https://github.com/lintool/clueweb).
+
+It is a java port of the fastpfor C++ library (https://github.com/lemire/FastPFor). 
+There is also a Go port (https://github.com/reducedb/encoding). The C++
+library is used by the zsearch engine (http://victorparmar.github.com/zsearch/)
+as well as in GMAP and GSNAP (http://research-pub.gene.com/gmap/).
+
+
 Some CODECs ("integrated codecs") assume that the integers are
 in sorted orders. Most others do not.
 
