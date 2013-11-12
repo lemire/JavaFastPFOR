@@ -1,0 +1,879 @@
+[INFO] Scanning for projects...
+[WARNING] POM for 'biz.aQute:bndlib:pom:1.50.0:runtime' is invalid.
+
+Its dependencies (if any) will NOT be available to the current build.
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JavaFastPFOR
+[INFO]    task-segment: [exec:java]
+[INFO] ------------------------------------------------------------------------
+[INFO] Preparing exec:java
+[INFO] [enforcer:enforce {execution: enforce-maven}]
+[INFO] [exec:java {execution: default-cli}]
+# benchmark based on the ClusterData model from:
+# 	 Vo Ngoc Anh and Alistair Moffat. 
+#	 Index compression using 64-bit words.
+# 	 Softw. Pract. Exper.40, 2 (February 2010), 131-147. 
+
+# Results will be written into a CSV file: benchmark-20131112T105209.csv
+
+# sparsity 1
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.28	48	218
+
+# IntegratedBinaryPacking + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.03	623	1205
+
+# JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1154	1331
+
+# VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.00	508	554
+
+# IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.00	592	709
+
+# BinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.03	596	900
+
+# NewPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	2.95	115	701
+
+# NewPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	2.98	135	726
+
+# NewPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	2.95	116	726
+
+# OptPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	2.94	19	761
+
+# OptPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	2.97	22	767
+
+# OptPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	2.94	19	765
+
+# IntegratedFastPFOR + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	2.71	219	797
+
+# FastPFOR + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	2.71	217	813
+
+# Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	2.90	254	599
+
+# XorBinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	2.92	375	669
+
+# DeltaZigzagBinaryPacking + DeltaZigzagVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.36	394	503
+
+# sparsity 2
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.09	47	254
+
+# IntegratedBinaryPacking + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.84	636	1160
+
+# JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1152	1264
+
+# VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.01	510	551
+
+# IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.01	594	704
+
+# BinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.84	602	875
+
+# NewPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.74	101	673
+
+# NewPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.77	117	695
+
+# NewPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.74	101	694
+
+# OptPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.73	15	725
+
+# OptPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.76	18	741
+
+# OptPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.73	15	731
+
+# IntegratedFastPFOR + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.48	215	782
+
+# FastPFOR + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.48	212	789
+
+# Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.72	190	530
+
+# XorBinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	3.76	375	657
+
+# DeltaZigzagBinaryPacking + DeltaZigzagVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.32	392	499
+
+# sparsity 3
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.03	42	250
+
+# IntegratedBinaryPacking + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.77	643	1141
+
+# JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1149	1337
+
+# VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.02	506	547
+
+# IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.02	590	698
+
+# BinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.77	619	904
+
+# NewPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.66	89	640
+
+# NewPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.69	103	672
+
+# NewPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.66	89	668
+
+# OptPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.64	12	700
+
+# OptPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.68	14	712
+
+# OptPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.64	12	704
+
+# IntegratedFastPFOR + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.39	212	762
+
+# FastPFOR + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.39	209	763
+
+# Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.81	146	480
+
+# XorBinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	4.75	373	646
+
+# DeltaZigzagBinaryPacking + DeltaZigzagVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.40	386	496
+
+# sparsity 4
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.77	39	245
+
+# IntegratedBinaryPacking + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.53	629	1095
+
+# JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1148	1332
+
+# VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.11	482	522
+
+# IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.11	557	655
+
+# BinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.53	617	889
+
+# NewPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.42	82	659
+
+# NewPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.45	94	684
+
+# NewPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.42	82	686
+
+# OptPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.40	10	695
+
+# OptPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.43	12	715
+
+# OptPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.40	10	705
+
+# IntegratedFastPFOR + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.16	214	776
+
+# FastPFOR + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.16	211	780
+
+# Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.66	128	457
+
+# XorBinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.53	370	645
+
+# DeltaZigzagBinaryPacking + DeltaZigzagVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.23	389	493
+
+# sparsity 5
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.57	37	248
+
+# IntegratedBinaryPacking + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.32	640	1113
+
+# JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1150	1349
+
+# VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.41	416	456
+
+# IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.41	473	548
+
+# BinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.32	622	898
+
+# NewPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.20	75	643
+
+# NewPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.23	86	668
+
+# NewPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.20	75	666
+
+# OptPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.18	8	690
+
+# OptPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.21	11	705
+
+# OptPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.18	8	697
+
+# IntegratedFastPFOR + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.93	211	741
+
+# FastPFOR + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	5.93	208	772
+
+# Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.51	118	426
+
+# XorBinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	6.32	374	639
+
+# DeltaZigzagBinaryPacking + DeltaZigzagVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.05	390	492
+
+# sparsity 6
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.73	35	242
+
+# IntegratedBinaryPacking + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.48	630	1071
+
+# JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1143	1350
+
+# VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.04	328	365
+
+# IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.04	365	415
+
+# BinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.48	620	882
+
+# NewPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.36	67	641
+
+# NewPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.39	76	668
+
+# NewPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.36	67	667
+
+# OptPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.33	7	679
+
+# OptPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.37	9	695
+
+# OptPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.33	7	686
+
+# IntegratedFastPFOR + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.09	211	749
+
+# FastPFOR + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.09	208	764
+
+# Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.88	101	383
+
+# XorBinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.49	372	630
+
+# DeltaZigzagBinaryPacking + DeltaZigzagVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.27	389	489
+
+# sparsity 7
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.46	33	244
+
+# IntegratedBinaryPacking + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.21	628	1052
+
+# JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1148	1334
+
+# VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.01	257	290
+
+# IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.01	284	315
+
+# BinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.21	612	859
+
+# NewPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.08	63	626
+
+# NewPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.11	71	665
+
+# NewPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.08	63	663
+
+# OptPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.06	6	675
+
+# OptPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.09	8	687
+
+# OptPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.06	6	682
+
+# IntegratedFastPFOR + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.81	210	756
+
+# FastPFOR + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	7.81	207	759
+
+# Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.85	92	353
+
+# XorBinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.22	369	622
+
+# DeltaZigzagBinaryPacking + DeltaZigzagVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.00	389	486
+
+# sparsity 8
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.41	32	234
+
+# IntegratedBinaryPacking + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.16	636	1062
+
+# JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1151	1326
+
+# VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.08	231	269
+
+# IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.08	259	288
+
+# BinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.16	616	873
+
+# NewPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.04	59	638
+
+# NewPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.07	65	664
+
+# NewPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.04	59	664
+
+# OptPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.01	5	665
+
+# OptPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.05	7	680
+
+# OptPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.01	5	671
+
+# IntegratedFastPFOR + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.77	209	746
+
+# FastPFOR + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	8.77	207	738
+
+# Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.25	81	324
+
+# XorBinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.18	372	625
+
+# DeltaZigzagBinaryPacking + DeltaZigzagVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.98	387	479
+
+# sparsity 9
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.41	31	238
+
+# IntegratedBinaryPacking + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.15	637	1070
+
+# JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1145	1413
+
+# VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.15	221	267
+
+# IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.15	252	284
+
+# BinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.15	609	849
+
+# NewPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.03	54	624
+
+# NewPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.06	60	650
+
+# NewPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.03	54	649
+
+# OptPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.00	5	653
+
+# OptPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.03	7	666
+
+# OptPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.00	5	659
+
+# IntegratedFastPFOR + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.75	207	739
+
+# FastPFOR + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	9.75	206	743
+
+# Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.72	73	313
+
+# XorBinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.17	369	611
+
+# DeltaZigzagBinaryPacking + DeltaZigzagVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.98	381	474
+
+# sparsity 10
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.57	29	236
+
+# IntegratedBinaryPacking + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.28	626	1033
+
+# JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1141	1328
+
+# VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.18	219	276
+
+# IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.18	254	294
+
+# BinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.28	610	848
+
+# NewPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.19	50	617
+
+# NewPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.23	56	638
+
+# NewPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.19	50	640
+
+# OptPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.13	4	640
+
+# OptPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.17	6	655
+
+# OptPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.13	4	647
+
+# IntegratedFastPFOR + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.87	207	736
+
+# FastPFOR + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	10.87	204	734
+
+# Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.19	68	311
+
+# XorBinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.30	369	612
+
+# DeltaZigzagBinaryPacking + DeltaZigzagVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.13	386	477
+
+# sparsity 11
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.41	29	229
+
+# IntegratedBinaryPacking + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.01	634	1046
+
+# JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1148	1365
+
+# VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.84	208	261
+
+# IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.84	241	277
+
+# BinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.01	605	832
+
+# NewPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.07	49	650
+
+# NewPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.10	54	674
+
+# NewPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.07	49	675
+
+# OptPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.93	4	604
+
+# OptPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.97	6	618
+
+# OptPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.93	4	611
+
+# IntegratedFastPFOR + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.60	206	724
+
+# FastPFOR + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	11.60	203	724
+
+# Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.98	66	291
+
+# XorBinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.04	367	603
+
+# DeltaZigzagBinaryPacking + DeltaZigzagVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.86	385	478
+
+# sparsity 12
+# generating random data...
+# generating random data... ok.
+# kamikaze PForDelta
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.48	28	236
+
+# IntegratedBinaryPacking + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.96	634	1051
+
+# JustCopy
+# bits per int, compress speed (mis), decompression speed (mis) 
+	32.00	1150	1307
+
+# VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	14.69	202	258
+
+# IntegratedVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	14.69	235	272
+
+# BinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.96	610	849
+
+# NewPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.17	48	698
+
+# NewPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.20	52	714
+
+# NewPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.17	48	720
+
+# OptPFD + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.96	4	588
+
+# OptPFDS9 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.00	6	602
+
+# OptPFDS16 + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.96	4	597
+
+# IntegratedFastPFOR + IntegratedVariableByte (Integrated)
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.55	206	726
+
+# FastPFOR + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.55	203	725
+
+# Simple9
+# bits per int, compress speed (mis), decompression speed (mis) 
+	15.40	63	269
+
+# XorBinaryPacking + VariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	12.99	368	613
+
+# DeltaZigzagBinaryPacking + DeltaZigzagVariableByte
+# bits per int, compress speed (mis), decompression speed (mis) 
+	13.81	384	476
+
+
+Results were written into a CSV file: benchmark-20131112T105209.csv
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 17 minutes 30 seconds
+[INFO] Finished at: Tue Nov 12 11:09:38 EST 2013
+[INFO] Final Memory: 20M/230M
+[INFO] ------------------------------------------------------------------------
