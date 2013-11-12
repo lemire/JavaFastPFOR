@@ -1,4 +1,7 @@
-upcoming
+0.0.8 (Nov. 12th 2013)
+  - variable byte schemes can now be used without an unnecessary copy, if you have a byte[] output array 
+
+0.0.7 
   - added two new (minor) codecs NewPFD16 and OptPFD16
 
 0.0.6  (Sept. 4th 2013)
