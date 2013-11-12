@@ -1,3 +1,6 @@
+upcoming
+  - Fixed bad compression ratio reporting in BenchmarkCSV
+
 0.0.8 (Nov. 12th 2013)
   - variable byte schemes can now be used without an unnecessary copy, if you have a byte[] output array 
 

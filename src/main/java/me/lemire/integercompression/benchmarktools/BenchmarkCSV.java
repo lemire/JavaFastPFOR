@@ -158,7 +158,7 @@ public class BenchmarkCSV {
                         }
                         aft = System.nanoTime();
                         decomptime += (aft - bef);
-                        double bitsPerInt = volumeout * 32.0 / volumein;
+                        double bitsPerInt = volumeout * 8.0 / volumein;
                         double decompressSpeed = volumein * 1000.0
                                 / (decomptime);
                         if (verbose)
