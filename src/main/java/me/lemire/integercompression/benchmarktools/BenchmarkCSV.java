@@ -34,19 +34,19 @@ public class BenchmarkCSV {
         
         public static ArrayList<int[]> loadIntegers(String filename,Format f) throws IOException {
                 if(f== Format.ONEARRAYPERLINE) {
-                ArrayList<int[]> answer = new ArrayList<int[]>();
-                BufferedReader br = new BufferedReader(new FileReader(filename));
-                String s;
-                while((s = br.readLine())!= null) {
-                        String[] numbers = s.split("[,;;]");
-                        int[] a = new int[numbers.length];
-                        for (int k = 0; k < numbers.length; ++k) {
-                                a[k] = Integer.parseInt(numbers[k].trim());
-                        }        
-                        answer.add(a);
-                }                
-                return answer;
-                } else {//Format.ONEARRAYPERFILE
+                    ArrayList<int[]> answer = new ArrayList<int[]>();
+                    BufferedReader br = new BufferedReader(new FileReader(filename));
+                    String s;
+                    while((s = br.readLine())!= null) {
+                            String[] numbers = s.split("[,;;]"); // that's slow
+                            int[] a = new int[numbers.length];
+                            for (int k = 0; k < numbers.length; ++k) {
+                                    a[k] = Integer.parseInt(numbers[k].trim());
+                            }        
+                            answer.add(a);
+                    }                
+                    return answer;
+                } else if(f==Format.ONEARRAYPERFILE) {
                         ArrayList<Integer> answer = new ArrayList<Integer>();
                         BufferedReader br = new BufferedReader(new FileReader(filename));
                         String s;
@@ -62,10 +62,23 @@ public class BenchmarkCSV {
                         ArrayList<int[]> wrap = new ArrayList<int[]>();
                         wrap.add(actualanswer);
                         return wrap;        
+                } else {
+                        ArrayList<Integer> answer = new ArrayList<Integer>();
+                        BufferedReader br = new BufferedReader(new FileReader(filename));
+                        String s;
+                        while((s = br.readLine())!= null) {
+                                answer.add(Integer.parseInt(s.trim()));
+                        }            
+                        int[] actualanswer = new int[answer.size()];
+                        for(int i = 0; i < answer.size(); ++i)
+                                actualanswer[i] = answer.get(i);
+                        ArrayList<int[]> wrap = new ArrayList<int[]>();
+                        wrap.add(actualanswer);
+                        return wrap;    
                 }
         }
         public enum Format {
-                ONEARRAYPERLINE, ONEARRAYPERFILE
+                ONEARRAYPERLINE, ONEARRAYPERFILE,ONEINTPERLINE
         }
 
         public enum CompressionMode {
@@ -81,6 +94,8 @@ public class BenchmarkCSV {
                                         myformat = Format.ONEARRAYPERFILE;
                                 else if(s.equals("--nodelta"))
                                         cm = CompressionMode.AS_IS;
+                                else if(s.equals("--oneintperline"))
+                                        myformat = Format.ONEINTPERLINE;
                                 else throw new RuntimeException("I don't understand: "+s);
                         } else {// it is a filename
                                 files.add(s);
@@ -89,7 +104,9 @@ public class BenchmarkCSV {
                 if(myformat == Format.ONEARRAYPERFILE)
                         System.out.println("Treating each file as one array.");
                 else if(myformat == Format.ONEARRAYPERLINE)
-                        System.out.println("Each line of each file is an array: use --onearrayperfile to change.");
+                        System.out.println("Each line of each file is an array: use --onearrayperfile or --oneintperline to change.");
+                else if(myformat == Format.ONEINTPERLINE)
+                        System.out.println("Treating each file as one array, with one integer per line.");
                 if(cm == CompressionMode.AS_IS)
                         System.out.println("Compressing the integers 'as is' (no differential coding)");
                 else 
