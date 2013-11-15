@@ -79,7 +79,7 @@ public class BenchmarkCSV {
                         if(s.startsWith("-")) {// it is a flag
                                 if(s.equals("--onearrayperfile"))
                                         myformat = Format.ONEARRAYPERFILE;
-                                if(s.equals("--nodelta"))
+                                else if(s.equals("--nodelta"))
                                         cm = CompressionMode.AS_IS;
                                 else throw new RuntimeException("I don't understand: "+s);
                         } else {// it is a filename
@@ -95,8 +95,8 @@ public class BenchmarkCSV {
                 else 
                         System.out.println("Using differential coding (arrays will be sorted): use --nodelta to prevent sorting");
                 ArrayList<int[]> data = new ArrayList<int[]>();
-                for (int k = 0; k < args.length; ++k)
-                        for(int[] x: loadIntegers(args[k],myformat))
+                for (String fn: files)
+                        for(int[] x: loadIntegers(fn,myformat))
                                 data.add(x);
                 System.out.println("Loaded " + data.size() + " array(s)");
                 if(cm == CompressionMode.DELTA) {
