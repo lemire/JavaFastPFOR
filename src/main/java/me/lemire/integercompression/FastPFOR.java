@@ -35,7 +35,7 @@ public final class FastPFOR implements IntegerCODEC {
     final static int DEFAULT_PAGE_SIZE = 65536;
 
     int pageSize;
-    final int[][] dataTobePacked = new int[32][];
+    final int[][] dataTobePacked = new int[33][];
     final ByteBuffer byteContainer;
 
     // Working area for compress and uncompress.
@@ -52,7 +52,7 @@ public final class FastPFOR implements IntegerCODEC {
         // Initiate arrrays.
         byteContainer = ByteBuffer.allocateDirect(3 * pageSize / BLOCK_SIZE
                 + pageSize);
-        for (int k = 1; k < 32; ++k)
+        for (int k = 1; k < dataTobePacked.length; ++k)
             dataTobePacked[k] = new int[pageSize / 32 * 4]; // heuristic
     }
 

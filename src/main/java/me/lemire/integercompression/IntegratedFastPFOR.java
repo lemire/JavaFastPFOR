@@ -23,6 +23,9 @@ import java.util.Arrays;
  * </p>
  * <p>For multi-threaded applications, each thread should use its own IntegratedFastPFOR object.</p>
  *
+ * You should only use this scheme on sorted arrays. Use FastPFOR
+ * if you have unsorted arrays.
+ *
  * @author Daniel Lemire
  */
 public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
@@ -32,7 +35,7 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
 
     int pageSize;
     final int[] buffer = new int[BLOCK_SIZE];
-    final int[][] dataTobePacked = new int[32][];
+    final int[][] dataTobePacked = new int[33][];
     final ByteBuffer byteContainer;
 
     // Working area for compress and uncompress.
@@ -49,7 +52,7 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
         // Initiate arrrays.
         byteContainer = ByteBuffer.allocateDirect(3 * pageSize / BLOCK_SIZE
                 + pageSize);
-        for (int k = 1; k < 32; ++k)
+        for (int k = 1; k < dataTobePacked.length; ++k)
             dataTobePacked[k] = new int[pageSize / 32 * 4]; // heuristic
     }
 

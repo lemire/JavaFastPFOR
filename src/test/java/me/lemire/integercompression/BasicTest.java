@@ -341,6 +341,42 @@ public class BasicTest
         testUnsorted(new IntegratedComposition(new IntegratedBinaryPacking(),
                     new IntegratedVariableByte()));
         testUnsorted(new Composition(new IntegratedBinaryPacking(), new VariableByte()));
+        testUnsorted(new IntegratedComposition(new IntegratedFastPFOR(),
+                new IntegratedVariableByte()));
+
+        testUnsorted2(new VariableByte());
+        testUnsorted2(new IntegratedVariableByte());
+        testUnsorted2(new Composition(new BinaryPacking(), new VariableByte()));
+        testUnsorted2(new Composition(new NewPFD(), new VariableByte()));
+        testUnsorted2(new Composition(new NewPFDS9(), new VariableByte()));
+        testUnsorted2(new Composition(new NewPFDS16(), new VariableByte()));
+        testUnsorted2(new Composition(new OptPFD(), new VariableByte()));
+        testUnsorted2(new Composition(new OptPFDS9(), new VariableByte()));
+        testUnsorted2(new Composition(new OptPFDS16(), new VariableByte()));
+        testUnsorted2(new Composition(new FastPFOR(), new VariableByte()));
+
+        testUnsorted3(new IntegratedComposition(new IntegratedBinaryPacking(),
+                    new IntegratedVariableByte()));
+        testUnsorted3(new Composition(new IntegratedBinaryPacking(), new VariableByte()));
+        testUnsorted3(new IntegratedComposition(new IntegratedFastPFOR(),
+                new IntegratedVariableByte()));
+        testUnsorted3(new VariableByte());
+        testUnsorted3(new IntegratedVariableByte());
+        testUnsorted3(new Composition(new BinaryPacking(), new VariableByte()));
+        testUnsorted3(new Composition(new NewPFD(), new VariableByte()));
+        testUnsorted3(new Composition(new NewPFDS9(), new VariableByte()));
+        testUnsorted3(new Composition(new NewPFDS16(), new VariableByte()));
+        testUnsorted3(new Composition(new OptPFD(), new VariableByte()));
+        testUnsorted3(new Composition(new OptPFDS9(), new VariableByte()));
+        testUnsorted3(new Composition(new OptPFDS16(), new VariableByte()));
+        testUnsorted3(new Composition(new FastPFOR(), new VariableByte()));
+
+        testUnsorted2(new IntegratedComposition(new IntegratedBinaryPacking(),
+                    new IntegratedVariableByte()));
+        testUnsorted2(new Composition(new IntegratedBinaryPacking(), new VariableByte()));
+        testUnsorted2(new IntegratedComposition(new IntegratedFastPFOR(),
+                new IntegratedVariableByte()));
+
     }
 
     public void testUnsorted(IntegerCODEC codec)
@@ -348,7 +384,7 @@ public class BasicTest
         int[] lengths = { 133, 1333333 };
         for (int N : lengths) {
             int[] data = new int[N];
-            // initialize the data (most will be small
+            // initialize the data (most will be small)
             for (int k = 0; k < N; k += 1)
                 data[k] = 3;
             // throw some larger values
@@ -372,5 +408,41 @@ public class BasicTest
             assertArrayEquals(data, recovered);
         }
     }
+    
+        public void testUnsorted2(IntegerCODEC codec) {
+                int[] data = new int[128];
+                data[5] = -1;
+                int[] compressed = new int[1024];
+                IntWrapper inputoffset = new IntWrapper(0);
+                IntWrapper outputoffset = new IntWrapper(0);
+                codec.compress(data, inputoffset, data.length, compressed,
+                        outputoffset);
+                // we can repack the data: (optional)
+                compressed = Arrays.copyOf(compressed, outputoffset.intValue());
+
+                int[] recovered = new int[128];
+                IntWrapper recoffset = new IntWrapper(0);
+                codec.uncompress(compressed, new IntWrapper(0),
+                        compressed.length, recovered, recoffset);
+                assertArrayEquals(data, recovered);
+        }
+
+        public void testUnsorted3(IntegerCODEC codec) {
+                int[] data = new int[128];
+                data[127] = -1;
+                int[] compressed = new int[1024];
+                IntWrapper inputoffset = new IntWrapper(0);
+                IntWrapper outputoffset = new IntWrapper(0);
+                codec.compress(data, inputoffset, data.length, compressed,
+                        outputoffset);
+                // we can repack the data: (optional)
+                compressed = Arrays.copyOf(compressed, outputoffset.intValue());
+
+                int[] recovered = new int[128];
+                IntWrapper recoffset = new IntWrapper(0);
+                codec.uncompress(compressed, new IntWrapper(0),
+                        compressed.length, recovered, recoffset);
+                assertArrayEquals(data, recovered);
+        }    
 
 }
