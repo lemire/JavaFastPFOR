@@ -21,6 +21,9 @@ import java.util.Arrays;
  * <p/>
  * For sufficiently compressible arrays, it is faster and better than other PFOR
  * schemes.
+ *
+ * Note that this does not use differential coding: if you are working on 
+ * sorted lists, use IntegratedFastPFOR instead. 
  * 
  * For multi-threaded applications, each thread should use its own FastPFOR object.
  *

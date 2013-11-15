@@ -9,6 +9,11 @@ package me.lemire.integercompression;
 
 
 /**
+ * This is an implementation of the popular Simple9 scheme.
+ * 
+ * Note that this does not use differential coding: if you are working on 
+ * sorted lists, you must compute the deltas separately. 
+ * 
  * @author Daniel Lemire
  *
  */

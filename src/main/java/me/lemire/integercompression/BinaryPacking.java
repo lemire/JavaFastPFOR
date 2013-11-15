@@ -8,7 +8,10 @@ package me.lemire.integercompression;
 
 
 /**
- * Scheme designed by D. Lemire
+ * Scheme designed by D. Lemire based on a commonly used idea.
+ * 
+ * Note that this does not use differential coding: if you are working on 
+ * sorted lists, use IntegratedBinaryPacking instead. 
  *
  * @author Daniel Lemire
  */

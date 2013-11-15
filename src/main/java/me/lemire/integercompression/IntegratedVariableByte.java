@@ -11,8 +11,14 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 /**
- * @author Daniel Lemire
+ * Implementation of variable-byte with differential coding. For best performance, 
+ * use it using the IntegratedByteIntegerCODEC interface.
  *
+ * You should only use this scheme on sorted arrays. Use VariableByte
+ * if you have unsorted arrays.
+ *
+ *
+ * @author Daniel Lemire
  */
 public class IntegratedVariableByte implements IntegratedIntegerCODEC, IntegratedByteIntegerCODEC {
     @Override

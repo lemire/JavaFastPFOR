@@ -8,6 +8,11 @@
 package me.lemire.integercompression;
 
 /**
+ * Scheme designed by D. Lemire based on a commonly used idea.
+ * 
+ * You should only use this scheme on sorted arrays. Use BinaryPacking
+ * if you have unsorted arrays. 
+ *
  * @author Daniel Lemire
  *
  */

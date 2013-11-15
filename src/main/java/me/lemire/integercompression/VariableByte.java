@@ -10,7 +10,11 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 /**
- * Implementation of variable-byte. Possibly inefficient.
+ * Implementation of variable-byte. For best performance, use it using the
+ * ByteIntegerCODEC interface.
+ * 
+ * Note that this does not use differential coding: if you are working on 
+ * sorted lists, you must compute the deltas separately. 
  *
  * @author Daniel Lemire
  */

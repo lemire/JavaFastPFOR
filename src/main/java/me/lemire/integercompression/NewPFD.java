@@ -17,6 +17,10 @@ package me.lemire.integercompression;
  * <p/>
  * using Simple16 as the secondary coder.
  * 
+ * Note that this does not use differential coding: if you are working on 
+ * sorted lists, you must compute the deltas separately. (Yes, this is true even
+ * though the "D" at the end of the name probably stands for delta.)
+ * 
  * For multi-threaded applications, each thread should use its own NewPFD object.
  *
  * @author Daniel Lemire

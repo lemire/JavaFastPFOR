@@ -17,6 +17,9 @@ package me.lemire.integercompression;
  * <p/>
  * using Simple9 as the secondary coder.
  * 
+ * Note that this does not use differential coding: if you are working on 
+ * sorted lists, you must compute the deltas separately. 
+ * 
  * For multi-threaded applications, each thread should use its own NewPFDS9 object.
  *
  * @author Daniel Lemire
