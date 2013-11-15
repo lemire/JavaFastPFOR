@@ -16,8 +16,8 @@ public class BenchmarkCSV {
                 new IntegratedComposition(new IntegratedFastPFOR(),
                         new IntegratedVariableByte()),
                 new IntegratedComposition(new IntegratedBinaryPacking(),
-                        new IntegratedVariableByte()),
-                new IntegratedVariableByte() };
+                        new IntegratedVariableByte())
+                 };
         static IntegratedByteIntegerCODEC bcodecs[]= {
                 new IntegratedVariableByte()
         };
@@ -25,8 +25,8 @@ public class BenchmarkCSV {
                 new Composition(new FastPFOR(),
                         new VariableByte()),
                 new Composition(new BinaryPacking(),
-                        new VariableByte()),
-                new VariableByte() };
+                        new VariableByte())
+                 };
         static ByteIntegerCODEC regbcodecs[]= {
                 new VariableByte()
         };
