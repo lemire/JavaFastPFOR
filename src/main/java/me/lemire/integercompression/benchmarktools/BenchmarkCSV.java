@@ -33,7 +33,8 @@ public class BenchmarkCSV {
         
         
         public static ArrayList<int[]> loadIntegers(String filename,Format f) throws IOException {
-                if(f== Format.ONEARRAYPERLINE) {
+                 int misparsed = 0;
+                 if(f== Format.ONEARRAYPERLINE) {
                     ArrayList<int[]> answer = new ArrayList<int[]>();
                     BufferedReader br = new BufferedReader(new FileReader(filename));
                     String s;
@@ -41,19 +42,32 @@ public class BenchmarkCSV {
                             String[] numbers = s.split("[,;;]"); // that's slow
                             int[] a = new int[numbers.length];
                             for (int k = 0; k < numbers.length; ++k) {
-                                    a[k] = Integer.parseInt(numbers[k].trim());
-                            }        
+                                   try {
+                                     a[k] = Integer.parseInt(numbers[k].trim());
+                                   } catch(java.lang.NumberFormatException nfe) {
+                                     if(misparsed==0) 
+                                       System.err.println(nfe);
+                                     ++misparsed; 
+                                   }
+                             }        
                             answer.add(a);
-                    }                
+                    }          
+                    if(misparsed > 0) System.out.println("Failed to parse "+misparsed+" entries");      
                     return answer;
                 } else if(f==Format.ONEARRAYPERFILE) {
                         ArrayList<Integer> answer = new ArrayList<Integer>();
                         BufferedReader br = new BufferedReader(new FileReader(filename));
                         String s;
                         while((s = br.readLine())!= null) {
-                                String[] numbers = s.split("[,;;]");
+                                String[] numbers = s.split("[,;;]");// that's slow
                                 for (int k = 0; k < numbers.length; ++k) {
-                                        answer.add(Integer.parseInt(numbers[k].trim()));
+                                   try {
+                                     answer.add(Integer.parseInt(numbers[k].trim()));
+                                   } catch(java.lang.NumberFormatException nfe) {
+                                     if(misparsed==0) 
+                                       System.err.println(nfe);
+                                     ++misparsed; 
+                                   }
                                 }        
                         }            
                         int[] actualanswer = new int[answer.size()];
@@ -61,19 +75,27 @@ public class BenchmarkCSV {
                                 actualanswer[i] = answer.get(i);
                         ArrayList<int[]> wrap = new ArrayList<int[]>();
                         wrap.add(actualanswer);
+                        if(misparsed > 0) System.out.println("Failed to parse "+misparsed+" entries");    
                         return wrap;        
                 } else {
                         ArrayList<Integer> answer = new ArrayList<Integer>();
                         BufferedReader br = new BufferedReader(new FileReader(filename));
                         String s;
                         while((s = br.readLine())!= null) {
-                                answer.add(Integer.parseInt(s.trim()));
+                               try {
+                                 answer.add(Integer.parseInt(s.trim()));
+                               } catch(java.lang.NumberFormatException nfe) {
+                                     if(misparsed==0) 
+                                       System.err.println(nfe);
+                                     ++misparsed;  
+                               }
                         }            
                         int[] actualanswer = new int[answer.size()];
                         for(int i = 0; i < answer.size(); ++i)
                                 actualanswer[i] = answer.get(i);
                         ArrayList<int[]> wrap = new ArrayList<int[]>();
                         wrap.add(actualanswer);
+                        if(misparsed > 0) System.out.println("Failed to parse "+misparsed+" entries");
                         return wrap;    
                 }
         }
@@ -198,7 +220,7 @@ public class BenchmarkCSV {
                         if (maxlength < x.length)
                                 maxlength = x.length;
                 if (verbose) System.out.println("Max array length: " + maxlength);
-                byte[] compbuffer = new byte[4*(maxlength + 1024)];
+                byte[] compbuffer = new byte[6*(maxlength + 1024)];
                 int[] decompbuffer = new int[maxlength];
                 if(verbose)
                         System.out.println("Scheme -- bits/int -- speed (mis)");
