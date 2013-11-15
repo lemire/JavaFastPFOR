@@ -1,7 +1,7 @@
 upcoming
   - Improved BenchmarkCVS
   - Improved comments slightly
-  - Fix a rarely occuring bug in FastPFOR and IntegratedFastPFOR (reported by zhenjl)
+  - Fixed a rarely occuring bug in FastPFOR and IntegratedFastPFOR (reported by zhenjl)
 
 0.0.8 (Nov. 12th 2013)
   - variable byte schemes can now be used without an unnecessary copy, if you have a byte[] output array 
