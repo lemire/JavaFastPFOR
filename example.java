@@ -27,7 +27,7 @@ public class example {
                     new IntegratedBinaryPacking(),
                     new IntegratedVariableByte());
         // output vector should be large enough...
-        int [] compressed = new int[data.length]; 
+        int [] compressed = new int[data.length+1024]; 
         // compressed might not be large enough in some cases
         // if you get java.lang.ArrayIndexOutOfBoundsException, try
         // allocating more memory
@@ -74,7 +74,7 @@ public class example {
         // throw some larger values
         for(int k = 0; k < N; k+=5) data[k] = 100;
         for(int k = 0; k < N; k+=533) data[k] = 10000;
-        int[] compressed = new int [N];// could need more
+        int[] compressed = new int [N+1024];// could need more
         IntegerCODEC codec =  new 
            Composition(
                     new FastPFOR(),
@@ -124,7 +124,7 @@ public class example {
         IntegratedIntegerCODEC lastcodec =  new 
            IntegratedComposition(regularcodec,ivb);
         // output vector should be large enough...
-        int [] compressed = new int[TotalSize];
+        int [] compressed = new int[TotalSize+1024];
         
         
         /**
