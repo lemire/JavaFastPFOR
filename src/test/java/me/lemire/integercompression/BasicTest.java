@@ -16,7 +16,53 @@ import static org.junit.Assert.*;
 @SuppressWarnings({"static-method","javadoc"})
 public class BasicTest
 {
+        IntegerCODEC[] codecs = {
+                new IntegratedComposition(new IntegratedBinaryPacking(),
+                        new IntegratedVariableByte()),
+                new JustCopy(),
+                new VariableByte(),
+                new IntegratedVariableByte(),
+                new Composition(new BinaryPacking(), new VariableByte()),
+                new Composition(new NewPFD(), new VariableByte()),
+                new Composition(new NewPFDS16(), new VariableByte()),
+                new Composition(new OptPFDS9(), new VariableByte()),
+                new Composition(new OptPFDS16(), new VariableByte()),
+                new IntegratedComposition(new IntegratedFastPFOR(),
+                        new IntegratedVariableByte()),
+                new Composition(new FastPFOR(), new VariableByte()),
+                new Simple9(),
+                new Composition(new XorBinaryPacking(), new VariableByte()),
+                new Composition(new DeltaZigzagBinaryPacking(),
+                        new DeltaZigzagVariableByte()) };
+    @Test
+    public void varyingLengthTest() {
+                int N = 4096;
+                int[] data = new int[N];
+                for (int k = 0; k < N; ++k)
+                        data[k] = k;
+                for (IntegerCODEC c : codecs) {
+                        for (int L = 1; L <= 128; L++) {
+                                int[] comp = TestUtils.compress(c,
+                                        Arrays.copyOf(data, L));
+                                int[] answer = TestUtils.uncompress(c, comp, L);
+                                for (int k = 0; k < L; ++k)
+                                        if (answer[k] != data[k])
+                                                throw new RuntimeException(
+                                                        "bug");
+                        }
+                        for (int L = 128; L <= N; L*=2) {
+                                int[] comp = TestUtils.compress(c,
+                                        Arrays.copyOf(data, L));
+                                int[] answer = TestUtils.uncompress(c, comp, L);
+                                for (int k = 0; k < L; ++k)
+                                        if (answer[k] != data[k])
+                                                throw new RuntimeException(
+                                                        "bug");
+                        }
 
+                }
+        }
+        
     @Test
     public void checkDeltaZigzagVB() {
         DeltaZigzagVariableByte codec = new DeltaZigzagVariableByte();
