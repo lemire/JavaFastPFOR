@@ -133,4 +133,9 @@ Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second throu
 http://arxiv.org/abs/1209.2137
 
 
+Ikhtear Sharif wrote his M.Sc. thesis on this library:
 
+Ikhtear Sharif, Performance Evaluation of Fast Integer Compression Techniques Over Tables, M.Sc. thesis, UNB 2013.
+http://hdl.handle.net/1882/45703
+
+He also posted his slides online: http://www.slideshare.net/ikhtearSharif/ikhtear-defense
