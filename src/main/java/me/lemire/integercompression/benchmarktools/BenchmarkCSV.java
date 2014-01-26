@@ -16,131 +16,151 @@ public class BenchmarkCSV {
                 new IntegratedComposition(new IntegratedFastPFOR(),
                         new IntegratedVariableByte()),
                 new IntegratedComposition(new IntegratedBinaryPacking(),
-                        new IntegratedVariableByte())
-                 };
-        static IntegratedByteIntegerCODEC bcodecs[]= {
-                new IntegratedVariableByte()
-        };
+                        new IntegratedVariableByte()) };
+        static IntegratedByteIntegerCODEC bcodecs[] = { new IntegratedVariableByte() };
         static IntegerCODEC regcodecs[] = {
-                new Composition(new FastPFOR(),
-                        new VariableByte()),
-                new Composition(new BinaryPacking(),
-                        new VariableByte())
-                 };
-        static ByteIntegerCODEC regbcodecs[]= {
-                new VariableByte()
-        };
-        
-        
-        public static ArrayList<int[]> loadIntegers(String filename,Format f) throws IOException {
-                 int misparsed = 0;
-                 if(f== Format.ONEARRAYPERLINE) {
-                    ArrayList<int[]> answer = new ArrayList<int[]>();
-                    BufferedReader br = new BufferedReader(new FileReader(filename));
-                    String s;
-                    while((s = br.readLine())!= null) {
-                            String[] numbers = s.split("[,;;]"); // that's slow
-                            int[] a = new int[numbers.length];
-                            for (int k = 0; k < numbers.length; ++k) {
-                                   try {
-                                     a[k] = Integer.parseInt(numbers[k].trim());
-                                   } catch(java.lang.NumberFormatException nfe) {
-                                     if(misparsed==0) 
-                                       System.err.println(nfe);
-                                     ++misparsed; 
-                                   }
-                             }        
-                            answer.add(a);
-                    }          
-                    if(misparsed > 0) System.out.println("Failed to parse "+misparsed+" entries");      
-                    return answer;
-                } else if(f==Format.ONEARRAYPERFILE) {
-                        ArrayList<Integer> answer = new ArrayList<Integer>();
-                        BufferedReader br = new BufferedReader(new FileReader(filename));
+                new Composition(new FastPFOR(), new VariableByte()),
+                new Composition(new BinaryPacking(), new VariableByte()) };
+        static ByteIntegerCODEC regbcodecs[] = { new VariableByte() };
+
+        private static ArrayList<int[]> loadIntegers(final String filename, final Format f)
+                throws IOException {
+                int misparsed = 0;
+                if (f == Format.ONEARRAYPERLINE) {
+                        ArrayList<int[]> answer = new ArrayList<int[]>();
+                        BufferedReader br = new BufferedReader(new FileReader(
+                                filename));
                         String s;
-                        while((s = br.readLine())!= null) {
-                                String[] numbers = s.split("[,;;]");// that's slow
+                        while ((s = br.readLine()) != null) {
+                                String[] numbers = s.split("[,;;]"); // that's
+                                                                     // slow
+                                int[] a = new int[numbers.length];
                                 for (int k = 0; k < numbers.length; ++k) {
-                                   try {
-                                     answer.add(Integer.parseInt(numbers[k].trim()));
-                                   } catch(java.lang.NumberFormatException nfe) {
-                                     if(misparsed==0) 
-                                       System.err.println(nfe);
-                                     ++misparsed; 
-                                   }
-                                }        
-                        }            
+                                        try {
+                                                a[k] = Integer
+                                                        .parseInt(numbers[k]
+                                                                .trim());
+                                        } catch (java.lang.NumberFormatException nfe) {
+                                                if (misparsed == 0)
+                                                        System.err.println(nfe);
+                                                ++misparsed;
+                                        }
+                                }
+                                answer.add(a);
+                        }
+                        if (misparsed > 0)
+                                System.out.println("Failed to parse "
+                                        + misparsed + " entries");
+                        return answer;
+                } else if (f == Format.ONEARRAYPERFILE) {
+                        ArrayList<Integer> answer = new ArrayList<Integer>();
+                        BufferedReader br = new BufferedReader(new FileReader(
+                                filename));
+                        String s;
+                        while ((s = br.readLine()) != null) {
+                                String[] numbers = s.split("[,;;]");// that's
+                                                                    // slow
+                                for (int k = 0; k < numbers.length; ++k) {
+                                        try {
+                                                answer.add(Integer
+                                                        .parseInt(numbers[k]
+                                                                .trim()));
+                                        } catch (java.lang.NumberFormatException nfe) {
+                                                if (misparsed == 0)
+                                                        System.err.println(nfe);
+                                                ++misparsed;
+                                        }
+                                }
+                        }
                         int[] actualanswer = new int[answer.size()];
-                        for(int i = 0; i < answer.size(); ++i)
+                        for (int i = 0; i < answer.size(); ++i)
                                 actualanswer[i] = answer.get(i);
                         ArrayList<int[]> wrap = new ArrayList<int[]>();
                         wrap.add(actualanswer);
-                        if(misparsed > 0) System.out.println("Failed to parse "+misparsed+" entries");    
-                        return wrap;        
+                        if (misparsed > 0)
+                                System.out.println("Failed to parse "
+                                        + misparsed + " entries");
+                        return wrap;
                 } else {
                         ArrayList<Integer> answer = new ArrayList<Integer>();
-                        BufferedReader br = new BufferedReader(new FileReader(filename));
+                        BufferedReader br = new BufferedReader(new FileReader(
+                                filename));
                         String s;
-                        while((s = br.readLine())!= null) {
-                               try {
-                                 answer.add(Integer.parseInt(s.trim()));
-                               } catch(java.lang.NumberFormatException nfe) {
-                                     if(misparsed==0) 
-                                       System.err.println(nfe);
-                                     ++misparsed;  
-                               }
-                        }            
+                        while ((s = br.readLine()) != null) {
+                                try {
+                                        answer.add(Integer.parseInt(s.trim()));
+                                } catch (java.lang.NumberFormatException nfe) {
+                                        if (misparsed == 0)
+                                                System.err.println(nfe);
+                                        ++misparsed;
+                                }
+                        }
                         int[] actualanswer = new int[answer.size()];
-                        for(int i = 0; i < answer.size(); ++i)
+                        for (int i = 0; i < answer.size(); ++i)
                                 actualanswer[i] = answer.get(i);
                         ArrayList<int[]> wrap = new ArrayList<int[]>();
                         wrap.add(actualanswer);
-                        if(misparsed > 0) System.out.println("Failed to parse "+misparsed+" entries");
-                        return wrap;    
+                        if (misparsed > 0)
+                                System.out.println("Failed to parse "
+                                        + misparsed + " entries");
+                        return wrap;
                 }
         }
-        public enum Format {
-                ONEARRAYPERLINE, ONEARRAYPERFILE,ONEINTPERLINE
+
+        private enum Format {
+                ONEARRAYPERLINE, ONEARRAYPERFILE, ONEINTPERLINE
         }
 
-        public enum CompressionMode {
+        private enum CompressionMode {
                 AS_IS, DELTA
         }
-        public static void main(String[] args) throws IOException {
+
+        /**
+         * @param args
+         * @throws IOException
+         */
+        public static void main(final String[] args) throws IOException {
                 Format myformat = Format.ONEARRAYPERLINE;
                 CompressionMode cm = CompressionMode.DELTA;
                 ArrayList<String> files = new ArrayList<String>();
-                for(String s : args) {
-                        if(s.startsWith("-")) {// it is a flag
-                                if(s.equals("--onearrayperfile"))
+                for (String s : args) {
+                        if (s.startsWith("-")) {// it is a flag
+                                if (s.equals("--onearrayperfile"))
                                         myformat = Format.ONEARRAYPERFILE;
-                                else if(s.equals("--nodelta"))
+                                else if (s.equals("--nodelta"))
                                         cm = CompressionMode.AS_IS;
-                                else if(s.equals("--oneintperline"))
+                                else if (s.equals("--oneintperline"))
                                         myformat = Format.ONEINTPERLINE;
-                                else throw new RuntimeException("I don't understand: "+s);
+                                else
+                                        throw new RuntimeException(
+                                                "I don't understand: " + s);
                         } else {// it is a filename
                                 files.add(s);
                         }
                 }
-                if(myformat == Format.ONEARRAYPERFILE)
+                if (myformat == Format.ONEARRAYPERFILE)
                         System.out.println("Treating each file as one array.");
-                else if(myformat == Format.ONEARRAYPERLINE)
-                        System.out.println("Each line of each file is an array: use --onearrayperfile or --oneintperline to change.");
-                else if(myformat == Format.ONEINTPERLINE)
-                        System.out.println("Treating each file as one array, with one integer per line.");
-                if(cm == CompressionMode.AS_IS)
-                        System.out.println("Compressing the integers 'as is' (no differential coding)");
-                else 
-                        System.out.println("Using differential coding (arrays will be sorted): use --nodelta to prevent sorting");
+                else if (myformat == Format.ONEARRAYPERLINE)
+                        System.out
+                                .println("Each line of each file is an array: use --onearrayperfile or --oneintperline to change.");
+                else if (myformat == Format.ONEINTPERLINE)
+                        System.out
+                                .println("Treating each file as one array, with one integer per line.");
+                if (cm == CompressionMode.AS_IS)
+                        System.out
+                                .println("Compressing the integers 'as is' (no differential coding)");
+                else
+                        System.out
+                                .println("Using differential coding (arrays will be sorted): use --nodelta to prevent sorting");
                 ArrayList<int[]> data = new ArrayList<int[]>();
-                for (String fn: files)
-                        for(int[] x: loadIntegers(fn,myformat))
+                for (String fn : files)
+                        for (int[] x : loadIntegers(fn, myformat))
                                 data.add(x);
                 System.out.println("Loaded " + data.size() + " array(s)");
-                if(cm == CompressionMode.DELTA) {
-                        System.out.println("Sorting the arrray(s) because you are using differential coding");
-                        for(int[] x: data)
+                if (cm == CompressionMode.DELTA) {
+                        System.out
+                                .println("Sorting the arrray(s) because you are using differential coding");
+                        for (int[] x : data)
                                 Arrays.sort(x);
                 }
                 bench(data, cm, false);
@@ -151,17 +171,20 @@ public class BenchmarkCSV {
                 bytebench(data, cm, true);
         }
 
-        public static void bench(ArrayList<int[]> postings, CompressionMode cm, boolean verbose) {
+        private static void bench(ArrayList<int[]> postings, CompressionMode cm,
+                boolean verbose) {
                 int maxlength = 0;
                 for (int[] x : postings)
                         if (maxlength < x.length)
                                 maxlength = x.length;
-                if (verbose) System.out.println("Max array length: " + maxlength);
-                int[] compbuffer = new int[2*maxlength + 1024];
+                if (verbose)
+                        System.out.println("Max array length: " + maxlength);
+                int[] compbuffer = new int[2 * maxlength + 1024];
                 int[] decompbuffer = new int[maxlength];
-                if(verbose)
+                if (verbose)
                         System.out.println("Scheme -- bits/int -- speed (mis)");
-                for (IntegerCODEC c : (cm == CompressionMode.DELTA ? codecs: regcodecs)) {
+                for (IntegerCODEC c : (cm == CompressionMode.DELTA ? codecs
+                        : regcodecs)) {
                         long bef = 0;
                         long aft = 0;
                         long decomptime = 0;
@@ -214,17 +237,20 @@ public class BenchmarkCSV {
                 }
         }
 
-        public static void bytebench(ArrayList<int[]> postings, CompressionMode cm, boolean verbose) {
+        private static void bytebench(ArrayList<int[]> postings,
+                CompressionMode cm, boolean verbose) {
                 int maxlength = 0;
                 for (int[] x : postings)
                         if (maxlength < x.length)
                                 maxlength = x.length;
-                if (verbose) System.out.println("Max array length: " + maxlength);
-                byte[] compbuffer = new byte[6*(maxlength + 1024)];
+                if (verbose)
+                        System.out.println("Max array length: " + maxlength);
+                byte[] compbuffer = new byte[6 * (maxlength + 1024)];
                 int[] decompbuffer = new int[maxlength];
-                if(verbose)
+                if (verbose)
                         System.out.println("Scheme -- bits/int -- speed (mis)");
-                for (ByteIntegerCODEC c : (cm == CompressionMode.DELTA ? bcodecs: regbcodecs)) {
+                for (ByteIntegerCODEC c : (cm == CompressionMode.DELTA ? bcodecs
+                        : regbcodecs)) {
                         long bef = 0;
                         long aft = 0;
                         long decomptime = 0;

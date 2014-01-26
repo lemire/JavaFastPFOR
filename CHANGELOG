@@ -1,4 +1,7 @@
-upcoming
+0.0.10 (Jan. 25th 2014)
+  - cleaning the code and improving the documentation
+
+0.0.9 (Nov. 15th 2013)
   - Improved BenchmarkCVS
   - Improved comments slightly
   - Fixed a rarely occuring bug in FastPFOR and IntegratedFastPFOR (reported by zhenjl)

@@ -98,7 +98,7 @@ See example.java for a simple demonstration.
 How fast is it?
 ---------------
 
-Compile the code and execute me.lemire.integercompression.Benchmark.
+Compile the code and execute me.lemire.integercompression.benchmarktools.Benchmark.
 
 I recommend running all the benchmarks with the "-server" flag on a desktop machine.
 

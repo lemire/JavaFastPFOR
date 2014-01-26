@@ -7,14 +7,13 @@
 
 package me.lemire.integercompression;
 
-
 /**
- * Interface describing a  CODEC to compress integers to bytes.
+ * Interface describing a CODEC to compress integers to bytes.
  * 
  * "Integrated" means that it uses differential coding.
  * 
  * @author Daniel Lemire
- *
+ * 
  */
 public interface IntegratedByteIntegerCODEC extends ByteIntegerCODEC {
 }

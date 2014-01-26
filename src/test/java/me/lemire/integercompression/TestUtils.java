@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 /**
  * Static utility methods for test.
  */
+@SuppressWarnings({ "javadoc"})
 public class TestUtils {
 
     public static void dumpIntArray(int[] data, String label) {

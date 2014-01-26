@@ -12,76 +12,79 @@ package me.lemire.integercompression;
  * @author dwu
  */
 public final class IntWrapper extends Number {
-    private static final long serialVersionUID = 1L;
-    private int value;
+        private static final long serialVersionUID = 1L;
+        private int value;
 
-    /**
-     * Constructor: value set to 0.
-     */
-    public IntWrapper() {
-        this(0);
-    }
+        /**
+         * Constructor: value set to 0.
+         */
+        public IntWrapper() {
+                this(0);
+        }
 
-    /**
-     * Construction: value set to provided argument.
-     * 
-     * @param v value to wrap
-     */
-    public IntWrapper(final int v) {
-        this.value = v;
-    }
+        /**
+         * Construction: value set to provided argument.
+         * 
+         * @param v
+         *                value to wrap
+         */
+        public IntWrapper(final int v) {
+                this.value = v;
+        }
 
-    /**
-     * @param v
-     */
-    public void add(int v) {
-        this.value += v;
-    }
+        /**
+         * @param v
+         */
+        public void add(int v) {
+                this.value += v;
+        }
 
-    @Override
-    public double doubleValue() {
-        return this.value;
-    }
+        @Override
+        public double doubleValue() {
+                return this.value;
+        }
 
-    @Override
-    public float floatValue() {
-        return this.value;
-    }
+        @Override
+        public float floatValue() {
+                return this.value;
+        }
 
-    /**
-     * @return the integer value
-     */
-    public int get() {
-        return this.value;
-    }
+        /**
+         * @return the integer value
+         */
+        public int get() {
+                return this.value;
+        }
 
-    /**
-     * add 1 to the integer value
-     */
-    public void increment() {
-        this.value++;
-    }
+        /**
+         * add 1 to the integer value
+         */
+        public void increment() {
+                this.value++;
+        }
 
-    @Override
-    public int intValue() {
-        return this.value;
-    }
+        @Override
+        public int intValue() {
+                return this.value;
+        }
 
-    @Override
-    public long longValue() {
-        return this.value;
-    }
+        @Override
+        public long longValue() {
+                return this.value;
+        }
 
-    /**
-     * Set the value to that of the specified integer.
-     * @param value specified integer value
-     */
-    public void set(final int value) {
-        this.value = value;
-    }
+        /**
+         * Set the value to that of the specified integer.
+         * 
+         * @param value
+         *                specified integer value
+         */
+        public void set(final int value) {
+                this.value = value;
+        }
 
-    @Override
-    public String toString() {
-        return Integer.toString(this.value);
-    }
+        @Override
+        public String toString() {
+                return Integer.toString(this.value);
+        }
 }

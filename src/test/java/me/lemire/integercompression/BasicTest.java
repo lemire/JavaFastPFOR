@@ -120,7 +120,6 @@ public class BasicTest
     /**
      * Verify bitpacking.
      */
-    @SuppressWarnings("static-method")
     @Test
     public void verifyBitPacking() {
         final int N = 32;
@@ -144,7 +143,6 @@ public class BasicTest
     /**
      * Verify bitpacking without mask.
      */
-    @SuppressWarnings("static-method")
     @Test
     public void verifyWithoutMask() {
         final int N = 32;
@@ -174,7 +172,6 @@ public class BasicTest
     /**
      * Verify bitpacking with exception.
      */
-    @SuppressWarnings("static-method")
     @Test
     public void verifyWithExceptions() {
         final int N = 32;
@@ -201,7 +198,6 @@ public class BasicTest
     /**
      * check that the codecs can be inverted.
      */
-    @SuppressWarnings("static-method")
     @Test
     public void basictest() {
         test(5, 10);
@@ -212,7 +208,6 @@ public class BasicTest
     /**
      * check that there is no spurious output.
      */
-    @SuppressWarnings("static-method")
     @Test
     public void spuriousouttest() {
         testSpurious(new IntegratedBinaryPacking());
@@ -230,7 +225,6 @@ public class BasicTest
      * check that an empty array generates an empty array
      * after compression.
      */
-    @SuppressWarnings("static-method")
     @Test
     public void zeroinzerouttest() {
         testZeroInZeroOut(new IntegratedBinaryPacking());
@@ -370,7 +364,6 @@ public class BasicTest
     /**
      * Test for unsorted array.
      */
-    @SuppressWarnings("static-method")
     @Test
     public void testUnsortedExample() {
         testUnsorted(new VariableByte());

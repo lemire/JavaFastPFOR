@@ -1,15 +1,12 @@
 package me.lemire.integercompression;
 
-import java.util.Arrays;
-
 import org.junit.Test;
-import static org.junit.Assert.*;
-
 import static me.lemire.integercompression.TestUtils.*;
 
 /**
  * Collection of adhoc tests.
  */
+@SuppressWarnings({ "javadoc", "static-method" })
 public class AdhocTest
 {
 
@@ -34,14 +31,5 @@ public class AdhocTest
         assertSymmetry(c, 65535, 65535);
     }
 
-    // NOTE: This require bigger 2 items for compressed array than original.
-    /*
-    @Test
-    public void overflowVariableByte() {
-        IntegerCODEC c = new VariableByte();
-        int[] d = new int[8];
-        Arrays.fill(d, -1);
-        assertSymmetry(c, d);
-    }
-    */
+ 
 }

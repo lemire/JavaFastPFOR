@@ -13,8 +13,8 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * This class will generate "uniform" lists of random integers. 
- *
+ * This class will generate "uniform" lists of random integers.
+ * 
  * @author Daniel Lemire
  */
 public class UniformDataGenerator {
@@ -26,7 +26,8 @@ public class UniformDataGenerator {
         }
 
         /**
-         * @param seed random seed
+         * @param seed
+         *                random seed
          */
         public UniformDataGenerator(final int seed) {
                 this.rand = new Random(seed);
@@ -50,9 +51,8 @@ public class UniformDataGenerator {
         }
 
         /**
-        * output all integers from the range [0,Max) that are not
-        * in the array
-        */
+         * output all integers from the range [0,Max) that are not in the array
+         */
         static int[] negate(int[] x, int Max) {
                 int[] ans = new int[Max - x.length];
                 int i = 0;
@@ -68,16 +68,18 @@ public class UniformDataGenerator {
                 return ans;
         }
 
-
         /**
          * generates randomly N distinct integers from 0 to Max.
-         * @param N number of integers to generate
-         * @param Max bound on the value of integers
+         * 
+         * @param N
+         *                number of integers to generate
+         * @param Max
+         *                bound on the value of integers
          * @return an array containing randomly selected integers
          */
         public int[] generateUniform(int N, int Max) {
-                if(N * 2 > Max) {
-                        return negate( generateUniform(Max - N, Max), Max );
+                if (N * 2 > Max) {
+                        return negate(generateUniform(Max - N, Max), Max);
                 }
                 if (2048 * N > Max)
                         return generateUniformBitmap(N, Max);
