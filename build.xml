@@ -14,7 +14,7 @@
   <target name="Benchmark" depends="compile">
     <java
       classpath="target/classes"
-      classname="me.lemire.integercompression.${benchmark.target}"
+      classname="me.lemire.integercompression.benchmarktools.${benchmark.target}"
       fork="true">
       <jvmarg value="-server" />
     </java>
