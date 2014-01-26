@@ -8,7 +8,7 @@
 package me.lemire.integercompression;
 
 /**
- * NewPFD/NewPFOR
+ * NewPFD/NewPFOR based on Simple9  by Yan et al.
  * <p/>
  * Follows:
  * <p/>

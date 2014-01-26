@@ -8,7 +8,7 @@
 package me.lemire.integercompression;
 
 /**
- * NewPFD/NewPFOR
+ * NewPFD/NewPFOR: fast patching scheme by Yan et al.
  * <p/>
  * Follows:
  * <p/>

@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 /**
- * This is a PFOR Scheme designed by D. Lemire called FastPFOR.
+ * This is a patching scheme designed for speed.
  * <p/>
  * For details, please see
  * <p/>

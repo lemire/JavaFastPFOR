@@ -8,7 +8,7 @@
 package me.lemire.integercompression;
 
 /**
- * Scheme designed by D. Lemire based on a commonly used idea.
+ * Scheme  based on a commonly used idea: can be extremely fast.
  * 
  * You should only use this scheme on sorted arrays. Use BinaryPacking if you
  * have unsorted arrays.

@@ -8,7 +8,7 @@
 package me.lemire.integercompression;
 
 /**
- * OptPFD
+ * OptPFD  based on Simple16  by Yan et al.
  * <p/>
  * Follows:
  * <p/>

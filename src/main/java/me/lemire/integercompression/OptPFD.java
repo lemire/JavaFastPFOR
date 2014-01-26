@@ -7,7 +7,7 @@
 package me.lemire.integercompression;
 
 /**
- * OptPFD
+ * OptPFD: fast patching scheme   by Yan et al.
  * <p/>
  * Follows:
  * <p/>
