@@ -124,6 +124,11 @@ or:
     $ ant Benchmark -Dbenchmark.target=BenchmarkBitPacking
 
 
+API Documentation
+-----------------
+
+http://lemire.me/docs/javafastpfor/
+
 Want to read more?
 ------------------
 
