@@ -138,6 +138,9 @@ Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second throu
 http://arxiv.org/abs/1209.2137
 
 
+Daniel Lemire, Leonid Boytsov, Nathan Kurz, SIMD Compression and the Intersection of Sorted Integers, arXiv:1401.6399, 2014
+http://arxiv.org/abs/1401.6399
+
 Ikhtear Sharif wrote his M.Sc. thesis on this library:
 
 Ikhtear Sharif, Performance Evaluation of Fast Integer Compression Techniques Over Tables, M.Sc. thesis, UNB 2013.
