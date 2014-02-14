@@ -9,6 +9,7 @@ package me.lemire.integercompression;
 
 /**
  * This is an implementation of the popular Simple9 scheme.
+ * It is limited to 28-bit integers (between 0 and 2^28-1).
  * 
  * Note that this does not use differential coding: if you are working on sorted
  * lists, you must compute the deltas separately.
@@ -190,7 +191,7 @@ public final class Simple9 implements IntegerCODEC {
                                 break;
                         }
                         default: {
-                                throw new RuntimeException("shouldn't happen");
+                                throw new RuntimeException("shouldn't happen: limited to 28-bit integers");
                         }
                         }
                 }
