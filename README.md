@@ -40,7 +40,7 @@ the following code in your pom.xml file:
          <dependency>
 	     <groupId>me.lemire.integercompression</groupId>
 	     <artifactId>JavaFastPFOR</artifactId>
-	     <version>0.0.10</version>
+	     <version>0.0.11</version>
          </dependency>
      </dependencies>
 
@@ -70,7 +70,7 @@ Main contributors
 
 with contributions by 
 * Di Wu, http://www.facebook.com/diwu1989
-
+* Stefan Ackermann, https://github.com/Stivo
 
 How does it compare to the Kamikaze PForDelta library?
 ------------------------------------------------------
