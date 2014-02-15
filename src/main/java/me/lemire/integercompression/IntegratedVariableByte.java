@@ -16,7 +16,6 @@ import java.nio.IntBuffer;
  * You should only use this scheme on sorted arrays. Use VariableByte if you
  * have unsorted arrays.
  * 
- * 
  * @author Daniel Lemire
  */
 public class IntegratedVariableByte implements IntegratedIntegerCODEC,

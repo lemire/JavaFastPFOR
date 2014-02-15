@@ -13,6 +13,29 @@ package me.lemire.integercompression;
  * You should only use this scheme on sorted arrays. Use BinaryPacking if you
  * have unsorted arrays.
  * 
+ * It encodes integers in blocks of 128 integers. For arrays containing
+ * an arbitrary number of integers, you should use it in conjunction
+ * with another CODEC: 
+ * 
+ * <pre>IntegratedIntegerCODEC is = 
+ * new IntegratedComposition(new IntegratedBinaryPacking(), 
+ * new IntegratedVariableByte())</pre>
+ * 
+ * <p>
+ * For details, please see
+ * </p>
+ * <p>
+ * Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second
+ * through vectorization Software: Practice &amp; Experience
+ * http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract
+ * http://arxiv.org/abs/1209.2137
+ * </p>
+ * <p>
+ * Daniel Lemire, Leonid Boytsov, Nathan Kurz,
+ * SIMD Compression and the Intersection of Sorted Integers
+ * http://arxiv.org/abs/1401.6399
+ * </p>
+ * 
  * @author Daniel Lemire
  * 
  */

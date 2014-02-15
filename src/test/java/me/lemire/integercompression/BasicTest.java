@@ -100,10 +100,12 @@ public class BasicTest
     @Test
     public void checkDeltaZigzagVB() {
         DeltaZigzagVariableByte codec = new DeltaZigzagVariableByte();
+        DeltaZigzagVariableByte codeco = new DeltaZigzagVariableByte();
+
         testZeroInZeroOut(codec);
-        test(codec, 5, 10);
-        test(codec, 5, 14);
-        test(codec, 2, 18);
+        test(codec, codeco, 5, 10);
+        test(codec, codeco, 5, 14);
+        test(codec, codeco, 2, 18);
     }
 
     @Test
@@ -115,11 +117,15 @@ public class BasicTest
         IntegerCODEC compo = new Composition(
                 new DeltaZigzagBinaryPacking(),
                 new VariableByte());
+        IntegerCODEC compo2 = new Composition(
+                new DeltaZigzagBinaryPacking(),
+                new VariableByte());
+
         testZeroInZeroOut(compo);
         testUnsorted(compo);
-        test(compo, 5, 10);
-        test(compo, 5, 14);
-        test(compo, 2, 18);
+        test(compo, compo2, 5, 10);
+        test(compo, compo2, 5, 14);
+        test(compo, compo2, 2, 18);
     }
 
     @Test
@@ -146,9 +152,11 @@ public class BasicTest
     public void checkXorBinaryPacking3() {
         IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),
                 new IntegratedVariableByte());
-        test(c, 5, 10);
-        test(c, 5, 14);
-        test(c, 2, 18);
+        IntegerCODEC co = new IntegratedComposition(new XorBinaryPacking(),
+                new IntegratedVariableByte());
+        test(c, co, 5, 10);
+        test(c, co, 5, 14);
+        test(c, co, 2, 18);
     }
 
     /**
@@ -310,7 +318,7 @@ public class BasicTest
         assertEquals(0, outpos.intValue());
     }
 
-    private static void test(IntegerCODEC c, int N, int nbr) {
+    private static void test(IntegerCODEC c,IntegerCODEC co, int N, int nbr) {
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
         for (int sparsity = 1; sparsity < 31 - nbr; sparsity += 4) {
             int[][] data = new int[N][];
@@ -318,7 +326,7 @@ public class BasicTest
             for (int k = 0; k < N; ++k) {
                 data[k] = cdg.generateClustered((1 << nbr), max);
             }
-            testCodec(c, data, max);
+            testCodec(c, co, data, max);
         }
     }
 
@@ -332,31 +340,40 @@ public class BasicTest
             }
 
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
-                        new IntegratedVariableByte()), data, max);
-            testCodec(new JustCopy(), data, max);
-            testCodec(new VariableByte(), data, max);
-            testCodec(new IntegratedVariableByte(), data, max);
+                        new IntegratedVariableByte()),new IntegratedComposition(new IntegratedBinaryPacking(),
+                                new IntegratedVariableByte()), data, max);
+            testCodec(new JustCopy(),new JustCopy(), data, max);
+            testCodec(new VariableByte(), new VariableByte(), data, max);
+            testCodec(new IntegratedVariableByte(),new IntegratedVariableByte(), data, max);
             testCodec(new Composition(new BinaryPacking(), new VariableByte()),
+                    new Composition(new BinaryPacking(), new VariableByte()),
                     data, max);
-            testCodec(new Composition(new NewPFD(), new VariableByte()), data,
+            testCodec(new Composition(new NewPFD(), new VariableByte()),
+                    new Composition(new NewPFD(), new VariableByte()), data,
                     max);
             testCodec(new Composition(new NewPFDS9(), new VariableByte()),
+                    new Composition(new NewPFDS9(), new VariableByte()),
                     data, max);
             testCodec(new Composition(new NewPFDS16(), new VariableByte()),
+                    new Composition(new NewPFDS16(), new VariableByte()),
                     data, max);
-            testCodec(new Composition(new OptPFD(), new VariableByte()), data,
+            testCodec(new Composition(new OptPFD(), new VariableByte()),
+                    new Composition(new OptPFD(), new VariableByte()),data,
                     max);
             testCodec(new Composition(new OptPFDS9(), new VariableByte()),
+                    new Composition(new OptPFDS9(), new VariableByte()),
                     data, max);
             testCodec(new Composition(new OptPFDS16(), new VariableByte()),
+                    new Composition(new OptPFDS16(), new VariableByte()),
                     data, max);
             testCodec(new Composition(new FastPFOR(), new VariableByte()),
+                    new Composition(new FastPFOR(), new VariableByte()),
                     data, max);
-            testCodec(new Simple9(), data, max);
+            testCodec(new Simple9(),new Simple9(), data, max);
         }
     }
 
-    private static void testCodec(IntegerCODEC c, int[][] data, int max) {
+    private static void testCodec(IntegerCODEC c,IntegerCODEC co, int[][] data, int max) {
         int N = data.length;
         int maxlength = 0;
         for (int k = 0; k < N; ++k) {
@@ -383,7 +400,7 @@ public class BasicTest
             inpos.set(0);
             outpos.set(1);
             buffer[0] = backupdata[0];
-            c.uncompress(dataout, inpos, thiscompsize - 1, buffer, outpos);
+            co.uncompress(dataout, inpos, thiscompsize - 1, buffer, outpos);
             if (!(c instanceof IntegratedIntegerCODEC))
                 Delta.fastinverseDelta(buffer);
 
@@ -517,5 +534,43 @@ public class BasicTest
                         compressed.length, recovered, recoffset);
                 assertArrayEquals(data, recovered);
         }    
-
+        
+        
+        @Test
+        public void fastPforTest() {
+            // proposed by Stefan Ackermann (https://github.com/Stivo)
+            FastPFOR codec1 = new FastPFOR();
+            FastPFOR codec2 = new FastPFOR();
+            int N = 128;
+            int[] data = new int[N];
+            for (int i = 0; i < N; i++)
+                data[i] = 0;
+            data[126] = -1;
+            int[] comp = TestUtils.compress(codec1,
+                    Arrays.copyOf(data, N));
+            int[] answer = TestUtils.uncompress(codec2, comp, N);
+            for (int k = 0; k < N; ++k)
+                if (answer[k] != data[k])
+                    throw new RuntimeException(
+                            "bug "+k+" "+answer[k]+" != "+data[k]);
+        }
+        @Test
+        public void ifastPforTest() {
+            // inspired by Stefan Ackermann (https://github.com/Stivo)
+            IntegratedFastPFOR codec1 = new IntegratedFastPFOR();
+            IntegratedFastPFOR codec2 = new IntegratedFastPFOR();
+            int N = 128;
+            int[] data = new int[N];
+            for (int i = 0; i < N; i++)
+                data[i] = 0;
+            data[126] = -1;
+            int[] comp = TestUtils.compress(codec1,
+                    Arrays.copyOf(data, N));
+            int[] answer = TestUtils.uncompress(codec2, comp, N);
+            for (int k = 0; k < N; ++k)
+                if (answer[k] != data[k])
+                    throw new RuntimeException(
+                            "bug "+k+" "+answer[k]+" != "+data[k]);
+        }        
+                
 }

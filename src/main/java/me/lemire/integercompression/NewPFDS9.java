@@ -17,6 +17,12 @@ package me.lemire.integercompression;
  * <p/>
  * using Simple9 as the secondary coder.
  * 
+ * It encodes integers in blocks of 128 integers. For arrays containing
+ * an arbitrary number of integers, you should use it in conjunction
+ * with another CODEC: 
+ * 
+ *  <pre>IntegerCODEC ic = new Composition(new PDFS9(), new VariableByte()).</pre>
+ * 
  * Note that this does not use differential coding: if you are working on sorted
  * lists, you must compute the deltas separately.
  * 

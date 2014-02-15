@@ -8,6 +8,13 @@ package me.lemire.integercompression;
 /**
  * BinaryPacking with Delta+Zigzag Encoding.
  * 
+ * It encodes integers in blocks of 128 integers. For arrays containing
+ * an arbitrary number of integers, you should use it in conjunction
+ * with another CODEC: 
+ * 
+ *  <pre>IntegerCODEC ic = new Composition(new DeltaZigzagBinaryPacking(),
+ *                      new DeltaZigzagVariableByte()).</pre>
+ * 
  * @author MURAOKA Taro http://github.com/koron
  */
 public final class DeltaZigzagBinaryPacking implements IntegerCODEC {

@@ -8,9 +8,30 @@ package me.lemire.integercompression;
 
 /**
  * Scheme  based on a commonly used idea: can be extremely fast.
+ * It encodes integers in blocks of 128 integers. For arrays containing
+ * an arbitrary number of integers, you should use it in conjunction
+ * with another CODEC: 
+ * 
+ *  <pre>IntegerCODEC ic = 
+ *  new Composition(new BinaryPacking(), new VariableByte()).</pre>
  * 
  * Note that this does not use differential coding: if you are working on sorted
  * lists, use IntegratedBinaryPacking instead.
+ *
+ * <p>
+ * For details, please see
+ * </p>
+ * <p>
+ * Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second
+ * through vectorization Software: Practice &amp; Experience
+ * http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract
+ * http://arxiv.org/abs/1209.2137
+ * </p>
+ * <p>
+ * Daniel Lemire, Leonid Boytsov, Nathan Kurz,
+ * SIMD Compression and the Intersection of Sorted Integers
+ * http://arxiv.org/abs/1401.6399
+ * </p>
  * 
  * @author Daniel Lemire
  */

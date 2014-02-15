@@ -5,7 +5,10 @@
 package me.lemire.integercompression;
 
 /**
- * XOR + BinaryPacking.
+ * BinaryPacking over XOR differential.
+ * 
+ * <pre>IntegratedIntegerCODEC is = 
+ * new Composition(new XorBinaryPacking(), new VariableByte())</pre>
  * 
  * @author MURAOKA Taro http://github.com/koron
  */

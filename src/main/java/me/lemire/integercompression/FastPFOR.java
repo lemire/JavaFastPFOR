@@ -11,6 +11,11 @@ import java.util.Arrays;
 
 /**
  * This is a patching scheme designed for speed.
+ *  It encodes integers in blocks of 128 integers. For arrays containing
+ * an arbitrary number of integers, you should use it in conjunction
+ * with another CODEC: 
+ * 
+ *  IntegerCODEC ic = new Composition(new FastPFOR(), new VariableByte()).
  * <p/>
  * For details, please see
  * <p/>
@@ -189,7 +194,7 @@ public final class FastPFOR implements IntegerCODEC {
                                 bitmap |= (1 << (k - 1));
                 }
                 out[tmpoutpos++] = bitmap;
-                for (int k = 1; k <= 31; ++k) {
+                for (int k = 1; k <= 32; ++k) {
                         if (dataPointers[k] != 0) {
                                 out[tmpoutpos++] = dataPointers[k];// size
                                 for (int j = 0; j < dataPointers[k]; j += 32) {
@@ -242,7 +247,7 @@ public final class FastPFOR implements IntegerCODEC {
                 inexcept += bytesize / 4;
 
                 final int bitmap = in[inexcept++];
-                for (int k = 1; k <= 31; ++k) {
+                for (int k = 1; k <= 32; ++k) {
                         if ((bitmap & (1 << (k - 1))) != 0) {
                                 int size = in[inexcept++];
                                 if (dataTobePacked[k].length < size)

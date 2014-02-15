@@ -15,6 +15,13 @@ import java.util.Arrays;
  * differential coding as part of the compression.
  * </p>
  * 
+ * It encodes integers in blocks of 128 integers. For arrays containing
+ * an arbitrary number of integers, you should use it in conjunction
+ * with another CODEC: 
+ * <pre>IntegratedIntegerCODEC is =  
+ *  new IntegratedComposition(new IntegratedFastPFOR(),
+ *               new IntegratedVariableByte())</pre>
+ * 
  * <p>
  * For details, please see
  * </p>
@@ -23,6 +30,11 @@ import java.util.Arrays;
  * through vectorization Software: Practice &amp; Experience
  * http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract
  * http://arxiv.org/abs/1209.2137
+ * </p>
+ * <p>
+ * Daniel Lemire, Leonid Boytsov, Nathan Kurz,
+ * SIMD Compression and the Intersection of Sorted Integers
+ * http://arxiv.org/abs/1401.6399
  * </p>
  * <p>
  * For multi-threaded applications, each thread should use its own
@@ -199,7 +211,7 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
                                 bitmap |= (1 << (k - 1));
                 }
                 out[tmpoutpos++] = bitmap;
-                for (int k = 1; k <= 31; ++k) {
+                for (int k = 1; k <= 32; ++k) {
                         if (dataPointers[k] != 0) {
                                 out[tmpoutpos++] = dataPointers[k];// size
                                 for (int j = 0; j < dataPointers[k]; j += 32) {
@@ -253,7 +265,7 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
                 inexcept += bytesize / 4;
 
                 final int bitmap = in[inexcept++];
-                for (int k = 1; k <= 31; ++k) {
+                for (int k = 1; k <= 32; ++k) {
                         if ((bitmap & (1 << (k - 1))) != 0) {
                                 int size = in[inexcept++];
                                 if (dataTobePacked[k].length < size)
