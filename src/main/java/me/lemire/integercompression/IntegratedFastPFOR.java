@@ -28,13 +28,13 @@ import java.util.Arrays;
  * <p>
  * Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second
  * through vectorization Software: Practice &amp; Experience
- * http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract
- * http://arxiv.org/abs/1209.2137
+ * <a href="http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract">http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract</a>
+ * <a href="http://arxiv.org/abs/1209.2137">http://arxiv.org/abs/1209.2137</a>
  * </p>
  * <p>
  * Daniel Lemire, Leonid Boytsov, Nathan Kurz,
  * SIMD Compression and the Intersection of Sorted Integers
- * http://arxiv.org/abs/1401.6399
+ * <a href="http://arxiv.org/abs/1401.6399">http://arxiv.org/abs/1401.6399</a>
  * </p>
  * <p>
  * For multi-threaded applications, each thread should use its own
