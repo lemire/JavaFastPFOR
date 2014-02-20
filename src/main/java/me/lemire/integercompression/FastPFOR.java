@@ -21,8 +21,8 @@ import java.util.Arrays;
  * <p/>
  * Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second
  * through vectorization Software: Practice &amp; Experience
- * http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract
- * http://arxiv.org/abs/1209.2137
+ * <a href="http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract">http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract</a>
+ * <a href="http://arxiv.org/abs/1209.2137">http://arxiv.org/abs/1209.2137</a>
  * <p/>
  * For sufficiently compressible arrays, it is faster and better than other PFOR
  * schemes.
