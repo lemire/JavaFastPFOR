@@ -147,3 +147,9 @@ Ikhtear Sharif, Performance Evaluation of Fast Integer Compression Techniques Ov
 http://hdl.handle.net/1882/45703
 
 He also posted his slides online: http://www.slideshare.net/ikhtearSharif/ikhtear-defense
+
+
+Funding
+-----------
+
+This work was supported by NSERC grant number 26143.
