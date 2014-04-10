@@ -18,6 +18,8 @@ when using differential coding in databases and information
 retrieval (e.g., in inverted indexes or column stores).
 
 This libary is used by ClueWeb Tools (https://github.com/lintool/clueweb).
+This library inspired a compression scheme used by Apache Lucene (e.g., see
+http://lucene.apache.org/core/4_6_1/core/org/apache/lucene/util/PForDeltaDocIdSet.html ).
 
 It is a java port of the fastpfor C++ library (https://github.com/lemire/FastPFor). 
 There is also a Go port (https://github.com/reducedb/encoding). The C++
