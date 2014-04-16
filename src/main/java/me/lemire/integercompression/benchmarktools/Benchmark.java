@@ -398,7 +398,6 @@ public class Benchmark {
                                 size += thiscompsize;
                                 //
                                 bef = System.nanoTime() / 1000;
-                                // buffer[0] = backupdata[0];
                                 ArrayList<int[]> datauncomp = new ArrayList<int[]>(
                                         dataout.size());
                                 int deltaoffset = 0;

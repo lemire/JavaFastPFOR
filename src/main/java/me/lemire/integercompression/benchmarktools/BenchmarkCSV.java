@@ -51,6 +51,7 @@ public class BenchmarkCSV {
                         if (misparsed > 0)
                                 System.out.println("Failed to parse "
                                         + misparsed + " entries");
+                        br.close();
                         return answer;
                 } else if (f == Format.ONEARRAYPERFILE) {
                         ArrayList<Integer> answer = new ArrayList<Integer>();
@@ -80,6 +81,7 @@ public class BenchmarkCSV {
                         if (misparsed > 0)
                                 System.out.println("Failed to parse "
                                         + misparsed + " entries");
+                        br.close();
                         return wrap;
                 } else {
                         ArrayList<Integer> answer = new ArrayList<Integer>();
@@ -103,6 +105,7 @@ public class BenchmarkCSV {
                         if (misparsed > 0)
                                 System.out.println("Failed to parse "
                                         + misparsed + " entries");
+                        br.close();
                         return wrap;
                 }
         }
