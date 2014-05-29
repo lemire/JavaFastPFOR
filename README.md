@@ -17,6 +17,11 @@ your array use less than 32 bits. These sort of arrays often come up
 when using differential coding in databases and information
 retrieval (e.g., in inverted indexes or column stores).
 
+It can decompress integers at a rate of over 1.2 billions per second
+(4.5 GB/s). It is significantly faster than generic codecs (such
+as Snappy, LZ4 and so on) when compressing arrays of integers.
+
+Part of this library has been integrated in Parquet (http://parquet.io/).
 This libary is used by ClueWeb Tools (https://github.com/lintool/clueweb).
 This library inspired a compression scheme used by Apache Lucene (e.g., see
 http://lucene.apache.org/core/4_6_1/core/org/apache/lucene/util/PForDeltaDocIdSet.html ).
@@ -156,7 +161,7 @@ http://arxiv.org/abs/1401.6399
 Ikhtear Sharif wrote his M.Sc. thesis on this library:
 
 Ikhtear Sharif, Performance Evaluation of Fast Integer Compression Techniques Over Tables, M.Sc. thesis, UNB 2013.
-http://hdl.handle.net/1882/45703
+http://lemire.me/fr/documents/thesis/IkhtearThesis.pdf
 
 He also posted his slides online: http://www.slideshare.net/ikhtearSharif/ikhtear-defense
 
