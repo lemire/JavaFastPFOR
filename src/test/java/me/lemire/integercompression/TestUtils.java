@@ -2,6 +2,8 @@ package me.lemire.integercompression;
 
 import java.util.Arrays;
 
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
@@ -9,6 +11,8 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings({ "javadoc"})
 public class TestUtils {
+    @Test
+    public void bogus() {}// to avoid useless complaining.
 
     public static void dumpIntArray(int[] data, String label) {
         System.out.print(label);
