@@ -9,12 +9,12 @@ package me.lemire.integercompression;
 
 /**
  * OptPFD  based on Simple9   by Yan et al.
- * <p/>
+ * <p>
  * Follows:
- * <p/>
+ * </p><p>
  * H. Yan, S. Ding, T. Suel, Inverted index compression and query processing
- * with optimized document ordering, in: WWW 09, 2009, pp. 401--410.
- * <p/>
+ * with optimized document ordering, in: WWW 09, 2009, pp. 401-410.
+ * </p>
  * using Simple9 as the secondary coder.
  * 
  * It encodes integers in blocks of 128 integers. For arrays containing

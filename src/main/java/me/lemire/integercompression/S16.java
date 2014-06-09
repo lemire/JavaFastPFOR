@@ -9,9 +9,9 @@ package me.lemire.integercompression;
 
 /**
  * Version of Simple16 for NewPFD and OptPFD.
- * <p/>
+ * <p>
  * Adapted by D. Lemire from the Apache Lucene project.
- * 
+ * </p>
  */
 public final class S16 {
 

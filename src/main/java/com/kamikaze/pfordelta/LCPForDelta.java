@@ -43,7 +43,7 @@ import java.util.Arrays;
  * literature.
  * 
  * This implementation overcomes the problem that Simple16 cannot deal with
- * >2^28 numbers.
+ * greater than 2^28 numbers.
  * 
  * This implementation is almost same as PForDelta in the same package, except
  * that it is tuned especially for Lucene-4.0 Codec to achieve the best
@@ -417,7 +417,7 @@ public class LCPForDelta {
         }
 
         /**
-         * Check if the block contains big numbers that is greater than ((1<<
+         * Check if the block contains big numbers that is greater than ((1&lt;&lt;
          * bits)-1)
          * 
          * @param inputBlock
@@ -578,7 +578,7 @@ public class LCPForDelta {
          * @param outOffset
          *                the start offset in bits in the output array
          * @param bits
-         *                the number of bits to be written (bits>=0)
+         *                the number of bits to be written (bits greater or equal to 0)
          */
         public static final void writeBits(int[] out, int val, int outOffset,
                 int bits) {
@@ -604,7 +604,7 @@ public class LCPForDelta {
          * @param bits
          *                the number of bits to be read, unlike writeBits(),
          *                readBits() does not deal with bits==0 and thus bits
-         *                must > 0. When bits ==0, the calling functions will
+         *                must be greater than  0. When bits ==0, the calling functions will
          *                just skip the entire bits-bit slots without decoding
          *                them
          * @return the bits bits of the input

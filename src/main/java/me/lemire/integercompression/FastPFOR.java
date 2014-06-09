@@ -18,16 +18,16 @@ import java.util.Arrays;
  * it in conjunction with another CODEC: 
  * 
  *  IntegerCODEC ic = new Composition(new FastPFOR(), new VariableByte()).
- * <p/>
+ * <p>
  * For details, please see
- * <p/>
+ * </p><p>
  * Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second
  * through vectorization Software: Practice &amp; Experience
  * <a href="http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract">http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract</a>
  * <a href="http://arxiv.org/abs/1209.2137">http://arxiv.org/abs/1209.2137</a>
- * <p/>
- * For sufficiently compressible arrays, it is faster and better than other PFOR
- * schemes.
+ * </p>
+ * <p>For sufficiently compressible and long arrays, it is faster and better than other PFOR
+ * schemes.</p>
  * 
  * Note that this does not use differential coding: if you are working on sorted
  * lists, use IntegratedFastPFOR instead.

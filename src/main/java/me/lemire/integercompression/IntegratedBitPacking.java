@@ -14,12 +14,12 @@ import java.util.Arrays;
  * differential coding.
  * 
  * For details, please see
- * <p/>
+ * <p>
  * Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second
  * through vectorization Software: Practice &amp; Experience
  * <a href="http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract">http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract</a>
  * <a href="http://arxiv.org/abs/1209.2137">http://arxiv.org/abs/1209.2137</a>
- * <p/>
+ *</p>
  * 
  * @author Daniel Lemire
  * 
