@@ -14,10 +14,11 @@ import java.util.Arrays;
  * This is an integrated version of FastPFOR meaning that it computes
  * differential coding as part of the compression.
  * </p>
- * 
- * It encodes integers in blocks of 128 integers. For arrays containing
- * an arbitrary number of integers, you should use it in conjunction
- * with another CODEC: 
+ *  It encodes integers in blocks of 128 integers within pages of
+ *  up to 65536 integers. Note that it is important, to get good
+ *  compression and good performance, to use sizeable blocks (greater than 1024 integers).
+ *  For arrays containing a number of integers that is not divisible by 128, 
+ *  you should use it in conjunction with another CODEC: 
  * <pre>IntegratedIntegerCODEC is =  
  *  new IntegratedComposition(new IntegratedFastPFOR(),
  *               new IntegratedVariableByte())</pre>

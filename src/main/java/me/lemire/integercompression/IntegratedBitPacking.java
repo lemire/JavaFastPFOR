@@ -13,10 +13,141 @@ import java.util.Arrays;
  * "Integrated" bit packing routines: they include both the bit packing and the
  * differential coding.
  * 
+ * For details, please see
+ * <p/>
+ * Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second
+ * through vectorization Software: Practice &amp; Experience
+ * <a href="http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract">http://onlinelibrary.wiley.com/doi/10.1002/spe.2203/abstract</a>
+ * <a href="http://arxiv.org/abs/1209.2137">http://arxiv.org/abs/1209.2137</a>
+ * <p/>
+ * 
  * @author Daniel Lemire
  * 
  */
 public final class IntegratedBitPacking {
+
+        /**
+         * Pack 32 integers as deltas with an initial value 
+         * 
+         * @param initoffset initial value (used to compute first delta)
+         * @param in input array
+         * @param inpos initial position in input array
+         * @param out output array
+         * @param outpos initial position in output array
+         * @param bit number of bits to use per integer
+         */
+        public static void integratedpack(final int initoffset, final int[] in,
+                final int inpos, final int[] out, final int outpos, final int bit) {
+                switch (bit) {
+                case 0:
+                        integratedpack0(initoffset, in, inpos, out, outpos);
+                        break;
+                case 1:
+                        integratedpack1(initoffset, in, inpos, out, outpos);
+                        break;
+                case 2:
+                        integratedpack2(initoffset, in, inpos, out, outpos);
+                        break;
+                case 3:
+                        integratedpack3(initoffset, in, inpos, out, outpos);
+                        break;
+                case 4:
+                        integratedpack4(initoffset, in, inpos, out, outpos);
+                        break;
+                case 5:
+                        integratedpack5(initoffset, in, inpos, out, outpos);
+                        break;
+                case 6:
+                        integratedpack6(initoffset, in, inpos, out, outpos);
+                        break;
+                case 7:
+                        integratedpack7(initoffset, in, inpos, out, outpos);
+                        break;
+                case 8:
+                        integratedpack8(initoffset, in, inpos, out, outpos);
+                        break;
+                case 9:
+                        integratedpack9(initoffset, in, inpos, out, outpos);
+                        break;
+                case 10:
+                        integratedpack10(initoffset, in, inpos, out, outpos);
+                        break;
+                case 11:
+                        integratedpack11(initoffset, in, inpos, out, outpos);
+                        break;
+                case 12:
+                        integratedpack12(initoffset, in, inpos, out, outpos);
+                        break;
+                case 13:
+                        integratedpack13(initoffset, in, inpos, out, outpos);
+                        break;
+                case 14:
+                        integratedpack14(initoffset, in, inpos, out, outpos);
+                        break;
+                case 15:
+                        integratedpack15(initoffset, in, inpos, out, outpos);
+                        break;
+                case 16:
+                        integratedpack16(initoffset, in, inpos, out, outpos);
+                        break;
+                case 17:
+                        integratedpack17(initoffset, in, inpos, out, outpos);
+                        break;
+                case 18:
+                        integratedpack18(initoffset, in, inpos, out, outpos);
+                        break;
+                case 19:
+                        integratedpack19(initoffset, in, inpos, out, outpos);
+                        break;
+                case 20:
+                        integratedpack20(initoffset, in, inpos, out, outpos);
+                        break;
+                case 21:
+                        integratedpack21(initoffset, in, inpos, out, outpos);
+                        break;
+                case 22:
+                        integratedpack22(initoffset, in, inpos, out, outpos);
+                        break;
+                case 23:
+                        integratedpack23(initoffset, in, inpos, out, outpos);
+                        break;
+                case 24:
+                        integratedpack24(initoffset, in, inpos, out, outpos);
+                        break;
+                case 25:
+                        integratedpack25(initoffset, in, inpos, out, outpos);
+                        break;
+                case 26:
+                        integratedpack26(initoffset, in, inpos, out, outpos);
+                        break;
+                case 27:
+                        integratedpack27(initoffset, in, inpos, out, outpos);
+                        break;
+                case 28:
+                        integratedpack28(initoffset, in, inpos, out, outpos);
+                        break;
+                case 29:
+                        integratedpack29(initoffset, in, inpos, out, outpos);
+                        break;
+                case 30:
+                        integratedpack30(initoffset, in, inpos, out, outpos);
+                        break;
+                case 31:
+                        integratedpack31(initoffset, in, inpos, out, outpos);
+                        break;
+                case 32:
+                        integratedpack32(initoffset, in, inpos, out, outpos);
+                        break;
+                default:
+                        throw new IllegalArgumentException(
+                                "Unsupported bit width.");
+                }
+        }
+
+        protected static void integratedpack0(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                // nothing
+        }
 
         protected static void integratedpack1(final int initoffset,
                 final int[] in, int inpos, final int[] out, int outpos) {
@@ -52,318 +183,6 @@ public final class IntegratedBitPacking {
                         | ((in[29 + inpos] - in[29 + inpos - 1]) << 29)
                         | ((in[30 + inpos] - in[30 + inpos - 1]) << 30)
                         | ((in[31 + inpos] - in[31 + inpos - 1]) << 31);
-        }
-
-        protected static void integratedpack2(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (in[0 + inpos] - initoffset)
-                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 2)
-                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 4)
-                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 6)
-                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 8)
-                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 10)
-                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 12)
-                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 14)
-                        | ((in[8 + inpos] - in[8 + inpos - 1]) << 16)
-                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 18)
-                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 20)
-                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 22)
-                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 24)
-                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 26)
-                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 28)
-                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 30);
-                out[1 + outpos] = (in[16 + inpos] - in[16 + inpos - 1])
-                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 2)
-                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 4)
-                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 6)
-                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 8)
-                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 10)
-                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 12)
-                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 14)
-                        | ((in[24 + inpos] - in[24 + inpos - 1]) << 16)
-                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 18)
-                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 20)
-                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 22)
-                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 24)
-                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 26)
-                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 28)
-                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 30);
-        }
-
-        protected static void integratedpack3(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (in[0 + inpos] - initoffset)
-                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 3)
-                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 6)
-                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 9)
-                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 12)
-                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 15)
-                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 18)
-                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 21)
-                        | ((in[8 + inpos] - in[8 + inpos - 1]) << 24)
-                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 27)
-                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 30);
-                out[1 + outpos] = (in[10 + inpos] - in[10 + inpos - 1]) >>> (3 - 1)
-                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 1)
-                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 4)
-                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 7)
-                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 10)
-                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 13)
-                        | ((in[16 + inpos] - in[16 + inpos - 1]) << 16)
-                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 19)
-                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 22)
-                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 25)
-                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 28)
-                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 31);
-                out[2 + outpos] = (in[21 + inpos] - in[21 + inpos - 1]) >>> (3 - 2)
-                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 2)
-                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 5)
-                        | ((in[24 + inpos] - in[24 + inpos - 1]) << 8)
-                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 11)
-                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 14)
-                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 17)
-                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 20)
-                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 23)
-                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 26)
-                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 29);
-        }
-
-        protected static void integratedpack4(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (in[0 + inpos] - initoffset)
-                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 4)
-                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 8)
-                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 12)
-                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 16)
-                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 20)
-                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 24)
-                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 28);
-                out[1 + outpos] = (in[8 + inpos] - in[8 + inpos - 1])
-                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 4)
-                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 8)
-                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 12)
-                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 16)
-                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 20)
-                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 24)
-                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 28);
-                out[2 + outpos] = (in[16 + inpos] - in[16 + inpos - 1])
-                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 4)
-                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 8)
-                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 12)
-                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 16)
-                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 20)
-                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 24)
-                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 28);
-                out[3 + outpos] = (in[24 + inpos] - in[24 + inpos - 1])
-                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 4)
-                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 8)
-                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 12)
-                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 16)
-                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 20)
-                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 24)
-                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 28);
-        }
-
-        protected static void integratedpack5(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (in[0 + inpos] - initoffset)
-                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 5)
-                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 10)
-                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 15)
-                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 20)
-                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 25)
-                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 30);
-                out[1 + outpos] = (in[6 + inpos] - in[6 + inpos - 1]) >>> (5 - 3)
-                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 3)
-                        | ((in[8 + inpos] - in[8 + inpos - 1]) << 8)
-                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 13)
-                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 18)
-                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 23)
-                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 28);
-                out[2 + outpos] = (in[12 + inpos] - in[12 + inpos - 1]) >>> (5 - 1)
-                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 1)
-                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 6)
-                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 11)
-                        | ((in[16 + inpos] - in[16 + inpos - 1]) << 16)
-                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 21)
-                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 26)
-                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 31);
-                out[3 + outpos] = (in[19 + inpos] - in[19 + inpos - 1]) >>> (5 - 4)
-                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 4)
-                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 9)
-                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 14)
-                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 19)
-                        | ((in[24 + inpos] - in[24 + inpos - 1]) << 24)
-                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 29);
-                out[4 + outpos] = (in[25 + inpos] - in[25 + inpos - 1]) >>> (5 - 2)
-                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 2)
-                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 7)
-                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 12)
-                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 17)
-                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 22)
-                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 27);
-        }
-
-        protected static void integratedpack6(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (in[0 + inpos] - initoffset)
-                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 6)
-                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 12)
-                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 18)
-                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 24)
-                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 30);
-                out[1 + outpos] = (in[5 + inpos] - in[5 + inpos - 1]) >>> (6 - 4)
-                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 4)
-                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 10)
-                        | ((in[8 + inpos] - in[8 + inpos - 1]) << 16)
-                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 22)
-                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 28);
-                out[2 + outpos] = (in[10 + inpos] - in[10 + inpos - 1]) >>> (6 - 2)
-                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 2)
-                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 8)
-                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 14)
-                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 20)
-                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 26);
-                out[3 + outpos] = (in[16 + inpos] - in[16 + inpos - 1])
-                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 6)
-                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 12)
-                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 18)
-                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 24)
-                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 30);
-                out[4 + outpos] = (in[21 + inpos] - in[21 + inpos - 1]) >>> (6 - 4)
-                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 4)
-                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 10)
-                        | ((in[24 + inpos] - in[24 + inpos - 1]) << 16)
-                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 22)
-                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 28);
-                out[5 + outpos] = (in[26 + inpos] - in[26 + inpos - 1]) >>> (6 - 2)
-                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 2)
-                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 8)
-                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 14)
-                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 20)
-                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 26);
-        }
-
-        protected static void integratedpack7(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (in[0 + inpos] - initoffset)
-                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 7)
-                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 14)
-                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 21)
-                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 28);
-                out[1 + outpos] = (in[4 + inpos] - in[4 + inpos - 1]) >>> (7 - 3)
-                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 3)
-                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 10)
-                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 17)
-                        | ((in[8 + inpos] - in[8 + inpos - 1]) << 24)
-                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 31);
-                out[2 + outpos] = (in[9 + inpos] - in[9 + inpos - 1]) >>> (7 - 6)
-                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 6)
-                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 13)
-                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 20)
-                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 27);
-                out[3 + outpos] = (in[13 + inpos] - in[13 + inpos - 1]) >>> (7 - 2)
-                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 2)
-                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 9)
-                        | ((in[16 + inpos] - in[16 + inpos - 1]) << 16)
-                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 23)
-                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 30);
-                out[4 + outpos] = (in[18 + inpos] - in[18 + inpos - 1]) >>> (7 - 5)
-                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 5)
-                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 12)
-                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 19)
-                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 26);
-                out[5 + outpos] = (in[22 + inpos] - in[22 + inpos - 1]) >>> (7 - 1)
-                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 1)
-                        | ((in[24 + inpos] - in[24 + inpos - 1]) << 8)
-                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 15)
-                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 22)
-                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 29);
-                out[6 + outpos] = (in[27 + inpos] - in[27 + inpos - 1]) >>> (7 - 4)
-                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 4)
-                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 11)
-                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 18)
-                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 25);
-        }
-
-        protected static void integratedpack8(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (in[0 + inpos] - initoffset)
-                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 8)
-                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 16)
-                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 24);
-                out[1 + outpos] = (in[4 + inpos] - in[4 + inpos - 1])
-                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 8)
-                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 16)
-                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 24);
-                out[2 + outpos] = (in[8 + inpos] - in[8 + inpos - 1])
-                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 8)
-                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 16)
-                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 24);
-                out[3 + outpos] = (in[12 + inpos] - in[12 + inpos - 1])
-                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 8)
-                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 16)
-                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 24);
-                out[4 + outpos] = (in[16 + inpos] - in[16 + inpos - 1])
-                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 8)
-                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 16)
-                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 24);
-                out[5 + outpos] = (in[20 + inpos] - in[20 + inpos - 1])
-                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 8)
-                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 16)
-                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 24);
-                out[6 + outpos] = (in[24 + inpos] - in[24 + inpos - 1])
-                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 8)
-                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 16)
-                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 24);
-                out[7 + outpos] = (in[28 + inpos] - in[28 + inpos - 1])
-                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 8)
-                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 16)
-                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 24);
-        }
-
-        protected static void integratedpack9(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (in[0 + inpos] - initoffset)
-                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 9)
-                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 18)
-                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 27);
-                out[1 + outpos] = (in[3 + inpos] - in[3 + inpos - 1]) >>> (9 - 4)
-                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 4)
-                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 13)
-                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 22)
-                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 31);
-                out[2 + outpos] = (in[7 + inpos] - in[7 + inpos - 1]) >>> (9 - 8)
-                        | ((in[8 + inpos] - in[8 + inpos - 1]) << 8)
-                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 17)
-                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 26);
-                out[3 + outpos] = (in[10 + inpos] - in[10 + inpos - 1]) >>> (9 - 3)
-                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 3)
-                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 12)
-                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 21)
-                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 30);
-                out[4 + outpos] = (in[14 + inpos] - in[14 + inpos - 1]) >>> (9 - 7)
-                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 7)
-                        | ((in[16 + inpos] - in[16 + inpos - 1]) << 16)
-                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 25);
-                out[5 + outpos] = (in[17 + inpos] - in[17 + inpos - 1]) >>> (9 - 2)
-                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 2)
-                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 11)
-                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 20)
-                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 29);
-                out[6 + outpos] = (in[21 + inpos] - in[21 + inpos - 1]) >>> (9 - 6)
-                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 6)
-                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 15)
-                        | ((in[24 + inpos] - in[24 + inpos - 1]) << 24);
-                out[7 + outpos] = (in[24 + inpos] - in[24 + inpos - 1]) >>> (9 - 1)
-                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 1)
-                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 10)
-                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 19)
-                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 28);
-                out[8 + outpos] = (in[28 + inpos] - in[28 + inpos - 1]) >>> (9 - 5)
-                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 5)
-                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 14)
-                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 23);
         }
 
         protected static void integratedpack10(final int initoffset,
@@ -838,6 +657,42 @@ public final class IntegratedBitPacking {
                         | ((in[30 + inpos] - in[30 + inpos - 1]) << 26);
                 out[18 + outpos] = (in[30 + inpos] - in[30 + inpos - 1]) >>> (19 - 13)
                         | ((in[31 + inpos] - in[31 + inpos - 1]) << 13);
+        }
+
+        protected static void integratedpack2(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (in[0 + inpos] - initoffset)
+                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 2)
+                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 4)
+                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 6)
+                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 8)
+                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 10)
+                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 12)
+                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 14)
+                        | ((in[8 + inpos] - in[8 + inpos - 1]) << 16)
+                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 18)
+                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 20)
+                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 22)
+                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 24)
+                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 26)
+                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 28)
+                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 30);
+                out[1 + outpos] = (in[16 + inpos] - in[16 + inpos - 1])
+                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 2)
+                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 4)
+                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 6)
+                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 8)
+                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 10)
+                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 12)
+                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 14)
+                        | ((in[24 + inpos] - in[24 + inpos - 1]) << 16)
+                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 18)
+                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 20)
+                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 22)
+                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 24)
+                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 26)
+                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 28)
+                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 30);
         }
 
         protected static void integratedpack20(final int initoffset,
@@ -1420,6 +1275,44 @@ public final class IntegratedBitPacking {
                         | ((in[31 + inpos] - in[31 + inpos - 1]) << 3);
         }
 
+        protected static void integratedpack3(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (in[0 + inpos] - initoffset)
+                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 3)
+                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 6)
+                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 9)
+                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 12)
+                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 15)
+                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 18)
+                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 21)
+                        | ((in[8 + inpos] - in[8 + inpos - 1]) << 24)
+                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 27)
+                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 30);
+                out[1 + outpos] = (in[10 + inpos] - in[10 + inpos - 1]) >>> (3 - 1)
+                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 1)
+                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 4)
+                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 7)
+                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 10)
+                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 13)
+                        | ((in[16 + inpos] - in[16 + inpos - 1]) << 16)
+                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 19)
+                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 22)
+                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 25)
+                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 28)
+                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 31);
+                out[2 + outpos] = (in[21 + inpos] - in[21 + inpos - 1]) >>> (3 - 2)
+                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 2)
+                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 5)
+                        | ((in[24 + inpos] - in[24 + inpos - 1]) << 8)
+                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 11)
+                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 14)
+                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 17)
+                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 20)
+                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 23)
+                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 26)
+                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 29);
+        }
+
         protected static void integratedpack30(final int initoffset,
                 final int[] in, int inpos, final int[] out, int outpos) {
                 out[0 + outpos] = (in[0 + inpos] - initoffset)
@@ -1550,6 +1443,375 @@ public final class IntegratedBitPacking {
                         | ((in[31 + inpos] - in[31 + inpos - 1]) << 1);
         }
 
+        protected static void integratedpack32(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                System.arraycopy(in, inpos, out, outpos, 32); // no sense in
+                                                              // doing delta
+                                                              // coding
+        }
+
+        protected static void integratedpack4(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (in[0 + inpos] - initoffset)
+                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 4)
+                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 8)
+                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 12)
+                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 16)
+                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 20)
+                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 24)
+                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 28);
+                out[1 + outpos] = (in[8 + inpos] - in[8 + inpos - 1])
+                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 4)
+                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 8)
+                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 12)
+                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 16)
+                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 20)
+                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 24)
+                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 28);
+                out[2 + outpos] = (in[16 + inpos] - in[16 + inpos - 1])
+                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 4)
+                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 8)
+                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 12)
+                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 16)
+                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 20)
+                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 24)
+                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 28);
+                out[3 + outpos] = (in[24 + inpos] - in[24 + inpos - 1])
+                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 4)
+                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 8)
+                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 12)
+                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 16)
+                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 20)
+                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 24)
+                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 28);
+        }
+
+        protected static void integratedpack5(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (in[0 + inpos] - initoffset)
+                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 5)
+                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 10)
+                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 15)
+                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 20)
+                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 25)
+                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 30);
+                out[1 + outpos] = (in[6 + inpos] - in[6 + inpos - 1]) >>> (5 - 3)
+                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 3)
+                        | ((in[8 + inpos] - in[8 + inpos - 1]) << 8)
+                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 13)
+                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 18)
+                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 23)
+                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 28);
+                out[2 + outpos] = (in[12 + inpos] - in[12 + inpos - 1]) >>> (5 - 1)
+                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 1)
+                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 6)
+                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 11)
+                        | ((in[16 + inpos] - in[16 + inpos - 1]) << 16)
+                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 21)
+                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 26)
+                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 31);
+                out[3 + outpos] = (in[19 + inpos] - in[19 + inpos - 1]) >>> (5 - 4)
+                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 4)
+                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 9)
+                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 14)
+                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 19)
+                        | ((in[24 + inpos] - in[24 + inpos - 1]) << 24)
+                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 29);
+                out[4 + outpos] = (in[25 + inpos] - in[25 + inpos - 1]) >>> (5 - 2)
+                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 2)
+                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 7)
+                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 12)
+                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 17)
+                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 22)
+                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 27);
+        }
+
+        protected static void integratedpack6(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (in[0 + inpos] - initoffset)
+                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 6)
+                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 12)
+                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 18)
+                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 24)
+                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 30);
+                out[1 + outpos] = (in[5 + inpos] - in[5 + inpos - 1]) >>> (6 - 4)
+                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 4)
+                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 10)
+                        | ((in[8 + inpos] - in[8 + inpos - 1]) << 16)
+                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 22)
+                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 28);
+                out[2 + outpos] = (in[10 + inpos] - in[10 + inpos - 1]) >>> (6 - 2)
+                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 2)
+                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 8)
+                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 14)
+                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 20)
+                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 26);
+                out[3 + outpos] = (in[16 + inpos] - in[16 + inpos - 1])
+                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 6)
+                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 12)
+                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 18)
+                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 24)
+                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 30);
+                out[4 + outpos] = (in[21 + inpos] - in[21 + inpos - 1]) >>> (6 - 4)
+                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 4)
+                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 10)
+                        | ((in[24 + inpos] - in[24 + inpos - 1]) << 16)
+                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 22)
+                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 28);
+                out[5 + outpos] = (in[26 + inpos] - in[26 + inpos - 1]) >>> (6 - 2)
+                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 2)
+                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 8)
+                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 14)
+                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 20)
+                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 26);
+        }
+
+        protected static void integratedpack7(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (in[0 + inpos] - initoffset)
+                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 7)
+                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 14)
+                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 21)
+                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 28);
+                out[1 + outpos] = (in[4 + inpos] - in[4 + inpos - 1]) >>> (7 - 3)
+                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 3)
+                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 10)
+                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 17)
+                        | ((in[8 + inpos] - in[8 + inpos - 1]) << 24)
+                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 31);
+                out[2 + outpos] = (in[9 + inpos] - in[9 + inpos - 1]) >>> (7 - 6)
+                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 6)
+                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 13)
+                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 20)
+                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 27);
+                out[3 + outpos] = (in[13 + inpos] - in[13 + inpos - 1]) >>> (7 - 2)
+                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 2)
+                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 9)
+                        | ((in[16 + inpos] - in[16 + inpos - 1]) << 16)
+                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 23)
+                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 30);
+                out[4 + outpos] = (in[18 + inpos] - in[18 + inpos - 1]) >>> (7 - 5)
+                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 5)
+                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 12)
+                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 19)
+                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 26);
+                out[5 + outpos] = (in[22 + inpos] - in[22 + inpos - 1]) >>> (7 - 1)
+                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 1)
+                        | ((in[24 + inpos] - in[24 + inpos - 1]) << 8)
+                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 15)
+                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 22)
+                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 29);
+                out[6 + outpos] = (in[27 + inpos] - in[27 + inpos - 1]) >>> (7 - 4)
+                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 4)
+                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 11)
+                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 18)
+                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 25);
+        }
+
+        protected static void integratedpack8(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (in[0 + inpos] - initoffset)
+                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 8)
+                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 16)
+                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 24);
+                out[1 + outpos] = (in[4 + inpos] - in[4 + inpos - 1])
+                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 8)
+                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 16)
+                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 24);
+                out[2 + outpos] = (in[8 + inpos] - in[8 + inpos - 1])
+                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 8)
+                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 16)
+                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 24);
+                out[3 + outpos] = (in[12 + inpos] - in[12 + inpos - 1])
+                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 8)
+                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 16)
+                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 24);
+                out[4 + outpos] = (in[16 + inpos] - in[16 + inpos - 1])
+                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 8)
+                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 16)
+                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 24);
+                out[5 + outpos] = (in[20 + inpos] - in[20 + inpos - 1])
+                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 8)
+                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 16)
+                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 24);
+                out[6 + outpos] = (in[24 + inpos] - in[24 + inpos - 1])
+                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 8)
+                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 16)
+                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 24);
+                out[7 + outpos] = (in[28 + inpos] - in[28 + inpos - 1])
+                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 8)
+                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 16)
+                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 24);
+        }
+
+        protected static void integratedpack9(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (in[0 + inpos] - initoffset)
+                        | ((in[1 + inpos] - in[1 + inpos - 1]) << 9)
+                        | ((in[2 + inpos] - in[2 + inpos - 1]) << 18)
+                        | ((in[3 + inpos] - in[3 + inpos - 1]) << 27);
+                out[1 + outpos] = (in[3 + inpos] - in[3 + inpos - 1]) >>> (9 - 4)
+                        | ((in[4 + inpos] - in[4 + inpos - 1]) << 4)
+                        | ((in[5 + inpos] - in[5 + inpos - 1]) << 13)
+                        | ((in[6 + inpos] - in[6 + inpos - 1]) << 22)
+                        | ((in[7 + inpos] - in[7 + inpos - 1]) << 31);
+                out[2 + outpos] = (in[7 + inpos] - in[7 + inpos - 1]) >>> (9 - 8)
+                        | ((in[8 + inpos] - in[8 + inpos - 1]) << 8)
+                        | ((in[9 + inpos] - in[9 + inpos - 1]) << 17)
+                        | ((in[10 + inpos] - in[10 + inpos - 1]) << 26);
+                out[3 + outpos] = (in[10 + inpos] - in[10 + inpos - 1]) >>> (9 - 3)
+                        | ((in[11 + inpos] - in[11 + inpos - 1]) << 3)
+                        | ((in[12 + inpos] - in[12 + inpos - 1]) << 12)
+                        | ((in[13 + inpos] - in[13 + inpos - 1]) << 21)
+                        | ((in[14 + inpos] - in[14 + inpos - 1]) << 30);
+                out[4 + outpos] = (in[14 + inpos] - in[14 + inpos - 1]) >>> (9 - 7)
+                        | ((in[15 + inpos] - in[15 + inpos - 1]) << 7)
+                        | ((in[16 + inpos] - in[16 + inpos - 1]) << 16)
+                        | ((in[17 + inpos] - in[17 + inpos - 1]) << 25);
+                out[5 + outpos] = (in[17 + inpos] - in[17 + inpos - 1]) >>> (9 - 2)
+                        | ((in[18 + inpos] - in[18 + inpos - 1]) << 2)
+                        | ((in[19 + inpos] - in[19 + inpos - 1]) << 11)
+                        | ((in[20 + inpos] - in[20 + inpos - 1]) << 20)
+                        | ((in[21 + inpos] - in[21 + inpos - 1]) << 29);
+                out[6 + outpos] = (in[21 + inpos] - in[21 + inpos - 1]) >>> (9 - 6)
+                        | ((in[22 + inpos] - in[22 + inpos - 1]) << 6)
+                        | ((in[23 + inpos] - in[23 + inpos - 1]) << 15)
+                        | ((in[24 + inpos] - in[24 + inpos - 1]) << 24);
+                out[7 + outpos] = (in[24 + inpos] - in[24 + inpos - 1]) >>> (9 - 1)
+                        | ((in[25 + inpos] - in[25 + inpos - 1]) << 1)
+                        | ((in[26 + inpos] - in[26 + inpos - 1]) << 10)
+                        | ((in[27 + inpos] - in[27 + inpos - 1]) << 19)
+                        | ((in[28 + inpos] - in[28 + inpos - 1]) << 28);
+                out[8 + outpos] = (in[28 + inpos] - in[28 + inpos - 1]) >>> (9 - 5)
+                        | ((in[29 + inpos] - in[29 + inpos - 1]) << 5)
+                        | ((in[30 + inpos] - in[30 + inpos - 1]) << 14)
+                        | ((in[31 + inpos] - in[31 + inpos - 1]) << 23);
+        }
+
+        /**
+         * Unpack 32 integers along with prefix sum computation
+         * 
+         * @param initoffset value to add to all outputted values
+         * @param in source array
+         * @param inpos initial position in source array
+         * @param out output array
+         * @param outpos initial position in output array
+         * @param bit number of bits to use per integer
+         */
+        public static void integratedunpack(final int initoffset,
+                final int[] in, final int inpos, final int[] out, final int outpos,
+                final int bit) {
+                switch (bit) {
+                case 0:
+                        integratedunpack0(initoffset, in, inpos, out, outpos);
+                        break;
+                case 1:
+                        integratedunpack1(initoffset, in, inpos, out, outpos);
+                        break;
+                case 2:
+                        integratedunpack2(initoffset, in, inpos, out, outpos);
+                        break;
+                case 3:
+                        integratedunpack3(initoffset, in, inpos, out, outpos);
+                        break;
+                case 4:
+                        integratedunpack4(initoffset, in, inpos, out, outpos);
+                        break;
+                case 5:
+                        integratedunpack5(initoffset, in, inpos, out, outpos);
+                        break;
+                case 6:
+                        integratedunpack6(initoffset, in, inpos, out, outpos);
+                        break;
+                case 7:
+                        integratedunpack7(initoffset, in, inpos, out, outpos);
+                        break;
+                case 8:
+                        integratedunpack8(initoffset, in, inpos, out, outpos);
+                        break;
+                case 9:
+                        integratedunpack9(initoffset, in, inpos, out, outpos);
+                        break;
+                case 10:
+                        integratedunpack10(initoffset, in, inpos, out, outpos);
+                        break;
+                case 11:
+                        integratedunpack11(initoffset, in, inpos, out, outpos);
+                        break;
+                case 12:
+                        integratedunpack12(initoffset, in, inpos, out, outpos);
+                        break;
+                case 13:
+                        integratedunpack13(initoffset, in, inpos, out, outpos);
+                        break;
+                case 14:
+                        integratedunpack14(initoffset, in, inpos, out, outpos);
+                        break;
+                case 15:
+                        integratedunpack15(initoffset, in, inpos, out, outpos);
+                        break;
+                case 16:
+                        integratedunpack16(initoffset, in, inpos, out, outpos);
+                        break;
+                case 17:
+                        integratedunpack17(initoffset, in, inpos, out, outpos);
+                        break;
+                case 18:
+                        integratedunpack18(initoffset, in, inpos, out, outpos);
+                        break;
+                case 19:
+                        integratedunpack19(initoffset, in, inpos, out, outpos);
+                        break;
+                case 20:
+                        integratedunpack20(initoffset, in, inpos, out, outpos);
+                        break;
+                case 21:
+                        integratedunpack21(initoffset, in, inpos, out, outpos);
+                        break;
+                case 22:
+                        integratedunpack22(initoffset, in, inpos, out, outpos);
+                        break;
+                case 23:
+                        integratedunpack23(initoffset, in, inpos, out, outpos);
+                        break;
+                case 24:
+                        integratedunpack24(initoffset, in, inpos, out, outpos);
+                        break;
+                case 25:
+                        integratedunpack25(initoffset, in, inpos, out, outpos);
+                        break;
+                case 26:
+                        integratedunpack26(initoffset, in, inpos, out, outpos);
+                        break;
+                case 27:
+                        integratedunpack27(initoffset, in, inpos, out, outpos);
+                        break;
+                case 28:
+                        integratedunpack28(initoffset, in, inpos, out, outpos);
+                        break;
+                case 29:
+                        integratedunpack29(initoffset, in, inpos, out, outpos);
+                        break;
+                case 30:
+                        integratedunpack30(initoffset, in, inpos, out, outpos);
+                        break;
+                case 31:
+                        integratedunpack31(initoffset, in, inpos, out, outpos);
+                        break;
+                case 32:
+                        integratedunpack32(initoffset, in, inpos, out, outpos);
+                        break;
+                default:
+                        throw new IllegalArgumentException(
+                                "Unsupported bit width.");
+                }
+        }
+
+        protected static void integratedunpack0(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                Arrays.fill(out, outpos, outpos + 32, initoffset);
+        }
+
         protected static void integratedunpack1(final int initoffset,
                 final int[] in, int inpos, final int[] out, int outpos) {
                 out[0 + outpos] = (((in[0 + inpos] >>> 0) & 1)) + initoffset;
@@ -1614,542 +1876,6 @@ public final class IntegratedBitPacking {
                 out[30 + outpos] = (((in[0 + inpos] >>> 30) & 1))
                         + out[30 + outpos - 1];
                 out[31 + outpos] = ((in[0 + inpos] >>> 31))
-                        + out[31 + outpos - 1];
-        }
-
-        protected static void integratedunpack2(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 3)) + initoffset;
-                out[1 + outpos] = (((in[0 + inpos] >>> 2) & 3))
-                        + out[1 + outpos - 1];
-                out[2 + outpos] = (((in[0 + inpos] >>> 4) & 3))
-                        + out[2 + outpos - 1];
-                out[3 + outpos] = (((in[0 + inpos] >>> 6) & 3))
-                        + out[3 + outpos - 1];
-                out[4 + outpos] = (((in[0 + inpos] >>> 8) & 3))
-                        + out[4 + outpos - 1];
-                out[5 + outpos] = (((in[0 + inpos] >>> 10) & 3))
-                        + out[5 + outpos - 1];
-                out[6 + outpos] = (((in[0 + inpos] >>> 12) & 3))
-                        + out[6 + outpos - 1];
-                out[7 + outpos] = (((in[0 + inpos] >>> 14) & 3))
-                        + out[7 + outpos - 1];
-                out[8 + outpos] = (((in[0 + inpos] >>> 16) & 3))
-                        + out[8 + outpos - 1];
-                out[9 + outpos] = (((in[0 + inpos] >>> 18) & 3))
-                        + out[9 + outpos - 1];
-                out[10 + outpos] = (((in[0 + inpos] >>> 20) & 3))
-                        + out[10 + outpos - 1];
-                out[11 + outpos] = (((in[0 + inpos] >>> 22) & 3))
-                        + out[11 + outpos - 1];
-                out[12 + outpos] = (((in[0 + inpos] >>> 24) & 3))
-                        + out[12 + outpos - 1];
-                out[13 + outpos] = (((in[0 + inpos] >>> 26) & 3))
-                        + out[13 + outpos - 1];
-                out[14 + outpos] = (((in[0 + inpos] >>> 28) & 3))
-                        + out[14 + outpos - 1];
-                out[15 + outpos] = ((in[0 + inpos] >>> 30))
-                        + out[15 + outpos - 1];
-                out[16 + outpos] = (((in[1 + inpos] >>> 0) & 3))
-                        + out[16 + outpos - 1];
-                out[17 + outpos] = (((in[1 + inpos] >>> 2) & 3))
-                        + out[17 + outpos - 1];
-                out[18 + outpos] = (((in[1 + inpos] >>> 4) & 3))
-                        + out[18 + outpos - 1];
-                out[19 + outpos] = (((in[1 + inpos] >>> 6) & 3))
-                        + out[19 + outpos - 1];
-                out[20 + outpos] = (((in[1 + inpos] >>> 8) & 3))
-                        + out[20 + outpos - 1];
-                out[21 + outpos] = (((in[1 + inpos] >>> 10) & 3))
-                        + out[21 + outpos - 1];
-                out[22 + outpos] = (((in[1 + inpos] >>> 12) & 3))
-                        + out[22 + outpos - 1];
-                out[23 + outpos] = (((in[1 + inpos] >>> 14) & 3))
-                        + out[23 + outpos - 1];
-                out[24 + outpos] = (((in[1 + inpos] >>> 16) & 3))
-                        + out[24 + outpos - 1];
-                out[25 + outpos] = (((in[1 + inpos] >>> 18) & 3))
-                        + out[25 + outpos - 1];
-                out[26 + outpos] = (((in[1 + inpos] >>> 20) & 3))
-                        + out[26 + outpos - 1];
-                out[27 + outpos] = (((in[1 + inpos] >>> 22) & 3))
-                        + out[27 + outpos - 1];
-                out[28 + outpos] = (((in[1 + inpos] >>> 24) & 3))
-                        + out[28 + outpos - 1];
-                out[29 + outpos] = (((in[1 + inpos] >>> 26) & 3))
-                        + out[29 + outpos - 1];
-                out[30 + outpos] = (((in[1 + inpos] >>> 28) & 3))
-                        + out[30 + outpos - 1];
-                out[31 + outpos] = ((in[1 + inpos] >>> 30))
-                        + out[31 + outpos - 1];
-        }
-
-        protected static void integratedunpack3(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 7)) + initoffset;
-                out[1 + outpos] = (((in[0 + inpos] >>> 3) & 7))
-                        + out[1 + outpos - 1];
-                out[2 + outpos] = (((in[0 + inpos] >>> 6) & 7))
-                        + out[2 + outpos - 1];
-                out[3 + outpos] = (((in[0 + inpos] >>> 9) & 7))
-                        + out[3 + outpos - 1];
-                out[4 + outpos] = (((in[0 + inpos] >>> 12) & 7))
-                        + out[4 + outpos - 1];
-                out[5 + outpos] = (((in[0 + inpos] >>> 15) & 7))
-                        + out[5 + outpos - 1];
-                out[6 + outpos] = (((in[0 + inpos] >>> 18) & 7))
-                        + out[6 + outpos - 1];
-                out[7 + outpos] = (((in[0 + inpos] >>> 21) & 7))
-                        + out[7 + outpos - 1];
-                out[8 + outpos] = (((in[0 + inpos] >>> 24) & 7))
-                        + out[8 + outpos - 1];
-                out[9 + outpos] = (((in[0 + inpos] >>> 27) & 7))
-                        + out[9 + outpos - 1];
-                out[10 + outpos] = ((in[0 + inpos] >>> 30) | ((in[1 + inpos] & 1) << (3 - 1)))
-                        + out[10 + outpos - 1];
-                out[11 + outpos] = (((in[1 + inpos] >>> 1) & 7))
-                        + out[11 + outpos - 1];
-                out[12 + outpos] = (((in[1 + inpos] >>> 4) & 7))
-                        + out[12 + outpos - 1];
-                out[13 + outpos] = (((in[1 + inpos] >>> 7) & 7))
-                        + out[13 + outpos - 1];
-                out[14 + outpos] = (((in[1 + inpos] >>> 10) & 7))
-                        + out[14 + outpos - 1];
-                out[15 + outpos] = (((in[1 + inpos] >>> 13) & 7))
-                        + out[15 + outpos - 1];
-                out[16 + outpos] = (((in[1 + inpos] >>> 16) & 7))
-                        + out[16 + outpos - 1];
-                out[17 + outpos] = (((in[1 + inpos] >>> 19) & 7))
-                        + out[17 + outpos - 1];
-                out[18 + outpos] = (((in[1 + inpos] >>> 22) & 7))
-                        + out[18 + outpos - 1];
-                out[19 + outpos] = (((in[1 + inpos] >>> 25) & 7))
-                        + out[19 + outpos - 1];
-                out[20 + outpos] = (((in[1 + inpos] >>> 28) & 7))
-                        + out[20 + outpos - 1];
-                out[21 + outpos] = ((in[1 + inpos] >>> 31) | ((in[2 + inpos] & 3) << (3 - 2)))
-                        + out[21 + outpos - 1];
-                out[22 + outpos] = (((in[2 + inpos] >>> 2) & 7))
-                        + out[22 + outpos - 1];
-                out[23 + outpos] = (((in[2 + inpos] >>> 5) & 7))
-                        + out[23 + outpos - 1];
-                out[24 + outpos] = (((in[2 + inpos] >>> 8) & 7))
-                        + out[24 + outpos - 1];
-                out[25 + outpos] = (((in[2 + inpos] >>> 11) & 7))
-                        + out[25 + outpos - 1];
-                out[26 + outpos] = (((in[2 + inpos] >>> 14) & 7))
-                        + out[26 + outpos - 1];
-                out[27 + outpos] = (((in[2 + inpos] >>> 17) & 7))
-                        + out[27 + outpos - 1];
-                out[28 + outpos] = (((in[2 + inpos] >>> 20) & 7))
-                        + out[28 + outpos - 1];
-                out[29 + outpos] = (((in[2 + inpos] >>> 23) & 7))
-                        + out[29 + outpos - 1];
-                out[30 + outpos] = (((in[2 + inpos] >>> 26) & 7))
-                        + out[30 + outpos - 1];
-                out[31 + outpos] = ((in[2 + inpos] >>> 29))
-                        + out[31 + outpos - 1];
-        }
-
-        protected static void integratedunpack4(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 15)) + initoffset;
-                out[1 + outpos] = (((in[0 + inpos] >>> 4) & 15))
-                        + out[1 + outpos - 1];
-                out[2 + outpos] = (((in[0 + inpos] >>> 8) & 15))
-                        + out[2 + outpos - 1];
-                out[3 + outpos] = (((in[0 + inpos] >>> 12) & 15))
-                        + out[3 + outpos - 1];
-                out[4 + outpos] = (((in[0 + inpos] >>> 16) & 15))
-                        + out[4 + outpos - 1];
-                out[5 + outpos] = (((in[0 + inpos] >>> 20) & 15))
-                        + out[5 + outpos - 1];
-                out[6 + outpos] = (((in[0 + inpos] >>> 24) & 15))
-                        + out[6 + outpos - 1];
-                out[7 + outpos] = ((in[0 + inpos] >>> 28))
-                        + out[7 + outpos - 1];
-                out[8 + outpos] = (((in[1 + inpos] >>> 0) & 15))
-                        + out[8 + outpos - 1];
-                out[9 + outpos] = (((in[1 + inpos] >>> 4) & 15))
-                        + out[9 + outpos - 1];
-                out[10 + outpos] = (((in[1 + inpos] >>> 8) & 15))
-                        + out[10 + outpos - 1];
-                out[11 + outpos] = (((in[1 + inpos] >>> 12) & 15))
-                        + out[11 + outpos - 1];
-                out[12 + outpos] = (((in[1 + inpos] >>> 16) & 15))
-                        + out[12 + outpos - 1];
-                out[13 + outpos] = (((in[1 + inpos] >>> 20) & 15))
-                        + out[13 + outpos - 1];
-                out[14 + outpos] = (((in[1 + inpos] >>> 24) & 15))
-                        + out[14 + outpos - 1];
-                out[15 + outpos] = ((in[1 + inpos] >>> 28))
-                        + out[15 + outpos - 1];
-                out[16 + outpos] = (((in[2 + inpos] >>> 0) & 15))
-                        + out[16 + outpos - 1];
-                out[17 + outpos] = (((in[2 + inpos] >>> 4) & 15))
-                        + out[17 + outpos - 1];
-                out[18 + outpos] = (((in[2 + inpos] >>> 8) & 15))
-                        + out[18 + outpos - 1];
-                out[19 + outpos] = (((in[2 + inpos] >>> 12) & 15))
-                        + out[19 + outpos - 1];
-                out[20 + outpos] = (((in[2 + inpos] >>> 16) & 15))
-                        + out[20 + outpos - 1];
-                out[21 + outpos] = (((in[2 + inpos] >>> 20) & 15))
-                        + out[21 + outpos - 1];
-                out[22 + outpos] = (((in[2 + inpos] >>> 24) & 15))
-                        + out[22 + outpos - 1];
-                out[23 + outpos] = ((in[2 + inpos] >>> 28))
-                        + out[23 + outpos - 1];
-                out[24 + outpos] = (((in[3 + inpos] >>> 0) & 15))
-                        + out[24 + outpos - 1];
-                out[25 + outpos] = (((in[3 + inpos] >>> 4) & 15))
-                        + out[25 + outpos - 1];
-                out[26 + outpos] = (((in[3 + inpos] >>> 8) & 15))
-                        + out[26 + outpos - 1];
-                out[27 + outpos] = (((in[3 + inpos] >>> 12) & 15))
-                        + out[27 + outpos - 1];
-                out[28 + outpos] = (((in[3 + inpos] >>> 16) & 15))
-                        + out[28 + outpos - 1];
-                out[29 + outpos] = (((in[3 + inpos] >>> 20) & 15))
-                        + out[29 + outpos - 1];
-                out[30 + outpos] = (((in[3 + inpos] >>> 24) & 15))
-                        + out[30 + outpos - 1];
-                out[31 + outpos] = ((in[3 + inpos] >>> 28))
-                        + out[31 + outpos - 1];
-        }
-
-        protected static void integratedunpack5(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 31)) + initoffset;
-                out[1 + outpos] = (((in[0 + inpos] >>> 5) & 31))
-                        + out[1 + outpos - 1];
-                out[2 + outpos] = (((in[0 + inpos] >>> 10) & 31))
-                        + out[2 + outpos - 1];
-                out[3 + outpos] = (((in[0 + inpos] >>> 15) & 31))
-                        + out[3 + outpos - 1];
-                out[4 + outpos] = (((in[0 + inpos] >>> 20) & 31))
-                        + out[4 + outpos - 1];
-                out[5 + outpos] = (((in[0 + inpos] >>> 25) & 31))
-                        + out[5 + outpos - 1];
-                out[6 + outpos] = ((in[0 + inpos] >>> 30) | ((in[1 + inpos] & 7) << (5 - 3)))
-                        + out[6 + outpos - 1];
-                out[7 + outpos] = (((in[1 + inpos] >>> 3) & 31))
-                        + out[7 + outpos - 1];
-                out[8 + outpos] = (((in[1 + inpos] >>> 8) & 31))
-                        + out[8 + outpos - 1];
-                out[9 + outpos] = (((in[1 + inpos] >>> 13) & 31))
-                        + out[9 + outpos - 1];
-                out[10 + outpos] = (((in[1 + inpos] >>> 18) & 31))
-                        + out[10 + outpos - 1];
-                out[11 + outpos] = (((in[1 + inpos] >>> 23) & 31))
-                        + out[11 + outpos - 1];
-                out[12 + outpos] = ((in[1 + inpos] >>> 28) | ((in[2 + inpos] & 1) << (5 - 1)))
-                        + out[12 + outpos - 1];
-                out[13 + outpos] = (((in[2 + inpos] >>> 1) & 31))
-                        + out[13 + outpos - 1];
-                out[14 + outpos] = (((in[2 + inpos] >>> 6) & 31))
-                        + out[14 + outpos - 1];
-                out[15 + outpos] = (((in[2 + inpos] >>> 11) & 31))
-                        + out[15 + outpos - 1];
-                out[16 + outpos] = (((in[2 + inpos] >>> 16) & 31))
-                        + out[16 + outpos - 1];
-                out[17 + outpos] = (((in[2 + inpos] >>> 21) & 31))
-                        + out[17 + outpos - 1];
-                out[18 + outpos] = (((in[2 + inpos] >>> 26) & 31))
-                        + out[18 + outpos - 1];
-                out[19 + outpos] = ((in[2 + inpos] >>> 31) | ((in[3 + inpos] & 15) << (5 - 4)))
-                        + out[19 + outpos - 1];
-                out[20 + outpos] = (((in[3 + inpos] >>> 4) & 31))
-                        + out[20 + outpos - 1];
-                out[21 + outpos] = (((in[3 + inpos] >>> 9) & 31))
-                        + out[21 + outpos - 1];
-                out[22 + outpos] = (((in[3 + inpos] >>> 14) & 31))
-                        + out[22 + outpos - 1];
-                out[23 + outpos] = (((in[3 + inpos] >>> 19) & 31))
-                        + out[23 + outpos - 1];
-                out[24 + outpos] = (((in[3 + inpos] >>> 24) & 31))
-                        + out[24 + outpos - 1];
-                out[25 + outpos] = ((in[3 + inpos] >>> 29) | ((in[4 + inpos] & 3) << (5 - 2)))
-                        + out[25 + outpos - 1];
-                out[26 + outpos] = (((in[4 + inpos] >>> 2) & 31))
-                        + out[26 + outpos - 1];
-                out[27 + outpos] = (((in[4 + inpos] >>> 7) & 31))
-                        + out[27 + outpos - 1];
-                out[28 + outpos] = (((in[4 + inpos] >>> 12) & 31))
-                        + out[28 + outpos - 1];
-                out[29 + outpos] = (((in[4 + inpos] >>> 17) & 31))
-                        + out[29 + outpos - 1];
-                out[30 + outpos] = (((in[4 + inpos] >>> 22) & 31))
-                        + out[30 + outpos - 1];
-                out[31 + outpos] = ((in[4 + inpos] >>> 27))
-                        + out[31 + outpos - 1];
-        }
-
-        protected static void integratedunpack6(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 63)) + initoffset;
-                out[1 + outpos] = (((in[0 + inpos] >>> 6) & 63))
-                        + out[1 + outpos - 1];
-                out[2 + outpos] = (((in[0 + inpos] >>> 12) & 63))
-                        + out[2 + outpos - 1];
-                out[3 + outpos] = (((in[0 + inpos] >>> 18) & 63))
-                        + out[3 + outpos - 1];
-                out[4 + outpos] = (((in[0 + inpos] >>> 24) & 63))
-                        + out[4 + outpos - 1];
-                out[5 + outpos] = ((in[0 + inpos] >>> 30) | ((in[1 + inpos] & 15) << (6 - 4)))
-                        + out[5 + outpos - 1];
-                out[6 + outpos] = (((in[1 + inpos] >>> 4) & 63))
-                        + out[6 + outpos - 1];
-                out[7 + outpos] = (((in[1 + inpos] >>> 10) & 63))
-                        + out[7 + outpos - 1];
-                out[8 + outpos] = (((in[1 + inpos] >>> 16) & 63))
-                        + out[8 + outpos - 1];
-                out[9 + outpos] = (((in[1 + inpos] >>> 22) & 63))
-                        + out[9 + outpos - 1];
-                out[10 + outpos] = ((in[1 + inpos] >>> 28) | ((in[2 + inpos] & 3) << (6 - 2)))
-                        + out[10 + outpos - 1];
-                out[11 + outpos] = (((in[2 + inpos] >>> 2) & 63))
-                        + out[11 + outpos - 1];
-                out[12 + outpos] = (((in[2 + inpos] >>> 8) & 63))
-                        + out[12 + outpos - 1];
-                out[13 + outpos] = (((in[2 + inpos] >>> 14) & 63))
-                        + out[13 + outpos - 1];
-                out[14 + outpos] = (((in[2 + inpos] >>> 20) & 63))
-                        + out[14 + outpos - 1];
-                out[15 + outpos] = ((in[2 + inpos] >>> 26))
-                        + out[15 + outpos - 1];
-                out[16 + outpos] = (((in[3 + inpos] >>> 0) & 63))
-                        + out[16 + outpos - 1];
-                out[17 + outpos] = (((in[3 + inpos] >>> 6) & 63))
-                        + out[17 + outpos - 1];
-                out[18 + outpos] = (((in[3 + inpos] >>> 12) & 63))
-                        + out[18 + outpos - 1];
-                out[19 + outpos] = (((in[3 + inpos] >>> 18) & 63))
-                        + out[19 + outpos - 1];
-                out[20 + outpos] = (((in[3 + inpos] >>> 24) & 63))
-                        + out[20 + outpos - 1];
-                out[21 + outpos] = ((in[3 + inpos] >>> 30) | ((in[4 + inpos] & 15) << (6 - 4)))
-                        + out[21 + outpos - 1];
-                out[22 + outpos] = (((in[4 + inpos] >>> 4) & 63))
-                        + out[22 + outpos - 1];
-                out[23 + outpos] = (((in[4 + inpos] >>> 10) & 63))
-                        + out[23 + outpos - 1];
-                out[24 + outpos] = (((in[4 + inpos] >>> 16) & 63))
-                        + out[24 + outpos - 1];
-                out[25 + outpos] = (((in[4 + inpos] >>> 22) & 63))
-                        + out[25 + outpos - 1];
-                out[26 + outpos] = ((in[4 + inpos] >>> 28) | ((in[5 + inpos] & 3) << (6 - 2)))
-                        + out[26 + outpos - 1];
-                out[27 + outpos] = (((in[5 + inpos] >>> 2) & 63))
-                        + out[27 + outpos - 1];
-                out[28 + outpos] = (((in[5 + inpos] >>> 8) & 63))
-                        + out[28 + outpos - 1];
-                out[29 + outpos] = (((in[5 + inpos] >>> 14) & 63))
-                        + out[29 + outpos - 1];
-                out[30 + outpos] = (((in[5 + inpos] >>> 20) & 63))
-                        + out[30 + outpos - 1];
-                out[31 + outpos] = ((in[5 + inpos] >>> 26))
-                        + out[31 + outpos - 1];
-        }
-
-        protected static void integratedunpack7(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 127)) + initoffset;
-                out[1 + outpos] = (((in[0 + inpos] >>> 7) & 127))
-                        + out[1 + outpos - 1];
-                out[2 + outpos] = (((in[0 + inpos] >>> 14) & 127))
-                        + out[2 + outpos - 1];
-                out[3 + outpos] = (((in[0 + inpos] >>> 21) & 127))
-                        + out[3 + outpos - 1];
-                out[4 + outpos] = ((in[0 + inpos] >>> 28) | ((in[1 + inpos] & 7) << (7 - 3)))
-                        + out[4 + outpos - 1];
-                out[5 + outpos] = (((in[1 + inpos] >>> 3) & 127))
-                        + out[5 + outpos - 1];
-                out[6 + outpos] = (((in[1 + inpos] >>> 10) & 127))
-                        + out[6 + outpos - 1];
-                out[7 + outpos] = (((in[1 + inpos] >>> 17) & 127))
-                        + out[7 + outpos - 1];
-                out[8 + outpos] = (((in[1 + inpos] >>> 24) & 127))
-                        + out[8 + outpos - 1];
-                out[9 + outpos] = ((in[1 + inpos] >>> 31) | ((in[2 + inpos] & 63) << (7 - 6)))
-                        + out[9 + outpos - 1];
-                out[10 + outpos] = (((in[2 + inpos] >>> 6) & 127))
-                        + out[10 + outpos - 1];
-                out[11 + outpos] = (((in[2 + inpos] >>> 13) & 127))
-                        + out[11 + outpos - 1];
-                out[12 + outpos] = (((in[2 + inpos] >>> 20) & 127))
-                        + out[12 + outpos - 1];
-                out[13 + outpos] = ((in[2 + inpos] >>> 27) | ((in[3 + inpos] & 3) << (7 - 2)))
-                        + out[13 + outpos - 1];
-                out[14 + outpos] = (((in[3 + inpos] >>> 2) & 127))
-                        + out[14 + outpos - 1];
-                out[15 + outpos] = (((in[3 + inpos] >>> 9) & 127))
-                        + out[15 + outpos - 1];
-                out[16 + outpos] = (((in[3 + inpos] >>> 16) & 127))
-                        + out[16 + outpos - 1];
-                out[17 + outpos] = (((in[3 + inpos] >>> 23) & 127))
-                        + out[17 + outpos - 1];
-                out[18 + outpos] = ((in[3 + inpos] >>> 30) | ((in[4 + inpos] & 31) << (7 - 5)))
-                        + out[18 + outpos - 1];
-                out[19 + outpos] = (((in[4 + inpos] >>> 5) & 127))
-                        + out[19 + outpos - 1];
-                out[20 + outpos] = (((in[4 + inpos] >>> 12) & 127))
-                        + out[20 + outpos - 1];
-                out[21 + outpos] = (((in[4 + inpos] >>> 19) & 127))
-                        + out[21 + outpos - 1];
-                out[22 + outpos] = ((in[4 + inpos] >>> 26) | ((in[5 + inpos] & 1) << (7 - 1)))
-                        + out[22 + outpos - 1];
-                out[23 + outpos] = (((in[5 + inpos] >>> 1) & 127))
-                        + out[23 + outpos - 1];
-                out[24 + outpos] = (((in[5 + inpos] >>> 8) & 127))
-                        + out[24 + outpos - 1];
-                out[25 + outpos] = (((in[5 + inpos] >>> 15) & 127))
-                        + out[25 + outpos - 1];
-                out[26 + outpos] = (((in[5 + inpos] >>> 22) & 127))
-                        + out[26 + outpos - 1];
-                out[27 + outpos] = ((in[5 + inpos] >>> 29) | ((in[6 + inpos] & 15) << (7 - 4)))
-                        + out[27 + outpos - 1];
-                out[28 + outpos] = (((in[6 + inpos] >>> 4) & 127))
-                        + out[28 + outpos - 1];
-                out[29 + outpos] = (((in[6 + inpos] >>> 11) & 127))
-                        + out[29 + outpos - 1];
-                out[30 + outpos] = (((in[6 + inpos] >>> 18) & 127))
-                        + out[30 + outpos - 1];
-                out[31 + outpos] = ((in[6 + inpos] >>> 25))
-                        + out[31 + outpos - 1];
-        }
-
-        protected static void integratedunpack8(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 255)) + initoffset;
-                out[1 + outpos] = (((in[0 + inpos] >>> 8) & 255))
-                        + out[1 + outpos - 1];
-                out[2 + outpos] = (((in[0 + inpos] >>> 16) & 255))
-                        + out[2 + outpos - 1];
-                out[3 + outpos] = ((in[0 + inpos] >>> 24))
-                        + out[3 + outpos - 1];
-                out[4 + outpos] = (((in[1 + inpos] >>> 0) & 255))
-                        + out[4 + outpos - 1];
-                out[5 + outpos] = (((in[1 + inpos] >>> 8) & 255))
-                        + out[5 + outpos - 1];
-                out[6 + outpos] = (((in[1 + inpos] >>> 16) & 255))
-                        + out[6 + outpos - 1];
-                out[7 + outpos] = ((in[1 + inpos] >>> 24))
-                        + out[7 + outpos - 1];
-                out[8 + outpos] = (((in[2 + inpos] >>> 0) & 255))
-                        + out[8 + outpos - 1];
-                out[9 + outpos] = (((in[2 + inpos] >>> 8) & 255))
-                        + out[9 + outpos - 1];
-                out[10 + outpos] = (((in[2 + inpos] >>> 16) & 255))
-                        + out[10 + outpos - 1];
-                out[11 + outpos] = ((in[2 + inpos] >>> 24))
-                        + out[11 + outpos - 1];
-                out[12 + outpos] = (((in[3 + inpos] >>> 0) & 255))
-                        + out[12 + outpos - 1];
-                out[13 + outpos] = (((in[3 + inpos] >>> 8) & 255))
-                        + out[13 + outpos - 1];
-                out[14 + outpos] = (((in[3 + inpos] >>> 16) & 255))
-                        + out[14 + outpos - 1];
-                out[15 + outpos] = ((in[3 + inpos] >>> 24))
-                        + out[15 + outpos - 1];
-                out[16 + outpos] = (((in[4 + inpos] >>> 0) & 255))
-                        + out[16 + outpos - 1];
-                out[17 + outpos] = (((in[4 + inpos] >>> 8) & 255))
-                        + out[17 + outpos - 1];
-                out[18 + outpos] = (((in[4 + inpos] >>> 16) & 255))
-                        + out[18 + outpos - 1];
-                out[19 + outpos] = ((in[4 + inpos] >>> 24))
-                        + out[19 + outpos - 1];
-                out[20 + outpos] = (((in[5 + inpos] >>> 0) & 255))
-                        + out[20 + outpos - 1];
-                out[21 + outpos] = (((in[5 + inpos] >>> 8) & 255))
-                        + out[21 + outpos - 1];
-                out[22 + outpos] = (((in[5 + inpos] >>> 16) & 255))
-                        + out[22 + outpos - 1];
-                out[23 + outpos] = ((in[5 + inpos] >>> 24))
-                        + out[23 + outpos - 1];
-                out[24 + outpos] = (((in[6 + inpos] >>> 0) & 255))
-                        + out[24 + outpos - 1];
-                out[25 + outpos] = (((in[6 + inpos] >>> 8) & 255))
-                        + out[25 + outpos - 1];
-                out[26 + outpos] = (((in[6 + inpos] >>> 16) & 255))
-                        + out[26 + outpos - 1];
-                out[27 + outpos] = ((in[6 + inpos] >>> 24))
-                        + out[27 + outpos - 1];
-                out[28 + outpos] = (((in[7 + inpos] >>> 0) & 255))
-                        + out[28 + outpos - 1];
-                out[29 + outpos] = (((in[7 + inpos] >>> 8) & 255))
-                        + out[29 + outpos - 1];
-                out[30 + outpos] = (((in[7 + inpos] >>> 16) & 255))
-                        + out[30 + outpos - 1];
-                out[31 + outpos] = ((in[7 + inpos] >>> 24))
-                        + out[31 + outpos - 1];
-        }
-
-        protected static void integratedunpack9(final int initoffset,
-                final int[] in, int inpos, final int[] out, int outpos) {
-                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 511)) + initoffset;
-                out[1 + outpos] = (((in[0 + inpos] >>> 9) & 511))
-                        + out[1 + outpos - 1];
-                out[2 + outpos] = (((in[0 + inpos] >>> 18) & 511))
-                        + out[2 + outpos - 1];
-                out[3 + outpos] = ((in[0 + inpos] >>> 27) | ((in[1 + inpos] & 15) << (9 - 4)))
-                        + out[3 + outpos - 1];
-                out[4 + outpos] = (((in[1 + inpos] >>> 4) & 511))
-                        + out[4 + outpos - 1];
-                out[5 + outpos] = (((in[1 + inpos] >>> 13) & 511))
-                        + out[5 + outpos - 1];
-                out[6 + outpos] = (((in[1 + inpos] >>> 22) & 511))
-                        + out[6 + outpos - 1];
-                out[7 + outpos] = ((in[1 + inpos] >>> 31) | ((in[2 + inpos] & 255) << (9 - 8)))
-                        + out[7 + outpos - 1];
-                out[8 + outpos] = (((in[2 + inpos] >>> 8) & 511))
-                        + out[8 + outpos - 1];
-                out[9 + outpos] = (((in[2 + inpos] >>> 17) & 511))
-                        + out[9 + outpos - 1];
-                out[10 + outpos] = ((in[2 + inpos] >>> 26) | ((in[3 + inpos] & 7) << (9 - 3)))
-                        + out[10 + outpos - 1];
-                out[11 + outpos] = (((in[3 + inpos] >>> 3) & 511))
-                        + out[11 + outpos - 1];
-                out[12 + outpos] = (((in[3 + inpos] >>> 12) & 511))
-                        + out[12 + outpos - 1];
-                out[13 + outpos] = (((in[3 + inpos] >>> 21) & 511))
-                        + out[13 + outpos - 1];
-                out[14 + outpos] = ((in[3 + inpos] >>> 30) | ((in[4 + inpos] & 127) << (9 - 7)))
-                        + out[14 + outpos - 1];
-                out[15 + outpos] = (((in[4 + inpos] >>> 7) & 511))
-                        + out[15 + outpos - 1];
-                out[16 + outpos] = (((in[4 + inpos] >>> 16) & 511))
-                        + out[16 + outpos - 1];
-                out[17 + outpos] = ((in[4 + inpos] >>> 25) | ((in[5 + inpos] & 3) << (9 - 2)))
-                        + out[17 + outpos - 1];
-                out[18 + outpos] = (((in[5 + inpos] >>> 2) & 511))
-                        + out[18 + outpos - 1];
-                out[19 + outpos] = (((in[5 + inpos] >>> 11) & 511))
-                        + out[19 + outpos - 1];
-                out[20 + outpos] = (((in[5 + inpos] >>> 20) & 511))
-                        + out[20 + outpos - 1];
-                out[21 + outpos] = ((in[5 + inpos] >>> 29) | ((in[6 + inpos] & 63) << (9 - 6)))
-                        + out[21 + outpos - 1];
-                out[22 + outpos] = (((in[6 + inpos] >>> 6) & 511))
-                        + out[22 + outpos - 1];
-                out[23 + outpos] = (((in[6 + inpos] >>> 15) & 511))
-                        + out[23 + outpos - 1];
-                out[24 + outpos] = ((in[6 + inpos] >>> 24) | ((in[7 + inpos] & 1) << (9 - 1)))
-                        + out[24 + outpos - 1];
-                out[25 + outpos] = (((in[7 + inpos] >>> 1) & 511))
-                        + out[25 + outpos - 1];
-                out[26 + outpos] = (((in[7 + inpos] >>> 10) & 511))
-                        + out[26 + outpos - 1];
-                out[27 + outpos] = (((in[7 + inpos] >>> 19) & 511))
-                        + out[27 + outpos - 1];
-                out[28 + outpos] = ((in[7 + inpos] >>> 28) | ((in[8 + inpos] & 31) << (9 - 5)))
-                        + out[28 + outpos - 1];
-                out[29 + outpos] = (((in[8 + inpos] >>> 5) & 511))
-                        + out[29 + outpos - 1];
-                out[30 + outpos] = (((in[8 + inpos] >>> 14) & 511))
-                        + out[30 + outpos - 1];
-                out[31 + outpos] = ((in[8 + inpos] >>> 23))
                         + out[31 + outpos - 1];
         }
 
@@ -2826,6 +2552,73 @@ public final class IntegratedBitPacking {
                 out[30 + outpos] = ((in[17 + inpos] >>> 26) | ((in[18 + inpos] & 8191) << (19 - 13)))
                         + out[30 + outpos - 1];
                 out[31 + outpos] = ((in[18 + inpos] >>> 13))
+                        + out[31 + outpos - 1];
+        }
+
+        protected static void integratedunpack2(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 3)) + initoffset;
+                out[1 + outpos] = (((in[0 + inpos] >>> 2) & 3))
+                        + out[1 + outpos - 1];
+                out[2 + outpos] = (((in[0 + inpos] >>> 4) & 3))
+                        + out[2 + outpos - 1];
+                out[3 + outpos] = (((in[0 + inpos] >>> 6) & 3))
+                        + out[3 + outpos - 1];
+                out[4 + outpos] = (((in[0 + inpos] >>> 8) & 3))
+                        + out[4 + outpos - 1];
+                out[5 + outpos] = (((in[0 + inpos] >>> 10) & 3))
+                        + out[5 + outpos - 1];
+                out[6 + outpos] = (((in[0 + inpos] >>> 12) & 3))
+                        + out[6 + outpos - 1];
+                out[7 + outpos] = (((in[0 + inpos] >>> 14) & 3))
+                        + out[7 + outpos - 1];
+                out[8 + outpos] = (((in[0 + inpos] >>> 16) & 3))
+                        + out[8 + outpos - 1];
+                out[9 + outpos] = (((in[0 + inpos] >>> 18) & 3))
+                        + out[9 + outpos - 1];
+                out[10 + outpos] = (((in[0 + inpos] >>> 20) & 3))
+                        + out[10 + outpos - 1];
+                out[11 + outpos] = (((in[0 + inpos] >>> 22) & 3))
+                        + out[11 + outpos - 1];
+                out[12 + outpos] = (((in[0 + inpos] >>> 24) & 3))
+                        + out[12 + outpos - 1];
+                out[13 + outpos] = (((in[0 + inpos] >>> 26) & 3))
+                        + out[13 + outpos - 1];
+                out[14 + outpos] = (((in[0 + inpos] >>> 28) & 3))
+                        + out[14 + outpos - 1];
+                out[15 + outpos] = ((in[0 + inpos] >>> 30))
+                        + out[15 + outpos - 1];
+                out[16 + outpos] = (((in[1 + inpos] >>> 0) & 3))
+                        + out[16 + outpos - 1];
+                out[17 + outpos] = (((in[1 + inpos] >>> 2) & 3))
+                        + out[17 + outpos - 1];
+                out[18 + outpos] = (((in[1 + inpos] >>> 4) & 3))
+                        + out[18 + outpos - 1];
+                out[19 + outpos] = (((in[1 + inpos] >>> 6) & 3))
+                        + out[19 + outpos - 1];
+                out[20 + outpos] = (((in[1 + inpos] >>> 8) & 3))
+                        + out[20 + outpos - 1];
+                out[21 + outpos] = (((in[1 + inpos] >>> 10) & 3))
+                        + out[21 + outpos - 1];
+                out[22 + outpos] = (((in[1 + inpos] >>> 12) & 3))
+                        + out[22 + outpos - 1];
+                out[23 + outpos] = (((in[1 + inpos] >>> 14) & 3))
+                        + out[23 + outpos - 1];
+                out[24 + outpos] = (((in[1 + inpos] >>> 16) & 3))
+                        + out[24 + outpos - 1];
+                out[25 + outpos] = (((in[1 + inpos] >>> 18) & 3))
+                        + out[25 + outpos - 1];
+                out[26 + outpos] = (((in[1 + inpos] >>> 20) & 3))
+                        + out[26 + outpos - 1];
+                out[27 + outpos] = (((in[1 + inpos] >>> 22) & 3))
+                        + out[27 + outpos - 1];
+                out[28 + outpos] = (((in[1 + inpos] >>> 24) & 3))
+                        + out[28 + outpos - 1];
+                out[29 + outpos] = (((in[1 + inpos] >>> 26) & 3))
+                        + out[29 + outpos - 1];
+                out[30 + outpos] = (((in[1 + inpos] >>> 28) & 3))
+                        + out[30 + outpos - 1];
+                out[31 + outpos] = ((in[1 + inpos] >>> 30))
                         + out[31 + outpos - 1];
         }
 
@@ -3506,6 +3299,73 @@ public final class IntegratedBitPacking {
                         + out[31 + outpos - 1];
         }
 
+        protected static void integratedunpack3(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 7)) + initoffset;
+                out[1 + outpos] = (((in[0 + inpos] >>> 3) & 7))
+                        + out[1 + outpos - 1];
+                out[2 + outpos] = (((in[0 + inpos] >>> 6) & 7))
+                        + out[2 + outpos - 1];
+                out[3 + outpos] = (((in[0 + inpos] >>> 9) & 7))
+                        + out[3 + outpos - 1];
+                out[4 + outpos] = (((in[0 + inpos] >>> 12) & 7))
+                        + out[4 + outpos - 1];
+                out[5 + outpos] = (((in[0 + inpos] >>> 15) & 7))
+                        + out[5 + outpos - 1];
+                out[6 + outpos] = (((in[0 + inpos] >>> 18) & 7))
+                        + out[6 + outpos - 1];
+                out[7 + outpos] = (((in[0 + inpos] >>> 21) & 7))
+                        + out[7 + outpos - 1];
+                out[8 + outpos] = (((in[0 + inpos] >>> 24) & 7))
+                        + out[8 + outpos - 1];
+                out[9 + outpos] = (((in[0 + inpos] >>> 27) & 7))
+                        + out[9 + outpos - 1];
+                out[10 + outpos] = ((in[0 + inpos] >>> 30) | ((in[1 + inpos] & 1) << (3 - 1)))
+                        + out[10 + outpos - 1];
+                out[11 + outpos] = (((in[1 + inpos] >>> 1) & 7))
+                        + out[11 + outpos - 1];
+                out[12 + outpos] = (((in[1 + inpos] >>> 4) & 7))
+                        + out[12 + outpos - 1];
+                out[13 + outpos] = (((in[1 + inpos] >>> 7) & 7))
+                        + out[13 + outpos - 1];
+                out[14 + outpos] = (((in[1 + inpos] >>> 10) & 7))
+                        + out[14 + outpos - 1];
+                out[15 + outpos] = (((in[1 + inpos] >>> 13) & 7))
+                        + out[15 + outpos - 1];
+                out[16 + outpos] = (((in[1 + inpos] >>> 16) & 7))
+                        + out[16 + outpos - 1];
+                out[17 + outpos] = (((in[1 + inpos] >>> 19) & 7))
+                        + out[17 + outpos - 1];
+                out[18 + outpos] = (((in[1 + inpos] >>> 22) & 7))
+                        + out[18 + outpos - 1];
+                out[19 + outpos] = (((in[1 + inpos] >>> 25) & 7))
+                        + out[19 + outpos - 1];
+                out[20 + outpos] = (((in[1 + inpos] >>> 28) & 7))
+                        + out[20 + outpos - 1];
+                out[21 + outpos] = ((in[1 + inpos] >>> 31) | ((in[2 + inpos] & 3) << (3 - 2)))
+                        + out[21 + outpos - 1];
+                out[22 + outpos] = (((in[2 + inpos] >>> 2) & 7))
+                        + out[22 + outpos - 1];
+                out[23 + outpos] = (((in[2 + inpos] >>> 5) & 7))
+                        + out[23 + outpos - 1];
+                out[24 + outpos] = (((in[2 + inpos] >>> 8) & 7))
+                        + out[24 + outpos - 1];
+                out[25 + outpos] = (((in[2 + inpos] >>> 11) & 7))
+                        + out[25 + outpos - 1];
+                out[26 + outpos] = (((in[2 + inpos] >>> 14) & 7))
+                        + out[26 + outpos - 1];
+                out[27 + outpos] = (((in[2 + inpos] >>> 17) & 7))
+                        + out[27 + outpos - 1];
+                out[28 + outpos] = (((in[2 + inpos] >>> 20) & 7))
+                        + out[28 + outpos - 1];
+                out[29 + outpos] = (((in[2 + inpos] >>> 23) & 7))
+                        + out[29 + outpos - 1];
+                out[30 + outpos] = (((in[2 + inpos] >>> 26) & 7))
+                        + out[30 + outpos - 1];
+                out[31 + outpos] = ((in[2 + inpos] >>> 29))
+                        + out[31 + outpos - 1];
+        }
+
         protected static void integratedunpack30(final int initoffset,
                 final int[] in, int inpos, final int[] out, int outpos) {
                 out[0 + outpos] = (((in[0 + inpos] >>> 0) & 1073741823))
@@ -3649,258 +3509,406 @@ public final class IntegratedBitPacking {
                                                               // coding
         }
 
-        protected static void integratedpack32(final int initoffset,
+        protected static void integratedunpack4(final int initoffset,
                 final int[] in, int inpos, final int[] out, int outpos) {
-                System.arraycopy(in, inpos, out, outpos, 32); // no sense in
-                                                              // doing delta
-                                                              // coding
+                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 15)) + initoffset;
+                out[1 + outpos] = (((in[0 + inpos] >>> 4) & 15))
+                        + out[1 + outpos - 1];
+                out[2 + outpos] = (((in[0 + inpos] >>> 8) & 15))
+                        + out[2 + outpos - 1];
+                out[3 + outpos] = (((in[0 + inpos] >>> 12) & 15))
+                        + out[3 + outpos - 1];
+                out[4 + outpos] = (((in[0 + inpos] >>> 16) & 15))
+                        + out[4 + outpos - 1];
+                out[5 + outpos] = (((in[0 + inpos] >>> 20) & 15))
+                        + out[5 + outpos - 1];
+                out[6 + outpos] = (((in[0 + inpos] >>> 24) & 15))
+                        + out[6 + outpos - 1];
+                out[7 + outpos] = ((in[0 + inpos] >>> 28))
+                        + out[7 + outpos - 1];
+                out[8 + outpos] = (((in[1 + inpos] >>> 0) & 15))
+                        + out[8 + outpos - 1];
+                out[9 + outpos] = (((in[1 + inpos] >>> 4) & 15))
+                        + out[9 + outpos - 1];
+                out[10 + outpos] = (((in[1 + inpos] >>> 8) & 15))
+                        + out[10 + outpos - 1];
+                out[11 + outpos] = (((in[1 + inpos] >>> 12) & 15))
+                        + out[11 + outpos - 1];
+                out[12 + outpos] = (((in[1 + inpos] >>> 16) & 15))
+                        + out[12 + outpos - 1];
+                out[13 + outpos] = (((in[1 + inpos] >>> 20) & 15))
+                        + out[13 + outpos - 1];
+                out[14 + outpos] = (((in[1 + inpos] >>> 24) & 15))
+                        + out[14 + outpos - 1];
+                out[15 + outpos] = ((in[1 + inpos] >>> 28))
+                        + out[15 + outpos - 1];
+                out[16 + outpos] = (((in[2 + inpos] >>> 0) & 15))
+                        + out[16 + outpos - 1];
+                out[17 + outpos] = (((in[2 + inpos] >>> 4) & 15))
+                        + out[17 + outpos - 1];
+                out[18 + outpos] = (((in[2 + inpos] >>> 8) & 15))
+                        + out[18 + outpos - 1];
+                out[19 + outpos] = (((in[2 + inpos] >>> 12) & 15))
+                        + out[19 + outpos - 1];
+                out[20 + outpos] = (((in[2 + inpos] >>> 16) & 15))
+                        + out[20 + outpos - 1];
+                out[21 + outpos] = (((in[2 + inpos] >>> 20) & 15))
+                        + out[21 + outpos - 1];
+                out[22 + outpos] = (((in[2 + inpos] >>> 24) & 15))
+                        + out[22 + outpos - 1];
+                out[23 + outpos] = ((in[2 + inpos] >>> 28))
+                        + out[23 + outpos - 1];
+                out[24 + outpos] = (((in[3 + inpos] >>> 0) & 15))
+                        + out[24 + outpos - 1];
+                out[25 + outpos] = (((in[3 + inpos] >>> 4) & 15))
+                        + out[25 + outpos - 1];
+                out[26 + outpos] = (((in[3 + inpos] >>> 8) & 15))
+                        + out[26 + outpos - 1];
+                out[27 + outpos] = (((in[3 + inpos] >>> 12) & 15))
+                        + out[27 + outpos - 1];
+                out[28 + outpos] = (((in[3 + inpos] >>> 16) & 15))
+                        + out[28 + outpos - 1];
+                out[29 + outpos] = (((in[3 + inpos] >>> 20) & 15))
+                        + out[29 + outpos - 1];
+                out[30 + outpos] = (((in[3 + inpos] >>> 24) & 15))
+                        + out[30 + outpos - 1];
+                out[31 + outpos] = ((in[3 + inpos] >>> 28))
+                        + out[31 + outpos - 1];
         }
 
-        protected static void integratedunpack0(final int initoffset,
+        protected static void integratedunpack5(final int initoffset,
                 final int[] in, int inpos, final int[] out, int outpos) {
-                Arrays.fill(out, outpos, outpos + 32, initoffset);
+                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 31)) + initoffset;
+                out[1 + outpos] = (((in[0 + inpos] >>> 5) & 31))
+                        + out[1 + outpos - 1];
+                out[2 + outpos] = (((in[0 + inpos] >>> 10) & 31))
+                        + out[2 + outpos - 1];
+                out[3 + outpos] = (((in[0 + inpos] >>> 15) & 31))
+                        + out[3 + outpos - 1];
+                out[4 + outpos] = (((in[0 + inpos] >>> 20) & 31))
+                        + out[4 + outpos - 1];
+                out[5 + outpos] = (((in[0 + inpos] >>> 25) & 31))
+                        + out[5 + outpos - 1];
+                out[6 + outpos] = ((in[0 + inpos] >>> 30) | ((in[1 + inpos] & 7) << (5 - 3)))
+                        + out[6 + outpos - 1];
+                out[7 + outpos] = (((in[1 + inpos] >>> 3) & 31))
+                        + out[7 + outpos - 1];
+                out[8 + outpos] = (((in[1 + inpos] >>> 8) & 31))
+                        + out[8 + outpos - 1];
+                out[9 + outpos] = (((in[1 + inpos] >>> 13) & 31))
+                        + out[9 + outpos - 1];
+                out[10 + outpos] = (((in[1 + inpos] >>> 18) & 31))
+                        + out[10 + outpos - 1];
+                out[11 + outpos] = (((in[1 + inpos] >>> 23) & 31))
+                        + out[11 + outpos - 1];
+                out[12 + outpos] = ((in[1 + inpos] >>> 28) | ((in[2 + inpos] & 1) << (5 - 1)))
+                        + out[12 + outpos - 1];
+                out[13 + outpos] = (((in[2 + inpos] >>> 1) & 31))
+                        + out[13 + outpos - 1];
+                out[14 + outpos] = (((in[2 + inpos] >>> 6) & 31))
+                        + out[14 + outpos - 1];
+                out[15 + outpos] = (((in[2 + inpos] >>> 11) & 31))
+                        + out[15 + outpos - 1];
+                out[16 + outpos] = (((in[2 + inpos] >>> 16) & 31))
+                        + out[16 + outpos - 1];
+                out[17 + outpos] = (((in[2 + inpos] >>> 21) & 31))
+                        + out[17 + outpos - 1];
+                out[18 + outpos] = (((in[2 + inpos] >>> 26) & 31))
+                        + out[18 + outpos - 1];
+                out[19 + outpos] = ((in[2 + inpos] >>> 31) | ((in[3 + inpos] & 15) << (5 - 4)))
+                        + out[19 + outpos - 1];
+                out[20 + outpos] = (((in[3 + inpos] >>> 4) & 31))
+                        + out[20 + outpos - 1];
+                out[21 + outpos] = (((in[3 + inpos] >>> 9) & 31))
+                        + out[21 + outpos - 1];
+                out[22 + outpos] = (((in[3 + inpos] >>> 14) & 31))
+                        + out[22 + outpos - 1];
+                out[23 + outpos] = (((in[3 + inpos] >>> 19) & 31))
+                        + out[23 + outpos - 1];
+                out[24 + outpos] = (((in[3 + inpos] >>> 24) & 31))
+                        + out[24 + outpos - 1];
+                out[25 + outpos] = ((in[3 + inpos] >>> 29) | ((in[4 + inpos] & 3) << (5 - 2)))
+                        + out[25 + outpos - 1];
+                out[26 + outpos] = (((in[4 + inpos] >>> 2) & 31))
+                        + out[26 + outpos - 1];
+                out[27 + outpos] = (((in[4 + inpos] >>> 7) & 31))
+                        + out[27 + outpos - 1];
+                out[28 + outpos] = (((in[4 + inpos] >>> 12) & 31))
+                        + out[28 + outpos - 1];
+                out[29 + outpos] = (((in[4 + inpos] >>> 17) & 31))
+                        + out[29 + outpos - 1];
+                out[30 + outpos] = (((in[4 + inpos] >>> 22) & 31))
+                        + out[30 + outpos - 1];
+                out[31 + outpos] = ((in[4 + inpos] >>> 27))
+                        + out[31 + outpos - 1];
         }
 
-        protected static void integratedpack0(final int initoffset,
+        protected static void integratedunpack6(final int initoffset,
                 final int[] in, int inpos, final int[] out, int outpos) {
-                // nothing
+                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 63)) + initoffset;
+                out[1 + outpos] = (((in[0 + inpos] >>> 6) & 63))
+                        + out[1 + outpos - 1];
+                out[2 + outpos] = (((in[0 + inpos] >>> 12) & 63))
+                        + out[2 + outpos - 1];
+                out[3 + outpos] = (((in[0 + inpos] >>> 18) & 63))
+                        + out[3 + outpos - 1];
+                out[4 + outpos] = (((in[0 + inpos] >>> 24) & 63))
+                        + out[4 + outpos - 1];
+                out[5 + outpos] = ((in[0 + inpos] >>> 30) | ((in[1 + inpos] & 15) << (6 - 4)))
+                        + out[5 + outpos - 1];
+                out[6 + outpos] = (((in[1 + inpos] >>> 4) & 63))
+                        + out[6 + outpos - 1];
+                out[7 + outpos] = (((in[1 + inpos] >>> 10) & 63))
+                        + out[7 + outpos - 1];
+                out[8 + outpos] = (((in[1 + inpos] >>> 16) & 63))
+                        + out[8 + outpos - 1];
+                out[9 + outpos] = (((in[1 + inpos] >>> 22) & 63))
+                        + out[9 + outpos - 1];
+                out[10 + outpos] = ((in[1 + inpos] >>> 28) | ((in[2 + inpos] & 3) << (6 - 2)))
+                        + out[10 + outpos - 1];
+                out[11 + outpos] = (((in[2 + inpos] >>> 2) & 63))
+                        + out[11 + outpos - 1];
+                out[12 + outpos] = (((in[2 + inpos] >>> 8) & 63))
+                        + out[12 + outpos - 1];
+                out[13 + outpos] = (((in[2 + inpos] >>> 14) & 63))
+                        + out[13 + outpos - 1];
+                out[14 + outpos] = (((in[2 + inpos] >>> 20) & 63))
+                        + out[14 + outpos - 1];
+                out[15 + outpos] = ((in[2 + inpos] >>> 26))
+                        + out[15 + outpos - 1];
+                out[16 + outpos] = (((in[3 + inpos] >>> 0) & 63))
+                        + out[16 + outpos - 1];
+                out[17 + outpos] = (((in[3 + inpos] >>> 6) & 63))
+                        + out[17 + outpos - 1];
+                out[18 + outpos] = (((in[3 + inpos] >>> 12) & 63))
+                        + out[18 + outpos - 1];
+                out[19 + outpos] = (((in[3 + inpos] >>> 18) & 63))
+                        + out[19 + outpos - 1];
+                out[20 + outpos] = (((in[3 + inpos] >>> 24) & 63))
+                        + out[20 + outpos - 1];
+                out[21 + outpos] = ((in[3 + inpos] >>> 30) | ((in[4 + inpos] & 15) << (6 - 4)))
+                        + out[21 + outpos - 1];
+                out[22 + outpos] = (((in[4 + inpos] >>> 4) & 63))
+                        + out[22 + outpos - 1];
+                out[23 + outpos] = (((in[4 + inpos] >>> 10) & 63))
+                        + out[23 + outpos - 1];
+                out[24 + outpos] = (((in[4 + inpos] >>> 16) & 63))
+                        + out[24 + outpos - 1];
+                out[25 + outpos] = (((in[4 + inpos] >>> 22) & 63))
+                        + out[25 + outpos - 1];
+                out[26 + outpos] = ((in[4 + inpos] >>> 28) | ((in[5 + inpos] & 3) << (6 - 2)))
+                        + out[26 + outpos - 1];
+                out[27 + outpos] = (((in[5 + inpos] >>> 2) & 63))
+                        + out[27 + outpos - 1];
+                out[28 + outpos] = (((in[5 + inpos] >>> 8) & 63))
+                        + out[28 + outpos - 1];
+                out[29 + outpos] = (((in[5 + inpos] >>> 14) & 63))
+                        + out[29 + outpos - 1];
+                out[30 + outpos] = (((in[5 + inpos] >>> 20) & 63))
+                        + out[30 + outpos - 1];
+                out[31 + outpos] = ((in[5 + inpos] >>> 26))
+                        + out[31 + outpos - 1];
         }
 
-        /**
-         * Unpack 32 integers along with prefix sum computation
-         * 
-         * @param initoffset value to add to all outputted values
-         * @param in source array
-         * @param inpos initial position in source array
-         * @param out output array
-         * @param outpos initial position in output array
-         * @param bit number of bits to use per integer
-         */
-        public static void integratedunpack(final int initoffset,
-                final int[] in, final int inpos, final int[] out, final int outpos,
-                final int bit) {
-                switch (bit) {
-                case 0:
-                        integratedunpack0(initoffset, in, inpos, out, outpos);
-                        break;
-                case 1:
-                        integratedunpack1(initoffset, in, inpos, out, outpos);
-                        break;
-                case 2:
-                        integratedunpack2(initoffset, in, inpos, out, outpos);
-                        break;
-                case 3:
-                        integratedunpack3(initoffset, in, inpos, out, outpos);
-                        break;
-                case 4:
-                        integratedunpack4(initoffset, in, inpos, out, outpos);
-                        break;
-                case 5:
-                        integratedunpack5(initoffset, in, inpos, out, outpos);
-                        break;
-                case 6:
-                        integratedunpack6(initoffset, in, inpos, out, outpos);
-                        break;
-                case 7:
-                        integratedunpack7(initoffset, in, inpos, out, outpos);
-                        break;
-                case 8:
-                        integratedunpack8(initoffset, in, inpos, out, outpos);
-                        break;
-                case 9:
-                        integratedunpack9(initoffset, in, inpos, out, outpos);
-                        break;
-                case 10:
-                        integratedunpack10(initoffset, in, inpos, out, outpos);
-                        break;
-                case 11:
-                        integratedunpack11(initoffset, in, inpos, out, outpos);
-                        break;
-                case 12:
-                        integratedunpack12(initoffset, in, inpos, out, outpos);
-                        break;
-                case 13:
-                        integratedunpack13(initoffset, in, inpos, out, outpos);
-                        break;
-                case 14:
-                        integratedunpack14(initoffset, in, inpos, out, outpos);
-                        break;
-                case 15:
-                        integratedunpack15(initoffset, in, inpos, out, outpos);
-                        break;
-                case 16:
-                        integratedunpack16(initoffset, in, inpos, out, outpos);
-                        break;
-                case 17:
-                        integratedunpack17(initoffset, in, inpos, out, outpos);
-                        break;
-                case 18:
-                        integratedunpack18(initoffset, in, inpos, out, outpos);
-                        break;
-                case 19:
-                        integratedunpack19(initoffset, in, inpos, out, outpos);
-                        break;
-                case 20:
-                        integratedunpack20(initoffset, in, inpos, out, outpos);
-                        break;
-                case 21:
-                        integratedunpack21(initoffset, in, inpos, out, outpos);
-                        break;
-                case 22:
-                        integratedunpack22(initoffset, in, inpos, out, outpos);
-                        break;
-                case 23:
-                        integratedunpack23(initoffset, in, inpos, out, outpos);
-                        break;
-                case 24:
-                        integratedunpack24(initoffset, in, inpos, out, outpos);
-                        break;
-                case 25:
-                        integratedunpack25(initoffset, in, inpos, out, outpos);
-                        break;
-                case 26:
-                        integratedunpack26(initoffset, in, inpos, out, outpos);
-                        break;
-                case 27:
-                        integratedunpack27(initoffset, in, inpos, out, outpos);
-                        break;
-                case 28:
-                        integratedunpack28(initoffset, in, inpos, out, outpos);
-                        break;
-                case 29:
-                        integratedunpack29(initoffset, in, inpos, out, outpos);
-                        break;
-                case 30:
-                        integratedunpack30(initoffset, in, inpos, out, outpos);
-                        break;
-                case 31:
-                        integratedunpack31(initoffset, in, inpos, out, outpos);
-                        break;
-                case 32:
-                        integratedunpack32(initoffset, in, inpos, out, outpos);
-                        break;
-                default:
-                        throw new IllegalArgumentException(
-                                "Unsupported bit width.");
-                }
+        protected static void integratedunpack7(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 127)) + initoffset;
+                out[1 + outpos] = (((in[0 + inpos] >>> 7) & 127))
+                        + out[1 + outpos - 1];
+                out[2 + outpos] = (((in[0 + inpos] >>> 14) & 127))
+                        + out[2 + outpos - 1];
+                out[3 + outpos] = (((in[0 + inpos] >>> 21) & 127))
+                        + out[3 + outpos - 1];
+                out[4 + outpos] = ((in[0 + inpos] >>> 28) | ((in[1 + inpos] & 7) << (7 - 3)))
+                        + out[4 + outpos - 1];
+                out[5 + outpos] = (((in[1 + inpos] >>> 3) & 127))
+                        + out[5 + outpos - 1];
+                out[6 + outpos] = (((in[1 + inpos] >>> 10) & 127))
+                        + out[6 + outpos - 1];
+                out[7 + outpos] = (((in[1 + inpos] >>> 17) & 127))
+                        + out[7 + outpos - 1];
+                out[8 + outpos] = (((in[1 + inpos] >>> 24) & 127))
+                        + out[8 + outpos - 1];
+                out[9 + outpos] = ((in[1 + inpos] >>> 31) | ((in[2 + inpos] & 63) << (7 - 6)))
+                        + out[9 + outpos - 1];
+                out[10 + outpos] = (((in[2 + inpos] >>> 6) & 127))
+                        + out[10 + outpos - 1];
+                out[11 + outpos] = (((in[2 + inpos] >>> 13) & 127))
+                        + out[11 + outpos - 1];
+                out[12 + outpos] = (((in[2 + inpos] >>> 20) & 127))
+                        + out[12 + outpos - 1];
+                out[13 + outpos] = ((in[2 + inpos] >>> 27) | ((in[3 + inpos] & 3) << (7 - 2)))
+                        + out[13 + outpos - 1];
+                out[14 + outpos] = (((in[3 + inpos] >>> 2) & 127))
+                        + out[14 + outpos - 1];
+                out[15 + outpos] = (((in[3 + inpos] >>> 9) & 127))
+                        + out[15 + outpos - 1];
+                out[16 + outpos] = (((in[3 + inpos] >>> 16) & 127))
+                        + out[16 + outpos - 1];
+                out[17 + outpos] = (((in[3 + inpos] >>> 23) & 127))
+                        + out[17 + outpos - 1];
+                out[18 + outpos] = ((in[3 + inpos] >>> 30) | ((in[4 + inpos] & 31) << (7 - 5)))
+                        + out[18 + outpos - 1];
+                out[19 + outpos] = (((in[4 + inpos] >>> 5) & 127))
+                        + out[19 + outpos - 1];
+                out[20 + outpos] = (((in[4 + inpos] >>> 12) & 127))
+                        + out[20 + outpos - 1];
+                out[21 + outpos] = (((in[4 + inpos] >>> 19) & 127))
+                        + out[21 + outpos - 1];
+                out[22 + outpos] = ((in[4 + inpos] >>> 26) | ((in[5 + inpos] & 1) << (7 - 1)))
+                        + out[22 + outpos - 1];
+                out[23 + outpos] = (((in[5 + inpos] >>> 1) & 127))
+                        + out[23 + outpos - 1];
+                out[24 + outpos] = (((in[5 + inpos] >>> 8) & 127))
+                        + out[24 + outpos - 1];
+                out[25 + outpos] = (((in[5 + inpos] >>> 15) & 127))
+                        + out[25 + outpos - 1];
+                out[26 + outpos] = (((in[5 + inpos] >>> 22) & 127))
+                        + out[26 + outpos - 1];
+                out[27 + outpos] = ((in[5 + inpos] >>> 29) | ((in[6 + inpos] & 15) << (7 - 4)))
+                        + out[27 + outpos - 1];
+                out[28 + outpos] = (((in[6 + inpos] >>> 4) & 127))
+                        + out[28 + outpos - 1];
+                out[29 + outpos] = (((in[6 + inpos] >>> 11) & 127))
+                        + out[29 + outpos - 1];
+                out[30 + outpos] = (((in[6 + inpos] >>> 18) & 127))
+                        + out[30 + outpos - 1];
+                out[31 + outpos] = ((in[6 + inpos] >>> 25))
+                        + out[31 + outpos - 1];
         }
 
-        /**
-         * Pack 32 integers as deltas with an initial value 
-         * 
-         * @param initoffset initial value (used to compute first delta)
-         * @param in input array
-         * @param inpos initial position in input array
-         * @param out output array
-         * @param outpos initial position in output array
-         * @param bit number of bits to use per integer
-         */
-        public static void integratedpack(final int initoffset, final int[] in,
-                final int inpos, final int[] out, final int outpos, final int bit) {
-                switch (bit) {
-                case 0:
-                        integratedpack0(initoffset, in, inpos, out, outpos);
-                        break;
-                case 1:
-                        integratedpack1(initoffset, in, inpos, out, outpos);
-                        break;
-                case 2:
-                        integratedpack2(initoffset, in, inpos, out, outpos);
-                        break;
-                case 3:
-                        integratedpack3(initoffset, in, inpos, out, outpos);
-                        break;
-                case 4:
-                        integratedpack4(initoffset, in, inpos, out, outpos);
-                        break;
-                case 5:
-                        integratedpack5(initoffset, in, inpos, out, outpos);
-                        break;
-                case 6:
-                        integratedpack6(initoffset, in, inpos, out, outpos);
-                        break;
-                case 7:
-                        integratedpack7(initoffset, in, inpos, out, outpos);
-                        break;
-                case 8:
-                        integratedpack8(initoffset, in, inpos, out, outpos);
-                        break;
-                case 9:
-                        integratedpack9(initoffset, in, inpos, out, outpos);
-                        break;
-                case 10:
-                        integratedpack10(initoffset, in, inpos, out, outpos);
-                        break;
-                case 11:
-                        integratedpack11(initoffset, in, inpos, out, outpos);
-                        break;
-                case 12:
-                        integratedpack12(initoffset, in, inpos, out, outpos);
-                        break;
-                case 13:
-                        integratedpack13(initoffset, in, inpos, out, outpos);
-                        break;
-                case 14:
-                        integratedpack14(initoffset, in, inpos, out, outpos);
-                        break;
-                case 15:
-                        integratedpack15(initoffset, in, inpos, out, outpos);
-                        break;
-                case 16:
-                        integratedpack16(initoffset, in, inpos, out, outpos);
-                        break;
-                case 17:
-                        integratedpack17(initoffset, in, inpos, out, outpos);
-                        break;
-                case 18:
-                        integratedpack18(initoffset, in, inpos, out, outpos);
-                        break;
-                case 19:
-                        integratedpack19(initoffset, in, inpos, out, outpos);
-                        break;
-                case 20:
-                        integratedpack20(initoffset, in, inpos, out, outpos);
-                        break;
-                case 21:
-                        integratedpack21(initoffset, in, inpos, out, outpos);
-                        break;
-                case 22:
-                        integratedpack22(initoffset, in, inpos, out, outpos);
-                        break;
-                case 23:
-                        integratedpack23(initoffset, in, inpos, out, outpos);
-                        break;
-                case 24:
-                        integratedpack24(initoffset, in, inpos, out, outpos);
-                        break;
-                case 25:
-                        integratedpack25(initoffset, in, inpos, out, outpos);
-                        break;
-                case 26:
-                        integratedpack26(initoffset, in, inpos, out, outpos);
-                        break;
-                case 27:
-                        integratedpack27(initoffset, in, inpos, out, outpos);
-                        break;
-                case 28:
-                        integratedpack28(initoffset, in, inpos, out, outpos);
-                        break;
-                case 29:
-                        integratedpack29(initoffset, in, inpos, out, outpos);
-                        break;
-                case 30:
-                        integratedpack30(initoffset, in, inpos, out, outpos);
-                        break;
-                case 31:
-                        integratedpack31(initoffset, in, inpos, out, outpos);
-                        break;
-                case 32:
-                        integratedpack32(initoffset, in, inpos, out, outpos);
-                        break;
-                default:
-                        throw new IllegalArgumentException(
-                                "Unsupported bit width.");
-                }
+        protected static void integratedunpack8(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 255)) + initoffset;
+                out[1 + outpos] = (((in[0 + inpos] >>> 8) & 255))
+                        + out[1 + outpos - 1];
+                out[2 + outpos] = (((in[0 + inpos] >>> 16) & 255))
+                        + out[2 + outpos - 1];
+                out[3 + outpos] = ((in[0 + inpos] >>> 24))
+                        + out[3 + outpos - 1];
+                out[4 + outpos] = (((in[1 + inpos] >>> 0) & 255))
+                        + out[4 + outpos - 1];
+                out[5 + outpos] = (((in[1 + inpos] >>> 8) & 255))
+                        + out[5 + outpos - 1];
+                out[6 + outpos] = (((in[1 + inpos] >>> 16) & 255))
+                        + out[6 + outpos - 1];
+                out[7 + outpos] = ((in[1 + inpos] >>> 24))
+                        + out[7 + outpos - 1];
+                out[8 + outpos] = (((in[2 + inpos] >>> 0) & 255))
+                        + out[8 + outpos - 1];
+                out[9 + outpos] = (((in[2 + inpos] >>> 8) & 255))
+                        + out[9 + outpos - 1];
+                out[10 + outpos] = (((in[2 + inpos] >>> 16) & 255))
+                        + out[10 + outpos - 1];
+                out[11 + outpos] = ((in[2 + inpos] >>> 24))
+                        + out[11 + outpos - 1];
+                out[12 + outpos] = (((in[3 + inpos] >>> 0) & 255))
+                        + out[12 + outpos - 1];
+                out[13 + outpos] = (((in[3 + inpos] >>> 8) & 255))
+                        + out[13 + outpos - 1];
+                out[14 + outpos] = (((in[3 + inpos] >>> 16) & 255))
+                        + out[14 + outpos - 1];
+                out[15 + outpos] = ((in[3 + inpos] >>> 24))
+                        + out[15 + outpos - 1];
+                out[16 + outpos] = (((in[4 + inpos] >>> 0) & 255))
+                        + out[16 + outpos - 1];
+                out[17 + outpos] = (((in[4 + inpos] >>> 8) & 255))
+                        + out[17 + outpos - 1];
+                out[18 + outpos] = (((in[4 + inpos] >>> 16) & 255))
+                        + out[18 + outpos - 1];
+                out[19 + outpos] = ((in[4 + inpos] >>> 24))
+                        + out[19 + outpos - 1];
+                out[20 + outpos] = (((in[5 + inpos] >>> 0) & 255))
+                        + out[20 + outpos - 1];
+                out[21 + outpos] = (((in[5 + inpos] >>> 8) & 255))
+                        + out[21 + outpos - 1];
+                out[22 + outpos] = (((in[5 + inpos] >>> 16) & 255))
+                        + out[22 + outpos - 1];
+                out[23 + outpos] = ((in[5 + inpos] >>> 24))
+                        + out[23 + outpos - 1];
+                out[24 + outpos] = (((in[6 + inpos] >>> 0) & 255))
+                        + out[24 + outpos - 1];
+                out[25 + outpos] = (((in[6 + inpos] >>> 8) & 255))
+                        + out[25 + outpos - 1];
+                out[26 + outpos] = (((in[6 + inpos] >>> 16) & 255))
+                        + out[26 + outpos - 1];
+                out[27 + outpos] = ((in[6 + inpos] >>> 24))
+                        + out[27 + outpos - 1];
+                out[28 + outpos] = (((in[7 + inpos] >>> 0) & 255))
+                        + out[28 + outpos - 1];
+                out[29 + outpos] = (((in[7 + inpos] >>> 8) & 255))
+                        + out[29 + outpos - 1];
+                out[30 + outpos] = (((in[7 + inpos] >>> 16) & 255))
+                        + out[30 + outpos - 1];
+                out[31 + outpos] = ((in[7 + inpos] >>> 24))
+                        + out[31 + outpos - 1];
+        }
+
+        protected static void integratedunpack9(final int initoffset,
+                final int[] in, int inpos, final int[] out, int outpos) {
+                out[0 + outpos] = (((in[0 + inpos] >>> 0) & 511)) + initoffset;
+                out[1 + outpos] = (((in[0 + inpos] >>> 9) & 511))
+                        + out[1 + outpos - 1];
+                out[2 + outpos] = (((in[0 + inpos] >>> 18) & 511))
+                        + out[2 + outpos - 1];
+                out[3 + outpos] = ((in[0 + inpos] >>> 27) | ((in[1 + inpos] & 15) << (9 - 4)))
+                        + out[3 + outpos - 1];
+                out[4 + outpos] = (((in[1 + inpos] >>> 4) & 511))
+                        + out[4 + outpos - 1];
+                out[5 + outpos] = (((in[1 + inpos] >>> 13) & 511))
+                        + out[5 + outpos - 1];
+                out[6 + outpos] = (((in[1 + inpos] >>> 22) & 511))
+                        + out[6 + outpos - 1];
+                out[7 + outpos] = ((in[1 + inpos] >>> 31) | ((in[2 + inpos] & 255) << (9 - 8)))
+                        + out[7 + outpos - 1];
+                out[8 + outpos] = (((in[2 + inpos] >>> 8) & 511))
+                        + out[8 + outpos - 1];
+                out[9 + outpos] = (((in[2 + inpos] >>> 17) & 511))
+                        + out[9 + outpos - 1];
+                out[10 + outpos] = ((in[2 + inpos] >>> 26) | ((in[3 + inpos] & 7) << (9 - 3)))
+                        + out[10 + outpos - 1];
+                out[11 + outpos] = (((in[3 + inpos] >>> 3) & 511))
+                        + out[11 + outpos - 1];
+                out[12 + outpos] = (((in[3 + inpos] >>> 12) & 511))
+                        + out[12 + outpos - 1];
+                out[13 + outpos] = (((in[3 + inpos] >>> 21) & 511))
+                        + out[13 + outpos - 1];
+                out[14 + outpos] = ((in[3 + inpos] >>> 30) | ((in[4 + inpos] & 127) << (9 - 7)))
+                        + out[14 + outpos - 1];
+                out[15 + outpos] = (((in[4 + inpos] >>> 7) & 511))
+                        + out[15 + outpos - 1];
+                out[16 + outpos] = (((in[4 + inpos] >>> 16) & 511))
+                        + out[16 + outpos - 1];
+                out[17 + outpos] = ((in[4 + inpos] >>> 25) | ((in[5 + inpos] & 3) << (9 - 2)))
+                        + out[17 + outpos - 1];
+                out[18 + outpos] = (((in[5 + inpos] >>> 2) & 511))
+                        + out[18 + outpos - 1];
+                out[19 + outpos] = (((in[5 + inpos] >>> 11) & 511))
+                        + out[19 + outpos - 1];
+                out[20 + outpos] = (((in[5 + inpos] >>> 20) & 511))
+                        + out[20 + outpos - 1];
+                out[21 + outpos] = ((in[5 + inpos] >>> 29) | ((in[6 + inpos] & 63) << (9 - 6)))
+                        + out[21 + outpos - 1];
+                out[22 + outpos] = (((in[6 + inpos] >>> 6) & 511))
+                        + out[22 + outpos - 1];
+                out[23 + outpos] = (((in[6 + inpos] >>> 15) & 511))
+                        + out[23 + outpos - 1];
+                out[24 + outpos] = ((in[6 + inpos] >>> 24) | ((in[7 + inpos] & 1) << (9 - 1)))
+                        + out[24 + outpos - 1];
+                out[25 + outpos] = (((in[7 + inpos] >>> 1) & 511))
+                        + out[25 + outpos - 1];
+                out[26 + outpos] = (((in[7 + inpos] >>> 10) & 511))
+                        + out[26 + outpos - 1];
+                out[27 + outpos] = (((in[7 + inpos] >>> 19) & 511))
+                        + out[27 + outpos - 1];
+                out[28 + outpos] = ((in[7 + inpos] >>> 28) | ((in[8 + inpos] & 31) << (9 - 5)))
+                        + out[28 + outpos - 1];
+                out[29 + outpos] = (((in[8 + inpos] >>> 5) & 511))
+                        + out[29 + outpos - 1];
+                out[30 + outpos] = (((in[8 + inpos] >>> 14) & 511))
+                        + out[30 + outpos - 1];
+                out[31 + outpos] = ((in[8 + inpos] >>> 23))
+                        + out[31 + outpos - 1];
         }
 
 }
