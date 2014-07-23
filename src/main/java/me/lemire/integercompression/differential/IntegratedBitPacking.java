@@ -5,7 +5,7 @@
  * (c) Daniel Lemire, http://lemire.me/en/
  */
 
-package me.lemire.integercompression;
+package me.lemire.integercompression.differential;
 
 import java.util.Arrays;
 

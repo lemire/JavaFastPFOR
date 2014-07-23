@@ -4,7 +4,9 @@
  *
  * (c) Daniel Lemire, http://lemire.me/en/
  */
-package me.lemire.integercompression;
+package me.lemire.integercompression.differential;
+
+import me.lemire.integercompression.IntegerCODEC;
 
 /**
  * This is just like IntegerCODEC, except that it indicates that delta coding is

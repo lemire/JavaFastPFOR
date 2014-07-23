@@ -6,9 +6,16 @@ package me.lemire.integercompression;
 
 import java.util.Arrays;
 
+import me.lemire.integercompression.differential.XorBinaryPacking;
+
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
+/**
+ * @author lemire
+ *
+ */
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class XorBinaryPackingTest
 {
@@ -18,13 +25,16 @@ public final class XorBinaryPackingTest
 
 
 
-    public static void checkCompressAndUncompress(String label, int[] data) {
+    private static void checkCompressAndUncompress(String label, int[] data) {
         XorBinaryPacking codec = new XorBinaryPacking();
         int[] compBuf = TestUtils.compress(codec, data);
         int[] decompBuf = TestUtils.uncompress(codec, compBuf, data.length);
         assertArrayEquals(data, decompBuf);
     }
 
+    /**
+     * 
+     */
     @Test
     public void compressAndUncompress0() {
         int[] data = new int[128];
@@ -35,6 +45,9 @@ public final class XorBinaryPackingTest
         checkCompressAndUncompress("compressAndUncompress0", data);
     }
 
+    /**
+     * 
+     */
     @Test
     public void compressAndUncompress1() {
         int[] data = new int[128];
@@ -44,6 +57,9 @@ public final class XorBinaryPackingTest
         checkCompressAndUncompress("compressAndUncompress1", data);
     }
 
+    /**
+     * 
+     */
     @Test
     public void compressAndUncompress2() {
         int[] data = new int[128];
@@ -53,6 +69,9 @@ public final class XorBinaryPackingTest
         checkCompressAndUncompress("compressAndUncompress2", data);
     }
 
+    /**
+     * 
+     */
     @Test
     public void compressAndUncompress3() {
         int[] data = new int[256];
@@ -61,6 +80,9 @@ public final class XorBinaryPackingTest
         checkCompressAndUncompress("compressAndUncompress3", data);
     }
 
+    /**
+     * 
+     */
     @Test
     public void compressAndUncompress4() {
         int[] data = new int[256];
@@ -69,6 +91,9 @@ public final class XorBinaryPackingTest
         checkCompressAndUncompress("compressAndUncompress4", data);
     }
 
+    /**
+     * 
+     */
     @Test
     public void compressAndUncompress5() {
         int[] data = new int[256];

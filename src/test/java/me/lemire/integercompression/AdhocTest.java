@@ -10,6 +10,9 @@ import static me.lemire.integercompression.TestUtils.*;
 public class AdhocTest
 {
 
+    /**
+     * a test
+     */
     @Test
     public void biggerCompressedArray0() {
         // No problem: for comparison.
@@ -17,6 +20,9 @@ public class AdhocTest
         assertSymmetry(c, 0, 16384);
     }
 
+    /**
+     * a test
+     */
     @Test
     public void biggerCompressedArray1() {
         // Compressed array is bigger than original, because of VariableByte.
@@ -24,6 +30,9 @@ public class AdhocTest
         assertSymmetry(c, -1);
     }
 
+    /**
+     * a test
+     */
     @Test
     public void biggerCompressedArray2() {
         // Compressed array is bigger than original, because of Composition.

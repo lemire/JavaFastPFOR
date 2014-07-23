@@ -11,10 +11,13 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings({ "javadoc"})
 public class TestUtils {
+    /**
+     * 
+     */
     @Test
     public void bogus() {}// to avoid useless complaining.
 
-    public static void dumpIntArray(int[] data, String label) {
+    protected static void dumpIntArray(int[] data, String label) {
         System.out.print(label);
         for (int i = 0; i < data.length; ++i) {
             if (i % 6 == 0) {
@@ -25,7 +28,7 @@ public class TestUtils {
         System.out.println();
     }
 
-    public static void dumpIntArrayAsHex(int[] data, String label) {
+    protected static void dumpIntArrayAsHex(int[] data, String label) {
         System.out.print(label);
         for (int i = 0; i < data.length; ++i) {
             if (i % 8 == 0) {
@@ -40,7 +43,7 @@ public class TestUtils {
      * Check that compress and uncompress keep original array.
      *
      * @param codec CODEC to test.
-     * @param source Data for test.
+     * @param orig  original integers
      */
     public static void assertSymmetry(IntegerCODEC codec, int... orig) {
         // There are some cases that compressed array is bigger than original
@@ -71,7 +74,7 @@ public class TestUtils {
         assertArrayEquals(orig, target);
     }
 
-    public static int[] compress(IntegerCODEC codec, int[] data) {
+    protected static int[] compress(IntegerCODEC codec, int[] data) {
         int[] outBuf = new int[data.length * 4];
         IntWrapper inPos = new IntWrapper();
         IntWrapper outPos = new IntWrapper();
@@ -79,7 +82,7 @@ public class TestUtils {
         return Arrays.copyOf(outBuf, outPos.get());
     }
 
-    public static int[] uncompress(IntegerCODEC codec, int[] data, int len) {
+    protected static int[] uncompress(IntegerCODEC codec, int[] data, int len) {
         int[] outBuf = new int[len + 1024];
         IntWrapper inPos = new IntWrapper();
         IntWrapper outPos = new IntWrapper();

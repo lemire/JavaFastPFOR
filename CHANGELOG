@@ -1,6 +1,8 @@
+0.0.13 (July 23rd 2014)
+  - CODECs using differential coding are now in a separate package (me.lemire.integercompression.differential)
+
 0.0.12 (June 9th 2014)
   - Better API documentation
-
 
 0.0.11 (Feb. 14th 2014)
   - Fix rare bug in FastPFOR (reported by Stefan Ackermann (https://github.com/Stivo))

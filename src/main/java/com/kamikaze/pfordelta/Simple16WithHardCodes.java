@@ -85,6 +85,9 @@ public class Simple16WithHardCodes {
          *                the offset of the input in the number of integers
          * @param n
          *                the number of elements to be compressed
+         * @param blockSize block size 
+         * @param oriBlockSize  ori block size
+         * @param oriInputBlock ori input block 
          * @return the number of compressed integers
          */
         public static final int s16Compress(int[] out, int outOffset, int[] in,
@@ -114,7 +117,8 @@ public class Simple16WithHardCodes {
                 return -1;
         }
 
-        public static final int s16CompressBackup(int[] out, int outOffset,
+
+        protected static final int s16CompressBackup(int[] out, int outOffset,
                 int[] in, int inOffset, int n, int blockSize, int oriBlockSize,
                 int[] oriInputBlock) {
                 int numIdx, j, num, bits;
@@ -152,7 +156,7 @@ public class Simple16WithHardCodes {
          *                the number of elements to be compressed
          * @return the number of processed integers
          */
-        public static final int s16Decompress(int[] out, int outOffset,
+        protected static final int s16Decompress(int[] out, int outOffset,
                 int[] in, int inOffset, int n) {
                 int numIdx, j = 0, bits = 0;
                 numIdx = in[inOffset] >>> S16_BITSSIZE;
@@ -165,7 +169,7 @@ public class Simple16WithHardCodes {
                 return num;
         }
 
-        public static final int s16DecompressWithIntBufferBackup(
+        protected static final int s16DecompressWithIntBufferBackup(
                 final int[] out, int outOffset, final int value, final int n) {
                 int j = 0, shift;
                 final int numIdx = value >>> S16_BITSSIZE;
@@ -180,7 +184,7 @@ public class Simple16WithHardCodes {
                 return num;
         }
 
-        public static final int s16DecompressWithIntBuffer(final int[] out,
+        protected static final int s16DecompressWithIntBuffer(final int[] out,
                 int outOffset, final int value, final int n) {
                 int j = 0, shift;
                 final int numIdx = value >>> S16_BITSSIZE;
@@ -196,14 +200,14 @@ public class Simple16WithHardCodes {
                 return num;
         }
 
-        public static final int s16DecompressWithIntBufferWithHardCodes(
+        protected static final int s16DecompressWithIntBufferWithHardCodes(
                 final int[] out, int outOffset, final int value, final int n) {
                 final int numIdx = value >>> S16_BITSSIZE;
                 return s16DecompressOneNumberWithHardCodes(out, outOffset,
                         value, numIdx);
         }
 
-        public static final int s16DecompressWithIntBufferIntegrated(
+        protected static final int s16DecompressWithIntBufferIntegrated(
                 final int[] out, int outOffset, final int value, final int n,
                 int[] expPos, int oribits) {
                 int j = 0, shift = 0;
@@ -219,7 +223,7 @@ public class Simple16WithHardCodes {
                 return num;
         }
 
-        public static final int s16DecompressWithIntBufferIntegrated2(
+        protected static final int s16DecompressWithIntBufferIntegrated2(
                 final int[] out, int outOffset, final int value, final int n,
                 int[] expPos, int oribits) {
                 final int numIdx = value >>> S16_BITSSIZE;
@@ -227,7 +231,7 @@ public class Simple16WithHardCodes {
                         outOffset, value, numIdx, oribits, expPos);
         }
 
-        public static final int s16DecompressWithIntBufferIntegratedBackup(
+        protected static final int s16DecompressWithIntBufferIntegratedBackup(
                 final int[] out, int outOffset, final int value, final int n,
                 int[] expPos, int oribits) {
                 int j = 0, shift = 0;
@@ -242,7 +246,7 @@ public class Simple16WithHardCodes {
                 return num;
         }
 
-        public static int s16DecompressOneNumberWithHardCodes(int[] out,
+        protected static int s16DecompressOneNumberWithHardCodes(int[] out,
                 int outOffset, int value, int numIdx) {
                 switch (numIdx) {
                 case 0: {
@@ -459,7 +463,7 @@ public class Simple16WithHardCodes {
                 }
         }
 
-        public static int s16DecompressOneNumberWithHardCodesIntegrated(
+        protected static int s16DecompressOneNumberWithHardCodesIntegrated(
                 int[] out, int outOffset, int value, int numIdx, int oribits,
                 int[] expPos) {
                 switch (numIdx) {

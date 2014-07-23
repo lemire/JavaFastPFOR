@@ -32,8 +32,15 @@ library is used by the zsearch engine (http://victorparmar.github.com/zsearch/)
 as well as in GMAP and GSNAP (http://research-pub.gene.com/gmap/).
 
 
+Usage
+------
+
+See example.java.
+
 Some CODECs ("integrated codecs") assume that the integers are
-in sorted orders. Most others do not.
+in sorted orders and use differential coding (they compress deltas). 
+They can be found in the package me.lemire.integercopression.differential.
+Most others do not.
 
 
 Maven central repository
@@ -47,7 +54,7 @@ the following code in your pom.xml file:
          <dependency>
 	     <groupId>me.lemire.integercompression</groupId>
 	     <artifactId>JavaFastPFOR</artifactId>
-	     <version>0.0.12</version>
+	     <version>0.0.13</version>
          </dependency>
      </dependencies>
 
@@ -100,11 +107,6 @@ A recent Java compiler. Java 7 or better is recommended.
 Good instructions on installing Java 7 on Linux:
 
 http://forums.linuxmint.com/viewtopic.php?f=42&t=93052
-
-Usage 
------
-
-See example.java for a simple demonstration.
 
 
 How fast is it?

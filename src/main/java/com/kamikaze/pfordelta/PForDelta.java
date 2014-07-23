@@ -161,10 +161,9 @@ public class PForDelta {
          * @param blockSize
          *                the block size
          * @return the compressed size in ints
-         * @throws IllegalArgumentException
          */
         public static int estimateCompressedSize(int[] inputBlock, int bits,
-                int blockSize) throws IllegalArgumentException {
+                int blockSize)  {
                 int maxNoExp = (1 << bits) - 1;
                 // Size of the header and the bits-bit slots
                 int outputOffset = HEADER_SIZE + bits * blockSize;
@@ -192,10 +191,9 @@ public class PForDelta {
          * @param blockSize
          *                the block size
          * @return true if there is any big numbers in the block
-         * @throws IllegalArgumentException
          */
         public static boolean checkBigNumbers(int[] inputBlock, int bits,
-                int blockSize) throws IllegalArgumentException {
+                int blockSize) {
                 int maxNoExp = (1 << bits) - 1;
                 for (int i = 0; i < blockSize; ++i) {
                         if (inputBlock[i] > maxNoExp)
@@ -215,10 +213,9 @@ public class PForDelta {
          * @param blockSize
          *                the block size
          * @return the compressed block
-         * @throws IllegalArgumentException
          */
         public static int[] compressOneBlock(int[] inputBlock, int bits,
-                int blockSize) throws IllegalArgumentException {
+                int blockSize)  {
 
                 int[] expAux = new int[blockSize * 2];
 

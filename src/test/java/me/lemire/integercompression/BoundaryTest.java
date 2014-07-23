@@ -2,12 +2,21 @@ package me.lemire.integercompression;
 
 import java.util.Arrays;
 
+import me.lemire.integercompression.differential.IntegratedBinaryPacking;
+import me.lemire.integercompression.differential.IntegratedComposition;
+import me.lemire.integercompression.differential.IntegratedFastPFOR;
+import me.lemire.integercompression.differential.IntegratedVariableByte;
+
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
+/**
+ * @author lemire
+ *
+ */
 @SuppressWarnings({ "static-method", "javadoc" })
-public class BoundaryTest
-{
+public class BoundaryTest {
     private static void compressAndUncompress(int length, IntegerCODEC c) {
         // Initialize array.
         int[] source = new int[length];
@@ -26,15 +35,15 @@ public class BoundaryTest
         int[] uncompressed = new int[length];
         IntWrapper u_inpos = new IntWrapper(0);
         IntWrapper u_outpos = new IntWrapper(0);
-        c.uncompress(compressed, u_inpos, c_outpos.get(),
-                uncompressed, u_outpos);
+        c.uncompress(compressed, u_inpos, c_outpos.get(), uncompressed,
+                u_outpos);
 
         // Compare between uncompressed and original arrays.
         int[] target = Arrays.copyOf(uncompressed, u_outpos.get());
-        if(!Arrays.equals(source, target)) {
-                System.out.println("problem with length = "+length+" and "+c);
-                System.out.println(Arrays.toString(source));
-                System.out.println(Arrays.toString(target));
+        if (!Arrays.equals(source, target)) {
+            System.out.println("problem with length = " + length + " and " + c);
+            System.out.println(Arrays.toString(source));
+            System.out.println(Arrays.toString(target));
         }
         assertArrayEquals(source, target);
     }
@@ -56,23 +65,24 @@ public class BoundaryTest
         around256(c);
     }
 
+
+    /**
+     */
     @Test
-    public void testIntegratedComposition() throws Exception {
+    public void testIntegratedComposition() {
         IntegratedComposition c = new IntegratedComposition(
-                new IntegratedBinaryPacking(),
-                new IntegratedVariableByte());
+                new IntegratedBinaryPacking(), new IntegratedVariableByte());
         testBoundary(c);
         IntegratedComposition c2 = new IntegratedComposition(
-                new IntegratedFastPFOR(),
-                new IntegratedVariableByte());
+                new IntegratedFastPFOR(), new IntegratedVariableByte());
         testBoundary(c2);
     }
 
-   @Test
-    public void testComposition() throws Exception {
-        Composition c = new Composition(
-                new BinaryPacking(),
-                new VariableByte());
+    /**
+     */
+    @Test
+    public void testComposition()  {
+        Composition c = new Composition(new BinaryPacking(), new VariableByte());
         testBoundary(c);
     }
 }

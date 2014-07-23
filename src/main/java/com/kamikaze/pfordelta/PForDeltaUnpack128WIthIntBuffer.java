@@ -15,7 +15,7 @@ import java.nio.IntBuffer;
 @SuppressWarnings("javadoc")
 public class PForDeltaUnpack128WIthIntBuffer {
 
-        static public void unpack(int[] out, IntBuffer in, int bits) {
+        static protected void unpack(int[] out, IntBuffer in, int bits) {
                 switch (bits) {
                 case 0:
                         unpack0(out, in);

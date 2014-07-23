@@ -4,10 +4,12 @@
  *
  * (c) Daniel Lemire, http://lemire.me/en/
  */
-package me.lemire.integercompression;
+package me.lemire.integercompression.differential;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+
+import me.lemire.integercompression.IntWrapper;
 
 /**
  * Implementation of variable-byte with differential coding. For best

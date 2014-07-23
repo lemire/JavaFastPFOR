@@ -1,4 +1,5 @@
 import me.lemire.integercompression.*;
+import me.lemire.integercompression.differential.*;
 import java.util.*;
 
 public class example {

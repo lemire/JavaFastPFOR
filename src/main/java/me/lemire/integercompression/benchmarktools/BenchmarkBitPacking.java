@@ -11,8 +11,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 import me.lemire.integercompression.BitPacking;
-import me.lemire.integercompression.Delta;
-import me.lemire.integercompression.IntegratedBitPacking;
+import me.lemire.integercompression.differential.Delta;
+import me.lemire.integercompression.differential.IntegratedBitPacking;
 
 /**
  * Class used to benchmark the speed of bit packing. (For expert use.)

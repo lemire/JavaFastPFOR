@@ -5,7 +5,7 @@
  * (c) Daniel Lemire, http://lemire.me/en/
  */
 
-package me.lemire.integercompression;
+package me.lemire.integercompression.differential;
 
 /**
  * Generic class to compute differential coding.

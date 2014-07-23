@@ -4,10 +4,15 @@
  *
  * (c) Daniel Lemire, http://lemire.me/en/
  */
-package me.lemire.integercompression;
+package me.lemire.integercompression.differential;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+
+import me.lemire.integercompression.BitPacking;
+import me.lemire.integercompression.IntWrapper;
+import me.lemire.integercompression.IntegerCODEC;
+import me.lemire.integercompression.Util;
 
 /**
  * <p>

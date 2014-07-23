@@ -15,9 +15,9 @@ import me.lemire.integercompression.DeltaZigzagVariableByte;
 import me.lemire.integercompression.FastPFOR;
 import me.lemire.integercompression.IntWrapper;
 import me.lemire.integercompression.IntegerCODEC;
-import me.lemire.integercompression.IntegratedBinaryPacking;
 import me.lemire.integercompression.JustCopy;
-import me.lemire.integercompression.XorBinaryPacking;
+import me.lemire.integercompression.differential.IntegratedBinaryPacking;
+import me.lemire.integercompression.differential.XorBinaryPacking;
 
 /**
  * Simple synthetic benchmark
@@ -265,8 +265,8 @@ public class BenchmarkOffsettedSeries {
         }
 
         /**
-         * @param args
-         * @throws Exception
+         * @param args command-line arguments
+         * @throws Exception when some problem occurs
          */
         public static void main(final String[] args) throws Exception {
                 File csvFile = new File(

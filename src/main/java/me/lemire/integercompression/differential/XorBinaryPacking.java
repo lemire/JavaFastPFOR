@@ -2,7 +2,10 @@
  * This code is released under the
  * Apache License Version 2.0 http://www.apache.org/licenses/.
  */
-package me.lemire.integercompression;
+package me.lemire.integercompression.differential;
+
+import me.lemire.integercompression.BitPacking;
+import me.lemire.integercompression.IntWrapper;
 
 /**
  * BinaryPacking over XOR differential.

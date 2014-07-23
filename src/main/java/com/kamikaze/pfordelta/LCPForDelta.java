@@ -82,11 +82,11 @@ public class LCPForDelta {
 
         private int[] compBuffer; // buffer to hold the compressed data
 
-        public int[] getCompBuffer() {
+        protected int[] getCompBuffer() {
                 return compBuffer;
         }
 
-        public void setCompBuffer(int[] buffer) {
+        protected void setCompBuffer(int[] buffer) {
                 compBuffer = buffer;
         }
 
@@ -141,10 +141,9 @@ public class LCPForDelta {
          * @param bits
          *                the the value of the parameter b
          * @return the size of the compressed block (the number of ints)
-         * @throws IllegalArgumentException
          */
         public int compressOneBlockCore(int[] inputBlock, int blockSize,
-                int bits) throws IllegalArgumentException {
+                int bits)  {
                 int outputOffset = HEADER_SIZE;
                 int expUpperBound = 1 << bits;
                 int expNum = 0;
@@ -202,7 +201,7 @@ public class LCPForDelta {
                 return compressedSizeInInts;
         }
 
-        public int compressOneBlockCore2(int[] inputBlock, int blockSize,
+        protected int compressOneBlockCore2(int[] inputBlock, int blockSize,
                 int bits) throws IllegalArgumentException {
                 int outputOffset = HEADER_SIZE;
                 int expUpperBound = 1 << bits;
@@ -311,7 +310,7 @@ public class LCPForDelta {
                 }
         }
 
-        public static void decompressOneBlockWithSize(int[] decompBlock,
+        protected static void decompressOneBlockWithSize(int[] decompBlock,
                 int[] inBlock, int blockSize, int[] expPosBuffer,
                 int[] expHighBitsBuffer, int inBlockLen) {
                 int expNum = inBlock[0] & MASK[31 - POSSIBLE_B_BITS];
@@ -349,7 +348,7 @@ public class LCPForDelta {
                 }
         }
 
-        public static void decompressOneBlockWithSizeWithIntBuffer(
+        protected static void decompressOneBlockWithSizeWithIntBuffer(
                 final int[] decompBlock, final IntBuffer inBlock,
                 final int blockSize, final int[] expPosBuffer,
                 final int[] expHighBitsBuffer, final int inBlockLen) {
@@ -397,10 +396,9 @@ public class LCPForDelta {
          * @param blockSize
          *                the block size
          * @return the compressed size in ints
-         * @throws IllegalArgumentException
          */
         public static int estimateCompressedSize(int[] inputBlock,
-                int blockSize, int bits) throws IllegalArgumentException {
+                int blockSize, int bits)  {
                 int maxNoExp = (1 << bits) - 1;
                 // Size of the header and the bits-bit slots
                 int outputOffset = HEADER_SIZE + bits * blockSize;
@@ -428,10 +426,9 @@ public class LCPForDelta {
          * @param blockSize
          *                the block size
          * @return true if there is any big numbers in the block
-         * @throws IllegalArgumentException
          */
         public static boolean checkBigNumbers(int[] inputBlock, int blockSize,
-                int bits) throws IllegalArgumentException {
+                int bits)  {
                 int maxNoExp = (1 << bits) - 1;
                 for (int i = 0; i < blockSize; ++i) {
                         if (inputBlock[i] > maxNoExp)
@@ -467,7 +464,7 @@ public class LCPForDelta {
                 return compressedBitSize;
         }
 
-        public static int decompressBBitSlotsWithHardCodes(
+        protected static int decompressBBitSlotsWithHardCodes(
                 final int[] outDecompSlots, final int[] inCompBlock,
                 final int blockSize, final int bits) {
                 int compressedBitSize = 0;
@@ -476,7 +473,7 @@ public class LCPForDelta {
                 return compressedBitSize;
         }
 
-        public static int decompressBBitSlotsWithHardCodesWithIntBuffer(
+        protected static int decompressBBitSlotsWithHardCodesWithIntBuffer(
                 final int[] outDecompSlots, final IntBuffer inCompBlock,
                 final int blockSize, final int bits) {
                 PForDeltaUnpack128WIthIntBuffer.unpack(outDecompSlots,
@@ -541,7 +538,7 @@ public class LCPForDelta {
                 return compressedBitSize;
         }
 
-        public static void decompressBlockByS16WithIntBuffer(
+        protected static void decompressBlockByS16WithIntBuffer(
                 final int[] outDecompBlock, final IntBuffer inCompBlock,
                 final int blockSize) {
                 int num, outOffset = 0, numLeft;
@@ -553,7 +550,7 @@ public class LCPForDelta {
                 }
         }
 
-        public static void decompressBlockByS16WithIntBufferIntegrated(
+        protected static void decompressBlockByS16WithIntBufferIntegrated(
                 final int[] outDecompBlock, final IntBuffer inCompBlock,
                 final int blockSize, int[] expPosBuffer, int oribits) {
                 int num, outOffset = 0, numLeft;
@@ -620,7 +617,7 @@ public class LCPForDelta {
                 return val & (0xffffffff >>> (32 - bits));
         }
 
-        public static final int readBitsWithBuffer(int[] in,
+        protected static final int readBitsWithBuffer(int[] in,
                 final int inOffset, final int bits) {
                 final int index = inOffset >>> 5;
                 final int skip = inOffset & 0x1f;

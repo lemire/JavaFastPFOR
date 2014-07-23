@@ -3,9 +3,17 @@ package me.lemire.integercompression;
 import java.util.Arrays;
 import java.util.Random;
 
+import me.lemire.integercompression.differential.Delta;
+import me.lemire.integercompression.differential.IntegratedBinaryPacking;
+import me.lemire.integercompression.differential.IntegratedComposition;
+import me.lemire.integercompression.differential.IntegratedFastPFOR;
+import me.lemire.integercompression.differential.IntegratedIntegerCODEC;
+import me.lemire.integercompression.differential.IntegratedVariableByte;
+import me.lemire.integercompression.differential.XorBinaryPacking;
 import me.lemire.integercompression.synth.ClusteredDataGenerator;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
@@ -13,90 +21,93 @@ import static org.junit.Assert.*;
  * 
  * @author Daniel Lemire
  */
-@SuppressWarnings({"static-method","javadoc"})
-public class BasicTest
-{
-        IntegerCODEC[] codecs = {
-                new IntegratedComposition(new IntegratedBinaryPacking(),
-                        new IntegratedVariableByte()),
-                new JustCopy(),
-                new VariableByte(),
-                new IntegratedVariableByte(),
-                new Composition(new BinaryPacking(), new VariableByte()),
-                new Composition(new NewPFD(), new VariableByte()),
-                new Composition(new NewPFDS16(), new VariableByte()),
-                new Composition(new OptPFDS9(), new VariableByte()),
-                new Composition(new OptPFDS16(), new VariableByte()),
-                new IntegratedComposition(new IntegratedFastPFOR(),
-                        new IntegratedVariableByte()),
-                new Composition(new FastPFOR(), new VariableByte()),
-                new Simple9(),
-                new Composition(new XorBinaryPacking(), new VariableByte()),
-                new Composition(new DeltaZigzagBinaryPacking(),
-                        new DeltaZigzagVariableByte()) };
+@SuppressWarnings({ "static-method", "javadoc" })
+public class BasicTest {
+    IntegerCODEC[] codecs = {
+            new IntegratedComposition(new IntegratedBinaryPacking(),
+                    new IntegratedVariableByte()),
+            new JustCopy(),
+            new VariableByte(),
+            new IntegratedVariableByte(),
+            new Composition(new BinaryPacking(), new VariableByte()),
+            new Composition(new NewPFD(), new VariableByte()),
+            new Composition(new NewPFDS16(), new VariableByte()),
+            new Composition(new OptPFDS9(), new VariableByte()),
+            new Composition(new OptPFDS16(), new VariableByte()),
+            new IntegratedComposition(new IntegratedFastPFOR(),
+                    new IntegratedVariableByte()),
+            new Composition(new FastPFOR(), new VariableByte()),
+            new Simple9(),
+            new Composition(new XorBinaryPacking(), new VariableByte()),
+            new Composition(new DeltaZigzagBinaryPacking(),
+                    new DeltaZigzagVariableByte()) };
+
+    /**
+     * 
+     */
     @Test
     public void varyingLengthTest() {
-                int N = 4096;
-                int[] data = new int[N];
-                for (int k = 0; k < N; ++k)
-                        data[k] = k;
-                for (IntegerCODEC c : codecs) {
-                        for (int L = 1; L <= 128; L++) {
-                                int[] comp = TestUtils.compress(c,
-                                        Arrays.copyOf(data, L));
-                                int[] answer = TestUtils.uncompress(c, comp, L);
-                                for (int k = 0; k < L; ++k)
-                                        if (answer[k] != data[k])
-                                                throw new RuntimeException(
-                                                        "bug");
-                        }
-                        for (int L = 128; L <= N; L*=2) {
-                                int[] comp = TestUtils.compress(c,
-                                        Arrays.copyOf(data, L));
-                                int[] answer = TestUtils.uncompress(c, comp, L);
-                                for (int k = 0; k < L; ++k)
-                                        if (answer[k] != data[k])
-                                                throw new RuntimeException(
-                                                        "bug");
-                        }
+        int N = 4096;
+        int[] data = new int[N];
+        for (int k = 0; k < N; ++k)
+            data[k] = k;
+        for (IntegerCODEC c : codecs) {
+            for (int L = 1; L <= 128; L++) {
+                int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
+                int[] answer = TestUtils.uncompress(c, comp, L);
+                for (int k = 0; k < L; ++k)
+                    if (answer[k] != data[k])
+                        throw new RuntimeException("bug");
+            }
+            for (int L = 128; L <= N; L *= 2) {
+                int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
+                int[] answer = TestUtils.uncompress(c, comp, L);
+                for (int k = 0; k < L; ++k)
+                    if (answer[k] != data[k])
+                        throw new RuntimeException("bug");
+            }
 
-                }
         }
+    }
+
+    /**
+     * 
+     */
     @Test
     public void varyingLengthTest2() {
-                int N = 128;
-                int[] data = new int[N];
-                data[127] = -1;
-                for (IntegerCODEC c : codecs) {
-                        try {
-                                // CODEC Simple9 is limited to "small" integers.
-                                if(c.getClass().equals(Class.forName("me.lemire.integercompression.Simple9")))
-                                        continue;
-                        } catch (ClassNotFoundException e) {
-                                e.printStackTrace();
-                        }
-                        for (int L = 1; L <= 128; L++) {
-                                int[] comp = TestUtils.compress(c,
-                                        Arrays.copyOf(data, L));
-                                int[] answer = TestUtils.uncompress(c, comp, L);
-                                for (int k = 0; k < L; ++k)
-                                        if (answer[k] != data[k])
-                                                throw new RuntimeException(
-                                                        "bug");
-                        }
-                        for (int L = 128; L <= N; L*=2) {
-                                int[] comp = TestUtils.compress(c,
-                                        Arrays.copyOf(data, L));
-                                int[] answer = TestUtils.uncompress(c, comp, L);
-                                for (int k = 0; k < L; ++k)
-                                        if (answer[k] != data[k])
-                                                throw new RuntimeException(
-                                                        "bug");
-                        }
+        int N = 128;
+        int[] data = new int[N];
+        data[127] = -1;
+        for (IntegerCODEC c : codecs) {
+            try {
+                // CODEC Simple9 is limited to "small" integers.
+                if (c.getClass().equals(
+                        Class.forName("me.lemire.integercompression.Simple9")))
+                    continue;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            for (int L = 1; L <= 128; L++) {
+                int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
+                int[] answer = TestUtils.uncompress(c, comp, L);
+                for (int k = 0; k < L; ++k)
+                    if (answer[k] != data[k])
+                        throw new RuntimeException("bug");
+            }
+            for (int L = 128; L <= N; L *= 2) {
+                int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
+                int[] answer = TestUtils.uncompress(c, comp, L);
+                for (int k = 0; k < L; ++k)
+                    if (answer[k] != data[k])
+                        throw new RuntimeException("bug");
+            }
 
-                }
         }
-        
+    }
+
+    /**
+     * 
+     */
     @Test
     public void checkDeltaZigzagVB() {
         DeltaZigzagVariableByte codec = new DeltaZigzagVariableByte();
@@ -108,17 +119,18 @@ public class BasicTest
         test(codec, codeco, 2, 18);
     }
 
+    /**
+     * 
+     */
     @Test
     public void checkDeltaZigzagPacking() {
         DeltaZigzagBinaryPacking codec = new DeltaZigzagBinaryPacking();
         testZeroInZeroOut(codec);
         testSpurious(codec);
 
-        IntegerCODEC compo = new Composition(
-                new DeltaZigzagBinaryPacking(),
+        IntegerCODEC compo = new Composition(new DeltaZigzagBinaryPacking(),
                 new VariableByte());
-        IntegerCODEC compo2 = new Composition(
-                new DeltaZigzagBinaryPacking(),
+        IntegerCODEC compo2 = new Composition(new DeltaZigzagBinaryPacking(),
                 new VariableByte());
 
         testZeroInZeroOut(compo);
@@ -128,12 +140,18 @@ public class BasicTest
         test(compo, compo2, 2, 18);
     }
 
+    /**
+     * 
+     */
     @Test
     public void checkXorBinaryPacking() {
         testZeroInZeroOut(new XorBinaryPacking());
         testSpurious(new XorBinaryPacking());
     }
 
+    /**
+     * 
+     */
     @Test
     public void checkXorBinaryPacking1() {
         IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),
@@ -141,6 +159,9 @@ public class BasicTest
         testZeroInZeroOut(c);
     }
 
+    /**
+     * 
+     */
     @Test
     public void checkXorBinaryPacking2() {
         IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),
@@ -148,6 +169,9 @@ public class BasicTest
         testUnsorted(c);
     }
 
+    /**
+     * 
+     */
     @Test
     public void checkXorBinaryPacking3() {
         IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),
@@ -205,6 +229,12 @@ public class BasicTest
         }
     }
 
+    /**
+     * @param array
+     *            some array
+     * @param mask
+     *            provided mask
+     */
     public static void maskArray(int[] array, int mask) {
         for (int i = 0, end = array.length; i < end; ++i) {
             array[i] &= mask;
@@ -264,8 +294,7 @@ public class BasicTest
     }
 
     /**
-     * check that an empty array generates an empty array
-     * after compression.
+     * check that an empty array generates an empty array after compression.
      */
     @Test
     public void zeroinzerouttest() {
@@ -280,8 +309,10 @@ public class BasicTest
         testZeroInZeroOut(new OptPFDS16());
         testZeroInZeroOut(new FastPFOR());
         testZeroInZeroOut(new VariableByte());
-        testZeroInZeroOut(new Composition(new IntegratedBinaryPacking(), new VariableByte()));
-        testZeroInZeroOut(new Composition(new BinaryPacking(), new VariableByte()));
+        testZeroInZeroOut(new Composition(new IntegratedBinaryPacking(),
+                new VariableByte()));
+        testZeroInZeroOut(new Composition(new BinaryPacking(),
+                new VariableByte()));
         testZeroInZeroOut(new Composition(new NewPFD(), new VariableByte()));
         testZeroInZeroOut(new Composition(new NewPFDS9(), new VariableByte()));
         testZeroInZeroOut(new Composition(new NewPFDS16(), new VariableByte()));
@@ -290,7 +321,8 @@ public class BasicTest
         testZeroInZeroOut(new Composition(new OptPFDS16(), new VariableByte()));
         testZeroInZeroOut(new Composition(new FastPFOR(), new VariableByte()));
 
-        testZeroInZeroOut(new IntegratedComposition(new IntegratedBinaryPacking(), new IntegratedVariableByte()));
+        testZeroInZeroOut(new IntegratedComposition(
+                new IntegratedBinaryPacking(), new IntegratedVariableByte()));
     }
 
     private static void testSpurious(IntegerCODEC c) {
@@ -318,7 +350,7 @@ public class BasicTest
         assertEquals(0, outpos.intValue());
     }
 
-    private static void test(IntegerCODEC c,IntegerCODEC co, int N, int nbr) {
+    private static void test(IntegerCODEC c, IntegerCODEC co, int N, int nbr) {
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
         for (int sparsity = 1; sparsity < 31 - nbr; sparsity += 4) {
             int[][] data = new int[N][];
@@ -340,11 +372,13 @@ public class BasicTest
             }
 
             testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),
-                        new IntegratedVariableByte()),new IntegratedComposition(new IntegratedBinaryPacking(),
-                                new IntegratedVariableByte()), data, max);
-            testCodec(new JustCopy(),new JustCopy(), data, max);
+                    new IntegratedVariableByte()),
+                    new IntegratedComposition(new IntegratedBinaryPacking(),
+                            new IntegratedVariableByte()), data, max);
+            testCodec(new JustCopy(), new JustCopy(), data, max);
             testCodec(new VariableByte(), new VariableByte(), data, max);
-            testCodec(new IntegratedVariableByte(),new IntegratedVariableByte(), data, max);
+            testCodec(new IntegratedVariableByte(),
+                    new IntegratedVariableByte(), data, max);
             testCodec(new Composition(new BinaryPacking(), new VariableByte()),
                     new Composition(new BinaryPacking(), new VariableByte()),
                     data, max);
@@ -352,28 +386,29 @@ public class BasicTest
                     new Composition(new NewPFD(), new VariableByte()), data,
                     max);
             testCodec(new Composition(new NewPFDS9(), new VariableByte()),
-                    new Composition(new NewPFDS9(), new VariableByte()),
-                    data, max);
+                    new Composition(new NewPFDS9(), new VariableByte()), data,
+                    max);
             testCodec(new Composition(new NewPFDS16(), new VariableByte()),
-                    new Composition(new NewPFDS16(), new VariableByte()),
-                    data, max);
+                    new Composition(new NewPFDS16(), new VariableByte()), data,
+                    max);
             testCodec(new Composition(new OptPFD(), new VariableByte()),
-                    new Composition(new OptPFD(), new VariableByte()),data,
+                    new Composition(new OptPFD(), new VariableByte()), data,
                     max);
             testCodec(new Composition(new OptPFDS9(), new VariableByte()),
-                    new Composition(new OptPFDS9(), new VariableByte()),
-                    data, max);
+                    new Composition(new OptPFDS9(), new VariableByte()), data,
+                    max);
             testCodec(new Composition(new OptPFDS16(), new VariableByte()),
-                    new Composition(new OptPFDS16(), new VariableByte()),
-                    data, max);
+                    new Composition(new OptPFDS16(), new VariableByte()), data,
+                    max);
             testCodec(new Composition(new FastPFOR(), new VariableByte()),
-                    new Composition(new FastPFOR(), new VariableByte()),
-                    data, max);
-            testCodec(new Simple9(),new Simple9(), data, max);
+                    new Composition(new FastPFOR(), new VariableByte()), data,
+                    max);
+            testCodec(new Simple9(), new Simple9(), data, max);
         }
     }
 
-    private static void testCodec(IntegerCODEC c,IntegerCODEC co, int[][] data, int max) {
+    private static void testCodec(IntegerCODEC c, IntegerCODEC co,
+            int[][] data, int max) {
         int N = data.length;
         int maxlength = 0;
         for (int k = 0; k < N; ++k) {
@@ -407,8 +442,8 @@ public class BasicTest
             // Check assertions.
             assertEquals("length is not match", outpos.get(), data[k].length);
             int[] bufferCutout = Arrays.copyOf(buffer, outpos.get());
-            assertArrayEquals("failed to reconstruct original data",
-                    data[k], bufferCutout);
+            assertArrayEquals("failed to reconstruct original data", data[k],
+                    bufferCutout);
         }
     }
 
@@ -429,8 +464,9 @@ public class BasicTest
         testUnsorted(new Composition(new FastPFOR(), new VariableByte()));
 
         testUnsorted(new IntegratedComposition(new IntegratedBinaryPacking(),
-                    new IntegratedVariableByte()));
-        testUnsorted(new Composition(new IntegratedBinaryPacking(), new VariableByte()));
+                new IntegratedVariableByte()));
+        testUnsorted(new Composition(new IntegratedBinaryPacking(),
+                new VariableByte()));
         testUnsorted(new IntegratedComposition(new IntegratedFastPFOR(),
                 new IntegratedVariableByte()));
 
@@ -446,8 +482,9 @@ public class BasicTest
         testUnsorted2(new Composition(new FastPFOR(), new VariableByte()));
 
         testUnsorted3(new IntegratedComposition(new IntegratedBinaryPacking(),
-                    new IntegratedVariableByte()));
-        testUnsorted3(new Composition(new IntegratedBinaryPacking(), new VariableByte()));
+                new IntegratedVariableByte()));
+        testUnsorted3(new Composition(new IntegratedBinaryPacking(),
+                new VariableByte()));
         testUnsorted3(new IntegratedComposition(new IntegratedFastPFOR(),
                 new IntegratedVariableByte()));
         testUnsorted3(new VariableByte());
@@ -462,15 +499,19 @@ public class BasicTest
         testUnsorted3(new Composition(new FastPFOR(), new VariableByte()));
 
         testUnsorted2(new IntegratedComposition(new IntegratedBinaryPacking(),
-                    new IntegratedVariableByte()));
-        testUnsorted2(new Composition(new IntegratedBinaryPacking(), new VariableByte()));
+                new IntegratedVariableByte()));
+        testUnsorted2(new Composition(new IntegratedBinaryPacking(),
+                new VariableByte()));
         testUnsorted2(new IntegratedComposition(new IntegratedFastPFOR(),
                 new IntegratedVariableByte()));
 
     }
 
-    public void testUnsorted(IntegerCODEC codec)
-    {
+    /**
+     * @param codec
+     *            provided codec
+     */
+    public void testUnsorted(IntegerCODEC codec) {
         int[] lengths = { 133, 1333333 };
         for (int N : lengths) {
             int[] data = new int[N];
@@ -487,90 +528,93 @@ public class BasicTest
             int[] compressed = new int[(int) Math.ceil(N * 1.01) + 1024];
             IntWrapper inputoffset = new IntWrapper(0);
             IntWrapper outputoffset = new IntWrapper(0);
-            codec.compress(data, inputoffset, data.length, compressed, outputoffset);
+            codec.compress(data, inputoffset, data.length, compressed,
+                    outputoffset);
             // we can repack the data: (optional)
             compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
             int[] recovered = new int[N];
             IntWrapper recoffset = new IntWrapper(0);
-            codec.uncompress(compressed, new IntWrapper(0),
-                    compressed.length, recovered, recoffset);
+            codec.uncompress(compressed, new IntWrapper(0), compressed.length,
+                    recovered, recoffset);
             assertArrayEquals(data, recovered);
         }
     }
-    
-        public void testUnsorted2(IntegerCODEC codec) {
-                int[] data = new int[128];
-                data[5] = -1;
-                int[] compressed = new int[1024];
-                IntWrapper inputoffset = new IntWrapper(0);
-                IntWrapper outputoffset = new IntWrapper(0);
-                codec.compress(data, inputoffset, data.length, compressed,
-                        outputoffset);
-                // we can repack the data: (optional)
-                compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
-                int[] recovered = new int[128];
-                IntWrapper recoffset = new IntWrapper(0);
-                codec.uncompress(compressed, new IntWrapper(0),
-                        compressed.length, recovered, recoffset);
-                assertArrayEquals(data, recovered);
-        }
+    private void testUnsorted2(IntegerCODEC codec) {
+        int[] data = new int[128];
+        data[5] = -1;
+        int[] compressed = new int[1024];
+        IntWrapper inputoffset = new IntWrapper(0);
+        IntWrapper outputoffset = new IntWrapper(0);
+        codec.compress(data, inputoffset, data.length, compressed, outputoffset);
+        // we can repack the data: (optional)
+        compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
-        public void testUnsorted3(IntegerCODEC codec) {
-                int[] data = new int[128];
-                data[127] = -1;
-                int[] compressed = new int[1024];
-                IntWrapper inputoffset = new IntWrapper(0);
-                IntWrapper outputoffset = new IntWrapper(0);
-                codec.compress(data, inputoffset, data.length, compressed,
-                        outputoffset);
-                // we can repack the data: (optional)
-                compressed = Arrays.copyOf(compressed, outputoffset.intValue());
+        int[] recovered = new int[128];
+        IntWrapper recoffset = new IntWrapper(0);
+        codec.uncompress(compressed, new IntWrapper(0), compressed.length,
+                recovered, recoffset);
+        assertArrayEquals(data, recovered);
+    }
 
-                int[] recovered = new int[128];
-                IntWrapper recoffset = new IntWrapper(0);
-                codec.uncompress(compressed, new IntWrapper(0),
-                        compressed.length, recovered, recoffset);
-                assertArrayEquals(data, recovered);
-        }    
-        
-        
-        @Test
-        public void fastPforTest() {
-            // proposed by Stefan Ackermann (https://github.com/Stivo)
-            FastPFOR codec1 = new FastPFOR();
-            FastPFOR codec2 = new FastPFOR();
-            int N = 128;
-            int[] data = new int[N];
-            for (int i = 0; i < N; i++)
-                data[i] = 0;
-            data[126] = -1;
-            int[] comp = TestUtils.compress(codec1,
-                    Arrays.copyOf(data, N));
-            int[] answer = TestUtils.uncompress(codec2, comp, N);
-            for (int k = 0; k < N; ++k)
-                if (answer[k] != data[k])
-                    throw new RuntimeException(
-                            "bug "+k+" "+answer[k]+" != "+data[k]);
-        }
-        @Test
-        public void ifastPforTest() {
-            // inspired by Stefan Ackermann (https://github.com/Stivo)
-            IntegratedFastPFOR codec1 = new IntegratedFastPFOR();
-            IntegratedFastPFOR codec2 = new IntegratedFastPFOR();
-            int N = 128;
-            int[] data = new int[N];
-            for (int i = 0; i < N; i++)
-                data[i] = 0;
-            data[126] = -1;
-            int[] comp = TestUtils.compress(codec1,
-                    Arrays.copyOf(data, N));
-            int[] answer = TestUtils.uncompress(codec2, comp, N);
-            for (int k = 0; k < N; ++k)
-                if (answer[k] != data[k])
-                    throw new RuntimeException(
-                            "bug "+k+" "+answer[k]+" != "+data[k]);
-        }        
-                
+    private void testUnsorted3(IntegerCODEC codec) {
+        int[] data = new int[128];
+        data[127] = -1;
+        int[] compressed = new int[1024];
+        IntWrapper inputoffset = new IntWrapper(0);
+        IntWrapper outputoffset = new IntWrapper(0);
+        codec.compress(data, inputoffset, data.length, compressed, outputoffset);
+        // we can repack the data: (optional)
+        compressed = Arrays.copyOf(compressed, outputoffset.intValue());
+
+        int[] recovered = new int[128];
+        IntWrapper recoffset = new IntWrapper(0);
+        codec.uncompress(compressed, new IntWrapper(0), compressed.length,
+                recovered, recoffset);
+        assertArrayEquals(data, recovered);
+    }
+
+    /**
+         * 
+         */
+    @Test
+    public void fastPforTest() {
+        // proposed by Stefan Ackermann (https://github.com/Stivo)
+        FastPFOR codec1 = new FastPFOR();
+        FastPFOR codec2 = new FastPFOR();
+        int N = 128;
+        int[] data = new int[N];
+        for (int i = 0; i < N; i++)
+            data[i] = 0;
+        data[126] = -1;
+        int[] comp = TestUtils.compress(codec1, Arrays.copyOf(data, N));
+        int[] answer = TestUtils.uncompress(codec2, comp, N);
+        for (int k = 0; k < N; ++k)
+            if (answer[k] != data[k])
+                throw new RuntimeException("bug " + k + " " + answer[k]
+                        + " != " + data[k]);
+    }
+
+    /**
+         * 
+         */
+    @Test
+    public void ifastPforTest() {
+        // inspired by Stefan Ackermann (https://github.com/Stivo)
+        IntegratedFastPFOR codec1 = new IntegratedFastPFOR();
+        IntegratedFastPFOR codec2 = new IntegratedFastPFOR();
+        int N = 128;
+        int[] data = new int[N];
+        for (int i = 0; i < N; i++)
+            data[i] = 0;
+        data[126] = -1;
+        int[] comp = TestUtils.compress(codec1, Arrays.copyOf(data, N));
+        int[] answer = TestUtils.uncompress(codec2, comp, N);
+        for (int k = 0; k < N; ++k)
+            if (answer[k] != data[k])
+                throw new RuntimeException("bug " + k + " " + answer[k]
+                        + " != " + data[k]);
+    }
+
 }

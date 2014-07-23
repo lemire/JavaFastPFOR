@@ -7,20 +7,24 @@ package me.lemire.integercompression;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * @author lemire
+ *
+ */
 @SuppressWarnings({ "javadoc", "static-method" })
 public class DeltaZigzagEncodingTest {
 
-    public static int zigzagEncode(DeltaZigzagEncoding.Encoder e, int value) {
+    protected static int zigzagEncode(DeltaZigzagEncoding.Encoder e, int value) {
         e.setContextValue(0);
         return e.encodeInt(value);
     }
 
-    public static int zigzagDecode(DeltaZigzagEncoding.Decoder d, int value) {
+    protected static int zigzagDecode(DeltaZigzagEncoding.Decoder d, int value) {
         d.setContextValue(0);
         return d.decodeInt(value);
     }
 
-    public static void checkEncode(
+    protected static void checkEncode(
             DeltaZigzagEncoding.Encoder e,
             int[] data,
             int[] expected)
@@ -29,7 +33,7 @@ public class DeltaZigzagEncodingTest {
         assertEquals(data[data.length - 1], e.getContextValue());
     }
 
-    public static void checkDecode(
+    protected static void checkDecode(
             DeltaZigzagEncoding.Decoder d,
             int[] data,
             int[] expected)
@@ -38,7 +42,9 @@ public class DeltaZigzagEncodingTest {
         assertArrayEquals(expected, r);
         assertEquals(r[r.length - 1], d.getContextValue());
     }
-
+    /**
+     * 
+     */
     @Test
     public void checkZigzagEncode() {
         DeltaZigzagEncoding.Encoder e = new DeltaZigzagEncoding.Encoder(0);
@@ -50,7 +56,9 @@ public class DeltaZigzagEncodingTest {
         assertEquals(3, zigzagEncode(e, -2));
         assertEquals(5, zigzagEncode(e, -3));
     }
-
+    /**
+     * 
+     */
     @Test
     public void checkZigzagDecoder() {
         DeltaZigzagEncoding.Decoder d = new DeltaZigzagEncoding.Decoder(0);
@@ -61,7 +69,9 @@ public class DeltaZigzagEncodingTest {
         assertEquals( 2, zigzagDecode(d, 4));
         assertEquals(-3, zigzagDecode(d, 5));
     }
-
+    /**
+     * 
+     */
     @Test
     public void checkEncodeSimple() {
         DeltaZigzagEncoding.Encoder e = new DeltaZigzagEncoding.Encoder(0);
@@ -69,7 +79,9 @@ public class DeltaZigzagEncodingTest {
             new int[]{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 },
             new int[]{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
     }
-
+    /**
+     * 
+     */
     @Test
     public void checkDecodeSimple() {
         DeltaZigzagEncoding.Decoder d = new DeltaZigzagEncoding.Decoder(0);
@@ -78,7 +90,7 @@ public class DeltaZigzagEncodingTest {
             new int[]{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
     }
 
-    public static class SpotChecker {
+    protected static class SpotChecker {
 
         private final static DeltaZigzagEncoding.Encoder encoder =
             new DeltaZigzagEncoding.Encoder(0);
@@ -94,6 +106,9 @@ public class DeltaZigzagEncodingTest {
         }
     }
 
+    /**
+     * 
+     */
     @Test
     public void checkSpots() {
         SpotChecker c = new SpotChecker();

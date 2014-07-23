@@ -1,6 +1,13 @@
 package me.lemire.integercompression.benchmarktools;
 
 import me.lemire.integercompression.*;
+import me.lemire.integercompression.differential.IntegratedBinaryPacking;
+import me.lemire.integercompression.differential.IntegratedByteIntegerCODEC;
+import me.lemire.integercompression.differential.IntegratedComposition;
+import me.lemire.integercompression.differential.IntegratedFastPFOR;
+import me.lemire.integercompression.differential.IntegratedIntegerCODEC;
+import me.lemire.integercompression.differential.IntegratedVariableByte;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -119,8 +126,8 @@ public class BenchmarkCSV {
         }
 
         /**
-         * @param args
-         * @throws IOException
+         * @param args command-line arguments
+         * @throws IOException when some IO error occurs
          */
         public static void main(final String[] args) throws IOException {
                 Format myformat = Format.ONEARRAYPERLINE;

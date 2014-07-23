@@ -33,7 +33,8 @@ public final class IntWrapper extends Number {
         }
 
         /**
-         * @param v
+         * add the provided value to the integer
+         * @param v value to add
          */
         public void add(int v) {
                 this.value += v;

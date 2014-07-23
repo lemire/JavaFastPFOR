@@ -8,7 +8,7 @@ package com.kamikaze.pfordelta;
 @SuppressWarnings("javadoc")
 public class PForDeltaUnpack128 {
 
-        static public void unpack(int[] out, int[] in, int bits) {
+        static protected void unpack(int[] out, int[] in, int bits) {
                 switch (bits) {
                 case 0:
                         unpack0(out, in);

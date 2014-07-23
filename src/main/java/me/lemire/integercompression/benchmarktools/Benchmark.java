@@ -11,18 +11,11 @@ import com.kamikaze.pfordelta.PForDelta;
 import me.lemire.integercompression.BinaryPacking;
 import me.lemire.integercompression.ByteIntegerCODEC;
 import me.lemire.integercompression.Composition;
-import me.lemire.integercompression.Delta;
 import me.lemire.integercompression.DeltaZigzagBinaryPacking;
 import me.lemire.integercompression.DeltaZigzagVariableByte;
 import me.lemire.integercompression.FastPFOR;
 import me.lemire.integercompression.IntWrapper;
 import me.lemire.integercompression.IntegerCODEC;
-import me.lemire.integercompression.IntegratedBinaryPacking;
-import me.lemire.integercompression.IntegratedByteIntegerCODEC;
-import me.lemire.integercompression.IntegratedComposition;
-import me.lemire.integercompression.IntegratedFastPFOR;
-import me.lemire.integercompression.IntegratedIntegerCODEC;
-import me.lemire.integercompression.IntegratedVariableByte;
 import me.lemire.integercompression.JustCopy;
 import me.lemire.integercompression.NewPFD;
 import me.lemire.integercompression.NewPFDS16;
@@ -32,7 +25,14 @@ import me.lemire.integercompression.OptPFDS16;
 import me.lemire.integercompression.OptPFDS9;
 import me.lemire.integercompression.Simple9;
 import me.lemire.integercompression.VariableByte;
-import me.lemire.integercompression.XorBinaryPacking;
+import me.lemire.integercompression.differential.Delta;
+import me.lemire.integercompression.differential.IntegratedBinaryPacking;
+import me.lemire.integercompression.differential.IntegratedByteIntegerCODEC;
+import me.lemire.integercompression.differential.IntegratedComposition;
+import me.lemire.integercompression.differential.IntegratedFastPFOR;
+import me.lemire.integercompression.differential.IntegratedIntegerCODEC;
+import me.lemire.integercompression.differential.IntegratedVariableByte;
+import me.lemire.integercompression.differential.XorBinaryPacking;
 import me.lemire.integercompression.synth.ClusteredDataGenerator;
 
 import java.io.File;
@@ -300,7 +300,7 @@ public class Benchmark {
          * 
          * @param args
          *                command-line arguments
-         * @throws FileNotFoundException 
+         * @throws FileNotFoundException when we fail to create a new file
          */
         public static void main(String args[]) throws FileNotFoundException  {
                 System.out

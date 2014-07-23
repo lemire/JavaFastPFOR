@@ -5,7 +5,10 @@
  * (c) Daniel Lemire, http://lemire.me/en/
  */
 
-package me.lemire.integercompression;
+package me.lemire.integercompression.differential;
+
+import me.lemire.integercompression.IntWrapper;
+import me.lemire.integercompression.Util;
 
 /**
  * Scheme  based on a commonly used idea: can be extremely fast.

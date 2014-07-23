@@ -79,6 +79,7 @@ public class Simple16 {
          *                the offset of the input in the number of integers
          * @param n
          *                the number of elements to be compressed
+         * @param blockSize block size
          * @return the number of compressed integers
          */
         public static final int s16Compress(int[] out, int outOffset, int[] in,
