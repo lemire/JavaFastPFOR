@@ -182,11 +182,11 @@ public final class FastPFOR implements IntegerCODEC {
                 }
                 inpos.set(tmpinpos);
                 out[headerpos] = tmpoutpos - headerpos;
+                final int bytesize = byteContainer.position();
                 while ((byteContainer.position() & 3) != 0)
                         byteContainer.put((byte) 0);
-                final int bytesize = byteContainer.position();
                 out[tmpoutpos++] = bytesize;
-                final int howmanyints = bytesize / 4;
+                final int howmanyints = byteContainer.position() / 4;
                 byteContainer.flip();
                 byteContainer.asIntBuffer().get(out, tmpoutpos, howmanyints);
                 tmpoutpos += howmanyints;
@@ -245,8 +245,8 @@ public final class FastPFOR implements IntegerCODEC {
                 int inexcept = initpos + wheremeta;
                 final int bytesize = in[inexcept++];
                 byteContainer.clear();
-                byteContainer.asIntBuffer().put(in, inexcept, bytesize / 4);
-                inexcept += bytesize / 4;
+                byteContainer.asIntBuffer().put(in, inexcept, (bytesize + 3) / 4);
+                inexcept += (bytesize + 3)/ 4;
 
                 final int bitmap = in[inexcept++];
                 for (int k = 1; k <= 32; ++k) {
