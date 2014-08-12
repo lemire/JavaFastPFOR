@@ -20,11 +20,11 @@ import java.nio.IntBuffer;
  */
 public class VariableByte implements IntegerCODEC, ByteIntegerCODEC {
 
-	private byte extract7bits(int i, long val) {
+	private static byte extract7bits(int i, long val) {
 		return (byte)((val >> (7 * i)) & ((1 << 7) - 1));
 	}
 
-	private byte extract7bitsmaskless(int i, long val) {
+	private static  byte extract7bitsmaskless(int i, long val) {
 		return (byte)((val >> (7 * i)));
 	}
 
@@ -35,7 +35,7 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC {
 			return;
 		ByteBuffer buf = ByteBuffer.allocateDirect(inlength * 8);
 		for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
-			long val = in[k] & 0xFFFFFFFFL;
+			final long val = in[k] & 0xFFFFFFFFL;  // To be consistent with unsigned integers in C/C++
 			if (val < (1 << 7)) {
 				buf.put((byte)(val | (1 << 7)));
 			} else if (val < (1 << 14)) {
@@ -75,7 +75,7 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC {
 			return;
 		ByteBuffer buf = ByteBuffer.allocateDirect(inlength * 8);
 		for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
-			long val = in[k] & 0xFFFFFFFFL;
+			final long val = in[k] & 0xFFFFFFFFL;  // To be consistent with unsigned integers in C/C++
 			if (val < (1 << 7)) {
 				buf.put((byte)(val | (1 << 7)));
 			} else if (val < (1 << 14)) {
