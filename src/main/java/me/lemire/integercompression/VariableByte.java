@@ -7,7 +7,6 @@
 package me.lemire.integercompression;
 
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
 /**
@@ -140,24 +139,24 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC {
 	public void uncompress(byte[] in, IntWrapper inpos, int inlength,
 			int[] out, IntWrapper outpos) {
 		int p = inpos.get();
-        int finalp = inpos.get() + inlength;
-        int tmpoutpos = outpos.get();
-        int v = 0;
-        int shift = 0;
-        for (; p < finalp; ++p) {
-                int c = in[p];
-                v += ((c & 127) << shift);
-                if ((c & 128) == 128) {
-                        out[tmpoutpos++] = v;
-                        v = 0;
-                        shift = 0;
-                } else
-                        shift += 7;
-        }
-        outpos.set(tmpoutpos);
-        inpos.add(p);
+		int finalp = inpos.get() + inlength;
+		int tmpoutpos = outpos.get();
+		int v = 0;
+		int shift = 0;
+		for (; p < finalp; ++p) {
+			int c = in[p];
+			v += ((c & 127) << shift);
+			if ((c & 128) == 128) {
+				out[tmpoutpos++] = v;
+				v = 0;
+				shift = 0;
+			} else
+				shift += 7;
+		}
+		outpos.set(tmpoutpos);
+		inpos.add(p);
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName();
