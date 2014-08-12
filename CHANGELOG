@@ -1,3 +1,6 @@
+0.0.14 (upcoming)
+  - FastPFOR and VariableByte codecs made consistent with C++ version at https://github.com/lemire/FastPFor
+
 0.0.13 (July 23rd 2014)
   - CODECs using differential coding are now in a separate package (me.lemire.integercompression.differential)
 

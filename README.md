@@ -85,6 +85,7 @@ Main contributors
 with contributions by 
 * Di Wu, http://www.facebook.com/diwu1989
 * Stefan Ackermann, https://github.com/Stivo
+* Samit Roy, https://github.com/roysamit
 
 How does it compare to the Kamikaze PForDelta library?
 ------------------------------------------------------
