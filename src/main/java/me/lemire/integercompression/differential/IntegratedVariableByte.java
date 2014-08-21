@@ -4,9 +4,10 @@
  *
  * (c) Daniel Lemire, http://lemire.me/en/
  */
-package me.lemire.integercompression.differential;
+package me.lemire.integercompression;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
 import me.lemire.integercompression.IntWrapper;
@@ -37,6 +38,7 @@ public class IntegratedVariableByte implements IntegratedIntegerCODEC, Integrate
             return;
         int initoffset = 0;
         ByteBuffer buf = ByteBuffer.allocateDirect(inlength * 8);
+        buf.order(ByteOrder.LITTLE_ENDIAN);
         for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
             final long val = (in[k] - initoffset) & 0xFFFFFFFFL; // To be consistent with unsigned integers in C/C++
             initoffset = in[k];
@@ -124,7 +126,7 @@ public class IntegratedVariableByte implements IntegratedIntegerCODEC, Integrate
         int initoffset = 0;
         for (int v = 0, shift =0; p < finalp;) {
             val = in[p];
-            int c = (byte) (val >>> (24 - s));
+            int c = (byte) (val >>> s);
             s += 8;
             if (s == 32) {
                 s = 0;
