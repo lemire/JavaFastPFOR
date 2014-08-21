@@ -7,6 +7,7 @@
 package me.lemire.integercompression;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
 /**
@@ -34,6 +35,7 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC {
 		if (inlength == 0)
 			return;
 		ByteBuffer buf = ByteBuffer.allocateDirect(inlength * 8);
+		buf.order(ByteOrder.LITTLE_ENDIAN);
 		for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
 			final long val = in[k] & 0xFFFFFFFFL;  // To be consistent with unsigned integers in C/C++
 			if (val < (1 << 7)) {
@@ -117,7 +119,7 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC {
 		int tmpoutpos = outpos.get();
 		for (int v = 0, shift =0; p < finalp;) {
 			val = in[p];
-			int c = (byte) (val >>> (24 - s));
+			int c = (byte) (val >>> s);
 			s += 8;
 			if (s == 32) {
 				s = 0;
