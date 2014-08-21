@@ -1,5 +1,7 @@
-0.0.14 (upcoming)
+
+0.0.14 (August 21st 2014)
   - FastPFOR and VariableByte codecs made consistent with C++ version at https://github.com/lemire/FastPFor
+  - VariableByte made to use little endian encoding 
 
 0.0.13 (July 23rd 2014)
   - CODECs using differential coding are now in a separate package (me.lemire.integercompression.differential)
