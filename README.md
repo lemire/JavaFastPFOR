@@ -22,7 +22,10 @@ It can decompress integers at a rate of over 1.2 billions per second
 as Snappy, LZ4 and so on) when compressing arrays of integers.
 
 Part of this library has been integrated in Parquet (http://parquet.io/).
-This libary is used by ClueWeb Tools (https://github.com/lintool/clueweb).
+A modified version of the library is included in the search engine 
+Terrier (http://terrier.org/). This libary is used by ClueWeb 
+Tools (https://github.com/lintool/clueweb). 
+
 This library inspired a compression scheme used by Apache Lucene (e.g., see
 http://lucene.apache.org/core/4_6_1/core/org/apache/lucene/util/PForDeltaDocIdSet.html ).
 
