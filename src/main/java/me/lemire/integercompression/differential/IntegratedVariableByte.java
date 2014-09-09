@@ -80,38 +80,33 @@ public class IntegratedVariableByte implements IntegratedIntegerCODEC, Integrate
         if (inlength == 0)
             return;
         int initoffset = 0;
-        ByteBuffer buf = ByteBuffer.allocateDirect(inlength * 8);
+        int outpostmp = outpos.get();
         for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
             final long val = (in[k] - initoffset) & 0xFFFFFFFFL;  // To be consistent with unsigned integers in C/C++
             initoffset = in[k];
             if (val < (1 << 7)) {
-                buf.put((byte)(val | (1 << 7)));
+                out[outpostmp++] = (byte)(val | (1 << 7));
             } else if (val < (1 << 14)) {
-                buf.put((byte)extract7bits(0, val));
-                buf.put((byte)(extract7bitsmaskless(1, (val)) | (1 << 7)));
+                out[outpostmp++] = (byte)extract7bits(0, val);
+                out[outpostmp++] = (byte)(extract7bitsmaskless(1, (val)) | (1 << 7));
             } else if (val < (1 << 21)) {
-                buf.put((byte)extract7bits(0, val));
-                buf.put((byte)extract7bits(1, val));
-                buf.put((byte)(extract7bitsmaskless(2, (val)) | (1 << 7)));
+                out[outpostmp++] = (byte)extract7bits(0, val);
+                out[outpostmp++] = (byte)extract7bits(1, val);
+                out[outpostmp++] = (byte)(extract7bitsmaskless(2, (val)) | (1 << 7));
             } else if (val < (1 << 28)) {
-                buf.put((byte)extract7bits(0, val));
-                buf.put((byte)extract7bits(1, val));
-                buf.put((byte)extract7bits(2, val));
-                buf.put((byte)(extract7bitsmaskless(3, (val)) | (1 << 7)));
+                out[outpostmp++] = (byte)extract7bits(0, val);
+                out[outpostmp++] = (byte)extract7bits(1, val);
+                out[outpostmp++] = (byte)extract7bits(2, val);
+                out[outpostmp++] = (byte)(extract7bitsmaskless(3, (val)) | (1 << 7));
             } else {
-                buf.put((byte)extract7bits(0, val));
-                buf.put((byte)extract7bits(1, val));
-                buf.put((byte)extract7bits(2, val));
-                buf.put((byte)extract7bits(3, val));
-                buf.put((byte)(extract7bitsmaskless(4, (val)) | (1 << 7)));
+                out[outpostmp++] = (byte)extract7bits(0, val);
+                out[outpostmp++] = (byte)extract7bits(1, val);
+                out[outpostmp++] = (byte)extract7bits(2, val);
+                out[outpostmp++] = (byte)extract7bits(3, val);
+                out[outpostmp++] = (byte)(extract7bitsmaskless(4, (val)) | (1 << 7));
             }
         }
-        while (buf.position() % 4 != 0)
-            buf.put((byte) 0);
-        final int length = buf.position();
-        buf.flip();
-        buf.get(out,0,length);
-        outpos.set(length);
+        outpos.set(outpostmp);
         inpos.add(inlength);
     }
 
@@ -153,19 +148,29 @@ public class IntegratedVariableByte implements IntegratedIntegerCODEC, Integrate
         int initoffset = 0;
         int finalp = inpos.get() + inlength;
         int tmpoutpos = outpos.get();
-        int v = 0;
-        int shift = 0;
-        for (; p < finalp; ++p) {
-            int c = in[p];
-            v += ((c & 127) << shift);
-            if ((c & 128) == 128) {
-                out[tmpoutpos] = v + initoffset;
-                initoffset = out[tmpoutpos];
-                tmpoutpos++;
-                v = 0;
-                shift = 0;
-            } else
-                shift += 7;
+        for (int v = 0;p < finalp; out[tmpoutpos++] = (initoffset = initoffset + v)) {
+            v = in[p] & 0x7F;
+            if (in[p] <0 ) {
+                p+= 1;
+                continue;
+            }
+            v = ((in[p+1] & 0x7F)<<7) | v; 
+            if (in[p+1] < 0) {
+                p+= 2;
+                continue;
+            }
+            v = ((in[p+2] & 0x7F)<<14) | v;
+            if ((in[p+2]& 128) == 128) {
+                p+= 3;
+                continue;
+            }
+            v = ((in[p+3] & 0x7F)<<21) | v;
+            if ((in[p+3] & 128) == 128) {
+                p+= 4;
+                continue;
+            }
+            v = ((in[p+4] & 0x7F)<<28) | v;
+            p+= 5;                
         }
         outpos.set(tmpoutpos);
         inpos.add(p);

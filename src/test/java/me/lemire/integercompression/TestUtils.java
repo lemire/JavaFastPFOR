@@ -9,7 +9,6 @@ import static org.junit.Assert.*;
 /**
  * Static utility methods for test.
  */
-@SuppressWarnings({ "javadoc"})
 public class TestUtils {
     /**
      * 
@@ -89,4 +88,23 @@ public class TestUtils {
         codec.uncompress(data, inPos, data.length, outBuf, outPos);
         return Arrays.copyOf(outBuf, outPos.get());
     }
+
+
+
+    protected static byte[] compress(ByteIntegerCODEC codec, int[] data) {
+        byte[] outBuf = new byte[data.length * 4 * 4];
+        IntWrapper inPos = new IntWrapper();
+        IntWrapper outPos = new IntWrapper();
+        codec.compress(data, inPos, data.length, outBuf, outPos);
+        return Arrays.copyOf(outBuf, outPos.get());
+    }
+
+    protected static int[] uncompress(ByteIntegerCODEC codec, byte[] data, int len) {
+        int[] outBuf = new int[len + 1024];
+        IntWrapper inPos = new IntWrapper();
+        IntWrapper outPos = new IntWrapper();
+        codec.uncompress(data, inPos, data.length, outBuf, outPos);
+        return Arrays.copyOf(outBuf, outPos.get());
+    }
+
 }

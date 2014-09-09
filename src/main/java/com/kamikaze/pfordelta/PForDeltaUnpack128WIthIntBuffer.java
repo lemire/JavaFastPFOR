@@ -12,7 +12,6 @@ import java.nio.IntBuffer;
  * PForDeltaUnpack128WIthIntBuffer is almost the same as PForDeltaUnpack128,
  * except that it use IntBuffer as input instead of int[].
  */
-@SuppressWarnings("javadoc")
 public class PForDeltaUnpack128WIthIntBuffer {
 
         static protected void unpack(int[] out, IntBuffer in, int bits) {

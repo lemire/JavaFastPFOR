@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
  * 
  * @author Daniel Lemire
  */
-@SuppressWarnings({ "static-method", "javadoc" })
+@SuppressWarnings({ "static-method" })
 public class BasicTest {
     IntegerCODEC[] codecs = {
             new IntegratedComposition(new IntegratedBinaryPacking(),

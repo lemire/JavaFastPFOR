@@ -26,7 +26,6 @@ package com.kamikaze.pfordelta;
  * 
  * Author: Hao Yan, hyan2008@gmail.com
  */
-@SuppressWarnings("javadoc")
 public class Simple16WithHardCodes {
 
         private static final int S16_NUMSIZE = 16;

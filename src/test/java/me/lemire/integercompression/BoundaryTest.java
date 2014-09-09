@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
  * @author lemire
  *
  */
-@SuppressWarnings({ "static-method", "javadoc" })
+@SuppressWarnings({ "static-method" })
 public class BoundaryTest {
     private static void compressAndUncompress(int length, IntegerCODEC c) {
         // Initialize array.

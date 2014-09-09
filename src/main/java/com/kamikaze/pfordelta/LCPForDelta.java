@@ -51,7 +51,6 @@ import java.util.Arrays;
  * 
  * @author hao yan, hyan2008@gmail.com
  */
-@SuppressWarnings("javadoc")
 public class LCPForDelta {
 
         // NOTE: we expect the blockSize is always < (1<<(31-POSSIBLE_B_BITS)).

@@ -5,7 +5,6 @@ package com.kamikaze.pfordelta;
  * up by D. Lemire. It is included in the JavaFastPFOR library for comparison
  * purposes. As the original
  */
-@SuppressWarnings("javadoc")
 public class PForDeltaUnpack128 {
 
         static protected void unpack(int[] out, int[] in, int bits) {

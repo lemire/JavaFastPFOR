@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  * @author lemire
  *
  */
-@SuppressWarnings({ "javadoc", "static-method" })
+@SuppressWarnings({ "static-method" })
 public final class XorBinaryPackingTest
 {
 

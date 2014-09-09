@@ -6,7 +6,7 @@ import static me.lemire.integercompression.TestUtils.*;
 /**
  * Collection of adhoc tests.
  */
-@SuppressWarnings({ "javadoc", "static-method" })
+@SuppressWarnings({  "static-method" })
 public class AdhocTest
 {
 
