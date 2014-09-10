@@ -1,3 +1,6 @@
+0.1.0 (upcoming)
+  - Introduced skippable versions (for use in a search engine like Terrier)
+
 0.0.15 (September 9th 2014)
   - Improved the performance of VariableByte schemes when used as a ByteIntegerCODEC
 

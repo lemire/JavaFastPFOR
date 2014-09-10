@@ -15,7 +15,21 @@ package me.lemire.integercompression;
  */
 public final class S16 {
 
-        protected static int compress(final int[] in, int currentPos,
+        /**
+         * Compress an integer array using Simple16
+         *
+         * 
+         * @param in
+         *                array to compress
+         * @param currentPos
+         *                where to start reading
+         * @param inlength
+         *                how many integers to read
+         * @param out   output array
+         * @param tmpoutpos location in the output array
+         * @return the number of 32-bit words written (in compressed form)
+         */
+        public static int compress(final int[] in, int currentPos,
                 int inlength, final int out[], final int tmpoutpos) {
                 int outpos = tmpoutpos;
                 final int finalin = currentPos + inlength;
@@ -141,7 +155,17 @@ public final class S16 {
                 return num;
         }
 
-        protected static void uncompress(final int[] in, int tmpinpos,
+        /**
+         * Uncompressed data from an input array into an output array
+         *
+         * @param in    input array (in compressed form)
+         * @param tmpinpos  starting location in the compressed input array
+         * @param inlength  how much data we wish the read (in 32-bit words)
+         * @param out       output array (in decompressed form)
+         * @param currentPos    current position in the output array
+         * @param outlength     available data in the output array
+         */
+        public static void uncompress(final int[] in, int tmpinpos,
                 final int inlength, final int[] out, int currentPos,
                 int outlength) {
                 final int finalpos = tmpinpos + inlength;

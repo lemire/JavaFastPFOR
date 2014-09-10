@@ -13,7 +13,7 @@ package me.lemire.integercompression;
  * Follows:
  * </p><p>
  * H. Yan, S. Ding, T. Suel, Inverted index compression and query processing
- * with optimized document ordering, in: WWW �09, 2009, pp. 401�410.
+ * with optimized document ordering, in: WWW 09, 2009, pp. 401-410.
  * </p>
  * using Simple16 as the secondary coder.
  * 

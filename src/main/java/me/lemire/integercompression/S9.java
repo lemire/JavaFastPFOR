@@ -53,7 +53,21 @@ public final class S9 {
                 return tmpoutpos;
         }
 
-        protected static int compress(int[] in, int currentPos, int inlength,
+        /**
+         * Compress an integer array using Simple9
+         *
+         * 
+         * @param in
+         *                array to compress
+         * @param currentPos
+         *                where to start reading
+         * @param inlength
+         *                how many integers to read
+         * @param out   output array
+         * @param tmpoutpos location in the output array
+         * @return the number of 32-bit words written (in compressed form)
+         */
+        public static int compress(int[] in, int currentPos, int inlength,
                 int out[], int tmpoutpos) {
                 int origtmpoutpos = tmpoutpos;
                 int finalpos = currentPos + inlength;
@@ -87,7 +101,17 @@ public final class S9 {
                 return tmpoutpos - origtmpoutpos;
         }
 
-        protected static void uncompress(int[] in, int tmpinpos, int inlength,
+        /**
+         * Uncompressed data from an input array into an output array
+         * 
+         * @param in    input array (in compressed form)
+         * @param tmpinpos  starting location in the compressed input array
+         * @param inlength  how much data we wish the read (in 32-bit words)
+         * @param out       output array (in decompressed form)
+         * @param currentPos    current position in the output array
+         * @param outlength     available data in the output array
+         */
+        public static void uncompress(int[] in, int tmpinpos, int inlength,
                 int[] out, int currentPos, int outlength) {
                 int finallength = currentPos + outlength;
 
