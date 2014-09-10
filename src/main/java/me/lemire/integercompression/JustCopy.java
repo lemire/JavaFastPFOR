@@ -7,11 +7,13 @@
 
 package me.lemire.integercompression;
 
+import me.lemire.integercompression.skippable.SkippableIntegerCODEC;
+
 /**
  * @author Daniel Lemire
  * 
  */
-public final class JustCopy implements IntegerCODEC {
+public final class JustCopy implements IntegerCODEC, SkippableIntegerCODEC {
 
         @Override
         public void compress(int[] in, IntWrapper inpos, int inlength,
@@ -32,6 +34,15 @@ public final class JustCopy implements IntegerCODEC {
         @Override
         public String toString() {
                 return this.getClass().getSimpleName();
+        }
+
+        @Override
+        public void uncompress(int[] in, IntWrapper inpos, int inlength,
+                int[] out, IntWrapper outpos, int num) {
+            System.arraycopy(in, inpos.get(), out, outpos.get(), num);
+            inpos.add(num);
+            outpos.add(num);
+            
         }
 
 }

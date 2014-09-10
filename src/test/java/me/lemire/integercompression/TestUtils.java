@@ -2,6 +2,8 @@ package me.lemire.integercompression;
 
 import java.util.Arrays;
 
+import me.lemire.integercompression.skippable.SkippableIntegerCODEC;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -104,6 +106,22 @@ public class TestUtils {
         IntWrapper inPos = new IntWrapper();
         IntWrapper outPos = new IntWrapper();
         codec.uncompress(data, inPos, data.length, outBuf, outPos);
+        return Arrays.copyOf(outBuf, outPos.get());
+    }
+
+    protected static int[] compress(SkippableIntegerCODEC codec, int[] data) {
+        int[] outBuf = new int[data.length * 4];
+        IntWrapper inPos = new IntWrapper();
+        IntWrapper outPos = new IntWrapper();
+        codec.compress(data, inPos, data.length, outBuf, outPos);
+        return Arrays.copyOf(outBuf, outPos.get());
+    }
+
+    protected static int[] uncompress(SkippableIntegerCODEC codec, int[] data, int len) {
+        int[] outBuf = new int[len + 1024];
+        IntWrapper inPos = new IntWrapper();
+        IntWrapper outPos = new IntWrapper();
+        codec.uncompress(data, inPos, data.length, outBuf, outPos,len);
         return Arrays.copyOf(outBuf, outPos.get());
     }
 

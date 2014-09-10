@@ -10,6 +10,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
+import me.lemire.integercompression.skippable.SkippableIntegerCODEC;
+
 /**
  * Implementation of variable-byte. For best performance, use it using the
  * ByteIntegerCODEC interface.
@@ -19,7 +21,7 @@ import java.nio.IntBuffer;
  * 
  * @author Daniel Lemire
  */
-public class VariableByte implements IntegerCODEC, ByteIntegerCODEC {
+public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIntegerCODEC {
 
     private static byte extract7bits(int i, long val) {
         return (byte) ((val >> (7 * i)) & ((1 << 7) - 1));
@@ -171,6 +173,34 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC {
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+            IntWrapper outpos, int num) {
+        int s = 0;
+        int val = 0;
+        int p = inpos.get();
+        int tmpoutpos = outpos.get();
+        int finaloutpos = num + tmpoutpos;
+        for (int v = 0, shift = 0; tmpoutpos < finaloutpos;) {
+            val = in[p];
+            int c = (byte) (val >>> s);
+            s += 8;
+            if (s == 32) {
+                s = 0;
+                p++;
+            }
+            v += ((c & 127) << shift);
+            if ((c & 128) == 128) {
+                out[tmpoutpos++] = v;
+                v = 0;
+                shift = 0;
+            } else
+                shift += 7;
+        }
+        outpos.set(tmpoutpos);
+        inpos.add(inlength);
     }
 
 }

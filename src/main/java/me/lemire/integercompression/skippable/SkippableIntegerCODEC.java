@@ -61,7 +61,7 @@ public interface SkippableIntegerCODEC {
      * @param outpos
      *            where to write the compressed output in out
      * @param num
-     *            number of integers we want to decode
+     *            number of integers we want to decode, the actual number of integers decoded can be less
      */
     public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num);
