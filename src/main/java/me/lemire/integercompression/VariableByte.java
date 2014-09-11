@@ -30,9 +30,14 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
     private static byte extract7bitsmaskless(int i, long val) {
         return (byte) ((val >> (7 * i)));
     }
-
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+            IntWrapper outpos) {
+        headlessCompress(in, inpos, inlength, out, outpos);
+    }
+
+    @Override
+    public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos) {
         if (inlength == 0)
             return;
@@ -176,7 +181,7 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
     }
 
     @Override
-    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num) {
         int s = 0;
         int val = 0;

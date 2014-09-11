@@ -17,7 +17,7 @@ public class Kamikaze implements SkippableIntegerCODEC {
     private int BLOCK_SIZE = 128;
 
     @Override
-    public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos) {
 
         inlength = inlength / BLOCK_SIZE * BLOCK_SIZE;
@@ -30,7 +30,7 @@ public class Kamikaze implements SkippableIntegerCODEC {
     }
 
     @Override
-    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num) {
 
         num = num / BLOCK_SIZE * BLOCK_SIZE;

@@ -17,7 +17,7 @@ public class SkippableBasicTest {
     SkippableIntegerCODEC[] codecs = {
             new JustCopy(),
             new VariableByte(),
-            new SkippableComposition(new SkippableBinaryPacking(), new VariableByte()),
+            new SkippableComposition(new BinaryPacking(), new VariableByte()),
             new SkippableComposition(new SkippableNewPFD(), new VariableByte()),
             new SkippableComposition(new SkippableOptPFD(), new VariableByte()),
             new SkippableComposition(new SkippableFastPFOR(), new VariableByte()),

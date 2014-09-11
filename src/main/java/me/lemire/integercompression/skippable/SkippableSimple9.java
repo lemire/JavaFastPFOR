@@ -22,7 +22,7 @@ import me.lemire.integercompression.IntWrapper;
 public final class SkippableSimple9 implements SkippableIntegerCODEC {
 
     @Override
-    public void compress(int[] in, IntWrapper inpos, int inlength, int out[],
+    public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int out[],
             IntWrapper outpos) {
         int tmpoutpos = outpos.get();
         int currentPos = inpos.get();
@@ -84,7 +84,7 @@ public final class SkippableSimple9 implements SkippableIntegerCODEC {
     }
 
     @Override
-    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num) {
         int currentPos = outpos.get();
         int tmpinpos = inpos.get();

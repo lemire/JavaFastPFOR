@@ -51,7 +51,7 @@ public final class SkippableOptPFD implements SkippableIntegerCODEC {
     }
 
     @Override
-    public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos) {
         // Util.assertTrue(inpos.get()+inlength <= in.length);
         inlength = inlength / BlockSize * BlockSize;
@@ -148,7 +148,7 @@ public final class SkippableOptPFD implements SkippableIntegerCODEC {
     }
 
     @Override
-    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num) {
         // Util.assertTrue(inpos.get()+inlength <= in.length);
         int mynvalue = num / BlockSize * BlockSize;

@@ -6,6 +6,8 @@
  */
 package me.lemire.integercompression;
 
+import me.lemire.integercompression.skippable.SkippableIntegerCODEC;
+
 /**
  * Scheme  based on a commonly used idea: can be extremely fast.
  * It encodes integers in blocks of 128 integers. For arrays containing
@@ -35,17 +37,23 @@ package me.lemire.integercompression;
  * 
  * @author Daniel Lemire
  */
-public final class BinaryPacking implements IntegerCODEC {
+public final class BinaryPacking implements IntegerCODEC, SkippableIntegerCODEC {
 
         @Override
         public void compress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos) {
-                inlength = inlength / 128 * 128;
-                if (inlength == 0)
-                        return;
+            inlength = inlength / 128 * 128;
+            if (inlength == 0)
+                    return;
+            out[outpos.get()] = inlength;
+            outpos.increment();
+            headlessCompress(in, inpos, inlength, out, outpos);
+        }
 
-                out[outpos.get()] = inlength;
-                outpos.increment();
+        @Override
+        public void headlessCompress(int[] in, IntWrapper inpos, int inlength,
+                int[] out, IntWrapper outpos) {
+                inlength = inlength / 128 * 128;
                 int tmpoutpos = outpos.get();
                 for (int s = inpos.get(); s < inpos.get() + inlength; s += 32 * 4) {
                         final int mbits1 = Util.maxbits(in, s, 32);
@@ -78,6 +86,13 @@ public final class BinaryPacking implements IntegerCODEC {
                         return;
                 final int outlength = in[inpos.get()];
                 inpos.increment();
+                headlessUncompress(in,inpos, inlength,out,outpos,outlength);
+        }
+
+        @Override
+        public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,
+                int[] out, IntWrapper outpos, int num) {
+                final int outlength = num / 128 * 128;
                 int tmpinpos = inpos.get();
                 for (int s = outpos.get(); s < outpos.get() + outlength; s += 32 * 4) {
                         final int mbits1 = (in[tmpinpos] >>> 24);
@@ -100,7 +115,6 @@ public final class BinaryPacking implements IntegerCODEC {
                 outpos.add(outlength);
                 inpos.set(tmpinpos);
         }
-
         @Override
         public String toString() {
                 return this.getClass().getSimpleName();

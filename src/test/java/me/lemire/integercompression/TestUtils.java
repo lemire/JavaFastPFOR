@@ -113,7 +113,7 @@ public class TestUtils {
         int[] outBuf = new int[data.length * 4];
         IntWrapper inPos = new IntWrapper();
         IntWrapper outPos = new IntWrapper();
-        codec.compress(data, inPos, data.length, outBuf, outPos);
+        codec.headlessCompress(data, inPos, data.length, outBuf, outPos);
         return Arrays.copyOf(outBuf, outPos.get());
     }
 
@@ -121,7 +121,7 @@ public class TestUtils {
         int[] outBuf = new int[len + 1024];
         IntWrapper inPos = new IntWrapper();
         IntWrapper outPos = new IntWrapper();
-        codec.uncompress(data, inPos, data.length, outBuf, outPos,len);
+        codec.headlessUncompress(data, inPos, data.length, outBuf, outPos,len);
         if(outPos.get() < len) throw new RuntimeException("Insufficient output.");
         return Arrays.copyOf(outBuf, outPos.get());
     }

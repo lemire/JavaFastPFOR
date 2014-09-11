@@ -52,7 +52,7 @@ public final class SkippableNewPFD implements SkippableIntegerCODEC {
     }
 
     @Override
-    public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos) {
         inlength = inlength / BlockSize * BlockSize;
 
@@ -131,7 +131,7 @@ public final class SkippableNewPFD implements SkippableIntegerCODEC {
     }
 
     @Override
-    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num) {
         int mynvalue = num / BlockSize * BlockSize;
         int finalout = outpos.get() + mynvalue;

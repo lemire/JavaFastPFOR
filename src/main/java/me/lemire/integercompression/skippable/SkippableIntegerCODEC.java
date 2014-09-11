@@ -41,7 +41,7 @@ public interface SkippableIntegerCODEC {
      * @param outpos
      *            where to write in the output array
      */
-    public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos);
 
     /**
@@ -63,7 +63,7 @@ public interface SkippableIntegerCODEC {
      * @param num
      *            number of integers we want to decode, the actual number of integers decoded can be less
      */
-    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num);
 
 }

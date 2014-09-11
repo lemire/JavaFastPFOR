@@ -36,22 +36,22 @@ public class SkippableComposition implements SkippableIntegerCODEC {
     }
 
     @Override
-    public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos) {
         int init = inpos.get();
-        F1.compress(in, inpos, inlength, out, outpos);
+        F1.headlessCompress(in, inpos, inlength, out, outpos);
         inlength -= inpos.get() - init;
-        F2.compress(in, inpos, inlength, out, outpos);
+        F2.headlessCompress(in, inpos, inlength, out, outpos);
     }
 
     @Override
-    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num) {
         int init = inpos.get();
-        F1.uncompress(in, inpos, inlength, out, outpos, num);
+        F1.headlessUncompress(in, inpos, inlength, out, outpos, num);
         inlength -= inpos.get() - init;
         num -= outpos.get();
-        F2.uncompress(in, inpos, inlength, out, outpos, num);
+        F2.headlessUncompress(in, inpos, inlength, out, outpos, num);
     }
 
     @Override

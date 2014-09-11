@@ -86,7 +86,7 @@ public final class SkippableFastPFOR implements SkippableIntegerCODEC {
      * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
      */
     @Override
-    public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos) {
             inlength = Util.floorBy(inlength, 128);
             if (inlength == 0)
@@ -220,7 +220,7 @@ public final class SkippableFastPFOR implements SkippableIntegerCODEC {
      * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
      */
     @Override
-    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num) {
             if (inlength == 0)
                     return;

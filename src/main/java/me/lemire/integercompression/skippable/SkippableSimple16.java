@@ -16,7 +16,7 @@ import me.lemire.integercompression.*;
  */
 public final class SkippableSimple16 implements SkippableIntegerCODEC {
 
-    public void compress(int[] in, IntWrapper inpos, int inlength, int out[],
+    public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int out[],
             IntWrapper outpos) {
         int i_inpos = inpos.get();
         int i_outpos = outpos.get();
@@ -130,7 +130,7 @@ public final class SkippableSimple16 implements SkippableIntegerCODEC {
     }
 
     @Override
-    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num) {
         int i_inpos = inpos.get();
         int i_outpos = outpos.get();
