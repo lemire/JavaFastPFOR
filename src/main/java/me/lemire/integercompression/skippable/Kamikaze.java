@@ -6,6 +6,8 @@ import com.kamikaze.pfordelta.PForDelta;
 /**
  * IntegerCODEC wrapper for Kamikaze's PForDelta.
  * 
+ * Note: this class is only included for speed benchmarks.
+ * It is not recommended. Use at your own risks.
  * 
  * @author Matteo Catena
  * 

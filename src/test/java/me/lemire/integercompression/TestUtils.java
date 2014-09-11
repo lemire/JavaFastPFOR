@@ -122,6 +122,7 @@ public class TestUtils {
         IntWrapper inPos = new IntWrapper();
         IntWrapper outPos = new IntWrapper();
         codec.uncompress(data, inPos, data.length, outBuf, outPos,len);
+        if(outPos.get() < len) throw new RuntimeException("Insufficient output.");
         return Arrays.copyOf(outBuf, outPos.get());
     }
 

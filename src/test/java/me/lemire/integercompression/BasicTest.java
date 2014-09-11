@@ -38,6 +38,7 @@ public class BasicTest {
                     new IntegratedVariableByte()),
             new Composition(new FastPFOR(), new VariableByte()),
             new Simple9(),
+            new Simple16(),
             new Composition(new XorBinaryPacking(), new VariableByte()),
             new Composition(new DeltaZigzagBinaryPacking(),
                     new DeltaZigzagVariableByte()) };
@@ -87,6 +88,15 @@ public class BasicTest {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+            try {
+                // CODEC Simple16 is limited to "small" integers.
+                if (c.getClass().equals(
+                        Class.forName("me.lemire.integercompression.Simple16")))
+                    continue;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
             for (int L = 1; L <= 128; L++) {
                 int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
                 int[] answer = TestUtils.uncompress(c, comp, L);

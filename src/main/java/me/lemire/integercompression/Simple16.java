@@ -1,6 +1,6 @@
-package me.lemire.integercompression.skippable;
+package me.lemire.integercompression;
 
-import me.lemire.integercompression.*;
+
 
 /**
  * This is an implementation of the popular Simple16 scheme. It is limited to
@@ -12,14 +12,14 @@ import me.lemire.integercompression.*;
  * <p>
  * Adapted by D. Lemire from the Apache Lucene project.
  * </p>
- * 
  */
-public final class SkippableSimple16 implements SkippableIntegerCODEC {
+public final class Simple16 implements IntegerCODEC {
 
     public void compress(int[] in, IntWrapper inpos, int inlength, int out[],
             IntWrapper outpos) {
         int i_inpos = inpos.get();
         int i_outpos = outpos.get();
+        out[i_outpos++] = inlength;
         final int finalin = i_inpos + inlength;
         while (i_inpos < finalin) {
             int inoffset = compressblock(out, i_outpos++, in, i_inpos, inlength);
@@ -31,21 +31,7 @@ public final class SkippableSimple16 implements SkippableIntegerCODEC {
         inpos.set(i_inpos);
         outpos.set(i_outpos);
     }
-
-    protected static int estimatecompress(int[] in, int currentPos, int inlength) {
-        final int finalin = currentPos + inlength;
-        int counter = 0;
-        while (currentPos < finalin) {
-            int inoffset = fakecompressblock(in, currentPos, inlength);
-            if (inoffset == -1)
-                throw new RuntimeException("Too big a number");
-            currentPos += inoffset;
-            inlength -= inoffset;
-            ++counter;
-        }
-        return counter;
-    }
-
+    
     /**
      * Compress an integer array using Simple16
      * 
@@ -83,24 +69,7 @@ public final class SkippableSimple16 implements SkippableIntegerCODEC {
         return -1;
     }
 
-    protected static final int fakecompressblock(int[] in, int inOffset, int n) {
-        int numIdx, j, num;
-        for (numIdx = 0; numIdx < S16_NUMSIZE; numIdx++) {
-            num = (S16_NUM[numIdx] < n) ? S16_NUM[numIdx] : n;
-
-            for (j = 0; (j < num)
-                    && (in[inOffset + j] < SHIFTED_S16_BITS[numIdx][j]);) {
-                j++;
-            }
-
-            if (j == num) {
-                return num;
-            }
-        }
-
-        return -1;
-    }
-
+    
     /**
      * Decompress an integer array using Simple16
      * 
@@ -129,13 +98,14 @@ public final class SkippableSimple16 implements SkippableIntegerCODEC {
         return num;
     }
 
+
     @Override
     public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
-            IntWrapper outpos, int num) {
+            IntWrapper outpos) {
         int i_inpos = inpos.get();
+        int num = in[i_inpos++];
         int i_outpos = outpos.get();
-        final int finalpos = i_inpos + inlength;
-        while (i_inpos < finalpos) {
+        while (num > 0) {
             final int howmany = decompressblock(out, i_outpos, in, i_inpos, num);
             num -= howmany;
             i_outpos += howmany;

@@ -84,15 +84,14 @@ public final class SkippableOptPFD implements SkippableIntegerCODEC {
         int exceptcounter = 0;
         for (int i = mini; i < bits.length - 1; ++i) {
             int tmpcounter = 0;
-            final int maxv = 1 << bits[i];
             for (int k = pos; k < BlockSize + pos; ++k)
-                if (in[k] >= maxv) {
+                if ((in[k] >>> bits[i]) != 0) {
                     ++tmpcounter;
                 }
             if (tmpcounter == BlockSize)
                 continue; // no need
             for (int k = pos, c = 0; k < pos + BlockSize; ++k)
-                if (in[k] >= maxv) {
+                if ((in[k] >>> bits[i]) != 0) {
                     exceptbuffer[tmpcounter + c] = k - pos;
                     exceptbuffer[c] = in[k] >>> bits[i];
                     ++c;
@@ -125,10 +124,9 @@ public final class SkippableOptPFD implements SkippableIntegerCODEC {
             int remember = tmpoutpos;
             tmpoutpos++;
             if (nbrexcept > 0) {
-                final int maxv = 1 << bits[tmpbestb];
                 int c = 0;
                 for (int i = 0; i < BlockSize; ++i) {
-                    if (in[tmpinpos + i] >= maxv) {
+                    if ((in[tmpinpos + i] >>> bits[tmpbestb]) != 0) {
                         exceptbuffer[c + nbrexcept] = i;
                         exceptbuffer[c] = in[tmpinpos + i] >>> bits[tmpbestb];
                         ++c;

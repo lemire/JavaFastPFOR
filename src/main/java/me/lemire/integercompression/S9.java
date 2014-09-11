@@ -8,7 +8,9 @@ package me.lemire.integercompression;
 
 /**
  * This is a version of Simple9 optimized for NewPFOR, OptPFOR
- * 
+ * <p>
+ * Adapted by D. Lemire from the Apache Lucene project.
+ * </p>
  * @author Daniel Lemire
  */
 public final class S9 {

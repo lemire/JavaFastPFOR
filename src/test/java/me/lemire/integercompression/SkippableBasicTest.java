@@ -18,9 +18,9 @@ public class SkippableBasicTest {
             new JustCopy(),
             new VariableByte(),
             new SkippableComposition(new SkippableBinaryPacking(), new VariableByte()),
-           // new SkippableComposition(new SkippableNewPFD(), new VariableByte()),
-           // new SkippableComposition(new SkippableOptPFD(), new VariableByte()),
-           // new SkippableComposition(new SkippableFastPFOR(), new VariableByte()),
+            new SkippableComposition(new SkippableNewPFD(), new VariableByte()),
+            new SkippableComposition(new SkippableOptPFD(), new VariableByte()),
+            new SkippableComposition(new SkippableFastPFOR(), new VariableByte()),
             new SkippableSimple9(),
             new SkippableSimple16() };
 
