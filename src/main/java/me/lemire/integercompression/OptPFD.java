@@ -49,8 +49,7 @@ public final class OptPFD implements IntegerCODEC,SkippableIntegerCODEC {
                 inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
                 if (inlength == 0)
                         return;
-                final int finalinpos = inpos.get() + inlength;
-                encodePage(in, inpos, finalinpos, out, outpos);
+                encodePage(in, inpos, inlength, out, outpos);
         }
 
         private static final int[] bits = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
@@ -145,8 +144,7 @@ public final class OptPFD implements IntegerCODEC,SkippableIntegerCODEC {
                 if (inlength == 0)
                         return;
                 mynvalue = Util.greatestMultiple(mynvalue, BLOCK_SIZE);
-                final int finalout = outpos.get() + mynvalue;
-                decodePage(in, inpos, out, outpos, finalout);
+                decodePage(in, inpos, out, outpos, mynvalue);
         }
 
         private void decodePage(int[] in, IntWrapper inpos, int[] out,

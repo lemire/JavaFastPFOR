@@ -37,11 +37,12 @@ package me.lemire.integercompression;
  * @author Daniel Lemire
  */
 public final class BinaryPacking implements IntegerCODEC, SkippableIntegerCODEC {
-
+        final static int BLOCK_SIZE = 128;
+    
         @Override
         public void compress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos) {
-            inlength = inlength / 128 * 128;
+            inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
             if (inlength == 0)
                     return;
             out[outpos.get()] = inlength;
@@ -52,7 +53,7 @@ public final class BinaryPacking implements IntegerCODEC, SkippableIntegerCODEC 
         @Override
         public void headlessCompress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos) {
-                inlength = inlength / 128 * 128;
+                inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
                 int tmpoutpos = outpos.get();
                 for (int s = inpos.get(); s < inpos.get() + inlength; s += 32 * 4) {
                         final int mbits1 = Util.maxbits(in, s, 32);
@@ -91,7 +92,7 @@ public final class BinaryPacking implements IntegerCODEC, SkippableIntegerCODEC 
         @Override
         public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos, int num) {
-                final int outlength = num / 128 * 128;
+                final int outlength = Util.greatestMultiple(num, BLOCK_SIZE);
                 int tmpinpos = inpos.get();
                 for (int s = outpos.get(); s < outpos.get() + outlength; s += 32 * 4) {
                         final int mbits1 = (in[tmpinpos] >>> 24);
