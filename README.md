@@ -86,6 +86,7 @@ Main contributors
 * Muraoka Taro, https://github.com/koron
 
 with contributions by 
+* the Terrier team (Matteo Catena, Craig Macdonald and Iadh Ounis)
 * Di Wu, http://www.facebook.com/diwu1989
 * Stefan Ackermann, https://github.com/Stivo
 * Samit Roy, https://github.com/roysamit
@@ -154,7 +155,6 @@ This library was a key ingredient in the best paper at ECIR 2014 :
 
 Matteo Catena, Craig Macdonald, Iadh Ounis, On Inverted Index Compression for Search Engine Efficiency,  Lecture Notes in Computer Science 8416 (ECIR 2014), 2014.
 http://dx.doi.org/10.1007/978-3-319-06028-6_30
-
 
 We wrote a research paper which documents many of the CODECs implemented here:
 

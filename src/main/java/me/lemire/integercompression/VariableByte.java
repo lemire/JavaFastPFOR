@@ -123,10 +123,8 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
             val = in[p];
             int c = (byte) (val >>> s);
             s += 8;
-            if (s == 32) {
-                s = 0;
-                p++;
-            }
+            p += s>>5;
+            s = s & 31;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {
                 out[tmpoutpos++] = v;
@@ -190,10 +188,8 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
             val = in[p];
             int c = (byte) (val >>> s);
             s += 8;
-            if (s == 32) {
-                s = 0;
-                p++;
-            }
+            p += s>>5;
+            s = s & 31;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {
                 out[tmpoutpos++] = v;
@@ -203,7 +199,7 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
                 shift += 7;
         }
         outpos.set(tmpoutpos);
-        inpos.add(inlength);
+        inpos.set(p + (s!=0 ? 1 : 0));
     }
 
 }
