@@ -33,7 +33,6 @@ package me.lemire.integercompression;
  * @author Daniel Lemire
  */
 public final class OptPFDS9 implements IntegerCODEC, SkippableIntegerCODEC {
-        final int PageSize;
         final static int BLOCK_SIZE = 128;
         int[] exceptbuffer = new int[2 * BLOCK_SIZE];
 
@@ -41,32 +40,27 @@ public final class OptPFDS9 implements IntegerCODEC, SkippableIntegerCODEC {
          * Constructor for the OptPFDS9 CODEC.
          */
         public OptPFDS9() {
-                PageSize = 65536;
         }
 
         @Override
         public void headlessCompress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos) {
-                inlength = inlength / BLOCK_SIZE * BLOCK_SIZE;
+                inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
                 if (inlength == 0)
                         return;
 
                 final int finalinpos = inpos.get() + inlength;
-                while (inpos.get() != finalinpos) {
-                        int thissize = finalinpos > PageSize + inpos.get() ? PageSize
-                                : (finalinpos - inpos.get());
-                        encodePage(in, inpos, thissize, out, outpos);
-                }
+                encodePage(in, inpos, finalinpos, out, outpos);
 
         }
 
-        protected static final int[] bits = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+        private static final int[] bits = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
                 11, 12, 13, 16, 20, 32 };
-        protected static final int[] invbits = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+        private static final int[] invbits = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
                 10, 11, 12, 13, 14, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 16,
                 16, 16, 16, 16, 16, 16, 16 };
 
-        protected void getBestBFromData(int[] in, int pos, IntWrapper bestb,
+        private void getBestBFromData(int[] in, int pos, IntWrapper bestb,
                 IntWrapper bestexcept) {
                 final int mb = Util.maxbits(in, pos, BLOCK_SIZE);
                 int mini = 0;
@@ -150,13 +144,9 @@ public final class OptPFDS9 implements IntegerCODEC, SkippableIntegerCODEC {
                 int[] out, IntWrapper outpos, int mynvalue) {
                 if (inlength == 0)
                         return;
-                mynvalue = Util.floorBy(mynvalue, BLOCK_SIZE);
+                mynvalue = Util.greatestMultiple(mynvalue, BLOCK_SIZE);
                 final int finalout = outpos.get() + mynvalue;
-                while (outpos.get() != finalout) {
-                        int thissize = finalout > PageSize + outpos.get() ? PageSize
-                                : (finalout - outpos.get());
-                        decodePage(in, inpos, out, outpos, thissize);
-                }
+                decodePage(in, inpos, out, outpos, finalout);
         }
 
         private void decodePage(int[] in, IntWrapper inpos, int[] out,

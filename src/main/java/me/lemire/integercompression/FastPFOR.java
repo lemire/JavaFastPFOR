@@ -82,7 +82,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
         @Override
         public void headlessCompress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos) {
-                inlength = Util.floorBy(inlength, BLOCK_SIZE);
+                inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
                 if (inlength == 0)
                         return;
 
@@ -158,7 +158,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                                         int newsize = 2 * (dataPointers[index] + bestbbestcexceptmaxb[1]);
                                         // make sure it is a multiple of 32
                                         newsize = Util
-                                                .floorBy(newsize + 31, 32);
+                                                .greatestMultiple(newsize + 31, 32);
                                         dataTobePacked[index] = Arrays.copyOf(
                                                 dataTobePacked[index], newsize);
                                 }
@@ -219,7 +219,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                 int[] out, IntWrapper outpos, int mynvalue) {
                 if (inlength == 0)
                         return;
-                mynvalue = Util.floorBy(mynvalue, BLOCK_SIZE);
+                mynvalue = Util.greatestMultiple(mynvalue, BLOCK_SIZE);
 
                 dataPointers = new int[33];
 
@@ -250,7 +250,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                                 int size = in[inexcept++];
                                 if (dataTobePacked[k].length < size)
                                         dataTobePacked[k] = new int[Util
-                                                .floorBy(size + 31, 32)];
+                                                .greatestMultiple(size + 31, 32)];
                                 for (int j = 0; j < size; j += 32) {
                                         BitPacking.fastunpack(in, inexcept,
                                                 dataTobePacked[k], j, k);
@@ -287,7 +287,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
         @Override
         public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                 IntWrapper outpos) {
-            inlength = Util.floorBy(inlength,  BLOCK_SIZE);
+            inlength = Util.greatestMultiple(inlength,  BLOCK_SIZE);
             if (inlength == 0)
                     return;
             out[outpos.get()] = inlength;

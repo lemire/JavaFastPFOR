@@ -98,7 +98,7 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
         @Override
         public void compress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos) {
-                inlength = Util.floorBy(inlength, 128);
+                inlength = Util.greatestMultiple(inlength, 128);
                 if (inlength == 0)
                         return;
 
@@ -182,7 +182,7 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
                                         int newsize = 2 * (dataPointers[index] + bestbbestcexceptmaxb[1]);
                                         // make sure it is a multiple of 32
                                         newsize = Util
-                                                .floorBy(newsize + 31, 32);
+                                                .greatestMultiple(newsize + 31, 32);
                                         dataTobePacked[index] = Arrays.copyOf(
                                                 dataTobePacked[index], newsize);
                                 }
@@ -276,7 +276,7 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
                                 int size = in[inexcept++];
                                 if (dataTobePacked[k].length < size)
                                         dataTobePacked[k] = new int[Util
-                                                .floorBy(size + 31, 32)];
+                                                .greatestMultiple(size + 31, 32)];
                                 for (int j = 0; j < size; j += 32) {
                                         BitPacking.fastunpack(in, inexcept,
                                                 dataTobePacked[k], j, k);

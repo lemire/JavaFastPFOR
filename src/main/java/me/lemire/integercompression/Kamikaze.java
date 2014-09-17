@@ -18,7 +18,7 @@ public class Kamikaze implements SkippableIntegerCODEC, IntegerCODEC {
     @Override
     public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos) {
-        inlength = Util.floorBy(inlength, BLOCK_SIZE);
+        inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
         if (inlength > 0) {
             int[] out2 = PForDelta.compressOneBlockOpt(in, inlength);
             inpos.add(inlength);
@@ -30,7 +30,7 @@ public class Kamikaze implements SkippableIntegerCODEC, IntegerCODEC {
     @Override
     public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num) {
-        num = Util.floorBy(num, BLOCK_SIZE);
+        num = Util.greatestMultiple(num, BLOCK_SIZE);
         if (num > 0) {
             int d = PForDelta.decompressOneBlock(out, in, num);
             inpos.add(d / 32);
@@ -46,7 +46,7 @@ public class Kamikaze implements SkippableIntegerCODEC, IntegerCODEC {
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos) {
-        inlength = Util.floorBy(inlength, BLOCK_SIZE);
+        inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
         if (inlength == 0)
                 return;
         out[outpos.get()] = inlength;

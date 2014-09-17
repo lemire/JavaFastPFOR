@@ -101,14 +101,13 @@ public final class Util {
     }
 
     /**
-     * return floor(value / factor)
+     * return floor(value / factor) * factor
      * 
      * @param value numerator
      * @param factor denominator
-     * @return result of the division
+     * @return greatest multiple of factor no larger than value
      */
-    public static int floorBy(int value, int factor) {
-
+    public static int greatestMultiple(int value, int factor) {
         return value - value % factor;
     }
 }
