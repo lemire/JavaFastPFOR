@@ -6,7 +6,6 @@
  */
 package me.lemire.integercompression;
 
-import me.lemire.integercompression.skippable.SkippableIntegerCODEC;
 
 /**
  * Scheme  based on a commonly used idea: can be extremely fast.

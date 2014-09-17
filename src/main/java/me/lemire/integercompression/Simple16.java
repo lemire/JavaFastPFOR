@@ -2,6 +2,7 @@ package me.lemire.integercompression;
 
 
 
+
 /**
  * This is an implementation of the popular Simple16 scheme. It is limited to
  * 28-bit integers (between 0 and 2^28-1).
@@ -13,13 +14,12 @@ package me.lemire.integercompression;
  * Adapted by D. Lemire from the Apache Lucene project.
  * </p>
  */
-public final class Simple16 implements IntegerCODEC {
+public final class Simple16 implements IntegerCODEC,SkippableIntegerCODEC {
 
-    public void compress(int[] in, IntWrapper inpos, int inlength, int out[],
+    public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int out[],
             IntWrapper outpos) {
         int i_inpos = inpos.get();
         int i_outpos = outpos.get();
-        out[i_outpos++] = inlength;
         final int finalin = i_inpos + inlength;
         while (i_inpos < finalin) {
             int inoffset = compressblock(out, i_outpos++, in, i_inpos, inlength);
@@ -100,10 +100,9 @@ public final class Simple16 implements IntegerCODEC {
 
 
     @Override
-    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
-            IntWrapper outpos) {
+    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+            IntWrapper outpos,int num) {
         int i_inpos = inpos.get();
-        int num = in[i_inpos++];
         int i_outpos = outpos.get();
         while (num > 0) {
             final int howmany = decompressblock(out, i_outpos, in, i_inpos, num);
@@ -155,6 +154,31 @@ public final class Simple16 implements IntegerCODEC {
                 answer[k][z] = 1 << x[k][z];
         }
         return answer;
+    }
+    
+    @Override
+    public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+            IntWrapper outpos) {
+        if (inlength == 0)
+                return;
+        out[outpos.get()] = inlength;
+        outpos.increment();
+        headlessCompress(in, inpos, inlength, out, outpos);        
+    }
+
+    @Override
+    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+            IntWrapper outpos) {
+        if (inlength == 0)
+            return;
+        final int outlength = in[inpos.get()];
+        inpos.increment();
+        headlessUncompress(in, inpos, inlength, out, outpos, outlength);
+
+    }
+    @Override
+    public String toString() {
+            return this.getClass().getSimpleName();
     }
 
     private static final int S16_NUMSIZE = 16;

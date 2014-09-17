@@ -53,6 +53,7 @@ public class BasicTest {
         for (int k = 0; k < N; ++k)
             data[k] = k;
         for (IntegerCODEC c : codecs) {
+            System.out.println("[BasicTest.varyingLengthTest] codec = "+c);
             for (int L = 1; L <= 128; L++) {
                 int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
                 int[] answer = TestUtils.uncompress(c, comp, L);
@@ -80,6 +81,7 @@ public class BasicTest {
         int[] data = new int[N];
         data[127] = -1;
         for (IntegerCODEC c : codecs) {
+            System.out.println("[BasicTest.varyingLengthTest2] codec = "+c);
             try {
                 // CODEC Simple9 is limited to "small" integers.
                 if (c.getClass().equals(
@@ -374,6 +376,7 @@ public class BasicTest {
 
     private static void test(int N, int nbr) {
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
+        System.out.println("[BasicTest.test] N = "+N+" "+nbr);
         for (int sparsity = 1; sparsity < 31 - nbr; sparsity += 4) {
             int[][] data = new int[N][];
             int max = (1 << (nbr + sparsity));

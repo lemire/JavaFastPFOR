@@ -4,9 +4,8 @@
  *
  * (c) Daniel Lemire, http://lemire.me/en/
  */
-package me.lemire.integercompression.skippable;
+package me.lemire.integercompression;
 
-import me.lemire.integercompression.*;
 
 /**
  * Helper class to compose schemes.
@@ -56,7 +55,7 @@ public class SkippableComposition implements SkippableIntegerCODEC {
 
     @Override
     public String toString() {
-        return F1.getClass().getName() + "+" + F2.getClass().getName();
+        return F1.toString() + "+" + F2.toString();
     }
 
 }

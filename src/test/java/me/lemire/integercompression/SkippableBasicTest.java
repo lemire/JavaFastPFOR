@@ -2,8 +2,6 @@ package me.lemire.integercompression;
 
 import java.util.Arrays;
 
-import me.lemire.integercompression.skippable.*;
-
 import org.junit.Test;
 
 
@@ -18,11 +16,15 @@ public class SkippableBasicTest {
             new JustCopy(),
             new VariableByte(),
             new SkippableComposition(new BinaryPacking(), new VariableByte()),
-            new SkippableComposition(new SkippableNewPFD(), new VariableByte()),
-            new SkippableComposition(new SkippableOptPFD(), new VariableByte()),
-            new SkippableComposition(new SkippableFastPFOR(), new VariableByte()),
-            new SkippableSimple9(),
-            new SkippableSimple16() };
+           /* new SkippableComposition(new NewPFD(), new VariableByte()),
+            new SkippableComposition(new NewPFDS9(), new VariableByte()),
+            new SkippableComposition(new NewPFDS16(), new VariableByte()),
+            new SkippableComposition(new OptPFD(), new VariableByte()),
+            new SkippableComposition(new OptPFDS9(), new VariableByte()),
+            new SkippableComposition(new OptPFDS16(), new VariableByte()),*/
+            new SkippableComposition(new FastPFOR(), new VariableByte()),
+            new Simple9(),
+            new Simple16() };
 
     /**
      * 
@@ -34,16 +36,17 @@ public class SkippableBasicTest {
         for (int k = 0; k < N; ++k)
             data[k] = k;
         for (SkippableIntegerCODEC c : codecs) {
+            System.out.println("[SkippeableBasicTest.varyingLengthTest] codec = "+c);
             for (int L = 1; L <= 128; L++) {
-                int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
-                int[] answer = TestUtils.uncompress(c, comp, L);
+                int[] comp = TestUtils.compressHeadless(c, Arrays.copyOf(data, L));
+                int[] answer = TestUtils.uncompressHeadless(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug "+c.toString()+" "+k+" "+answer[k]+" "+data[k]);
             }
             for (int L = 128; L <= N; L *= 2) {
-                int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
-                int[] answer = TestUtils.uncompress(c, comp, L);
+                int[] comp = TestUtils.compressHeadless(c, Arrays.copyOf(data, L));
+                int[] answer = TestUtils.uncompressHeadless(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
@@ -61,10 +64,12 @@ public class SkippableBasicTest {
         int[] data = new int[N];
         data[127] = -1;
         for (SkippableIntegerCODEC c : codecs) {
+            System.out.println("[SkippeableBasicTest.varyingLengthTest2] codec = "+c);
+
             try {
                 // CODEC Simple9 is limited to "small" integers.
                 if (c.getClass().equals(
-                        Class.forName("me.lemire.integercompression.skippable.SkippableSimple9")))
+                        Class.forName("me.lemire.integercompression.Simple9")))
                     continue;
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -72,21 +77,21 @@ public class SkippableBasicTest {
             try {
                 // CODEC Simple16 is limited to "small" integers.
                 if (c.getClass().equals(
-                        Class.forName("me.lemire.integercompression.skippable.SkippableSimple16")))
+                        Class.forName("me.lemire.integercompression.Simple16")))
                     continue;
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
             for (int L = 1; L <= 128; L++) {
-                int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
-                int[] answer = TestUtils.uncompress(c, comp, L);
+                int[] comp = TestUtils.compressHeadless(c, Arrays.copyOf(data, L));
+                int[] answer = TestUtils.uncompressHeadless(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug at k = "+k+" "+answer[k]+" "+data[k]+" for "+c.toString());
             }
             for (int L = 128; L <= N; L *= 2) {
-                int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
-                int[] answer = TestUtils.uncompress(c, comp, L);
+                int[] comp = TestUtils.compressHeadless(c, Arrays.copyOf(data, L));
+                int[] answer = TestUtils.uncompressHeadless(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");

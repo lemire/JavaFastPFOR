@@ -5,9 +5,8 @@
  * (c) Daniel Lemire, http://lemire.me/en/
  */
 
-package me.lemire.integercompression.skippable;
+package me.lemire.integercompression;
 
-import me.lemire.integercompression.*;
 
 /**
  * Interface describing a standard CODEC to compress integers. This is a

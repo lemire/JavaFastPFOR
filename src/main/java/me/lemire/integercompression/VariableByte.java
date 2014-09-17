@@ -10,8 +10,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
-import me.lemire.integercompression.skippable.SkippableIntegerCODEC;
-
 /**
  * Implementation of variable-byte. For best performance, use it using the
  * ByteIntegerCODEC interface.

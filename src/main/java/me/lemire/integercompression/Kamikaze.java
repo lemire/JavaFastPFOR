@@ -1,6 +1,5 @@
-package me.lemire.integercompression.skippable;
+package me.lemire.integercompression;
 
-import me.lemire.integercompression.IntWrapper;
 import com.kamikaze.pfordelta.PForDelta;
 
 /**
@@ -12,15 +11,14 @@ import com.kamikaze.pfordelta.PForDelta;
  * @author Matteo Catena
  * 
  */
-public class Kamikaze implements SkippableIntegerCODEC {
+public class Kamikaze implements SkippableIntegerCODEC, IntegerCODEC {
 
     private int BLOCK_SIZE = 128;
 
     @Override
     public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos) {
-
-        inlength = inlength / BLOCK_SIZE * BLOCK_SIZE;
+        inlength = Util.floorBy(inlength, BLOCK_SIZE);
         if (inlength > 0) {
             int[] out2 = PForDelta.compressOneBlockOpt(in, inlength);
             inpos.add(inlength);
@@ -32,8 +30,7 @@ public class Kamikaze implements SkippableIntegerCODEC {
     @Override
     public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num) {
-
-        num = num / BLOCK_SIZE * BLOCK_SIZE;
+        num = Util.floorBy(num, BLOCK_SIZE);
         if (num > 0) {
             int d = PForDelta.decompressOneBlock(out, in, num);
             inpos.add(d / 32);
@@ -44,5 +41,27 @@ public class Kamikaze implements SkippableIntegerCODEC {
     @Override
     public String toString() {
         return "Kamikaze's PForDelta";
+    }
+
+    @Override
+    public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+            IntWrapper outpos) {
+        inlength = Util.floorBy(inlength, BLOCK_SIZE);
+        if (inlength == 0)
+                return;
+        out[outpos.get()] = inlength;
+        outpos.increment();
+        headlessCompress(in, inpos, inlength, out, outpos);        
+    }
+
+    @Override
+    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+            IntWrapper outpos) {
+        if (inlength == 0)
+            return;
+        final int outlength = in[inpos.get()];
+        inpos.increment();
+        headlessUncompress(in, inpos, inlength, out, outpos, outlength);
+
     }
 }

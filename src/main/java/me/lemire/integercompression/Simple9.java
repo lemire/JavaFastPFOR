@@ -7,6 +7,7 @@
 
 package me.lemire.integercompression;
 
+
 /**
  * This is an implementation of the popular Simple9 scheme.
  * It is limited to 28-bit integers (between 0 and 2^28-1).
@@ -17,13 +18,12 @@ package me.lemire.integercompression;
  * @author Daniel Lemire
  * 
  */
-public final class Simple9 implements IntegerCODEC {
+public final class Simple9 implements IntegerCODEC, SkippableIntegerCODEC {
         @Override
-        public void compress(int[] in, IntWrapper inpos, int inlength,
+        public void headlessCompress(int[] in, IntWrapper inpos, int inlength,
                 int out[], IntWrapper outpos) {
                 int tmpoutpos = outpos.get();
                 int currentPos = inpos.get();
-                out[tmpoutpos++] = inlength;
                 final int finalin = currentPos + inlength;
                 outer: while (currentPos < finalin - 28) {
                         mainloop: for (int selector = 0; selector < 8; selector++) {
@@ -81,11 +81,11 @@ public final class Simple9 implements IntegerCODEC {
         }
 
         @Override
-        public void uncompress(int[] in, IntWrapper inpos, int inlength,
-                int[] out, IntWrapper outpos) {
+        public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,
+                int[] out, IntWrapper outpos, int outlength) {
                 int currentPos = outpos.get();
                 int tmpinpos = inpos.get();
-                final int finalout = currentPos + in[tmpinpos++];
+                final int finalout = currentPos + outlength;
                 while (currentPos < finalout - 28) {
                         int val = in[tmpinpos++];
                         int header = val >>> 28;
@@ -282,7 +282,26 @@ public final class Simple9 implements IntegerCODEC {
                 inpos.set(tmpinpos);
 
         }
+        @Override
+        public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+                IntWrapper outpos) {
+            if (inlength == 0)
+                    return;
+            out[outpos.get()] = inlength;
+            outpos.increment();
+            headlessCompress(in, inpos, inlength, out, outpos);        
+        }
 
+        @Override
+        public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+                IntWrapper outpos) {
+            if (inlength == 0)
+                return;
+            final int outlength = in[inpos.get()];
+            inpos.increment();
+            headlessUncompress(in, inpos, inlength, out, outpos, outlength);
+
+        }
         private final static int bitLength[] = { 1, 2, 3, 4, 5, 7, 9, 14, 28 };
 
         private final static int codeNum[] = { 28, 14, 9, 7, 5, 4, 3, 2, 1 };

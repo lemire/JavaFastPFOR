@@ -37,7 +37,7 @@ import java.util.Arrays;
  * 
  * @author Daniel Lemire
  */
-public final class FastPFOR implements IntegerCODEC {
+public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
         final static int BLOCK_SIZE = 128;
         final static int OVERHEAD_OF_EACH_EXCEPT = 8;
         final static int DEFAULT_PAGE_SIZE = 65536;
@@ -80,14 +80,12 @@ public final class FastPFOR implements IntegerCODEC {
          * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
          */
         @Override
-        public void compress(int[] in, IntWrapper inpos, int inlength,
+        public void headlessCompress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos) {
-                inlength = Util.floorBy(inlength, 128);
+                inlength = Util.floorBy(inlength, BLOCK_SIZE);
                 if (inlength == 0)
                         return;
 
-                out[outpos.get()] = inlength;
-                outpos.increment();
 
                 // Allocate memory for working area.
                 dataPointers = new int[33];
@@ -174,7 +172,7 @@ public final class FastPFOR implements IntegerCODEC {
                                 }
 
                         }
-                        for (int k = 0; k < 128; k += 32) {
+                        for (int k = 0; k < BLOCK_SIZE; k += 32) {
                                 BitPacking.fastpack(in, tmpinpos + k, out,
                                         tmpoutpos, tmpbestb);
                                 tmpoutpos += tmpbestb;
@@ -217,13 +215,11 @@ public final class FastPFOR implements IntegerCODEC {
          * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
          */
         @Override
-        public void uncompress(int[] in, IntWrapper inpos, int inlength,
-                int[] out, IntWrapper outpos) {
+        public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,
+                int[] out, IntWrapper outpos, int mynvalue) {
                 if (inlength == 0)
                         return;
-
-                int mynvalue = in[inpos.get()];
-                inpos.increment();
+                mynvalue = Util.floorBy(mynvalue, BLOCK_SIZE);
 
                 dataPointers = new int[33];
 
@@ -269,7 +265,7 @@ public final class FastPFOR implements IntegerCODEC {
                 for (int run = 0, run_end = thissize / BLOCK_SIZE; run < run_end; ++run, tmpoutpos += BLOCK_SIZE) {
                         final byte b = byteContainer.get();
                         final byte cexcept = byteContainer.get();
-                        for (int k = 0; k < 128; k += 32) {
+                        for (int k = 0; k < BLOCK_SIZE; k += 32) {
                                 BitPacking.fastunpack(in, tmpinpos, out,
                                         tmpoutpos + k, b);
                                 tmpinpos += b;
@@ -288,7 +284,26 @@ public final class FastPFOR implements IntegerCODEC {
                 outpos.set(tmpoutpos);
                 inpos.set(inexcept);
         }
+        @Override
+        public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
+                IntWrapper outpos) {
+            inlength = Util.floorBy(inlength,  BLOCK_SIZE);
+            if (inlength == 0)
+                    return;
+            out[outpos.get()] = inlength;
+            outpos.increment();
+            headlessCompress(in, inpos, inlength, out, outpos);        
+        }
 
+        @Override
+        public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+                IntWrapper outpos) {
+            if (inlength == 0)
+                return;
+            final int outlength = in[inpos.get()];
+            inpos.increment();
+            headlessUncompress(in, inpos, inlength, out, outpos, outlength);
+        }
         @Override
         public String toString() {
                 return this.getClass().getSimpleName();

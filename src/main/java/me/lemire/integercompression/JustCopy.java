@@ -7,7 +7,6 @@
 
 package me.lemire.integercompression;
 
-import me.lemire.integercompression.skippable.SkippableIntegerCODEC;
 
 /**
  * @author Daniel Lemire
