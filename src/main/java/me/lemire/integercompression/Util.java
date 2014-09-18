@@ -6,7 +6,6 @@
  */
 package me.lemire.integercompression;
 
-
 /**
  * Routine utility functions.
  * 
@@ -72,7 +71,9 @@ public final class Util {
     /**
      * Compute the maximum of the integer logarithms (ceil(log(x+1)) of a the
      * successive differences (deltas) of a range of value
-     * @param initoffset initial vallue for the computation of the deltas
+     * 
+     * @param initoffset
+     *            initial vallue for the computation of the deltas
      * @param i
      *            source array
      * @param pos
@@ -100,30 +101,33 @@ public final class Util {
     public static int bits(int i) {
         return 32 - Integer.numberOfLeadingZeros(i);
     }
-    
+
     protected static int packsize(int num, int b) {
-        if(b>16) return num;
-        int howmanyfit = 32/b;
-        return  (num + howmanyfit - 1)/ howmanyfit;
+        if (b > 16)
+            return num;
+        int howmanyfit = 32 / b;
+        return (num + howmanyfit - 1) / howmanyfit;
     }
-    
+
     protected static int pack(int[] outputarray, int arraypos, int[] data,
             int num, int b) {
-        if(num == 0) return arraypos;
+        if (num == 0)
+            return arraypos;
         if (b > 16) {
             System.arraycopy(data, 0, outputarray, arraypos, num);
             return num + arraypos;
         }
-        for(int k = 0 ; k < packsize(num, b); ++k) outputarray[k+arraypos] = 0;
+        for (int k = 0; k < packsize(num, b); ++k)
+            outputarray[k + arraypos] = 0;
         int inwordpointer = 0;
         for (int k = 0; k < num; ++k) {
             outputarray[arraypos] |= (data[k] << inwordpointer);
             inwordpointer += b;
-            final int increment =  ((inwordpointer + b - 1 ) >> 5);
+            final int increment = ((inwordpointer + b - 1) >> 5);
             arraypos += increment;
             inwordpointer &= ~(-increment);
         }
-        return arraypos + (inwordpointer>0?1:0);
+        return arraypos + (inwordpointer > 0 ? 1 : 0);
     }
 
     protected static int unpack(int[] sourcearray, int arraypos, int[] data,
@@ -138,22 +142,24 @@ public final class Util {
             data[k] = (sourcearray[arraypos] & mask);
             sourcearray[arraypos] >>>= b;
             inwordpointer += b;
-            final int increment =  ((inwordpointer + b - 1) >> 5);
+            final int increment = ((inwordpointer + b - 1) >> 5);
             arraypos += increment;
             inwordpointer &= ~(-increment);
         }
-        return arraypos + (inwordpointer>0?1:0);
+        return arraypos + (inwordpointer > 0 ? 1 : 0);
     }
+
     protected static int packsizew(int num, int b) {
-        int howmanyfit = 32/b;
-        if  (num <=  howmanyfit) return 1;
+        int howmanyfit = 32 / b;
+        if (num <= howmanyfit)
+            return 1;
         return num;
     }
-    
+
     protected static int packw(int[] outputarray, int arraypos, int[] data,
             int num, int b) {
-        int howmanyfit = 32/b;
-        if  (num >  howmanyfit)  {
+        int howmanyfit = 32 / b;
+        if (num > howmanyfit) {
             System.arraycopy(data, 0, outputarray, arraypos, num);
             return num + arraypos;
         }
@@ -168,8 +174,8 @@ public final class Util {
 
     protected static int unpackw(int[] sourcearray, int arraypos, int[] data,
             int num, int b) {
-        int howmanyfit = 32/b;
-        if  (num >  howmanyfit)  {
+        int howmanyfit = 32 / b;
+        if (num > howmanyfit) {
             System.arraycopy(sourcearray, arraypos, data, 0, num);
             return num + arraypos;
         }
@@ -182,12 +188,13 @@ public final class Util {
         return arraypos + 1;
     }
 
-    
     /**
      * return floor(value / factor) * factor
      * 
-     * @param value numerator
-     * @param factor denominator
+     * @param value
+     *            numerator
+     * @param factor
+     *            denominator
      * @return greatest multiple of factor no larger than value
      */
     public static int greatestMultiple(int value, int factor) {

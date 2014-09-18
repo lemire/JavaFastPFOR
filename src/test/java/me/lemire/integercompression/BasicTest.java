@@ -24,7 +24,6 @@ import static org.junit.Assert.*;
 @SuppressWarnings({ "static-method" })
 public class BasicTest {
     IntegerCODEC[] codecs = {
-            new Composition(new SkippableFastPFOR(), new VariableByte()),
             new IntegratedComposition(new IntegratedBinaryPacking(),
                     new IntegratedVariableByte()),
             new JustCopy(),

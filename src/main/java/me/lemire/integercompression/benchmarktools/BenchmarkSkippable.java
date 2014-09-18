@@ -19,7 +19,6 @@ import me.lemire.integercompression.OptPFDS9;
 import me.lemire.integercompression.Simple16;
 import me.lemire.integercompression.Simple9;
 import me.lemire.integercompression.SkippableComposition;
-import me.lemire.integercompression.SkippableFastPFOR;
 import me.lemire.integercompression.SkippableIntegerCODEC;
 import me.lemire.integercompression.VariableByte;
 import me.lemire.integercompression.differential.Delta;
@@ -292,9 +291,7 @@ public class BenchmarkSkippable {
 
     static Object[] codecs = {
             new SkippableIntegratedComposition(new IntegratedBinaryPacking(),
-                    new IntegratedVariableByte()),
-            new SkippableComposition(new SkippableFastPFOR(),
-                    new VariableByte()), new JustCopy(), new VariableByte(),
+                    new IntegratedVariableByte()), new JustCopy(), new VariableByte(),
 
             new SkippableComposition(new BinaryPacking(), new VariableByte()),
             new SkippableComposition(new NewPFD(), new VariableByte()),

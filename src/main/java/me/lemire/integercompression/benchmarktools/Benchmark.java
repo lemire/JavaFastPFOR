@@ -24,7 +24,6 @@ import me.lemire.integercompression.OptPFD;
 import me.lemire.integercompression.OptPFDS16;
 import me.lemire.integercompression.OptPFDS9;
 import me.lemire.integercompression.Simple9;
-import me.lemire.integercompression.SkippableFastPFOR;
 import me.lemire.integercompression.VariableByte;
 import me.lemire.integercompression.differential.Delta;
 import me.lemire.integercompression.differential.IntegratedBinaryPacking;
@@ -500,12 +499,6 @@ public class Benchmark {
                                 repeat, true);
                         System.out.println();
                         
-                        testCodec(csvLog, sparsity, new Composition(new SkippableFastPFOR(), new VariableByte()), data, repeat,
-                                false);
-                        testCodec(csvLog, sparsity, new Composition(new SkippableFastPFOR(), new VariableByte()), data, repeat,
-                                false);
-                        testCodec(csvLog, sparsity, new Composition(new SkippableFastPFOR(), new VariableByte()), data, repeat,
-                                true);
                         
                         // TODO: support CSV log output.
                         testKamikaze(data, repeat, false);
