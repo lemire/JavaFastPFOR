@@ -19,6 +19,7 @@ import me.lemire.integercompression.OptPFDS9;
 import me.lemire.integercompression.Simple16;
 import me.lemire.integercompression.Simple9;
 import me.lemire.integercompression.SkippableComposition;
+import me.lemire.integercompression.SkippableFastPFOR;
 import me.lemire.integercompression.SkippableIntegerCODEC;
 import me.lemire.integercompression.VariableByte;
 import me.lemire.integercompression.differential.Delta;
@@ -82,12 +83,12 @@ public class BenchmarkSkippable {
             if (num > length - uncomppos.get())
                 num = length - uncomppos.get();
             int location = metadata[metapos++];
-           // System.out.println("location = "+location);
+            // System.out.println("location = "+location);
             int initvalue = metadata[metapos++];
             int outputlocation = uncomppos.get();
             if (location != compressedpos.get())
                 throw new RuntimeException("Bug " + location + " "
-                        + compressedpos.get()+ " codec "+c);
+                        + compressedpos.get() + " codec " + c);
             if (c instanceof SkippableIntegerCODEC) {
                 ((SkippableIntegerCODEC) c).headlessUncompress(compressed,
                         compressedpos, compressed.length - uncomppos.get(),
@@ -99,7 +100,7 @@ public class BenchmarkSkippable {
                 ((SkippableIntegratedIntegerCODEC) c).headlessUncompress(
                         compressed, compressedpos, compressed.length
                                 - uncomppos.get(), data, uncomppos, num, ival);
-               // System.out.println("compressedpos = "+compressedpos);
+                // System.out.println("compressedpos = "+compressedpos);
 
             } else {
                 throw new RuntimeException("Unrecognized codec " + c);
@@ -184,7 +185,7 @@ public class BenchmarkSkippable {
                         throw new RuntimeException(
                                 "Bad output size with codec " + c);
                     for (int j = 0; j < volume; ++j) {
-                        if (data[k][j] != decompressBuffer[j]) 
+                        if (data[k][j] != decompressBuffer[j])
                             throw new RuntimeException("bug in codec " + c);
                     }
                 }
@@ -208,7 +209,7 @@ public class BenchmarkSkippable {
                 // verify: compare original array with
                 // compressed and
                 // uncompressed.
-                for (int m = 0; m < outpos.get(); ++m) {
+               for (int m = 0; m < outpos.get(); ++m) {
                     if (decompressBuffer[m] != data[k][m]) {
                         throw new RuntimeException(
                                 "we have a bug (actual difference), expected "
@@ -290,12 +291,10 @@ public class BenchmarkSkippable {
     }
 
     static Object[] codecs = {
-        new IntegratedBinaryPacking(),
-        new IntegratedVariableByte(),
-        new SkippableIntegratedComposition(new IntegratedBinaryPacking(),
-                new IntegratedVariableByte()),
-        new JustCopy(),
-            new VariableByte(),
+            new SkippableIntegratedComposition(new IntegratedBinaryPacking(),
+                    new IntegratedVariableByte()),
+            new SkippableComposition(new SkippableFastPFOR(),
+                    new VariableByte()), new JustCopy(), new VariableByte(),
 
             new SkippableComposition(new BinaryPacking(), new VariableByte()),
             new SkippableComposition(new NewPFD(), new VariableByte()),
@@ -323,7 +322,7 @@ public class BenchmarkSkippable {
         csvLog.format("\"Algorithm\",\"Sparsity\",\"Bits per int\",\"Compress speed (MiS)\",\"Decompress speed (MiS)\"\n");
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
         final int max_sparsity = 31 - nbr;
-        
+
         for (int sparsity = 1; sparsity < max_sparsity; ++sparsity) {
             System.out.println("# sparsity " + sparsity);
             System.out.println("# generating random data...");

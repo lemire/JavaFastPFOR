@@ -10,11 +10,61 @@ import static org.junit.Assert.*;
  * Static utility methods for test.
  */
 public class TestUtils {
+    
     /**
      * 
      */
     @Test
-    public void bogus() {}// to avoid useless complaining.
+    public void testPacking() {
+        int[] outputarray = new int[32];
+       for(int b = 1; b < 32; ++b) {
+           int[] data = new int[32];
+           int[] newdata = new int[32];
+           int mask = (1<<b) -1;
+           for(int j = 0; j < data.length; ++j) {
+               data[j] = mask - (j % mask);
+           }
+           for(int n = 0; n <= 32; ++n) {
+               Arrays.fill(outputarray, 0);
+               int howmany = Util.pack(outputarray, 0, data, n, b);
+               if(howmany != Util.packsize(n, b)) throw new RuntimeException("bug "+n+" "+b);
+               Util.unpack(Arrays.copyOf(outputarray, howmany), 0, newdata, n, b);
+               for(int i = 0; i < n; ++i)
+                   if(newdata[i] != data[i]) {
+                       System.out.println(Arrays.toString(Arrays.copyOf(data, n)));
+                       System.out.println(Arrays.toString(Arrays.copyOf(newdata,n)));
+                       throw new RuntimeException("bug "+b+" "+n);
+                   }
+           }
+       }
+    }
+    /**
+     * 
+     */
+    @Test
+    public void testPackingw() {
+        int[] outputarray = new int[32];
+       for(int b = 1; b < 32; ++b) {
+           int[] data = new int[32];
+           int[] newdata = new int[32];
+           int mask = (1<<b) -1;
+           for(int j = 0; j < data.length; ++j) {
+               data[j] = mask - (j % mask);
+           }
+           for(int n = 0; n <= 32; ++n) {
+               Arrays.fill(outputarray, 0);
+               int howmany = Util.packw(outputarray, 0, data, n, b);
+               if(howmany != Util.packsizew(n, b)) throw new RuntimeException("bug "+n+" "+b);
+               Util.unpackw(Arrays.copyOf(outputarray, howmany), 0, newdata, n, b);
+               for(int i = 0; i < n; ++i)
+                   if(newdata[i] != data[i]) {
+                       System.out.println(Arrays.toString(Arrays.copyOf(data, n)));
+                       System.out.println(Arrays.toString(Arrays.copyOf(newdata,n)));
+                       throw new RuntimeException("bug "+b+" "+n);
+                   }
+           }
+       }
+    }
 
     protected static void dumpIntArray(int[] data, String label) {
         System.out.print(label);

@@ -24,6 +24,7 @@ import me.lemire.integercompression.OptPFD;
 import me.lemire.integercompression.OptPFDS16;
 import me.lemire.integercompression.OptPFDS9;
 import me.lemire.integercompression.Simple9;
+import me.lemire.integercompression.SkippableFastPFOR;
 import me.lemire.integercompression.VariableByte;
 import me.lemire.integercompression.differential.Delta;
 import me.lemire.integercompression.differential.IntegratedBinaryPacking;
@@ -145,6 +146,7 @@ public class Benchmark {
                                 // verify: compare original array with
                                 // compressed and
                                 // uncompressed.
+
                                 for (int m = 0; m < outpos.get(); ++m) {
                                         if (decompressBuffer[m] != data[k][m]) {
                                                 throw new RuntimeException(
@@ -486,6 +488,25 @@ public class Benchmark {
                         int[][] data = generateTestData(cdg, N, nbr, sparsity);
                         System.out.println("# generating random data... ok.");
 
+
+                        testCodec(csvLog, sparsity, new Composition(
+                                new FastPFOR(), new VariableByte()), data,
+                                repeat, false);
+                        testCodec(csvLog, sparsity, new Composition(
+                                new FastPFOR(), new VariableByte()), data,
+                                repeat, false);
+                        testCodec(csvLog, sparsity, new Composition(
+                                new FastPFOR(), new VariableByte()), data,
+                                repeat, true);
+                        System.out.println();
+                        
+                        testCodec(csvLog, sparsity, new Composition(new SkippableFastPFOR(), new VariableByte()), data, repeat,
+                                false);
+                        testCodec(csvLog, sparsity, new Composition(new SkippableFastPFOR(), new VariableByte()), data, repeat,
+                                false);
+                        testCodec(csvLog, sparsity, new Composition(new SkippableFastPFOR(), new VariableByte()), data, repeat,
+                                true);
+                        
                         // TODO: support CSV log output.
                         testKamikaze(data, repeat, false);
                         testKamikaze(data, repeat, false);
@@ -622,17 +643,6 @@ public class Benchmark {
                                         true);
                                 System.out.println();
                         }
-
-                        testCodec(csvLog, sparsity, new Composition(
-                                new FastPFOR(), new VariableByte()), data,
-                                repeat, false);
-                        testCodec(csvLog, sparsity, new Composition(
-                                new FastPFOR(), new VariableByte()), data,
-                                repeat, false);
-                        testCodec(csvLog, sparsity, new Composition(
-                                new FastPFOR(), new VariableByte()), data,
-                                repeat, true);
-                        System.out.println();
 
                         testCodec(csvLog, sparsity, new Simple9(), data,
                                 repeat, false);

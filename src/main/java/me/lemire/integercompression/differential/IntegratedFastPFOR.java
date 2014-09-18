@@ -53,7 +53,10 @@ import me.lemire.integercompression.Util;
  * @author Daniel Lemire
  */
 public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
-        final static int BLOCK_SIZE = 128;
+        /**
+         * 
+         */
+        public final static int BLOCK_SIZE = 128;
         final static int OVERHEAD_OF_EACH_EXCEPT = 8;
         final static int DEFAULT_PAGE_SIZE = 65536;
 
@@ -65,7 +68,7 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
         // Working area for compress and uncompress.
         int[] dataPointers;
         int[] freqs;
-        byte[] bestbbestcexceptmaxb;
+        int[] bestbbestcexceptmaxb = new int[3];
 
         /**
          * Construct the FastPFOR CODEC.
@@ -109,7 +112,6 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
                 // Allocate memory for working area.
                 dataPointers = new int[33];
                 freqs = new int[33];
-                bestbbestcexceptmaxb = new byte[3];
 
                 final int finalinpos = inpos.get() + inlength;
                 while (inpos.get() != finalinpos) {
@@ -120,7 +122,6 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
 
                 dataPointers = null;
                 freqs = null;
-                bestbbestcexceptmaxb = null;
         }
 
         private void getBestBFromData(int[] in, int pos) {
@@ -133,7 +134,7 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
                         bestbbestcexceptmaxb[0]--;
                 bestbbestcexceptmaxb[2] = bestbbestcexceptmaxb[0];
                 int bestcost = bestbbestcexceptmaxb[0] * BLOCK_SIZE;
-                byte cexcept = 0;
+                int cexcept = 0;
                 bestbbestcexceptmaxb[1] = cexcept;
                 for (int b = bestbbestcexceptmaxb[0] - 1; b >= 0; --b) {
                         cexcept += freqs[b + 1];
@@ -160,7 +161,6 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
 
                 // Clear working area.
                 Arrays.fill(dataPointers, 0);
-                // Arrays.fill(bestbbestcexceptmaxb, (byte)0);//DL:unncessary
                 byteContainer.clear();
 
                 int tmpconstinpos = constinpos.get();
@@ -170,11 +170,11 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
                                 BLOCK_SIZE, initoffset.intValue(), buffer));
                         getBestBFromData(buffer, 0);
                         final int tmpbestb = bestbbestcexceptmaxb[0];
-                        byteContainer.put(bestbbestcexceptmaxb[0]);
-                        byteContainer.put(bestbbestcexceptmaxb[1]);
+                        byteContainer.put((byte)bestbbestcexceptmaxb[0]);
+                        byteContainer.put((byte)bestbbestcexceptmaxb[1]);
 
                         if (bestbbestcexceptmaxb[1] > 0) {
-                                byteContainer.put(bestbbestcexceptmaxb[2]);
+                                byteContainer.put((byte)bestbbestcexceptmaxb[2]);
                                 final int index = bestbbestcexceptmaxb[2]
                                         - bestbbestcexceptmaxb[0];
                                 if (dataPointers[index]
@@ -289,18 +289,18 @@ public final class IntegratedFastPFOR implements IntegratedIntegerCODEC {
                 int tmpinpos = inpos.get();
 
                 for (int run = 0, run_end = thissize / BLOCK_SIZE; run < run_end; ++run, tmpoutpos += BLOCK_SIZE) {
-                        final byte b = byteContainer.get();
-                        final byte cexcept = byteContainer.get();
+                        final int b = byteContainer.get();
+                        final int cexcept = byteContainer.get() & 0xFF;
                         for (int k = 0; k < 128; k += 32) {
                                 BitPacking.fastunpack(in, tmpinpos, out,
                                         tmpoutpos + k, b);
                                 tmpinpos += b;
                         }
                         if (cexcept > 0) {
-                                final byte maxbits = byteContainer.get();
+                                final int  maxbits = byteContainer.get();
                                 final int index = maxbits - b;
                                 for (int k = 0; k < cexcept; ++k) {
-                                        final byte pos = byteContainer.get();
+                                        final int  pos = byteContainer.get() & 0xFF;
                                         final int exceptvalue = dataTobePacked[index][dataPointers[index]++];
                                         out[pos + tmpoutpos] |= exceptvalue << b;
                                 }

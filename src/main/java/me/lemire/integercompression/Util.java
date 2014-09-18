@@ -6,6 +6,8 @@
  */
 package me.lemire.integercompression;
 
+import java.util.Arrays;
+
 /**
  * Routine utility functions.
  * 
@@ -99,7 +101,89 @@ public final class Util {
     public static int bits(int i) {
         return 32 - Integer.numberOfLeadingZeros(i);
     }
+    
+    protected static int packsize(int num, int b) {
+        if(b>16) return num;
+        int howmanyfit = 32/b;
+        return  (num + howmanyfit - 1)/ howmanyfit;
+    }
+    
+    protected static int pack(int[] outputarray, int arraypos, int[] data,
+            int num, int b) {
+        if(num == 0) return arraypos;
+        if (b > 16) {
+            System.arraycopy(data, 0, outputarray, arraypos, num);
+            return num + arraypos;
+        }
+        for(int k = 0 ; k < packsize(num, b); ++k) outputarray[k+arraypos] = 0;
+        int inwordpointer = 0;
+        for (int k = 0; k < num; ++k) {
+            outputarray[arraypos] |= (data[k] << inwordpointer);
+            inwordpointer += b;
+            final int increment =  ((inwordpointer + b - 1 ) >> 5);
+            arraypos += increment;
+            inwordpointer &= ~(-increment);
+        }
+        return arraypos + (inwordpointer>0?1:0);
+    }
 
+    protected static int unpack(int[] sourcearray, int arraypos, int[] data,
+            int num, int b) {
+        if (b > 16) {
+            System.arraycopy(sourcearray, arraypos, data, 0, num);
+            return num + arraypos;
+        }
+        final int mask = (1 << b) - 1;
+        int inwordpointer = 0;
+        for (int k = 0; k < num; ++k) {
+            data[k] = (sourcearray[arraypos] & mask);
+            sourcearray[arraypos] >>>= b;
+            inwordpointer += b;
+            final int increment =  ((inwordpointer + b - 1) >> 5);
+            arraypos += increment;
+            inwordpointer &= ~(-increment);
+        }
+        return arraypos + (inwordpointer>0?1:0);
+    }
+    protected static int packsizew(int num, int b) {
+        int howmanyfit = 32/b;
+        if  (num <=  howmanyfit) return 1;
+        return num;
+    }
+    
+    protected static int packw(int[] outputarray, int arraypos, int[] data,
+            int num, int b) {
+        int howmanyfit = 32/b;
+        if  (num >  howmanyfit)  {
+            System.arraycopy(data, 0, outputarray, arraypos, num);
+            return num + arraypos;
+        }
+        outputarray[arraypos] = 0;
+        int inwordpointer = 0;
+        for (int k = 0; k < num; ++k) {
+            outputarray[arraypos] |= (data[k] << inwordpointer);
+            inwordpointer += b;
+        }
+        return arraypos + 1;
+    }
+
+    protected static int unpackw(int[] sourcearray, int arraypos, int[] data,
+            int num, int b) {
+        int howmanyfit = 32/b;
+        if  (num >  howmanyfit)  {
+            System.arraycopy(sourcearray, arraypos, data, 0, num);
+            return num + arraypos;
+        }
+        final int mask = (1 << b) - 1;
+        int val = sourcearray[arraypos];
+        for (int k = 0; k < num; ++k) {
+            data[k] = (val & mask);
+            val >>>= b;
+        }
+        return arraypos + 1;
+    }
+
+    
     /**
      * return floor(value / factor) * factor
      * 

@@ -24,6 +24,7 @@ import static org.junit.Assert.*;
 @SuppressWarnings({ "static-method" })
 public class BasicTest {
     IntegerCODEC[] codecs = {
+            new Composition(new SkippableFastPFOR(), new VariableByte()),
             new IntegratedComposition(new IntegratedBinaryPacking(),
                     new IntegratedVariableByte()),
             new JustCopy(),
@@ -65,8 +66,11 @@ public class BasicTest {
                 int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
                 int[] answer = TestUtils.uncompress(c, comp, L);
                 for (int k = 0; k < L; ++k)
-                    if (answer[k] != data[k])
+                    if (answer[k] != data[k]) {
+                        System.out.println(Arrays.toString(Arrays.copyOf(answer, L)));
+                        System.out.println(Arrays.toString(Arrays.copyOf(data, L)));
                         throw new RuntimeException("bug");
+                    }
             }
 
         }
@@ -596,7 +600,7 @@ public class BasicTest {
         // proposed by Stefan Ackermann (https://github.com/Stivo)
         FastPFOR codec1 = new FastPFOR();
         FastPFOR codec2 = new FastPFOR();
-        int N = 128;
+        int N = FastPFOR.BLOCK_SIZE;
         int[] data = new int[N];
         for (int i = 0; i < N; i++)
             data[i] = 0;
@@ -617,7 +621,7 @@ public class BasicTest {
         // inspired by Stefan Ackermann (https://github.com/Stivo)
         IntegratedFastPFOR codec1 = new IntegratedFastPFOR();
         IntegratedFastPFOR codec2 = new IntegratedFastPFOR();
-        int N = 128;
+        int N = IntegratedFastPFOR.BLOCK_SIZE;
         int[] data = new int[N];
         for (int i = 0; i < N; i++)
             data[i] = 0;
