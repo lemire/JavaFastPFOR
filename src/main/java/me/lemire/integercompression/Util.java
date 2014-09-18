@@ -6,7 +6,6 @@
  */
 package me.lemire.integercompression;
 
-import java.util.Arrays;
 
 /**
  * Routine utility functions.
