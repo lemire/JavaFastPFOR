@@ -122,6 +122,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                         int thiscost = cexcept * OVERHEAD_OF_EACH_EXCEPT
                                 + cexcept * (bestbbestcexceptmaxb[2] - b) + b
                                 * BLOCK_SIZE + 8;
+                        if(bestbbestcexceptmaxb[2] - b == 1) thiscost -= cexcept;
                         if (thiscost < bestcost) {
                                 bestcost = thiscost;
                                 bestbbestcexceptmaxb[0] = b;
@@ -142,7 +143,6 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
 
                 int tmpinpos = inpos.get();
                 for (final int finalinpos = tmpinpos + thissize - BLOCK_SIZE; tmpinpos <= finalinpos; tmpinpos += BLOCK_SIZE) {
-
                     getBestBFromData(in, tmpinpos);
                         final int tmpbestb = bestbbestcexceptmaxb[0];
                         byteContainer.put((byte)bestbbestcexceptmaxb[0]);
@@ -187,17 +187,16 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                 byteContainer.asIntBuffer().get(out, tmpoutpos, howmanyints);
                 tmpoutpos += howmanyints;
                 int bitmap = 0;
-                for (int k = 1; k <= 32; ++k) {
+                for (int k = 2; k <= 32; ++k) {
                         if (dataPointers[k] != 0)
                                 bitmap |= (1 << (k - 1));
                 }
                 out[tmpoutpos++] = bitmap;
 
-                for (int k = 1; k <= 32; ++k) {
+                for (int k = 2; k <= 32; ++k) {
                         if (dataPointers[k] != 0) {
                                 out[tmpoutpos++] = dataPointers[k];// size
                                 int j = 0;
-
                                 for (; j + 31 < dataPointers[k]; j += 32) {
                                         BitPacking.fastpack(dataTobePacked[k],
                                                 j, out, tmpoutpos, k);
@@ -250,7 +249,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                 inexcept += (bytesize + 3)/ 4;
 
                 final int bitmap = in[inexcept++];
-                for (int k = 1; k <= 32; ++k) {
+                for (int k = 2; k <= 32; ++k) {
                         if ((bitmap & (1 << (k - 1))) != 0) {
                                 int size = in[inexcept++];
                                 if (dataTobePacked[k].length < size)
@@ -282,14 +281,20 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                                 tmpinpos += b;
                         }
                         if (cexcept > 0) {
-                                final int maxbits = byteContainer.get();
-                                final int index = maxbits - b;
+                            final int maxbits = byteContainer.get();
+                            final int index = maxbits - b;
+                            if(index == 1) {
                                 for (int k = 0; k < cexcept; ++k) {
-                                        final int pos = byteContainer.get() &0xFF;
-                                        final int exceptvalue = dataTobePacked[index][dataPointers[index]++];
-                                        out[pos + tmpoutpos] |= exceptvalue << b;
+                                    final int pos = byteContainer.get() &0xFF;
+                                    out[pos + tmpoutpos] |= 1 << b;
+                                }    
+                            } else {
+                                for (int k = 0; k < cexcept; ++k) {
+                                    final int pos = byteContainer.get() &0xFF;
+                                    final int exceptvalue = dataTobePacked[index][dataPointers[index]++];
+                                    out[pos + tmpoutpos] |= exceptvalue << b;
                                 }
-
+                            }
                         }
                 }
                 outpos.set(tmpoutpos);
