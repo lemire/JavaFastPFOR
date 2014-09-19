@@ -197,15 +197,17 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                         if (dataPointers[k] != 0) {
                                 out[tmpoutpos++] = dataPointers[k];// size
                                 int j = 0;
-                                for (; j + 31 < dataPointers[k]; j += 32) {
+                                for (; j < dataPointers[k]; j += 32) {
                                         BitPacking.fastpack(dataTobePacked[k],
                                                 j, out, tmpoutpos, k);
                                         tmpoutpos += k;
                                 }
-                                int leftover = dataPointers[k] % 32;
-                                if(leftover > 0) {
-                                    tmpoutpos =  Util.pack(out, tmpoutpos, dataTobePacked[k], j, leftover, k);
-                                }
+                                int overflow = j - dataPointers[k];
+                                tmpoutpos -= overflow * k / 32;
+                                //int leftover = dataPointers[k] % 32;
+                                //if(leftover > 0) {
+                                //    tmpoutpos =  Util.pack(out, tmpoutpos, dataTobePacked[k], j, leftover, k);
+                                //}
                         }
                 }
                 outpos.set(tmpoutpos);
@@ -257,14 +259,17 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                                                 .greatestMultiple(size + 31, 32)];
                                 int j = 0;
 
-                                for (; j + 31 < size; j += 32) {
+                                for (; j < size; j += 32) {
                                         BitPacking.fastunpack(in, inexcept,
                                                 dataTobePacked[k], j, k);
                                         inexcept += k;
                                 }
-                                int leftover = size % 32;
-                                if(size > 0)
-                                    inexcept = Util.unpack(in, inexcept, dataTobePacked[k], j, leftover, k);
+                                int overflow = j - size;
+                                inexcept -= overflow * k / 32;
+
+                                //int leftover = size % 32;
+                                //if(size > 0)
+                                //    inexcept = Util.unpack(in, inexcept, dataTobePacked[k], j, leftover, k);
 
                         }
                 }

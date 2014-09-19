@@ -7,6 +7,7 @@
 package me.lemire.integercompression.benchmarktools;
 
 import me.lemire.integercompression.BinaryPacking;
+import me.lemire.integercompression.CopyOfFastPFOR;
 import me.lemire.integercompression.FastPFOR;
 import me.lemire.integercompression.IntWrapper;
 import me.lemire.integercompression.JustCopy;
@@ -291,7 +292,8 @@ public class BenchmarkSkippable {
 
     static Object[] codecs = {
         new SkippableComposition(new FastPFOR(), new VariableByte()),
-
+        new SkippableComposition(new CopyOfFastPFOR(), new VariableByte()),
+        /*
             new SkippableIntegratedComposition(new IntegratedBinaryPacking(),
                     new IntegratedVariableByte()), new JustCopy(), new VariableByte(),
 
@@ -303,7 +305,7 @@ public class BenchmarkSkippable {
             new SkippableComposition(new OptPFDS9(), new VariableByte()),
             new SkippableComposition(new OptPFDS16(), new VariableByte()),
             new SkippableComposition(new FastPFOR(), new VariableByte()),
-            new Simple9(), new Simple16() };
+            new Simple9(), new Simple16()*/ };
 
     /**
      * Generates data and calls other tests.
@@ -322,7 +324,7 @@ public class BenchmarkSkippable {
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
         final int max_sparsity = 31 - nbr;
 
-        for (int sparsity = 1; sparsity < max_sparsity; ++sparsity) {
+        for (int sparsity = 1; sparsity < max_sparsity; sparsity+=4) {
             System.out.println("# sparsity " + sparsity);
             System.out.println("# generating random data...");
             int[][] data = generateTestData(cdg, N, nbr, sparsity);
@@ -331,6 +333,9 @@ public class BenchmarkSkippable {
                 testCodec(csvLog, sparsity, c, data, repeat, false);
                 testCodec(csvLog, sparsity, c, data, repeat, false);
                 testCodec(csvLog, sparsity, c, data, repeat, true);
+                testCodec(csvLog, sparsity, c, data, repeat, true);
+                testCodec(csvLog, sparsity, c, data, repeat, true);
+
             }
 
         }
