@@ -488,13 +488,23 @@ public class Benchmark {
 
 
                         testCodec(csvLog, sparsity, new Composition(
-                                new FastPFOR(), new VariableByte()), data,
+                                new FastPFOR(128), new VariableByte()), data,
                                 repeat, false);
                         testCodec(csvLog, sparsity, new Composition(
-                                new FastPFOR(), new VariableByte()), data,
+                                new FastPFOR(128), new VariableByte()), data,
                                 repeat, false);
                         testCodec(csvLog, sparsity, new Composition(
-                                new FastPFOR(), new VariableByte()), data,
+                                new FastPFOR(128), new VariableByte()), data,
+                                repeat, true);
+                        System.out.println();
+                        testCodec(csvLog, sparsity, new Composition(
+                                new FastPFOR(256), new VariableByte()), data,
+                                repeat, false);
+                        testCodec(csvLog, sparsity, new Composition(
+                                new FastPFOR(256), new VariableByte()), data,
+                                repeat, false);
+                        testCodec(csvLog, sparsity, new Composition(
+                                new FastPFOR(256), new VariableByte()), data,
                                 repeat, true);
                         System.out.println();
                         

@@ -33,7 +33,8 @@ public class BasicTest {
             new Composition(new NewPFDS16(), new VariableByte()),
             new Composition(new OptPFDS9(), new VariableByte()),
             new Composition(new OptPFDS16(), new VariableByte()),
-            new Composition(new FastPFOR(), new VariableByte()),
+            new Composition(new FastPFOR(128), new VariableByte()),
+            new Composition(new FastPFOR(256), new VariableByte()),
             new Simple9(),
             new Simple16(),
             new Composition(new XorBinaryPacking(), new VariableByte()),
@@ -302,7 +303,8 @@ public class BasicTest {
         testSpurious(new OptPFD());
         testSpurious(new OptPFDS9());
         testSpurious(new OptPFDS16());
-        testSpurious(new FastPFOR());
+        testSpurious(new FastPFOR(128));
+        testSpurious(new FastPFOR(256));
     }
 
     /**
@@ -319,7 +321,8 @@ public class BasicTest {
         testZeroInZeroOut(new OptPFD());
         testZeroInZeroOut(new OptPFDS9());
         testZeroInZeroOut(new OptPFDS16());
-        testZeroInZeroOut(new FastPFOR());
+        testZeroInZeroOut(new FastPFOR(128));
+        testZeroInZeroOut(new FastPFOR(256));
         testZeroInZeroOut(new VariableByte());
         testZeroInZeroOut(new Composition(new IntegratedBinaryPacking(),
                 new VariableByte()));
@@ -331,7 +334,8 @@ public class BasicTest {
         testZeroInZeroOut(new Composition(new OptPFD(), new VariableByte()));
         testZeroInZeroOut(new Composition(new OptPFDS9(), new VariableByte()));
         testZeroInZeroOut(new Composition(new OptPFDS16(), new VariableByte()));
-        testZeroInZeroOut(new Composition(new FastPFOR(), new VariableByte()));
+        testZeroInZeroOut(new Composition(new FastPFOR(128), new VariableByte()));
+        testZeroInZeroOut(new Composition(new FastPFOR(256), new VariableByte()));
 
         testZeroInZeroOut(new IntegratedComposition(
                 new IntegratedBinaryPacking(), new IntegratedVariableByte()));
@@ -413,8 +417,11 @@ public class BasicTest {
             testCodec(new Composition(new OptPFDS16(), new VariableByte()),
                     new Composition(new OptPFDS16(), new VariableByte()), data,
                     max);
-            testCodec(new Composition(new FastPFOR(), new VariableByte()),
-                    new Composition(new FastPFOR(), new VariableByte()), data,
+            testCodec(new Composition(new FastPFOR(128), new VariableByte()),
+                    new Composition(new FastPFOR(128), new VariableByte()), data,
+                    max);
+            testCodec(new Composition(new FastPFOR(256), new VariableByte()),
+                    new Composition(new FastPFOR(256), new VariableByte()), data,
                     max);
             testCodec(new Simple9(), new Simple9(), data, max);
         }
@@ -474,7 +481,8 @@ public class BasicTest {
         testUnsorted(new Composition(new OptPFD(), new VariableByte()));
         testUnsorted(new Composition(new OptPFDS9(), new VariableByte()));
         testUnsorted(new Composition(new OptPFDS16(), new VariableByte()));
-        testUnsorted(new Composition(new FastPFOR(), new VariableByte()));
+        testUnsorted(new Composition(new FastPFOR(128), new VariableByte()));
+        testUnsorted(new Composition(new FastPFOR(256), new VariableByte()));
 
         testUnsorted(new IntegratedComposition(new IntegratedBinaryPacking(),
                 new IntegratedVariableByte()));
@@ -490,7 +498,8 @@ public class BasicTest {
         testUnsorted2(new Composition(new OptPFD(), new VariableByte()));
         testUnsorted2(new Composition(new OptPFDS9(), new VariableByte()));
         testUnsorted2(new Composition(new OptPFDS16(), new VariableByte()));
-        testUnsorted2(new Composition(new FastPFOR(), new VariableByte()));
+        testUnsorted2(new Composition(new FastPFOR(128), new VariableByte()));
+        testUnsorted2(new Composition(new FastPFOR(256), new VariableByte()));
 
         testUnsorted3(new IntegratedComposition(new IntegratedBinaryPacking(),
                 new IntegratedVariableByte()));
@@ -505,7 +514,8 @@ public class BasicTest {
         testUnsorted3(new Composition(new OptPFD(), new VariableByte()));
         testUnsorted3(new Composition(new OptPFDS9(), new VariableByte()));
         testUnsorted3(new Composition(new OptPFDS16(), new VariableByte()));
-        testUnsorted3(new Composition(new FastPFOR(), new VariableByte()));
+        testUnsorted3(new Composition(new FastPFOR(128), new VariableByte()));
+        testUnsorted3(new Composition(new FastPFOR(256), new VariableByte()));
 
         testUnsorted2(new IntegratedComposition(new IntegratedBinaryPacking(),
                 new IntegratedVariableByte()));
@@ -588,19 +598,21 @@ public class BasicTest {
     @Test
     public void fastPforTest() {
         // proposed by Stefan Ackermann (https://github.com/Stivo)
-        FastPFOR codec1 = new FastPFOR();
-        FastPFOR codec2 = new FastPFOR();
-        int N = FastPFOR.BLOCK_SIZE;
-        int[] data = new int[N];
-        for (int i = 0; i < N; i++)
-            data[i] = 0;
-        data[126] = -1;
-        int[] comp = TestUtils.compress(codec1, Arrays.copyOf(data, N));
-        int[] answer = TestUtils.uncompress(codec2, comp, N);
-        for (int k = 0; k < N; ++k)
-            if (answer[k] != data[k])
-                throw new RuntimeException("bug " + k + " " + answer[k]
-                        + " != " + data[k]);
+        for(int n = 128; n<=256;n+=128) {
+            FastPFOR codec1 = new FastPFOR(n);
+            FastPFOR codec2 = new FastPFOR(n);
+            int N = codec1.blockSize;
+            int[] data = new int[N];
+            for (int i = 0; i < N; i++)
+                data[i] = 0;
+            data[126] = -1;
+            int[] comp = TestUtils.compress(codec1, Arrays.copyOf(data, N));
+            int[] answer = TestUtils.uncompress(codec2, comp, N);
+            for (int k = 0; k < N; ++k)
+                if (answer[k] != data[k])
+                    throw new RuntimeException("bug " + k + " " + answer[k]
+                            + " != " + data[k]);
+        }
     }
 
 }

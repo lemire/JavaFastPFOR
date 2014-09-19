@@ -16,8 +16,11 @@ public class AdhocTest
     @Test
     public void biggerCompressedArray0() {
         // No problem: for comparison.
-        IntegerCODEC c = new Composition(new FastPFOR(), new VariableByte());
+        IntegerCODEC c = new Composition(new FastPFOR(128), new VariableByte());
         assertSymmetry(c, 0, 16384);
+        c = new Composition(new FastPFOR(256), new VariableByte());
+        assertSymmetry(c, 0, 16384);
+
     }
 
     /**
@@ -36,7 +39,9 @@ public class AdhocTest
     @Test
     public void biggerCompressedArray2() {
         // Compressed array is bigger than original, because of Composition.
-        IntegerCODEC c = new Composition(new FastPFOR(), new VariableByte());
+        IntegerCODEC c = new Composition(new FastPFOR(128), new VariableByte());
+        assertSymmetry(c, 65535, 65535);
+        c = new Composition(new FastPFOR(256), new VariableByte());
         assertSymmetry(c, 65535, 65535);
     }
 

@@ -45,7 +45,7 @@ public class BenchmarkOffsettedSeries {
                         new DeltaZigzagBinaryPacking(),
                         new DeltaZigzagVariableByte(),
                         new IntegratedBinaryPacking(), new XorBinaryPacking(),
-                        new FastPFOR(), };
+                        new FastPFOR(128), new FastPFOR(256)};
 
                 csvWriter
                         .format("\"Dataset\",\"CODEC\",\"Bits per int\","
@@ -60,7 +60,7 @@ public class BenchmarkOffsettedSeries {
                         new DeltaZigzagBinaryPacking(),
                         new DeltaZigzagVariableByte(),
                         new IntegratedBinaryPacking(), new XorBinaryPacking(),
-                        new FastPFOR(), };
+                        new FastPFOR(128),new FastPFOR(256), };
 
                 int freq = length / 4;
                 benchmarkSine(csvWriter, codecs2, count, length,
