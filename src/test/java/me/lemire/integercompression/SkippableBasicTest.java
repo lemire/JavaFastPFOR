@@ -22,8 +22,8 @@ public class SkippableBasicTest {
             new SkippableComposition(new OptPFD(), new VariableByte()),
             new SkippableComposition(new OptPFDS9(), new VariableByte()),
             new SkippableComposition(new OptPFDS16(), new VariableByte()),
-            new SkippableComposition(new FastPFOR(128), new VariableByte()),
-            new SkippableComposition(new FastPFOR(256), new VariableByte()),
+            new SkippableComposition(new FastPFOR128(), new VariableByte()),
+            new SkippableComposition(new FastPFOR(), new VariableByte()),
             new Simple9(),
             new Simple16() };
 

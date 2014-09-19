@@ -13,6 +13,7 @@ import me.lemire.integercompression.BinaryPacking;
 import me.lemire.integercompression.DeltaZigzagBinaryPacking;
 import me.lemire.integercompression.DeltaZigzagVariableByte;
 import me.lemire.integercompression.FastPFOR;
+import me.lemire.integercompression.FastPFOR128;
 import me.lemire.integercompression.IntWrapper;
 import me.lemire.integercompression.IntegerCODEC;
 import me.lemire.integercompression.JustCopy;
@@ -45,7 +46,7 @@ public class BenchmarkOffsettedSeries {
                         new DeltaZigzagBinaryPacking(),
                         new DeltaZigzagVariableByte(),
                         new IntegratedBinaryPacking(), new XorBinaryPacking(),
-                        new FastPFOR(128), new FastPFOR(256)};
+                        new FastPFOR128(), new FastPFOR()};
 
                 csvWriter
                         .format("\"Dataset\",\"CODEC\",\"Bits per int\","
@@ -60,7 +61,7 @@ public class BenchmarkOffsettedSeries {
                         new DeltaZigzagBinaryPacking(),
                         new DeltaZigzagVariableByte(),
                         new IntegratedBinaryPacking(), new XorBinaryPacking(),
-                        new FastPFOR(128),new FastPFOR(256), };
+                        new FastPFOR128(),new FastPFOR(), };
 
                 int freq = length / 4;
                 benchmarkSine(csvWriter, codecs2, count, length,

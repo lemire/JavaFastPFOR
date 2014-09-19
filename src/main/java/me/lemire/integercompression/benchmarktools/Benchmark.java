@@ -14,6 +14,7 @@ import me.lemire.integercompression.Composition;
 import me.lemire.integercompression.DeltaZigzagBinaryPacking;
 import me.lemire.integercompression.DeltaZigzagVariableByte;
 import me.lemire.integercompression.FastPFOR;
+import me.lemire.integercompression.FastPFOR128;
 import me.lemire.integercompression.IntWrapper;
 import me.lemire.integercompression.IntegerCODEC;
 import me.lemire.integercompression.JustCopy;
@@ -488,23 +489,23 @@ public class Benchmark {
 
 
                         testCodec(csvLog, sparsity, new Composition(
-                                new FastPFOR(128), new VariableByte()), data,
+                                new FastPFOR128(), new VariableByte()), data,
                                 repeat, false);
                         testCodec(csvLog, sparsity, new Composition(
-                                new FastPFOR(128), new VariableByte()), data,
+                                new FastPFOR128(), new VariableByte()), data,
                                 repeat, false);
                         testCodec(csvLog, sparsity, new Composition(
-                                new FastPFOR(128), new VariableByte()), data,
+                                new FastPFOR128(), new VariableByte()), data,
                                 repeat, true);
                         System.out.println();
                         testCodec(csvLog, sparsity, new Composition(
-                                new FastPFOR(256), new VariableByte()), data,
+                                new FastPFOR(), new VariableByte()), data,
                                 repeat, false);
                         testCodec(csvLog, sparsity, new Composition(
-                                new FastPFOR(256), new VariableByte()), data,
+                                new FastPFOR(), new VariableByte()), data,
                                 repeat, false);
                         testCodec(csvLog, sparsity, new Composition(
-                                new FastPFOR(256), new VariableByte()), data,
+                                new FastPFOR(), new VariableByte()), data,
                                 repeat, true);
                         System.out.println();
                         

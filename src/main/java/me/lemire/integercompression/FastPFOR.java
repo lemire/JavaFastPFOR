@@ -60,15 +60,11 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
 
         /**
          * Construct the FastPFOR CODEC.
-         * @param BlockSize block size (should be 128 or 256 integers)
          * 
          * @param pagesize
          *                the desired page size (recommended value is FastPFOR.DEFAULT_PAGE_SIZE)
          */
-        public FastPFOR(int BlockSize, int pagesize) {
-            if((BlockSize != 128) && (BlockSize != 256))
-                throw new IllegalArgumentException(" block size should be 128 or 256");
-            //blockSize = BlockSize;
+        private FastPFOR(int pagesize) {
             pageSize = pagesize;
             // Initiate arrrays.
             byteContainer = ByteBuffer.allocateDirect(3 * pageSize
@@ -76,19 +72,12 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
             for (int k = 1; k < dataTobePacked.length; ++k)
                 dataTobePacked[k] = new int[pageSize / 32 * 4]; // heuristic
         }
-        /**
-         * Construct the fastPFOR CODEC with specified block size .
-         * @param BlockSize block size (should be 128 or 256 integers)
-         */
-        public FastPFOR(int BlockSize) {
-                this(BlockSize, DEFAULT_PAGE_SIZE);
-        }
 
         /**
          * Construct the fastPFOR CODEC with default parameters.
          */
         public FastPFOR() {
-                this(DEFAULT_BLOCK_SIZE, DEFAULT_PAGE_SIZE);
+                this( DEFAULT_PAGE_SIZE);
         }
 
         /**
@@ -350,6 +339,6 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
         }
         @Override
         public String toString() {
-                return this.getClass().getSimpleName()+blockSize;
+                return this.getClass().getSimpleName();
         }
 }

@@ -8,6 +8,7 @@ package me.lemire.integercompression.benchmarktools;
 
 import me.lemire.integercompression.BinaryPacking;
 import me.lemire.integercompression.FastPFOR;
+import me.lemire.integercompression.FastPFOR128;
 import me.lemire.integercompression.IntWrapper;
 import me.lemire.integercompression.JustCopy;
 import me.lemire.integercompression.NewPFD;
@@ -290,8 +291,8 @@ public class BenchmarkSkippable {
     }
 
     static Object[] codecs = {
-        new SkippableComposition(new FastPFOR(128), new VariableByte()),
-        new SkippableComposition(new FastPFOR(256), new VariableByte()),
+        new SkippableComposition(new FastPFOR128(), new VariableByte()),
+        new SkippableComposition(new FastPFOR(), new VariableByte()),
         new SkippableComposition(new OptPFD(), new VariableByte()),
         /*
             new SkippableIntegratedComposition(new IntegratedBinaryPacking(),
