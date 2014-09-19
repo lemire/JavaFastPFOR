@@ -204,10 +204,6 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                                 }
                                 int overflow = j - dataPointers[k];
                                 tmpoutpos -= overflow * k / 32;
-                                //int leftover = dataPointers[k] % 32;
-                                //if(leftover > 0) {
-                                //    tmpoutpos =  Util.pack(out, tmpoutpos, dataTobePacked[k], j, leftover, k);
-                                //}
                         }
                 }
                 outpos.set(tmpoutpos);
@@ -266,11 +262,6 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                                 }
                                 int overflow = j - size;
                                 inexcept -= overflow * k / 32;
-
-                                //int leftover = size % 32;
-                                //if(size > 0)
-                                //    inexcept = Util.unpack(in, inexcept, dataTobePacked[k], j, leftover, k);
-
                         }
                 }
                 Arrays.fill(dataPointers, 0);
