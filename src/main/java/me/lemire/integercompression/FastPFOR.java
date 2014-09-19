@@ -48,15 +48,15 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
          */
         public final static int DEFAULT_BLOCK_SIZE = 256;
 
-        int blockSize;
-        int pageSize;
+        final int blockSize = DEFAULT_BLOCK_SIZE;
+        final int pageSize;
         final int[][] dataTobePacked = new int[33][];
         final ByteBuffer byteContainer;
 
         // Working area for compress and uncompress.
         int[] dataPointers;
         int[] freqs;
-        int[] bestbbestcexceptmaxb = new int[3];
+        final int[] bestbbestcexceptmaxb = new int[3];
 
         /**
          * Construct the FastPFOR CODEC.
@@ -68,7 +68,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
         public FastPFOR(int BlockSize, int pagesize) {
             if((BlockSize != 128) && (BlockSize != 256))
                 throw new IllegalArgumentException(" block size should be 128 or 256");
-            blockSize = BlockSize;
+            //blockSize = BlockSize;
             pageSize = pagesize;
             // Initiate arrrays.
             byteContainer = ByteBuffer.allocateDirect(3 * pageSize
