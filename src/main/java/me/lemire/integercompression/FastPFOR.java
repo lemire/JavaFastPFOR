@@ -192,13 +192,20 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                                 bitmap |= (1 << (k - 1));
                 }
                 out[tmpoutpos++] = bitmap;
+
                 for (int k = 1; k <= 32; ++k) {
                         if (dataPointers[k] != 0) {
                                 out[tmpoutpos++] = dataPointers[k];// size
-                                for (int j = 0; j < dataPointers[k]; j += 32) {
+                                int j = 0;
+
+                                for (; j + 31 < dataPointers[k]; j += 32) {
                                         BitPacking.fastpack(dataTobePacked[k],
                                                 j, out, tmpoutpos, k);
                                         tmpoutpos += k;
+                                }
+                                int leftover = dataPointers[k] % 32;
+                                if(leftover > 0) {
+                                    tmpoutpos =  Util.pack(out, tmpoutpos, dataTobePacked[k], j, leftover, k);
                                 }
                         }
                 }
@@ -249,11 +256,17 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                                 if (dataTobePacked[k].length < size)
                                         dataTobePacked[k] = new int[Util
                                                 .greatestMultiple(size + 31, 32)];
-                                for (int j = 0; j < size; j += 32) {
+                                int j = 0;
+
+                                for (; j + 31 < size; j += 32) {
                                         BitPacking.fastunpack(in, inexcept,
                                                 dataTobePacked[k], j, k);
                                         inexcept += k;
                                 }
+                                int leftover = size % 32;
+                                if(size > 0)
+                                    inexcept = Util.unpack(in, inexcept, dataTobePacked[k], j, leftover, k);
+
                         }
                 }
                 Arrays.fill(dataPointers, 0);

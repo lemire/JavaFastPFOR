@@ -290,6 +290,8 @@ public class BenchmarkSkippable {
     }
 
     static Object[] codecs = {
+        new SkippableComposition(new FastPFOR(), new VariableByte()),
+
             new SkippableIntegratedComposition(new IntegratedBinaryPacking(),
                     new IntegratedVariableByte()), new JustCopy(), new VariableByte(),
 

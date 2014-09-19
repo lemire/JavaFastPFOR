@@ -109,19 +109,19 @@ public final class Util {
         return (num + howmanyfit - 1) / howmanyfit;
     }
 
-    protected static int pack(int[] outputarray, int arraypos, int[] data,
+    protected static int pack(int[] outputarray, int arraypos, int[] data, int datapos,
             int num, int b) {
         if (num == 0)
             return arraypos;
         if (b > 16) {
-            System.arraycopy(data, 0, outputarray, arraypos, num);
+            System.arraycopy(data, datapos, outputarray, arraypos, num);
             return num + arraypos;
         }
         for (int k = 0; k < packsize(num, b); ++k)
             outputarray[k + arraypos] = 0;
         int inwordpointer = 0;
         for (int k = 0; k < num; ++k) {
-            outputarray[arraypos] |= (data[k] << inwordpointer);
+            outputarray[arraypos] |= (data[k + datapos] << inwordpointer);
             inwordpointer += b;
             final int increment = ((inwordpointer + b - 1) >> 5);
             arraypos += increment;
@@ -130,7 +130,7 @@ public final class Util {
         return arraypos + (inwordpointer > 0 ? 1 : 0);
     }
 
-    protected static int unpack(int[] sourcearray, int arraypos, int[] data,
+    protected static int unpack(int[] sourcearray, int arraypos, int[] data, int datapos,
             int num, int b) {
         if (b > 16) {
             System.arraycopy(sourcearray, arraypos, data, 0, num);
@@ -139,8 +139,7 @@ public final class Util {
         final int mask = (1 << b) - 1;
         int inwordpointer = 0;
         for (int k = 0; k < num; ++k) {
-            data[k] = (sourcearray[arraypos] & mask);
-            sourcearray[arraypos] >>>= b;
+            data[k + datapos] = ((sourcearray[arraypos] >>> inwordpointer) & mask);
             inwordpointer += b;
             final int increment = ((inwordpointer + b - 1) >> 5);
             arraypos += increment;
