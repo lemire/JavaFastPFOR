@@ -16,7 +16,7 @@ import me.lemire.integercompression.Util;
  * You should only use this scheme on sorted arrays. Use BinaryPacking if you
  * have unsorted arrays.
  * 
- * It encodes integers in blocks of 128 integers. For arrays containing an
+ * It encodes integers in blocks of 32 integers. For arrays containing an
  * arbitrary number of integers, you should use it in conjunction with another
  * CODEC:
  * 
@@ -48,7 +48,7 @@ import me.lemire.integercompression.Util;
 public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
         SkippableIntegratedIntegerCODEC {
 
-    static final int BLOCK_SIZE = 128;
+    static final int BLOCK_SIZE = 32;
 
     @Override
     public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
@@ -58,36 +58,7 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
             return;
         out[outpos.get()] = inlength;
         outpos.increment();
-        int tmpoutpos = outpos.get();
-        int initoffset = 0;
-        for (int s = inpos.get(); s < inpos.get() + inlength; s += 32 * 4) {
-            final int mbits1 = Util.maxdiffbits(initoffset, in, s, 32);
-            int initoffset2 = in[s + 31];
-            final int mbits2 = Util.maxdiffbits(initoffset2, in, s + 32, 32);
-            int initoffset3 = in[s + 32 + 31];
-            final int mbits3 = Util
-                    .maxdiffbits(initoffset3, in, s + 2 * 32, 32);
-            int initoffset4 = in[s + 2 * 32 + 31];
-            final int mbits4 = Util
-                    .maxdiffbits(initoffset4, in, s + 3 * 32, 32);
-            out[tmpoutpos++] = (mbits1 << 24) | (mbits2 << 16) | (mbits3 << 8)
-                    | (mbits4);
-            IntegratedBitPacking.integratedpack(initoffset, in, s, out,
-                    tmpoutpos, mbits1);
-            tmpoutpos += mbits1;
-            IntegratedBitPacking.integratedpack(initoffset2, in, s + 32, out,
-                    tmpoutpos, mbits2);
-            tmpoutpos += mbits2;
-            IntegratedBitPacking.integratedpack(initoffset3, in, s + 2 * 32,
-                    out, tmpoutpos, mbits3);
-            tmpoutpos += mbits3;
-            IntegratedBitPacking.integratedpack(initoffset4, in, s + 3 * 32,
-                    out, tmpoutpos, mbits4);
-            tmpoutpos += mbits4;
-            initoffset = in[s + 3 * 32 + 31];
-        }
-        inpos.add(inlength);
-        outpos.set(tmpoutpos);
+        headlessCompress(in, inpos, inlength, out, outpos, new IntWrapper(0));
     }
 
     @Override
@@ -97,33 +68,7 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
             return;
         final int outlength = in[inpos.get()];
         inpos.increment();
-        int tmpinpos = inpos.get();
-        int initoffset = 0;
-        for (int s = outpos.get(); s < outpos.get() + outlength; s += 32 * 4) {
-            final int mbits1 = (in[tmpinpos] >>> 24);
-            final int mbits2 = (in[tmpinpos] >>> 16) & 0xFF;
-            final int mbits3 = (in[tmpinpos] >>> 8) & 0xFF;
-            final int mbits4 = (in[tmpinpos]) & 0xFF;
-            ++tmpinpos;
-            IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,
-                    out, s, mbits1);
-            tmpinpos += mbits1;
-            initoffset = out[s + 31];
-            IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,
-                    out, s + 32, mbits2);
-            tmpinpos += mbits2;
-            initoffset = out[s + 32 + 31];
-            IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,
-                    out, s + 2 * 32, mbits3);
-            tmpinpos += mbits3;
-            initoffset = out[s + 2 * 32 + 31];
-            IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,
-                    out, s + 3 * 32, mbits4);
-            tmpinpos += mbits4;
-            initoffset = out[s + 3 * 32 + 31];
-        }
-        outpos.add(outlength);
-        inpos.set(tmpinpos);
+        headlessUncompress(in,inpos,inlength,out,outpos,outlength, new IntWrapper(0));
     }
 
     @Override
@@ -140,8 +85,8 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
         int tmpoutpos = outpos.get();
         int initoffset = initvalue.get();
         initvalue.set(in[inpos.get()+inlength -1]);
-
-        for (int s = inpos.get(); s < inpos.get() + inlength; s += 32 * 4) {
+        int s = inpos.get();
+        for (; s + BLOCK_SIZE * 4 - 1 < inpos.get() + inlength; s += BLOCK_SIZE * 4) {
             final int mbits1 = Util.maxdiffbits(initoffset, in, s, 32);
             int initoffset2 = in[s + 31];
             final int mbits2 = Util.maxdiffbits(initoffset2, in, s + 32, 32);
@@ -167,6 +112,15 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
             tmpoutpos += mbits4;
             initoffset = in[s + 3 * 32 + 31];
         }
+        for (; s < inpos.get() + inlength; s += BLOCK_SIZE ) {
+            
+            final int mbits = Util.maxdiffbits(initoffset, in, s, 32);
+            out[tmpoutpos++] = mbits;
+            IntegratedBitPacking.integratedpack(initoffset, in, s, out,
+                    tmpoutpos, mbits);
+            tmpoutpos += mbits;
+            initoffset = in[s + 31];
+        }
         inpos.add(inlength);
         outpos.set(tmpoutpos);
     }
@@ -177,7 +131,8 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
         final int outlength = num;
         int tmpinpos = inpos.get();
         int initoffset = initvalue.get();
-        for (int s = outpos.get(); s < outpos.get() + outlength; s += 32 * 4) {
+        int s = outpos.get();
+        for (; s + BLOCK_SIZE * 4 - 1 < outpos.get() + outlength; s += BLOCK_SIZE * 4) {
             final int mbits1 = (in[tmpinpos] >>> 24);
             final int mbits2 = (in[tmpinpos] >>> 16) & 0xFF;
             final int mbits3 = (in[tmpinpos] >>> 8) & 0xFF;
@@ -200,9 +155,17 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
             tmpinpos += mbits4;
             initoffset = out[s + 3 * 32 + 31];
         }
-        outpos.add(outlength);
-        initvalue.set(out[outpos.get()-1]);
-        inpos.set(tmpinpos);
+        for (; s < outpos.get() + outlength; s += BLOCK_SIZE) {
+            final int mbits = in[tmpinpos];
+            ++tmpinpos;
+            IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,
+                    out, s, mbits);
+            initoffset = out[s + 31];
 
+            tmpinpos += mbits;
+        }
+        outpos.add(outlength);
+        initvalue.set(initoffset);
+        inpos.set(tmpinpos);
     }
 }

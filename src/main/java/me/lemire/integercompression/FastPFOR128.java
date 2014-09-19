@@ -29,18 +29,17 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
         /**
          * 
          */
-        public final static int DEFAULT_BLOCK_SIZE = 256;
+        public final static int BLOCK_SIZE = 128;
 
-        final int blockSize = DEFAULT_BLOCK_SIZE;
         final int pageSize;
         final int[][] dataTobePacked = new int[33][];
         final ByteBuffer byteContainer;
 
         // Working area for compress and uncompress.
-        int[] dataPointers;
-        int[] freqs;
+        final int[] dataPointers = new int[33];
+        final int[] freqs = new int[33];
         final int[] bestbbestcexceptmaxb = new int[3];
-
+       
         /**
          * Construct the FastPFOR CODEC.
          * 
@@ -51,7 +50,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
             pageSize = pagesize;
             // Initiate arrrays.
             byteContainer = ByteBuffer.allocateDirect(3 * pageSize
-                    / blockSize + pageSize);
+                    / BLOCK_SIZE + pageSize);
             for (int k = 1; k < dataTobePacked.length; ++k)
                 dataTobePacked[k] = new int[pageSize / 32 * 4]; // heuristic
         }
@@ -71,46 +70,35 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
         @Override
         public void headlessCompress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos) {
-                inlength = Util.greatestMultiple(inlength, blockSize);
-                if (inlength == 0)
-                        return;
-
-
-                // Allocate memory for working area.
-                dataPointers = new int[33];
-                freqs = new int[33];
-
+                inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
                 final int finalinpos = inpos.get() + inlength;
                 while (inpos.get() != finalinpos) {
                         int thissize = Math.min(pageSize,
                                 finalinpos - inpos.get());
                         encodePage(in, inpos, thissize, out, outpos);
                 }
-
-                dataPointers = null;
-                freqs = null;
         }
 
         private void getBestBFromData(int[] in, int pos) {
                 Arrays.fill(freqs, 0);
-                for (int k = pos, k_end = pos + blockSize; k < k_end; ++k) {
+                for (int k = pos, k_end = pos + BLOCK_SIZE; k < k_end; ++k) {
                         freqs[Util.bits(in[k])]++;
                 }
                 bestbbestcexceptmaxb[0] = 32;
                 while (freqs[bestbbestcexceptmaxb[0]] == 0)
                         bestbbestcexceptmaxb[0]--;
                 bestbbestcexceptmaxb[2] = bestbbestcexceptmaxb[0];
-                int bestcost = bestbbestcexceptmaxb[0] * blockSize;
+                int bestcost = bestbbestcexceptmaxb[0] * BLOCK_SIZE;
                 int cexcept = 0;
                 bestbbestcexceptmaxb[1] = cexcept;
                 for (int b = bestbbestcexceptmaxb[0] - 1; b >= 0; --b) {
                         cexcept += freqs[b + 1];
-                        if (cexcept == blockSize)
+                        if (cexcept == BLOCK_SIZE)
                                 break;
                         // the extra 8 is the cost of storing maxbits
                         int thiscost = cexcept * OVERHEAD_OF_EACH_EXCEPT
                                 + cexcept * (bestbbestcexceptmaxb[2] - b) + b
-                                * blockSize + 8;
+                                * BLOCK_SIZE + 8;
                         if(bestbbestcexceptmaxb[2] - b == 1) thiscost -= cexcept;
                         if (thiscost < bestcost) {
                                 bestcost = thiscost;
@@ -131,7 +119,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
                 byteContainer.clear();
 
                 int tmpinpos = inpos.get();
-                for (final int finalinpos = tmpinpos + thissize - blockSize; tmpinpos <= finalinpos; tmpinpos += blockSize) {
+                for (final int finalinpos = tmpinpos + thissize - BLOCK_SIZE; tmpinpos <= finalinpos; tmpinpos += BLOCK_SIZE) {
                     getBestBFromData(in, tmpinpos);
                         final int tmpbestb = bestbbestcexceptmaxb[0];
                         byteContainer.put((byte)bestbbestcexceptmaxb[0]);
@@ -149,7 +137,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
                                         dataTobePacked[index] = Arrays.copyOf(
                                                 dataTobePacked[index], newsize);
                                 }
-                                for (int k = 0; k < blockSize; ++k) {
+                                for (int k = 0; k < BLOCK_SIZE; ++k) {
                                         if ((in[k + tmpinpos] >>> bestbbestcexceptmaxb[0]) != 0) {
                                                 // we have an exception
                                                 byteContainer.put((byte) k);
@@ -159,7 +147,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
                                 }
 
                         }
-                        for (int k = 0; k < blockSize; k += 32) {
+                        for (int k = 0; k < BLOCK_SIZE; k += 32) {
                                 BitPacking.fastpack(in, tmpinpos + k, out,
                                         tmpoutpos, tmpbestb);
                                 tmpoutpos += tmpbestb;
@@ -210,18 +198,13 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
                 int[] out, IntWrapper outpos, int mynvalue) {
                 if (inlength == 0)
                         return;
-                mynvalue = Util.greatestMultiple(mynvalue, blockSize);
-
-                dataPointers = new int[33];
-
+                mynvalue = Util.greatestMultiple(mynvalue, BLOCK_SIZE);
                 int finalout = outpos.get() + mynvalue;
                 while (outpos.get() != finalout) {
                         int thissize = Math.min(pageSize,
                                 finalout - outpos.get());
                         decodePage(in, inpos, out, outpos, thissize);
                 }
-
-                dataPointers = null;
         }
 
         private void decodePage(int[] in, IntWrapper inpos, int[] out,
@@ -271,10 +254,10 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
                 int tmpoutpos = outpos.get();
                 int tmpinpos = inpos.get();
 
-                for (int run = 0, run_end = thissize / blockSize; run < run_end; ++run, tmpoutpos += blockSize) {
+                for (int run = 0, run_end = thissize / BLOCK_SIZE; run < run_end; ++run, tmpoutpos += BLOCK_SIZE) {
                         final int b = byteContainer.get();
                         final int cexcept = byteContainer.get() & 0xFF;
-                        for (int k = 0; k < blockSize; k += 32) {
+                        for (int k = 0; k < BLOCK_SIZE; k += 32) {
                                 BitPacking.fastunpack(in, tmpinpos, out,
                                         tmpoutpos + k, b);
                                 tmpinpos += b;
@@ -302,7 +285,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
         @Override
         public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                 IntWrapper outpos) {
-            inlength = Util.greatestMultiple(inlength,  blockSize);
+            inlength = Util.greatestMultiple(inlength,  BLOCK_SIZE);
             if (inlength == 0)
                     return;
             out[outpos.get()] = inlength;

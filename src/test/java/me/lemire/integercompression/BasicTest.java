@@ -348,7 +348,7 @@ public class BasicTest {
         int[] y = new int[0];
         IntWrapper i0 = new IntWrapper(0);
         IntWrapper i1 = new IntWrapper(0);
-        for (int inlength = 0; inlength < 128; ++inlength) {
+        for (int inlength = 0; inlength < 32; ++inlength) {
             c.compress(x, i0, inlength, y, i1);
             assertEquals(0, i1.intValue());
         }
@@ -531,7 +531,7 @@ public class BasicTest {
      *            provided codec
      */
     public void testUnsorted(IntegerCODEC codec) {
-        int[] lengths = { 133, 1333333 };
+        int[] lengths = { 133, 1026, 1333333 };
         for (int N : lengths) {
             int[] data = new int[N];
             // initialize the data (most will be small)
@@ -602,7 +602,7 @@ public class BasicTest {
         // proposed by Stefan Ackermann (https://github.com/Stivo)
         FastPFOR codec1 = new FastPFOR();
         FastPFOR codec2 = new FastPFOR();
-        int N = codec1.blockSize;
+        int N = FastPFOR.BLOCK_SIZE;
         int[] data = new int[N];
         for (int i = 0; i < N; i++)
             data[i] = 0;
@@ -623,7 +623,7 @@ public class BasicTest {
         // proposed by Stefan Ackermann (https://github.com/Stivo)
         FastPFOR128 codec1 = new FastPFOR128();
         FastPFOR128 codec2 = new FastPFOR128();
-        int N = codec1.blockSize;
+        int N = FastPFOR128.BLOCK_SIZE;
         int[] data = new int[N];
         for (int i = 0; i < N; i++)
             data[i] = 0;

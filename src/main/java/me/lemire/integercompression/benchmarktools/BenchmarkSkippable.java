@@ -100,8 +100,6 @@ public class BenchmarkSkippable {
                 ((SkippableIntegratedIntegerCODEC) c).headlessUncompress(
                         compressed, compressedpos, compressed.length
                                 - uncomppos.get(), data, uncomppos, num, ival);
-                // System.out.println("compressedpos = "+compressedpos);
-
             } else {
                 throw new RuntimeException("Unrecognized codec " + c);
             }
@@ -291,10 +289,7 @@ public class BenchmarkSkippable {
     }
 
     static Object[] codecs = {
-        new SkippableComposition(new FastPFOR128(), new VariableByte()),
-        new SkippableComposition(new FastPFOR(), new VariableByte()),
-        new SkippableComposition(new OptPFD(), new VariableByte()),
-        /*
+        
             new SkippableIntegratedComposition(new IntegratedBinaryPacking(),
                     new IntegratedVariableByte()), new JustCopy(), new VariableByte(),
 
@@ -306,7 +301,8 @@ public class BenchmarkSkippable {
             new SkippableComposition(new OptPFDS9(), new VariableByte()),
             new SkippableComposition(new OptPFDS16(), new VariableByte()),
             new SkippableComposition(new FastPFOR(), new VariableByte()),
-            new Simple9(), new Simple16()*/ };
+            new SkippableComposition(new FastPFOR128(), new VariableByte()),
+            new Simple9(), new Simple16() };
 
     /**
      * Generates data and calls other tests.

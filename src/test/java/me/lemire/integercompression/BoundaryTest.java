@@ -46,7 +46,13 @@ public class BoundaryTest {
         }
         assertArrayEquals(source, target);
     }
+    private static void around32(IntegerCODEC c) {
+        compressAndUncompress(31, c);
+        compressAndUncompress(32, c);
+        compressAndUncompress(33, c);
+    }
 
+    
     private static void around128(IntegerCODEC c) {
         compressAndUncompress(127, c);
         compressAndUncompress(128, c);
@@ -60,6 +66,7 @@ public class BoundaryTest {
     }
 
     private static void testBoundary(IntegerCODEC c) {
+        around32(c);
         around128(c);
         around256(c);
     }
