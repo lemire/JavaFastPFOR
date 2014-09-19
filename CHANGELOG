@@ -1,3 +1,7 @@
+0.1.1 (September 19th 2014)
+  - We now have two versions of FastPFOR (with blocks of 128 ints and 256 ints) and the format was streamlined.
+  - BinaryPacking and IntegratedBinaryPacking now use a block size of 32 (instead of 128). 
+
 0.1.0 (September 18th 2014)
   - Introduced skippable versions (for use in a search engine like Terrier)
 
