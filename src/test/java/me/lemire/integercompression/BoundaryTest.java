@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import me.lemire.integercompression.differential.IntegratedBinaryPacking;
 import me.lemire.integercompression.differential.IntegratedComposition;
-import me.lemire.integercompression.differential.IntegratedFastPFOR;
 import me.lemire.integercompression.differential.IntegratedVariableByte;
 
 import org.junit.Test;
@@ -73,9 +72,6 @@ public class BoundaryTest {
         IntegratedComposition c = new IntegratedComposition(
                 new IntegratedBinaryPacking(), new IntegratedVariableByte());
         testBoundary(c);
-        IntegratedComposition c2 = new IntegratedComposition(
-                new IntegratedFastPFOR(), new IntegratedVariableByte());
-        testBoundary(c2);
     }
 
     /**

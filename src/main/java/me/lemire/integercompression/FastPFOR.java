@@ -250,18 +250,32 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                 for (int k = 2; k <= 32; ++k) {
                         if ((bitmap & (1 << (k - 1))) != 0) {
                                 int size = in[inexcept++];
-                                if (dataTobePacked[k].length < size)
-                                        dataTobePacked[k] = new int[Util
-                                                .greatestMultiple(size + 31, 32)];
-                                int j = 0;
-
-                                for (; j < size; j += 32) {
+                                int roundedup = Util
+                                .greatestMultiple(size + 31, 32);
+                                if (dataTobePacked[k].length < roundedup)
+                                        dataTobePacked[k] = new int[roundedup];
+                                if(inexcept + roundedup/32*k <= in.length) {
+                                    int j = 0;
+                                    for (; j < size; j += 32) {
                                         BitPacking.fastunpack(in, inexcept,
                                                 dataTobePacked[k], j, k);
                                         inexcept += k;
+                                    }
+                                    int overflow = j - size;
+                                    inexcept -= overflow * k / 32;
+                                } else {
+                                    int j = 0;
+                                    int[] buf = new int[roundedup/32*k];
+                                    int initinexcept = inexcept;
+                                    System.arraycopy(in, inexcept, buf, 0, in.length - inexcept);
+                                    for (; j < size; j += 32) {
+                                        BitPacking.fastunpack(buf, inexcept-initinexcept,
+                                                dataTobePacked[k], j, k);
+                                        inexcept += k;
+                                    }
+                                    int overflow = j - size;
+                                    inexcept -= overflow * k / 32;
                                 }
-                                int overflow = j - size;
-                                inexcept -= overflow * k / 32;
                         }
                 }
                 Arrays.fill(dataPointers, 0);

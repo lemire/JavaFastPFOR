@@ -4,7 +4,6 @@ import me.lemire.integercompression.*;
 import me.lemire.integercompression.differential.IntegratedBinaryPacking;
 import me.lemire.integercompression.differential.IntegratedByteIntegerCODEC;
 import me.lemire.integercompression.differential.IntegratedComposition;
-import me.lemire.integercompression.differential.IntegratedFastPFOR;
 import me.lemire.integercompression.differential.IntegratedIntegerCODEC;
 import me.lemire.integercompression.differential.IntegratedVariableByte;
 
@@ -20,8 +19,6 @@ import java.util.Arrays;
  */
 public class BenchmarkCSV {
         static IntegratedIntegerCODEC codecs[] = {
-                new IntegratedComposition(new IntegratedFastPFOR(),
-                        new IntegratedVariableByte()),
                 new IntegratedComposition(new IntegratedBinaryPacking(),
                         new IntegratedVariableByte()) };
         static IntegratedByteIntegerCODEC bcodecs[] = { new IntegratedVariableByte() };

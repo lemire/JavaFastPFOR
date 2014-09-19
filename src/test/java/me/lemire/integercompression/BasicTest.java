@@ -6,7 +6,6 @@ import java.util.Random;
 import me.lemire.integercompression.differential.Delta;
 import me.lemire.integercompression.differential.IntegratedBinaryPacking;
 import me.lemire.integercompression.differential.IntegratedComposition;
-import me.lemire.integercompression.differential.IntegratedFastPFOR;
 import me.lemire.integercompression.differential.IntegratedIntegerCODEC;
 import me.lemire.integercompression.differential.IntegratedVariableByte;
 import me.lemire.integercompression.differential.XorBinaryPacking;
@@ -34,8 +33,6 @@ public class BasicTest {
             new Composition(new NewPFDS16(), new VariableByte()),
             new Composition(new OptPFDS9(), new VariableByte()),
             new Composition(new OptPFDS16(), new VariableByte()),
-            new IntegratedComposition(new IntegratedFastPFOR(),
-                    new IntegratedVariableByte()),
             new Composition(new FastPFOR(), new VariableByte()),
             new Simple9(),
             new Simple16(),
@@ -483,8 +480,6 @@ public class BasicTest {
                 new IntegratedVariableByte()));
         testUnsorted(new Composition(new IntegratedBinaryPacking(),
                 new VariableByte()));
-        testUnsorted(new IntegratedComposition(new IntegratedFastPFOR(),
-                new IntegratedVariableByte()));
 
         testUnsorted2(new VariableByte());
         testUnsorted2(new IntegratedVariableByte());
@@ -501,8 +496,6 @@ public class BasicTest {
                 new IntegratedVariableByte()));
         testUnsorted3(new Composition(new IntegratedBinaryPacking(),
                 new VariableByte()));
-        testUnsorted3(new IntegratedComposition(new IntegratedFastPFOR(),
-                new IntegratedVariableByte()));
         testUnsorted3(new VariableByte());
         testUnsorted3(new IntegratedVariableByte());
         testUnsorted3(new Composition(new BinaryPacking(), new VariableByte()));
@@ -518,8 +511,6 @@ public class BasicTest {
                 new IntegratedVariableByte()));
         testUnsorted2(new Composition(new IntegratedBinaryPacking(),
                 new VariableByte()));
-        testUnsorted2(new IntegratedComposition(new IntegratedFastPFOR(),
-                new IntegratedVariableByte()));
 
     }
 
@@ -600,27 +591,6 @@ public class BasicTest {
         FastPFOR codec1 = new FastPFOR();
         FastPFOR codec2 = new FastPFOR();
         int N = FastPFOR.BLOCK_SIZE;
-        int[] data = new int[N];
-        for (int i = 0; i < N; i++)
-            data[i] = 0;
-        data[126] = -1;
-        int[] comp = TestUtils.compress(codec1, Arrays.copyOf(data, N));
-        int[] answer = TestUtils.uncompress(codec2, comp, N);
-        for (int k = 0; k < N; ++k)
-            if (answer[k] != data[k])
-                throw new RuntimeException("bug " + k + " " + answer[k]
-                        + " != " + data[k]);
-    }
-
-    /**
-         * 
-         */
-    @Test
-    public void ifastPforTest() {
-        // inspired by Stefan Ackermann (https://github.com/Stivo)
-        IntegratedFastPFOR codec1 = new IntegratedFastPFOR();
-        IntegratedFastPFOR codec2 = new IntegratedFastPFOR();
-        int N = IntegratedFastPFOR.BLOCK_SIZE;
         int[] data = new int[N];
         for (int i = 0; i < N; i++)
             data[i] = 0;

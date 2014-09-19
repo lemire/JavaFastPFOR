@@ -29,7 +29,6 @@ import me.lemire.integercompression.differential.Delta;
 import me.lemire.integercompression.differential.IntegratedBinaryPacking;
 import me.lemire.integercompression.differential.IntegratedByteIntegerCODEC;
 import me.lemire.integercompression.differential.IntegratedComposition;
-import me.lemire.integercompression.differential.IntegratedFastPFOR;
 import me.lemire.integercompression.differential.IntegratedIntegerCODEC;
 import me.lemire.integercompression.differential.IntegratedVariableByte;
 import me.lemire.integercompression.differential.XorBinaryPacking;
@@ -624,18 +623,6 @@ public class Benchmark {
                                 repeat, true);
                         System.out.println();
 
-                        {
-                                IntegerCODEC c = new IntegratedComposition(
-                                        new IntegratedFastPFOR(),
-                                        new IntegratedVariableByte());
-                                testCodec(csvLog, sparsity, c, data, repeat,
-                                        false);
-                                testCodec(csvLog, sparsity, c, data, repeat,
-                                        false);
-                                testCodec(csvLog, sparsity, c, data, repeat,
-                                        true);
-                                System.out.println();
-                        }
 
                         testCodec(csvLog, sparsity, new Simple9(), data,
                                 repeat, false);

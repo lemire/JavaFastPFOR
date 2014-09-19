@@ -7,7 +7,6 @@
 package me.lemire.integercompression.benchmarktools;
 
 import me.lemire.integercompression.BinaryPacking;
-import me.lemire.integercompression.CopyOfFastPFOR;
 import me.lemire.integercompression.FastPFOR;
 import me.lemire.integercompression.IntWrapper;
 import me.lemire.integercompression.JustCopy;
