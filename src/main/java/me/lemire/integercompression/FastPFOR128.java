@@ -282,6 +282,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
                 outpos.set(tmpoutpos);
                 inpos.set(inexcept);
         }
+        
         @Override
         public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                 IntWrapper outpos) {
@@ -302,6 +303,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
             inpos.increment();
             headlessUncompress(in, inpos, inlength, out, outpos, outlength);
         }
+        
         @Override
         public String toString() {
                 return this.getClass().getSimpleName();

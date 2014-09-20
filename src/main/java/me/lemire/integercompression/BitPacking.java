@@ -144,13 +144,6 @@ public final class BitPacking {
                 default:
                         throw new IllegalArgumentException(
                                 "Unsupported bit width.");
-                        /**
-                         * @param in
-                         * @param inpos
-                         * @param out
-                         * @param outpos
-                         * @param bit
-                         */
                 }
         }
 
