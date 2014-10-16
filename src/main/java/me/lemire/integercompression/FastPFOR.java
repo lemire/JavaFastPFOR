@@ -62,6 +62,7 @@ public final class FastPFOR implements IntegerCODEC {
                 // Initiate arrrays.
                 byteContainer = ByteBuffer.allocateDirect(3 * pageSize
                         / BLOCK_SIZE + pageSize);
+                byteContainer.order(ByteOrder.LITTLE_ENDIAN);
                 for (int k = 1; k < dataTobePacked.length; ++k)
                         dataTobePacked[k] = new int[pageSize / 32 * 4]; // heuristic
         }
