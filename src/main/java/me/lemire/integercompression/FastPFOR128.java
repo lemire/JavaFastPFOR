@@ -7,6 +7,7 @@
 package me.lemire.integercompression;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Arrays;
 
 /**
@@ -51,6 +52,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
             // Initiate arrrays.
             byteContainer = ByteBuffer.allocateDirect(3 * pageSize
                     / BLOCK_SIZE + pageSize);
+            byteContainer.order(ByteOrder.LITTLE_ENDIAN);
             for (int k = 1; k < dataTobePacked.length; ++k)
                 dataTobePacked[k] = new int[pageSize / 32 * 4]; // heuristic
         }
