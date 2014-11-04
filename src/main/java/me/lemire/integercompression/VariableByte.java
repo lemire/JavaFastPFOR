@@ -155,12 +155,12 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
                 continue;
             }
             v = ((in[p + 2] & 0x7F) << 14) | v;
-            if ((in[p + 2] & 128) == 128) {
+            if (in[p + 2] < 0 ) {
                 p += 3;
                 continue;
             }
             v = ((in[p + 3] & 0x7F) << 21) | v;
-            if ((in[p + 3] & 128) == 128) {
+            if (in[p + 3] < 0) {
                 p += 4;
                 continue;
             }
@@ -186,7 +186,7 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
         int finaloutpos = num + tmpoutpos;
         for (int v = 0, shift = 0; tmpoutpos < finaloutpos;) {
             val = in[p];
-            int c = (byte) (val >>> s);
+            int c = val >>> s;
             s += 8;
             p += s>>5;
             s = s & 31;
