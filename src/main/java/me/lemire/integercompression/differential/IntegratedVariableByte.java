@@ -149,7 +149,7 @@ SkippableIntegratedIntegerCODEC  {
         int tmpoutpos = outpos.get();
         for (int v = 0;p < finalp; out[tmpoutpos++] = (initoffset = initoffset + v)) {
             v = in[p] & 0x7F;
-            if (in[p] <0 ) {
+            if (in[p] < 0 ) {
                 p+= 1;
                 continue;
             }
