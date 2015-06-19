@@ -59,7 +59,7 @@ the following code in your pom.xml file:
          <dependency>
 	     <groupId>me.lemire.integercompression</groupId>
 	     <artifactId>JavaFastPFOR</artifactId>
-	     <version>0.1.2</version>
+	     <version>0.1.3</version>
          </dependency>
      </dependencies>
 
@@ -88,7 +88,7 @@ Main contributors
 * Muraoka Taro, https://github.com/koron
 
 with contributions by 
-* the Terrier team (Matteo Catena, Craig Macdonald and Iadh Ounis)
+* the Terrier team (Matteo Catena, Craig Macdonald, Saúl Vargas and Iadh Ounis)
 * Di Wu, http://www.facebook.com/diwu1989
 * Stefan Ackermann, https://github.com/Stivo
 * Samit Roy, https://github.com/roysamit

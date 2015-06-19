@@ -36,21 +36,24 @@ public class IntegratedComposition implements IntegratedIntegerCODEC {
                 F2 = f2;
         }
 
+   
         @Override
         public void compress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos) {
-                if (inlength == 0)
-                        return;
-                final int init = inpos.get();
-                F1.compress(in, inpos, inlength, out, outpos);
-                if (outpos.get() == 0) {
-                        out[0] = 0;
-                        outpos.increment();
-                }
-                inlength -= inpos.get() - init;
-                F2.compress(in, inpos, inlength, out, outpos);
+            if (inlength == 0) {
+                return;
+            }
+            int inposInit = inpos.get();
+            int outposInit = outpos.get();
+            F1.compress(in, inpos, inlength, out, outpos);
+            if (outpos.get() == outposInit) {
+                out[outposInit] = 0;
+                outpos.increment();
+            }
+            inlength -= inpos.get() - inposInit;
+            F2.compress(in, inpos, inlength, out, outpos);
         }
-
+        
         @Override
         public void uncompress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos) {

@@ -1,3 +1,5 @@
+.classpath
+.project
 *.class
 *.csv
 tags

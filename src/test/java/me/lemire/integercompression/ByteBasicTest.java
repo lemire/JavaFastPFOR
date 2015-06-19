@@ -6,6 +6,8 @@ import me.lemire.integercompression.differential.IntegratedVariableByte;
 
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 
 /**
  * Just some basic sanity tests.
@@ -19,6 +21,32 @@ public class ByteBasicTest {
             new IntegratedVariableByte(),
          };
 
+	/**
+     * 
+     */
+	@Test
+	public void saulTest() {
+		for (ByteIntegerCODEC C : codecs) {
+			for (int x = 0; x < 50 * 4; ++x) {
+				int[] a = { 2, 3, 4, 5 };
+				byte[] b = new byte[90*4];
+				int[] c = new int[a.length];
+
+				IntWrapper aOffset = new IntWrapper(0);
+				IntWrapper bOffset = new IntWrapper(x);
+				C.compress(a, aOffset, a.length, b, bOffset);
+				int len = bOffset.get() - x;
+
+				bOffset.set(x);
+				IntWrapper cOffset = new IntWrapper(0);
+				C.uncompress(b, bOffset, len, c, cOffset);
+				if(!Arrays.equals(a, c)) {
+					System.out.println("Problem with "+C);
+				}
+				assertArrayEquals(a, c);
+			}
+		}
+	}
     /**
      * 
      */
