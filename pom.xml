@@ -1,30 +1,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>me.lemire.integercompression</groupId>
-    <artifactId>JavaFastPFOR</artifactId>
-    <version>0.1.4-SNAPSHOT</version>
-    <packaging>jar</packaging>
-
-    <properties>
-        <maven.compiler.source>1.5</maven.compiler.source>
-        <maven.compiler.target>1.5</maven.compiler.target>
-        <encoding>UTF-8</encoding>
-    </properties>
-	<licenses>
-	  <license>
-	    <name>Apache 2</name>
-	    <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-	    <distribution>repo</distribution>
-	    <comments>A business-friendly OSS license</comments>
-	  </license>
-	</licenses>
-	<scm>
-	  <connection>scm:git:git@github.com:lemire/JavaFastPFOR.git</connection>
-	  <url>scm:git:git@github.com:lemire/JavaFastPFOR.git</url>
-	  <developerConnection>scm:git:git@github.com:lemire/JavaFastPFOR.git</developerConnection>
-    </scm>
-      <developers>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>me.lemire.integercompression</groupId>
+  <artifactId>JavaFastPFOR</artifactId>
+  <version>0.1.4-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <properties>
+    <maven.compiler.source>1.5</maven.compiler.source>
+    <maven.compiler.target>1.5</maven.compiler.target>
+    <encoding>UTF-8</encoding>
+  </properties>
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:git:git@github.com:lemire/JavaFastPFOR.git</connection>
+    <url>scm:git:git@github.com:lemire/JavaFastPFOR.git</url>
+    <developerConnection>scm:git:git@github.com:lemire/JavaFastPFOR.git</developerConnection>
+  </scm>
+  <developers>
     <developer>
       <id>lemire</id>
       <name>Daniel Lemire</name>
@@ -43,52 +41,48 @@
       </properties>
     </developer>
   </developers>
-   <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.10</version>
-            <scope>test</scope>
-        </dependency>
-   </dependencies>
-   <issueManagement>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <issueManagement>
     <system>GitHub Issue Tracking</system>
     <url>https://github.com/lemire/JavaFastPFOR/issues</url>
   </issueManagement>
-     <parent>
+  <parent>
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
     <version>5</version>
   </parent>
-
-    <build>
+  <build>
     <plugins>
-    
-	   <plugin>
-			<groupId>org.apache.felix</groupId>
-			<artifactId>maven-bundle-plugin</artifactId>
-			<version>2.3.7</version>
-			<extensions>true</extensions>
-			<configuration>
-				<instructions>
-					<Export-Package>me.lemire.integercompression.*</Export-Package>
-					<Import-Package>*</Import-Package>
-				</instructions>
-			</configuration>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>2.3.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Export-Package>me.lemire.integercompression.*</Export-Package>
+            <Import-Package>*</Import-Package>
+          </instructions>
+        </configuration>
       </plugin>
-
-    		<plugin>
-  <groupId>org.codehaus.mojo</groupId>
-  <artifactId>exec-maven-plugin</artifactId>
-  <version>1.1</version>
-  <configuration>
-    <mainClass>me.lemire.integercompression.benchmarktools.Benchmark</mainClass>
-    <!--
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1</version>
+        <configuration>
+          <mainClass>me.lemire.integercompression.benchmarktools.Benchmark</mainClass>
+          <!--
     <mainClass>me.lemire.integercompression.benchmarktools.BenchmarkOffsettedSeries</mainClass>
     -->
-  </configuration>
-</plugin>
-
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
@@ -103,40 +97,38 @@
           </execution>
         </executions>
       </plugin>
-      
-    		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-javadoc-plugin</artifactId>
-			<version>2.8</version>
-
-			<executions>
-				<execution>
-					<id>attach-javadocs</id>
-					<goals>
-						<goal>jar</goal>
-					</goals>
-				</execution>
-			</executions>
-		</plugin>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-source-plugin</artifactId>
-			<version>2.1.2</version>
-			<executions>
-				<execution>
-					<id>attach-sources</id>
-					<goals>
-						<goal>jar</goal>
-					</goals>
-				</execution>
-			</executions>
-		</plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.8</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.2</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
-   <name>JavaFastPFOR</name>
-   <url>https://github.com/lemire/JavaFastPFOR/</url>
-   <description>
-It is a library to compress and uncompress arrays of integers 
+  <name>JavaFastPFOR</name>
+  <url>https://github.com/lemire/JavaFastPFOR/</url>
+  <description>
+It is a library to compress and uncompress arrays of integers
 very fast. The assumption is that most (but not all) values in
 your array use less than 32 bits. </description>
-</project>
+  </project>
