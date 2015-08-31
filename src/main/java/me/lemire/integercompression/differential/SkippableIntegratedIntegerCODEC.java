@@ -13,7 +13,8 @@ import me.lemire.integercompression.IntWrapper;
 /**
  * Interface describing a standard CODEC to compress integers. This is a
  * variation on the IntegerCODEC interface meant to be used for random access
- * and with integrated differential coding.
+ * and with integrated differential coding
+ * (i.e., given a large array, you can segment it and decode just the subarray you need).
  * 
  * The main differences are that we must specify the number of integers we wish to
  * decode as well as the initial value (for differential coding). This information 
