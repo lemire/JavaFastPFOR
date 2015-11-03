@@ -79,6 +79,16 @@ We found no library that implemented state-of-the-art integer coding techniques
 such as Binary Packing, NewPFD, OptPFD, Variable Byte, Simple 9 and so on in Java.
 We wrote one. 
 
+Thread safery 
+----
+
+Some codecs are thread-safe while others are not.
+For this reason, it is best to use one codec per thread.
+The memory usage of a codec instance is small in any case.
+
+Nevertheless, if you want to reuse codec instances, 
+note that by convention, unless the documentation of a codec specify
+that it is not thread-safe, then it can be assumed to be thread-safe.
 
 Authors
 -------

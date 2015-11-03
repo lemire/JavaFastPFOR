@@ -20,7 +20,7 @@ import java.util.Arrays;
  * 
  *  IntegerCODEC ic = new Composition(new FastPFOR(), new VariableByte()).
  * <p>
- * For details, please see
+ * For details, please see:
  * </p><p>
  * Daniel Lemire and Leonid Boytsov, Decoding billions of integers per second
  * through vectorization Software: Practice &amp; Experience
