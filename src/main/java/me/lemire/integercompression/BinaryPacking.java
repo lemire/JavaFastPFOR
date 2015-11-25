@@ -57,27 +57,27 @@ public final class BinaryPacking implements IntegerCODEC, SkippableIntegerCODEC 
             int tmpoutpos = outpos.get();
             int s = inpos.get();
             for (; s + BLOCK_SIZE * 4 - 1 < inpos.get() + inlength; s += BLOCK_SIZE * 4) {
-                final int mbits1 = Util.maxbits(in, s, 32);
-                final int mbits2 = Util.maxbits(in, s + 32, 32);
-                final int mbits3 = Util.maxbits(in, s + 2 * 32, 32);
-                final int mbits4 = Util.maxbits(in, s + 3 * 32, 32);
+                final int mbits1 = Util.maxbits(in, s, BLOCK_SIZE);
+                final int mbits2 = Util.maxbits(in, s + BLOCK_SIZE, BLOCK_SIZE);
+                final int mbits3 = Util.maxbits(in, s + 2 * BLOCK_SIZE, BLOCK_SIZE);
+                final int mbits4 = Util.maxbits(in, s + 3 * BLOCK_SIZE, BLOCK_SIZE);
                 out[tmpoutpos++] = (mbits1 << 24) | (mbits2 << 16)
                         | (mbits3 << 8) | (mbits4);
                 BitPacking.fastpackwithoutmask(in, s, out, tmpoutpos,
                         mbits1);
                 tmpoutpos += mbits1;
-                BitPacking.fastpackwithoutmask(in, s + 32, out,
+                BitPacking.fastpackwithoutmask(in, s + BLOCK_SIZE, out,
                         tmpoutpos, mbits2);
                 tmpoutpos += mbits2;
-                BitPacking.fastpackwithoutmask(in, s + 2 * 32, out,
+                BitPacking.fastpackwithoutmask(in, s + 2 * BLOCK_SIZE, out,
                         tmpoutpos, mbits3);
                 tmpoutpos += mbits3;
-                BitPacking.fastpackwithoutmask(in, s + 3 * 32, out,
+                BitPacking.fastpackwithoutmask(in, s + 3 * BLOCK_SIZE, out,
                         tmpoutpos, mbits4);
                 tmpoutpos += mbits4;
             }
             for (; s < inpos.get() + inlength; s += BLOCK_SIZE ) {
-                final int mbits = Util.maxbits(in, s, 32);
+                final int mbits = Util.maxbits(in, s, BLOCK_SIZE);
                 out[tmpoutpos++] = mbits;
                 BitPacking.fastpackwithoutmask(in, s, out, tmpoutpos,
                         mbits);
@@ -113,12 +113,12 @@ public final class BinaryPacking implements IntegerCODEC, SkippableIntegerCODEC 
                 BitPacking.fastunpack(in, tmpinpos, out, s, mbits1);
                 tmpinpos += mbits1;
                 BitPacking
-                .fastunpack(in, tmpinpos, out, s + 32, mbits2);
+                .fastunpack(in, tmpinpos, out, s + BLOCK_SIZE, mbits2);
                 tmpinpos += mbits2;
-                BitPacking.fastunpack(in, tmpinpos, out, s + 2 * 32,
+                BitPacking.fastunpack(in, tmpinpos, out, s + 2 * BLOCK_SIZE,
                         mbits3);
                 tmpinpos += mbits3;
-                BitPacking.fastunpack(in, tmpinpos, out, s + 3 * 32,
+                BitPacking.fastunpack(in, tmpinpos, out, s + 3 * BLOCK_SIZE,
                         mbits4);
                 tmpinpos += mbits4;
             }

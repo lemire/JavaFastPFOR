@@ -4,10 +4,23 @@ import java.util.*;
 
 public class example {
     public static void main(String[] args) {
+        superSimpleExample();
         unsortedExample();
         basicExample();
         advancedExample();
         headlessDemo();
+    }
+
+    public static void superSimpleExample() {
+        IntegratedIntCompressor iic = new IntegratedIntCompressor();
+        int[] data = new int[2342351];
+        for(int k = 0; k < data.length; ++k)
+          data[k] = k;
+        System.out.println("Compressing "+data.length+" integers using friendly interface");
+         int[] compressed = iic.compress(data);
+        int[] recov = iic.uncompress(compressed);
+        System.out.println("compressed from "+data.length*4/1024+"KB to "+compressed.length*4/1024+"KB");
+        if(!Arrays.equals(recov,data)) throw new RuntimeException("bug");          
     }
 
     public static void basicExample() {
@@ -221,3 +234,5 @@ public class example {
 
  }
 }
+
+

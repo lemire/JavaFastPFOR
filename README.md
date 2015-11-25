@@ -40,7 +40,16 @@ as well as in GMAP and GSNAP (http://research-pub.gene.com/gmap/).
 Usage
 ------
 
-See example.java.
+Really simple usage:
+
+```
+        IntegratedIntCompressor iic = new IntegratedIntCompressor();
+        int[] data = ... ; // to be compressed
+        int[] compressed = iic.compress(data); // compressed array
+        int[] recov = iic.uncompress(compressed); // equals to data
+```
+
+For more examples, see example.java.
 
 Some CODECs ("integrated codecs") assume that the integers are
 in sorted orders and use differential coding (they compress deltas). 
@@ -59,7 +68,7 @@ the following code in your pom.xml file:
          <dependency>
 	     <groupId>me.lemire.integercompression</groupId>
 	     <artifactId>JavaFastPFOR</artifactId>
-	     <version>0.1.3</version>
+	     <version>[0.1,)</version>
          </dependency>
      </dependencies>
 

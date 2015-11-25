@@ -87,34 +87,33 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
         initvalue.set(in[inpos.get()+inlength -1]);
         int s = inpos.get();
         for (; s + BLOCK_SIZE * 4 - 1 < inpos.get() + inlength; s += BLOCK_SIZE * 4) {
-            final int mbits1 = Util.maxdiffbits(initoffset, in, s, 32);
+            final int mbits1 = Util.maxdiffbits(initoffset, in, s, BLOCK_SIZE);
             int initoffset2 = in[s + 31];
-            final int mbits2 = Util.maxdiffbits(initoffset2, in, s + 32, 32);
-            int initoffset3 = in[s + 32 + 31];
+            final int mbits2 = Util.maxdiffbits(initoffset2, in, s + BLOCK_SIZE, BLOCK_SIZE);
+            int initoffset3 = in[s + BLOCK_SIZE + 31];
             final int mbits3 = Util
-                    .maxdiffbits(initoffset3, in, s + 2 * 32, 32);
-            int initoffset4 = in[s + 2 * 32 + 31];
+                    .maxdiffbits(initoffset3, in, s + 2 * BLOCK_SIZE, BLOCK_SIZE);
+            int initoffset4 = in[s + 2 * BLOCK_SIZE + 31];
             final int mbits4 = Util
-                    .maxdiffbits(initoffset4, in, s + 3 * 32, 32);
+                    .maxdiffbits(initoffset4, in, s + 3 * BLOCK_SIZE, BLOCK_SIZE);
             out[tmpoutpos++] = (mbits1 << 24) | (mbits2 << 16) | (mbits3 << 8)
                     | (mbits4);
             IntegratedBitPacking.integratedpack(initoffset, in, s, out,
                     tmpoutpos, mbits1);
             tmpoutpos += mbits1;
-            IntegratedBitPacking.integratedpack(initoffset2, in, s + 32, out,
+            IntegratedBitPacking.integratedpack(initoffset2, in, s + BLOCK_SIZE, out,
                     tmpoutpos, mbits2);
             tmpoutpos += mbits2;
-            IntegratedBitPacking.integratedpack(initoffset3, in, s + 2 * 32,
+            IntegratedBitPacking.integratedpack(initoffset3, in, s + 2 * BLOCK_SIZE,
                     out, tmpoutpos, mbits3);
             tmpoutpos += mbits3;
-            IntegratedBitPacking.integratedpack(initoffset4, in, s + 3 * 32,
+            IntegratedBitPacking.integratedpack(initoffset4, in, s + 3 * BLOCK_SIZE,
                     out, tmpoutpos, mbits4);
             tmpoutpos += mbits4;
-            initoffset = in[s + 3 * 32 + 31];
+            initoffset = in[s + 3 * BLOCK_SIZE + 31];
         }
         for (; s < inpos.get() + inlength; s += BLOCK_SIZE ) {
-            
-            final int mbits = Util.maxdiffbits(initoffset, in, s, 32);
+            final int mbits = Util.maxdiffbits(initoffset, in, s, BLOCK_SIZE);
             out[tmpoutpos++] = mbits;
             IntegratedBitPacking.integratedpack(initoffset, in, s, out,
                     tmpoutpos, mbits);
@@ -128,7 +127,7 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
     @Override
     public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,
             int[] out, IntWrapper outpos, int num, IntWrapper initvalue) {
-        final int outlength = num;
+        final int outlength = Util.greatestMultiple(num, BLOCK_SIZE);
         int tmpinpos = inpos.get();
         int initoffset = initvalue.get();
         int s = outpos.get();
@@ -137,23 +136,24 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
             final int mbits2 = (in[tmpinpos] >>> 16) & 0xFF;
             final int mbits3 = (in[tmpinpos] >>> 8) & 0xFF;
             final int mbits4 = (in[tmpinpos]) & 0xFF;
+
             ++tmpinpos;
             IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,
                     out, s, mbits1);
             tmpinpos += mbits1;
             initoffset = out[s + 31];
             IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,
-                    out, s + 32, mbits2);
+                    out, s + BLOCK_SIZE, mbits2);
             tmpinpos += mbits2;
-            initoffset = out[s + 32 + 31];
+            initoffset = out[s + BLOCK_SIZE + 31];
             IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,
-                    out, s + 2 * 32, mbits3);
+                    out, s + 2 * BLOCK_SIZE, mbits3);
             tmpinpos += mbits3;
-            initoffset = out[s + 2 * 32 + 31];
+            initoffset = out[s + 2 * BLOCK_SIZE + 31];
             IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,
-                    out, s + 3 * 32, mbits4);
+                    out, s + 3 * BLOCK_SIZE, mbits4);
             tmpinpos += mbits4;
-            initoffset = out[s + 3 * 32 + 31];
+            initoffset = out[s + 3 * BLOCK_SIZE + 31];
         }
         for (; s < outpos.get() + outlength; s += BLOCK_SIZE) {
             final int mbits = in[tmpinpos];

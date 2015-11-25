@@ -1,3 +1,6 @@
+0.1.4 (November 25th 2015)
+  - Added IntCompressor and IntegratedIntCompressor for users looking for a simpler API
+
 0.1.3 (June 19th 2015)
   - Fixed issue #29: Composition not working properly when output offset != 0 (Saúl Vargas)
 
