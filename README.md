@@ -15,11 +15,17 @@ What does this do?
 
 It is a library to compress and uncompress arrays of integers 
 very fast. The assumption is that most (but not all) values in
-your array use less than 32 bits. These sort of arrays often come up
+your array use much less than 32 bits, or that the gaps between
+the integers use much less than 32 bits. These sort of arrays often come up
 when using differential coding in databases and information
 retrieval (e.g., in inverted indexes or column stores).
 
-It can decompress integers at a rate of over 1.2 billions per second
+Please note that random integers are not compressible, by this
+library or by any other means. If you ever had the means of
+systematically compressing random integers, you could compress
+any data source to nothing, by recursive application of your technique. 
+
+This library can decompress integers at a rate of over 1.2 billions per second
 (4.5 GB/s). It is significantly faster than generic codecs (such
 as Snappy, LZ4 and so on) when compressing arrays of integers.
 
