@@ -131,6 +131,7 @@ Reference:
  http://sna-projects.com/kamikaze/
 
 
+
 Requirements
 ------------
 
@@ -198,6 +199,12 @@ http://lemire.me/fr/documents/thesis/IkhtearThesis.pdf
 
 He also posted his slides online: http://www.slideshare.net/ikhtearSharif/ikhtear-defense
 
+Other recommended libraries
+-----------------------------
+
+TurboPFor is a C library that offers lots of interesting optimizations and Java wrappers. Well worth checking!
+
+https://github.com/powturbo/TurboPFor
 
 Funding
 -----------
