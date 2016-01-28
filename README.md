@@ -59,7 +59,7 @@ For more examples, see example.java.
 
 Some CODECs ("integrated codecs") assume that the integers are
 in sorted orders and use differential coding (they compress deltas). 
-They can be found in the package me.lemire.integercopression.differential.
+They can be found in the package me.lemire.integercompression.differential.
 Most others do not.
 
 
@@ -174,7 +174,7 @@ or:
 API Documentation
 -----------------
 
-http://lemire.me/docs/javafastpfor/
+http://www.javadoc.io/doc/me.lemire.integercompression/JavaFastPFOR/
 
 Want to read more?
 ------------------
@@ -219,4 +219,4 @@ This work was supported by NSERC grant number 26143.
 [license img]:https://img.shields.io/badge/License-Apache%202-blue.svg
 
 [docs-badge]:https://img.shields.io/badge/API-docs-blue.svg?style=flat-square
-[docs]:http://lemire.me/docs/javafastpfor/
+[docs]:http://www.javadoc.io/doc/me.lemire.integercompression/JavaFastPFOR/
