@@ -8,3 +8,6 @@ jdk:
 install: true
 
 script: mvn test
+
+after_success:
+  - mvn coveralls:report
