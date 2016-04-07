@@ -56,7 +56,7 @@ Really simple usage:
         int[] recov = iic.uncompress(compressed); // equals to data
 ```
 
-For more examples, see example.java.
+For more examples, see example.java or the examples folder.
 
 Some CODECs ("integrated codecs") assume that the integers are
 in sorted orders and use differential coding (they compress deltas). 
