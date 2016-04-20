@@ -203,9 +203,8 @@ He also posted his slides online: http://www.slideshare.net/ikhtearSharif/ikhtea
 Other recommended libraries
 -----------------------------
 
-TurboPFor is a C library that offers lots of interesting optimizations and Java wrappers. Well worth checking!
-
-https://github.com/powturbo/TurboPFor
+* CSharpFastPFOR: A C#  integer compression library  https://github.com/Genbox/CSharpFastPFOR
+* TurboPFor is a C library that offers lots of interesting optimizations and Java wrappers. Well worth checking! (Uses a GPL license.) https://github.com/powturbo/TurboPFor
 
 Funding
 -----------
