@@ -12,23 +12,23 @@ import java.util.Arrays;
 
 /**
  * This class is similar to FastPFOR but uses a small block size.
- *   
+ *
  * Note that this does not use differential coding: if you are working on sorted
- * lists, use IntegratedFastPFOR instead.
- * 
+ * lists, you should first compute deltas, see {@link #me.lemire.integercompression.differential.Delta#delta}.
+ *
  * For multi-threaded applications, each thread should use its own FastPFOR
  * object.
- * 
+ *
  * @author Daniel Lemire
  */
 public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
         final static int OVERHEAD_OF_EACH_EXCEPT = 8;
         /**
-         * 
+         *
          */
         public final static int DEFAULT_PAGE_SIZE = 65536;
         /**
-         * 
+         *
          */
         public final static int BLOCK_SIZE = 128;
 
@@ -40,10 +40,10 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
         final int[] dataPointers = new int[33];
         final int[] freqs = new int[33];
         final int[] bestbbestcexceptmaxb = new int[3];
-       
+
         /**
          * Construct the FastPFOR CODEC.
-         * 
+         *
          * @param pagesize
          *                the desired page size (recommended value is FastPFOR.DEFAULT_PAGE_SIZE)
          */
@@ -66,7 +66,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
         /**
          * Compress data in blocks of BLOCK_SIZE integers (if fewer than BLOCK_SIZE integers
          * are provided, nothing is done).
-         * 
+         *
          * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
          */
         @Override
@@ -192,7 +192,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
          * Uncompress data in blocks of integers. In this particular case,
          * the inlength parameter is ignored: it is deduced from the compressed
          * data.
-         * 
+         *
          * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
          */
         @Override
@@ -271,7 +271,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
                                 for (int k = 0; k < cexcept; ++k) {
                                     final int pos = byteContainer.get() &0xFF;
                                     out[pos + tmpoutpos] |= 1 << b;
-                                }    
+                                }
                             } else {
                                 for (int k = 0; k < cexcept; ++k) {
                                     final int pos = byteContainer.get() &0xFF;
@@ -284,7 +284,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
                 outpos.set(tmpoutpos);
                 inpos.set(inexcept);
         }
-        
+
         @Override
         public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                 IntWrapper outpos) {
@@ -293,7 +293,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
                     return;
             out[outpos.get()] = inlength;
             outpos.increment();
-            headlessCompress(in, inpos, inlength, out, outpos);        
+            headlessCompress(in, inpos, inlength, out, outpos);
         }
 
         @Override
@@ -305,7 +305,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
             inpos.increment();
             headlessUncompress(in, inpos, inlength, out, outpos, outlength);
         }
-        
+
         @Override
         public String toString() {
                 return this.getClass().getSimpleName();

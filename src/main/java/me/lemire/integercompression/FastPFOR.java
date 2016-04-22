@@ -16,8 +16,8 @@ import java.util.Arrays;
  *  up to 65536 integers. Note that it is important, to get good
  *  compression and good performance, to use sizeable blocks (greater than 1024 integers).
  *  For arrays containing a number of integers that is not divisible by BLOCK_SIZE, you should use
- * it in conjunction with another CODEC: 
- * 
+ * it in conjunction with another CODEC:
+ *
  *  IntegerCODEC ic = new Composition(new FastPFOR(), new VariableByte()).
  * <p>
  * For details, please see:
@@ -29,23 +29,23 @@ import java.util.Arrays;
  * </p>
  * <p>For sufficiently compressible and long arrays, it is faster and better than other PFOR
  * schemes.</p>
- * 
+ *
  * Note that this does not use differential coding: if you are working on sorted
- * lists, use IntegratedFastPFOR instead.
+ * lists, you should first compute deltas, see {@link #me.lemire.integercompression.differential.Delta#delta}.
  * 
  * For multi-threaded applications, each thread should use its own FastPFOR
  * object.
- * 
+ *
  * @author Daniel Lemire
  */
 public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
         final static int OVERHEAD_OF_EACH_EXCEPT = 8;
         /**
-         * 
+         *
          */
         public final static int DEFAULT_PAGE_SIZE = 65536;
         /**
-         * 
+         *
          */
         public final static int BLOCK_SIZE = 256;
 
@@ -57,11 +57,11 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
         final int[] dataPointers = new int[33];
         final int[] freqs = new int[33];
         final int[] bestbbestcexceptmaxb = new int[3];
-        
+
 
         /**
          * Construct the FastPFOR CODEC.
-         * 
+         *
          * @param pagesize
          *                the desired page size (recommended value is FastPFOR.DEFAULT_PAGE_SIZE)
          */
@@ -85,7 +85,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
         /**
          * Compress data in blocks of BLOCK_SIZE integers (if fewer than BLOCK_SIZE integers
          * are provided, nothing is done).
-         * 
+         *
          * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
          */
         @Override
@@ -93,7 +93,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                 int[] out, IntWrapper outpos) {
                 inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
                 // Allocate memory for working area.
-                
+
                 final int finalinpos = inpos.get() + inlength;
                 while (inpos.get() != finalinpos) {
                         int thissize = Math.min(pageSize,
@@ -101,7 +101,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                         encodePage(in, inpos, thissize, out, outpos);
                 }
 
-                
+
         }
 
         private void getBestBFromData(int[] in, int pos) {
@@ -215,7 +215,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
          * Uncompress data in blocks of integers. In this particular case,
          * the inlength parameter is ignored: it is deduced from the compressed
          * data.
-         * 
+         *
          * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
          */
         @Override
@@ -292,7 +292,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                                 for (int k = 0; k < cexcept; ++k) {
                                     final int pos = byteContainer.get() &0xFF;
                                     out[pos + tmpoutpos] |= 1 << b;
-                                }    
+                                }
                             } else {
                                 for (int k = 0; k < cexcept; ++k) {
                                     final int pos = byteContainer.get() &0xFF;
@@ -313,7 +313,7 @@ public final class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                     return;
             out[outpos.get()] = inlength;
             outpos.increment();
-            headlessCompress(in, inpos, inlength, out, outpos);        
+            headlessCompress(in, inpos, inlength, out, outpos);
         }
 
         @Override
