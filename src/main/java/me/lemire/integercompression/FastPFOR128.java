@@ -14,7 +14,7 @@ import java.util.Arrays;
  * This class is similar to FastPFOR but uses a small block size.
  *
  * Note that this does not use differential coding: if you are working on sorted
- * lists, you should first compute deltas, see {@link #me.lemire.integercompression.differential.Delta#delta}.
+ * lists, you should first compute deltas, @see me.lemire.integercompression.differential.Delta#delta.
  *
  * For multi-threaded applications, each thread should use its own FastPFOR
  * object.
