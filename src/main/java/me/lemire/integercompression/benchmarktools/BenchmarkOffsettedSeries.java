@@ -88,7 +88,7 @@ public class BenchmarkOffsettedSeries {
                 final IntegerCODEC[] codecs, final int count, final int length, final int mean,
                 final int range, final int freq) {
                 String dataProp = String.format(
-                        "(mean=%1$d range=%2$d freq=%2$d)", mean, range, freq);
+                        "(mean=%1$d range=%2$d freq=%3$d)", mean, range, freq);
                 int[][] data = generateSineDataChunks(0, count, length, mean,
                         range, freq);
                 benchmark(csvWriter, "Sine " + dataProp, codecs, data,
