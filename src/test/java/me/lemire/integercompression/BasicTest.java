@@ -37,6 +37,7 @@ public class BasicTest {
             new Composition(new FastPFOR(), new VariableByte()),
             new Simple9(),
             new Simple16(),
+            new GroupSimple9(),
             new Composition(new XorBinaryPacking(), new VariableByte()),
             new Composition(new DeltaZigzagBinaryPacking(),
 					new DeltaZigzagVariableByte()) };
@@ -124,6 +125,14 @@ public class BasicTest {
                 // CODEC Simple16 is limited to "small" integers.
                 if (c.getClass().equals(
                         Class.forName("me.lemire.integercompression.Simple16")))
+                    continue;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            try {
+                // CODEC GroupSimple9 is limited to "small" integers.
+                if (c.getClass().equals(
+                        Class.forName("me.lemire.integercompression.GroupSimple9")))
                     continue;
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();

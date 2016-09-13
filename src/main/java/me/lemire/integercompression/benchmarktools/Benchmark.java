@@ -15,6 +15,7 @@ import me.lemire.integercompression.DeltaZigzagBinaryPacking;
 import me.lemire.integercompression.DeltaZigzagVariableByte;
 import me.lemire.integercompression.FastPFOR;
 import me.lemire.integercompression.FastPFOR128;
+import me.lemire.integercompression.GroupSimple9;
 import me.lemire.integercompression.IntWrapper;
 import me.lemire.integercompression.IntegerCODEC;
 import me.lemire.integercompression.JustCopy;
@@ -24,6 +25,7 @@ import me.lemire.integercompression.NewPFDS9;
 import me.lemire.integercompression.OptPFD;
 import me.lemire.integercompression.OptPFDS16;
 import me.lemire.integercompression.OptPFDS9;
+import me.lemire.integercompression.Simple16;
 import me.lemire.integercompression.Simple9;
 import me.lemire.integercompression.VariableByte;
 import me.lemire.integercompression.differential.Delta;
@@ -153,7 +155,7 @@ public class Benchmark {
                                                                 + data[k][m]
                                                                 + " found "
                                                                 + decompressBuffer[m]
-                                                                + " at " + m);
+                                                                + " at " + m + " out of " + outpos.get());
                                         }
                                 }
                         }
@@ -487,7 +489,6 @@ public class Benchmark {
                         int[][] data = generateTestData(cdg, N, nbr, sparsity);
                         System.out.println("# generating random data... ok.");
 
-
                         testCodec(csvLog, sparsity, new Composition(
                                 new FastPFOR128(), new VariableByte()), data,
                                 repeat, false);
@@ -635,11 +636,27 @@ public class Benchmark {
                         System.out.println();
 
 
+                        testCodec(csvLog, sparsity, new Simple16(), data,
+                                repeat, false);
+                        testCodec(csvLog, sparsity, new Simple16(), data,
+                                repeat, false);
+                        testCodec(csvLog, sparsity, new Simple16(), data,
+                                repeat, true);
+                        System.out.println();
+
                         testCodec(csvLog, sparsity, new Simple9(), data,
                                 repeat, false);
                         testCodec(csvLog, sparsity, new Simple9(), data,
                                 repeat, false);
                         testCodec(csvLog, sparsity, new Simple9(), data,
+                                repeat, true);
+                        System.out.println();
+
+                        testCodec(csvLog, sparsity, new GroupSimple9(), data,
+                                repeat, false);
+                        testCodec(csvLog, sparsity, new GroupSimple9(), data,
+                                repeat, false);
+                        testCodec(csvLog, sparsity, new GroupSimple9(), data,
                                 repeat, true);
                         System.out.println();
 
