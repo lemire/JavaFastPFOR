@@ -25,32 +25,33 @@ public final class GroupSimple9 implements IntegerCODEC {
 		outpos.add(1);
 		final int finalin = currentPos + inlength;
 		while (currentPos < finalin - 28 * 2) {
+			int nextCurrentPos = currentPos;
 					mainloop1: for (selector1=0; selector1 <= 8; selector1++) {
 				int compressedNum = codeNum[selector1];
-				//if (finalin <= currentPos + compressedNum - 1)
-				//	compressedNum = finalin - currentPos;
+				//if (finalin <= nextCurrentPos + compressedNum - 1)
+				//	compressedNum = finalin - nextCurrentPos;
 				int b = bitLength[selector1];
 				int max = 1 << b;
 				int i = 0;
 				for (; i < compressedNum; i++) {
-					if (Util.smallerorequalthan(max, in[currentPos + i]))
+					if (Util.smallerorequalthan(max, in[nextCurrentPos + i]))
 						continue mainloop1;
 				}
-				currentPos += compressedNum;
+				nextCurrentPos += compressedNum;
 				break;
 			}
 			mainloop2: for (selector2 = 0; selector2 <= 8; selector2++) {
 				int compressedNum = codeNum[selector2];
-				//if (finalin <= currentPos + compressedNum - 1)
-				//	compressedNum = finalin - currentPos;
+				//if (finalin <= nextCurrentPos + compressedNum - 1)
+				//	compressedNum = finalin - nextCurrentPos;
 				int b = bitLength[selector2];
 				int max = 1 << b;
 				int i = 0;
 				for (; i < compressedNum; i++) {
-					if (Util.smallerorequalthan(max, in[currentPos + i]))
+					if (Util.smallerorequalthan(max, in[nextCurrentPos + i]))
 						continue mainloop2;
 				}
-				currentPos += compressedNum;
+				nextCurrentPos += compressedNum;
 				break;
 			}
 			int code = M[selector1][selector2];
@@ -58,253 +59,253 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[tmpoutpos + 1] = 0;
 			switch (code) {
 			case 0:
-				encode0(in, inpos, code, out, outpos);
+				encode0(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 1:
-				encode1(in, inpos, code, out, outpos);
+				encode1(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 2:
-				encode2(in, inpos, code, out, outpos);
+				encode2(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 3:
-				encode3(in, inpos, code, out, outpos);
+				encode3(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 4:
-				encode4(in, inpos, code, out, outpos);
+				encode4(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 5:
-				encode5(in, inpos, code, out, outpos);
+				encode5(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 6:
-				encode6(in, inpos, code, out, outpos);
+				encode6(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 7:
-				encode7(in, inpos, code, out, outpos);
+				encode7(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 8:
-				encode8(in, inpos, code, out, outpos);
+				encode8(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 9:
-				encode9(in, inpos, code, out, outpos);
+				encode9(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 10:
-				encode10(in, inpos, code, out, outpos);
+				encode10(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 11:
-				encode11(in, inpos, code, out, outpos);
+				encode11(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 12:
-				encode12(in, inpos, code, out, outpos);
+				encode12(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 13:
-				encode13(in, inpos, code, out, outpos);
+				encode13(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 14:
-				encode14(in, inpos, code, out, outpos);
+				encode14(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 15:
-				encode15(in, inpos, code, out, outpos);
+				encode15(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 16:
-				encode16(in, inpos, code, out, outpos);
+				encode16(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 17:
-				encode17(in, inpos, code, out, outpos);
+				encode17(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 18:
-				encode18(in, inpos, code, out, outpos);
+				encode18(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 19:
-				encode19(in, inpos, code, out, outpos);
+				encode19(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 20:
-				encode20(in, inpos, code, out, outpos);
+				encode20(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 21:
-				encode21(in, inpos, code, out, outpos);
+				encode21(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 22:
-				encode22(in, inpos, code, out, outpos);
+				encode22(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 23:
-				encode23(in, inpos, code, out, outpos);
+				encode23(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 24:
-				encode24(in, inpos, code, out, outpos);
+				encode24(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 25:
-				encode25(in, inpos, code, out, outpos);
+				encode25(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 26:
-				encode26(in, inpos, code, out, outpos);
+				encode26(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 27:
-				encode27(in, inpos, code, out, outpos);
+				encode27(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 28:
-				encode28(in, inpos, code, out, outpos);
+				encode28(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 29:
-				encode29(in, inpos, code, out, outpos);
+				encode29(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 30:
-				encode30(in, inpos, code, out, outpos);
+				encode30(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 31:
-				encode31(in, inpos, code, out, outpos);
+				encode31(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 32:
-				encode32(in, inpos, code, out, outpos);
+				encode32(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 33:
-				encode33(in, inpos, code, out, outpos);
+				encode33(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 34:
-				encode34(in, inpos, code, out, outpos);
+				encode34(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 35:
-				encode35(in, inpos, code, out, outpos);
+				encode35(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 36:
-				encode36(in, inpos, code, out, outpos);
+				encode36(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 37:
-				encode37(in, inpos, code, out, outpos);
+				encode37(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 38:
-				encode38(in, inpos, code, out, outpos);
+				encode38(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 39:
-				encode39(in, inpos, code, out, outpos);
+				encode39(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 40:
-				encode40(in, inpos, code, out, outpos);
+				encode40(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 41:
-				encode41(in, inpos, code, out, outpos);
+				encode41(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 42:
-				encode42(in, inpos, code, out, outpos);
+				encode42(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 43:
-				encode43(in, inpos, code, out, outpos);
+				encode43(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 44:
-				encode44(in, inpos, code, out, outpos);
+				encode44(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 45:
-				encode45(in, inpos, code, out, outpos);
+				encode45(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 46:
-				encode46(in, inpos, code, out, outpos);
+				encode46(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 47:
-				encode47(in, inpos, code, out, outpos);
+				encode47(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 48:
-				encode48(in, inpos, code, out, outpos);
+				encode48(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 49:
-				encode49(in, inpos, code, out, outpos);
+				encode49(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 50:
-				encode50(in, inpos, code, out, outpos);
+				encode50(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 51:
-				encode51(in, inpos, code, out, outpos);
+				encode51(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 52:
-				encode52(in, inpos, code, out, outpos);
+				encode52(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 53:
-				encode53(in, inpos, code, out, outpos);
+				encode53(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 54:
-				encode54(in, inpos, code, out, outpos);
+				encode54(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 55:
-				encode55(in, inpos, code, out, outpos);
+				encode55(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 56:
-				encode56(in, inpos, code, out, outpos);
+				encode56(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 57:
-				encode57(in, inpos, code, out, outpos);
+				encode57(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 58:
-				encode58(in, inpos, code, out, outpos);
+				encode58(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 59:
-				encode59(in, inpos, code, out, outpos);
+				encode59(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 60:
-				encode60(in, inpos, code, out, outpos);
+				encode60(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 61:
-				encode61(in, inpos, code, out, outpos);
+				encode61(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 62:
-				encode62(in, inpos, code, out, outpos);
+				encode62(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 63:
-				encode63(in, inpos, code, out, outpos);
+				encode63(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 64:
-				encode64(in, inpos, code, out, outpos);
+				encode64(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 65:
-				encode65(in, inpos, code, out, outpos);
+				encode65(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 66:
-				encode66(in, inpos, code, out, outpos);
+				encode66(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 67:
-				encode67(in, inpos, code, out, outpos);
+				encode67(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 68:
-				encode68(in, inpos, code, out, outpos);
+				encode68(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 69:
-				encode69(in, inpos, code, out, outpos);
+				encode69(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 70:
-				encode70(in, inpos, code, out, outpos);
+				encode70(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 71:
-				encode71(in, inpos, code, out, outpos);
+				encode71(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 72:
-				encode72(in, inpos, code, out, outpos);
+				encode72(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 73:
-				encode73(in, inpos, code, out, outpos);
+				encode73(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 74:
-				encode74(in, inpos, code, out, outpos);
+				encode74(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 75:
-				encode75(in, inpos, code, out, outpos);
+				encode75(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 76:
-				encode76(in, inpos, code, out, outpos);
+				encode76(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 77:
-				encode77(in, inpos, code, out, outpos);
+				encode77(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 78:
-				encode78(in, inpos, code, out, outpos);
+				encode78(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 79:
-				encode79(in, inpos, code, out, outpos);
+				encode79(in, currentPos, code, out, tmpoutpos);
 				break;
 			case 80:
-				encode80(in, inpos, code, out, outpos);
+				encode80(in, currentPos, code, out, tmpoutpos);
 				break;
 			default:
 				throw new RuntimeException("unsupported code");
 			}// end switch
-			inpos.set(currentPos);
 			tmpoutpos += 2;
+			currentPos = nextCurrentPos;
 		}
 
 		outer: while (currentPos < finalin) {
@@ -337,10 +338,8 @@ public final class GroupSimple9 implements IntegerCODEC {
 		outpos.set(tmpoutpos);
 	}
 
-	private void encode0(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode0(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 24; i++)
 			out[outf + 0] = (out[outf + 0] << 1) + (in[inf + i]);
 		for (int i = 0; i < 4; i++)
@@ -348,13 +347,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 28; i++)
 			out[outf + 1] = (out[outf + 1] << 1) + in[inf + 28 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode1(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode1(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 24; i++)
 			out[outf + 0] = (out[outf + 0] << 1) + in[inf + i];
 		for (int i = 0; i < 4; i++)
@@ -362,13 +359,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 14; i++)
 			out[outf + 1] = (out[outf + 1] << 2) + in[inf + 28 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode2(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode2(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 24; i++)
 			out[outf + 0] = (out[outf + 0] << 1) + in[inf + i];
 		for (int i = 0; i < 4; i++)
@@ -376,13 +371,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 9; i++)
 			out[outf + 1] = (out[outf + 1] << 3) + in[inf + 28 + i];// 第二个28位是低位存储的，所以浪费的1比特在最顶端。
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode3(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode3(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 24; i++)
 			out[outf + 0] = (out[outf + 0] << 1) + in[inf + i];
 		for (int i = 0; i < 4; i++)
@@ -390,13 +383,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 7; i++)
 			out[outf + 1] = (out[outf + 1] << 4) + in[inf + 28 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode4(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode4(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 24; i++)
 			out[outf + 0] = (out[outf + 0] << 1) + in[inf + i];
 		for (int i = 0; i < 4; i++)
@@ -404,13 +395,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 5; i++)
 			out[outf + 1] = (out[outf + 1] << 5) + in[inf + 28 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode5(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode5(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 24; i++)
 			out[outf + 0] = (out[outf + 0] << 1) + in[inf + i];
 		for (int i = 0; i < 4; i++)
@@ -418,13 +407,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 4; i++)
 			out[outf + 1] = (out[outf + 1] << 7) + in[inf + 28 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode6(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode6(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 24; i++)
 			out[outf + 0] = (out[outf + 0] << 1) + in[inf + i];
 		for (int i = 0; i < 4; i++)
@@ -432,13 +419,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 3; i++)
 			out[outf + 1] = (out[outf + 1] << 9) + in[inf + 28 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode7(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode7(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 24; i++)
 			out[outf + 0] = (out[outf + 0] << 1) + in[inf + i];
 		for (int i = 0; i < 4; i++)
@@ -446,13 +431,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 2; i++)
 			out[outf + 1] = (out[outf + 1] << 14) + in[inf + 28 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode8(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode8(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 24; i++)
 			out[outf + 0] = (out[outf + 0] << 1) + in[inf + i];
 		for (int i = 0; i < 4; i++)
@@ -460,13 +443,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 1; i++)
 			out[outf + 1] = (out[outf + 1] << 28) + in[inf + 28 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode9(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode9(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 12; i++)
 			out[outf + 0] = (out[outf + 0] << 2) + in[inf + i];
 		for (int i = 0; i < 2; i++)
@@ -475,13 +456,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[outf + 1] = (out[outf + 1] << 1) + in[inf + 14 + i];
 
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode10(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode10(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 12; i++) {
 			out[outf + 0] = (out[outf + 0] << 2) + in[inf + i];
 
@@ -492,13 +471,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[outf + 1] = (out[outf + 1] << 2) + in[inf + 14 + i];
 
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode11(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode11(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 12; i++)
 			out[outf + 0] = (out[outf + 0] << 2) + in[inf + i];
 		for (int i = 0; i < 2; i++)
@@ -507,13 +484,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[outf + 1] = (out[outf + 1] << 3) + in[inf + 14 + i];
 
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode12(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode12(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 12; i++)
 			out[outf + 0] = (out[outf + 0] << 2) + in[inf + i];
 		for (int i = 0; i < 2; i++)
@@ -522,13 +497,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[outf + 1] = (out[outf + 1] << 4) + in[inf + 14 + i];
 
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode13(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode13(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 12; i++)
 			out[outf + 0] = (out[outf + 0] << 2) + in[inf + i];
 		for (int i = 0; i < 2; i++)
@@ -537,13 +510,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[outf + 1] = (out[outf + 1] << 5) + in[inf + 14 + i];
 
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode14(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode14(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 12; i++)
 			out[outf + 0] = (out[outf + 0] << 2) + in[inf + i];
 		for (int i = 0; i < 2; i++)
@@ -552,13 +523,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[outf + 1] = (out[outf + 1] << 7) + in[inf + 14 + i];
 
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode15(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode15(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 12; i++)
 			out[outf + 0] = (out[outf + 0] << 2) + in[inf + i];
 		for (int i = 0; i < 2; i++)
@@ -567,13 +536,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[outf + 1] = (out[outf + 1] << 9) + in[inf + 14 + i];
 
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode16(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode16(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 12; i++)
 			out[outf + 0] = (out[outf + 0] << 2) + in[inf + i];
 		for (int i = 0; i < 2; i++)
@@ -582,13 +549,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[outf + 1] = (out[outf + 1] << 14) + in[inf + 14 + i];
 
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode17(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode17(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 12; i++)
 			out[outf + 0] = (out[outf + 0] << 2) + in[inf + i];
 		for (int i = 0; i < 2; i++)
@@ -597,13 +562,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[outf + 1] = (out[outf + 1] << 28) + in[inf + 14 + i];
 
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode18(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode18(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 8; i++)
 			out[outf + 0] = (out[outf + 0] << 3) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -612,13 +575,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[outf + 1] = (out[outf + 1] << 1) + in[inf + 9 + i];
 
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode19(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode19(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 8; i++)
 			out[outf + 0] = (out[outf + 0] << 3) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -627,13 +588,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[outf + 1] = (out[outf + 1] << 2) + in[inf + 9 + i];
 
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode20(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode20(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 8; i++)
 			out[outf + 0] = (out[outf + 0] << 3) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -642,13 +601,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 			out[outf + 1] = (out[outf + 1] << 3) + in[inf + 9 + i];
 
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode21(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode21(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 8; i++)
 			out[outf + 0] = (out[outf + 0] << 3) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -656,13 +613,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 7; i++)
 			out[outf + 1] = (out[outf + 1] << 4) + in[inf + 9 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode22(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode22(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 8; i++)
 			out[outf + 0] = (out[outf + 0] << 3) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -670,13 +625,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 5; i++)
 			out[outf + 1] = (out[outf + 1] << 5) + in[inf + 9 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode23(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode23(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 8; i++)
 			out[outf + 0] = (out[outf + 0] << 3) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -684,13 +637,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 4; i++)
 			out[outf + 1] = (out[outf + 1] << 7) + in[inf + 9 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode24(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode24(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 8; i++)
 			out[outf + 0] = (out[outf + 0] << 3) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -698,13 +649,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 3; i++)
 			out[outf + 1] = (out[outf + 1] << 9) + in[inf + 9 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode25(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode25(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 8; i++)
 			out[outf + 0] = (out[outf + 0] << 3) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -712,13 +661,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 2; i++)
 			out[outf + 1] = (out[outf + 1] << 14) + in[inf + 9 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode26(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode26(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 8; i++)
 			out[outf + 0] = (out[outf + 0] << 3) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -726,13 +673,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 1; i++)
 			out[outf + 1] = (out[outf + 1] << 28) + in[inf + 9 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode27(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode27(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 6; i++)
 			out[outf + 0] = (out[outf + 0] << 4) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -740,13 +685,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 28; i++)
 			out[outf + 1] = (out[outf + 1] << 1) + in[inf + 7 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode28(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode28(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 6; i++)
 			out[outf + 0] = (out[outf + 0] << 4) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -754,13 +697,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 14; i++)
 			out[outf + 1] = (out[outf + 1] << 2) + in[inf + 7 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode29(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode29(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 6; i++)
 			out[outf + 0] = (out[outf + 0] << 4) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -768,13 +709,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 9; i++)
 			out[outf + 1] = (out[outf + 1] << 3) + in[inf + 7 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode30(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode30(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 6; i++)
 			out[outf + 0] = (out[outf + 0] << 4) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -782,13 +721,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 7; i++)
 			out[outf + 1] = (out[outf + 1] << 4) + in[inf + 7 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode31(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode31(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 6; i++)
 			out[outf + 0] = (out[outf + 0] << 4) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -796,13 +733,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 5; i++)
 			out[outf + 1] = (out[outf + 1] << 5) + in[inf + 7 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode32(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode32(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 6; i++)
 			out[outf + 0] = (out[outf + 0] << 4) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -810,13 +745,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 4; i++)
 			out[outf + 1] = (out[outf + 1] << 7) + in[inf + 7 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode33(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode33(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 6; i++)
 			out[outf + 0] = (out[outf + 0] << 4) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -824,13 +757,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 3; i++)
 			out[outf + 1] = (out[outf + 1] << 9) + in[inf + 7 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode34(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode34(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 6; i++)
 			out[outf + 0] = (out[outf + 0] << 4) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -838,13 +769,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 2; i++)
 			out[outf + 1] = (out[outf + 1] << 14) + in[inf + 7 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode35(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode35(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 6; i++)
 			out[outf + 0] = (out[outf + 0] << 4) + in[inf + i];
 		for (int i = 0; i < 1; i++)
@@ -852,13 +781,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 1; i++)
 			out[outf + 1] = (out[outf + 1] << 28) + in[inf + 7 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode36(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode36(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 4; i++)
 			out[outf + 0] = (out[outf + 0] << 5) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 4) + (in[inf + 4] >>> 1);
@@ -866,13 +793,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 28; i++)
 			out[outf + 1] = (out[outf + 1] << 1) + in[inf + 5 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode37(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode37(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 4; i++)
 			out[outf + 0] = (out[outf + 0] << 5) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 4) + (in[inf + 4] >>> 1);
@@ -880,13 +805,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 14; i++)
 			out[outf + 1] = (out[outf + 1] << 2) + in[inf + 5 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode38(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode38(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 4; i++)
 			out[outf + 0] = (out[outf + 0] << 5) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 4) + (in[inf + 4] >>> 1);
@@ -894,13 +817,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 9; i++)
 			out[outf + 1] = (out[outf + 1] << 3) + in[inf + 5 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode39(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode39(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 4; i++)
 			out[outf + 0] = (out[outf + 0] << 5) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 4) + (in[inf + 4] >>> 1);
@@ -908,13 +829,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 7; i++)
 			out[outf + 1] = (out[outf + 1] << 4) + in[inf + 5 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode40(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode40(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 4; i++)
 			out[outf + 0] = (out[outf + 0] << 5) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 4) + (in[inf + 4] >>> 1);
@@ -922,13 +841,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 5; i++)
 			out[outf + 1] = (out[outf + 1] << 5) + in[inf + 5 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode41(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode41(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 4; i++)
 			out[outf + 0] = (out[outf + 0] << 5) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 4) + (in[inf + 4] >>> 1);
@@ -936,13 +853,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 4; i++)
 			out[outf + 1] = (out[outf + 1] << 7) + in[inf + 5 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode42(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode42(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 4; i++)
 			out[outf + 0] = (out[outf + 0] << 5) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 4) + (in[inf + 4] >>> 1);
@@ -950,13 +865,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 3; i++)
 			out[outf + 1] = (out[outf + 1] << 9) + in[inf + 5 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode43(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode43(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 4; i++)
 			out[outf + 0] = (out[outf + 0] << 5) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 4) + (in[inf + 4] >>> 1);
@@ -964,13 +877,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 2; i++)
 			out[outf + 1] = (out[outf + 1] << 14) + in[inf + 5 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode44(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode44(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 4; i++)
 			out[outf + 0] = (out[outf + 0] << 5) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 4) + (in[inf + 4] >>> 1);
@@ -978,13 +889,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 1; i++)
 			out[outf + 1] = (out[outf + 1] << 28) + in[inf + 5 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode45(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode45(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 3; i++)
 			out[outf + 0] = (out[outf + 0] << 7) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 3) + (in[inf + 3] >>> 4);
@@ -992,13 +901,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 28; i++)
 			out[outf + 1] = (out[outf + 1] << 1) + in[inf + 4 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode46(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode46(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 3; i++)
 			out[outf + 0] = (out[outf + 0] << 7) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 3) + (in[inf + 3] >>> 4);
@@ -1006,13 +913,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 14; i++)
 			out[outf + 1] = (out[outf + 1] << 2) + in[inf + 4 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode47(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode47(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 3; i++)
 			out[outf + 0] = (out[outf + 0] << 7) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 3) + (in[inf + 3] >>> 4);
@@ -1020,13 +925,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 9; i++)
 			out[outf + 1] = (out[outf + 1] << 3) + in[inf + 4 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode48(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode48(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 3; i++)
 			out[outf + 0] = (out[outf + 0] << 7) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 3) + (in[inf + 3] >>> 4);
@@ -1034,13 +937,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 7; i++)
 			out[outf + 1] = (out[outf + 1] << 4) + in[inf + 4 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode49(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode49(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 3; i++)
 			out[outf + 0] = (out[outf + 0] << 7) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 3) + (in[inf + 3] >>> 4);
@@ -1048,13 +949,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 5; i++)
 			out[outf + 1] = (out[outf + 1] << 5) + in[inf + 4 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode50(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode50(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 3; i++)
 			out[outf + 0] = (out[outf + 0] << 7) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 3) + (in[inf + 3] >>> 4);
@@ -1062,13 +961,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 4; i++)
 			out[outf + 1] = (out[outf + 1] << 7) + in[inf + 4 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode51(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode51(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 3; i++)
 			out[outf + 0] = (out[outf + 0] << 7) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 3) + (in[inf + 3] >>> 4);
@@ -1076,13 +973,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 3; i++)
 			out[outf + 1] = (out[outf + 1] << 9) + in[inf + 4 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode52(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode52(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 3; i++)
 			out[outf + 0] = (out[outf + 0] << 7) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 3) + (in[inf + 3] >>> 4);
@@ -1090,13 +985,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 2; i++)
 			out[outf + 1] = (out[outf + 1] << 14) + in[inf + 4 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode53(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode53(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 3; i++)
 			out[outf + 0] = (out[outf + 0] << 7) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 3) + (in[inf + 3] >>> 4);
@@ -1104,13 +997,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 1; i++)
 			out[outf + 1] = (out[outf + 1] << 28) + in[inf + 4 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode54(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode54(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 2; i++)
 			out[outf + 0] = (out[outf + 0] << 9) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 6) + (in[inf + 2] >>> 3);
@@ -1118,13 +1009,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 28; i++)
 			out[outf + 1] = (out[outf + 1] << 1) + in[inf + 3 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode55(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode55(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 2; i++)
 			out[outf + 0] = (out[outf + 0] << 9) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 6) + (in[inf + 2] >>> 3);
@@ -1132,13 +1021,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 14; i++)
 			out[outf + 1] = (out[outf + 1] << 2) + in[inf + 3 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode56(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode56(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 2; i++)
 			out[outf + 0] = (out[outf + 0] << 9) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 6) + (in[inf + 2] >>> 3);
@@ -1146,13 +1033,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 9; i++)
 			out[outf + 1] = (out[outf + 1] << 3) + in[inf + 3 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode57(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode57(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 2; i++)
 			out[outf + 0] = (out[outf + 0] << 9) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 6) + (in[inf + 2] >>> 3);
@@ -1160,13 +1045,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 7; i++)
 			out[outf + 1] = (out[outf + 1] << 4) + in[inf + 3 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode58(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode58(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 2; i++)
 			out[outf + 0] = (out[outf + 0] << 9) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 6) + (in[inf + 2] >>> 3);
@@ -1174,13 +1057,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 5; i++)
 			out[outf + 1] = (out[outf + 1] << 5) + in[inf + 3 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode59(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode59(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 2; i++)
 			out[outf + 0] = (out[outf + 0] << 9) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 6) + (in[inf + 2] >>> 3);
@@ -1188,13 +1069,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 4; i++)
 			out[outf + 1] = (out[outf + 1] << 7) + in[inf + 3 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode60(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode60(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 2; i++)
 			out[outf + 0] = (out[outf + 0] << 9) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 6) + (in[inf + 2] >>> 3);
@@ -1202,13 +1081,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 3; i++)
 			out[outf + 1] = (out[outf + 1] << 9) + in[inf + 3 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode61(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode61(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 2; i++)
 			out[outf + 0] = (out[outf + 0] << 9) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 6) + (in[inf + 2] >>> 3);
@@ -1216,13 +1093,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 2; i++)
 			out[outf + 1] = (out[outf + 1] << 14) + in[inf + 3 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode62(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode62(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		for (int i = 0; i < 2; i++)
 			out[outf + 0] = (out[outf + 0] << 9) + in[inf + i];
 		out[outf + 0] = (out[outf + 0] << 6) + (in[inf + 2] >>> 3);
@@ -1230,13 +1105,11 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 1; i++)
 			out[outf + 1] = (out[outf + 1] << 28) + in[inf + 3 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode63(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode63(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 
 		out[outf + 0] = (out[outf + 0] << 14) + in[inf];
 		out[outf + 0] = (out[outf + 0] << 10) + (in[inf + 1] >>> 4);
@@ -1244,220 +1117,186 @@ public final class GroupSimple9 implements IntegerCODEC {
 		for (int i = 0; i < 28; i++)
 			out[outf + 1] = (out[outf + 1] << 1) + in[inf + 2 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode64(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode64(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 14) + in[inf];
 		out[outf + 0] = (out[outf + 0] << 10) + (in[inf + 1] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf + 1] << 28) >>> 28);
 		for (int i = 0; i < 14; i++)
 			out[outf + 1] = (out[outf + 1] << 2) + in[inf + 2 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode65(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode65(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 14) + in[inf];
 		out[outf + 0] = (out[outf + 0] << 10) + (in[inf + 1] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf + 1] << 28) >>> 28);
 		for (int i = 0; i < 9; i++)
 			out[outf + 1] = (out[outf + 1] << 3) + in[inf + 2 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode66(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode66(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 14) + in[inf];
 		out[outf + 0] = (out[outf + 0] << 10) + (in[inf + 1] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf + 1] << 28) >>> 28);
 		for (int i = 0; i < 7; i++)
 			out[outf + 1] = (out[outf + 1] << 4) + in[inf + 2 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode67(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode67(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 14) + in[inf];
 		out[outf + 0] = (out[outf + 0] << 10) + (in[inf + 1] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf + 1] << 28) >>> 28);
 		for (int i = 0; i < 5; i++)
 			out[outf + 1] = (out[outf + 1] << 5) + in[inf + 2 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode68(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode68(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 14) + in[inf];
 		out[outf + 0] = (out[outf + 0] << 10) + (in[inf + 1] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf + 1] << 28) >>> 28);
 		for (int i = 0; i < 4; i++)
 			out[outf + 1] = (out[outf + 1] << 7) + in[inf + 2 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode69(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode69(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 14) + in[inf];
 		out[outf + 0] = (out[outf + 0] << 10) + (in[inf + 1] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf + 1] << 28) >>> 28);
 		for (int i = 0; i < 3; i++)
 			out[outf + 1] = (out[outf + 1] << 9) + in[inf + 2 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode70(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode70(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 14) + in[inf];
 		out[outf + 0] = (out[outf + 0] << 10) + (in[inf + 1] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf + 1] << 28) >>> 28);
 		for (int i = 0; i < 2; i++)
 			out[outf + 1] = (out[outf + 1] << 14) + in[inf + 2 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode71(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode71(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 14) + in[inf];
 		out[outf + 0] = (out[outf + 0] << 10) + (in[inf + 1] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf + 1] << 28) >>> 28);
 		for (int i = 0; i < 1; i++)
 			out[outf + 1] = (out[outf + 1] << 28) + in[inf + 2 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode72(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode72(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 
 		out[outf + 0] = (out[outf + 0] << 24) + (in[inf] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf] << 28) >>> 28);
 		for (int i = 0; i < 28; i++)
 			out[outf + 1] = (out[outf + 1] << 1) + in[inf + 1 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode73(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode73(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 24) + (in[inf] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf] << 28) >>> 28);
 		for (int i = 0; i < 14; i++)
 			out[outf + 1] = (out[outf + 1] << 2) + in[inf + 1 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode74(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode74(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 24) + (in[inf] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf] << 28) >>> 28);
 		for (int i = 0; i < 9; i++)
 			out[outf + 1] = (out[outf + 1] << 3) + in[inf + 1 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode75(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode75(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 24) + (in[inf] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf] << 28) >>> 28);
 		for (int i = 0; i < 7; i++)
 			out[outf + 1] = (out[outf + 1] << 4) + in[inf + 1 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode76(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode76(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 24) + (in[inf] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf] << 28) >>> 28);
 		for (int i = 0; i < 5; i++)
 			out[outf + 1] = (out[outf + 1] << 5) + in[inf + 1 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode77(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode77(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 24) + (in[inf] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf] << 28) >>> 28);
 		for (int i = 0; i < 4; i++)
 			out[outf + 1] = (out[outf + 1] << 7) + in[inf + 1 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode78(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode78(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 24) + (in[inf] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf] << 28) >>> 28);
 		for (int i = 0; i < 3; i++)
 			out[outf + 1] = (out[outf + 1] << 9) + in[inf + 1 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode79(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode79(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 24) + (in[inf] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf] << 28) >>> 28);
 		for (int i = 0; i < 2; i++)
 			out[outf + 1] = (out[outf + 1] << 14) + in[inf + 1 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
-	private void encode80(final int[] in, final IntWrapper inOffset, final int code, final int[] out,
-			final IntWrapper outOffset) {
-		int inf = inOffset.get();
-		int outf = outOffset.get();
+	private void encode80(final int[] in, final int inf, final int code, final int[] out,
+			final int outf) {
 		out[outf + 0] = (out[outf + 0] << 24) + (in[inf] >>> 4);
 		out[outf + 1] = (out[outf + 1] << 4) + ((in[inf] << 28) >>> 28);
 		for (int i = 0; i < 1; i++)
 			out[outf + 1] = (out[outf + 1] << 28) + in[inf + 1 + i];
 		out[outf + 0] = code << 24 | out[outf + 0];
-		outOffset.add(2);
+		
 	}
 
 	@Override
