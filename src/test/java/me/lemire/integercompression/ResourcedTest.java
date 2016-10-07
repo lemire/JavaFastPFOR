@@ -1,25 +1,14 @@
 package me.lemire.integercompression;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import me.lemire.integercompression.differential.Delta;
-import me.lemire.integercompression.differential.IntegratedBinaryPacking;
-import me.lemire.integercompression.differential.IntegratedByteIntegerCODEC;
-import me.lemire.integercompression.differential.IntegratedComposition;
 import me.lemire.integercompression.differential.IntegratedIntCompressor;
-import me.lemire.integercompression.differential.IntegratedIntegerCODEC;
-import me.lemire.integercompression.differential.IntegratedVariableByte;
 import me.lemire.integercompression.differential.SkippableIntegratedIntegerCODEC;
-import me.lemire.integercompression.differential.XorBinaryPacking;
 
 import java.io.BufferedReader;
 import java.io.File;
 import org.junit.Assert;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.*;
-import java.util.stream.Stream;
 
 import org.junit.Test;
 
