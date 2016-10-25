@@ -58,7 +58,7 @@ Really simple usage:
 
 For more examples, see example.java or the examples folder.
 
-JavaFastPFOR supports compressing and uncompressing data in chunks (e.g., see ``advancedExample`` in [https://github.com/lemire/JavaFastPFOR/blob/master/example.java#L185-L190](example.java)).
+JavaFastPFOR supports compressing and uncompressing data in chunks (e.g., see ``advancedExample`` in [https://github.com/lemire/JavaFastPFOR/blob/master/example.java](example.java)).
 
 Some CODECs ("integrated codecs") assume that the integers are
 in sorted orders and use differential coding (they compress deltas). 
