@@ -14,7 +14,7 @@ import java.util.Arrays;
  * This is a patching scheme designed for speed.
  *  It encodes integers in blocks of integers within pages of
  *  up to 65536 integers. Note that it is important, to get good
- *  compression and good performance, to use sizeable blocks (greater than 1024 integers).
+ *  compression and good performance, to use sizeable arrays (greater than 1024 integers).
  *  For arrays containing a number of integers that is not divisible by BLOCK_SIZE, you should use
  * it in conjunction with another CODEC:
  *
