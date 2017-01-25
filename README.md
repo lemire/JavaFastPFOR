@@ -30,6 +30,7 @@ This library can decompress integers at a rate of over 1.2 billions per second
 (4.5 GB/s). It is significantly faster than generic codecs (such
 as Snappy, LZ4 and so on) when compressing arrays of integers.
 
+The library is used in [LinkedIn Pinot](https://github.com/linkedin/pinot), a realtime distributed OLAP datastore.
 Part of this library has been integrated in Parquet (http://parquet.io/).
 A modified version of the library is included in the search engine 
 Terrier (http://terrier.org/). This libary is used by ClueWeb 
