@@ -39,7 +39,7 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
             IntWrapper outpos) {
         if (inlength == 0)
             return;
-        ByteBuffer buf = ByteBuffer.allocateDirect(inlength * 8);
+        ByteBuffer buf = makeBuffer(inlength * 8);
         buf.order(ByteOrder.LITTLE_ENDIAN);
         for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
             final long val = in[k] & 0xFFFFFFFFL; // To be consistent with
@@ -202,4 +202,14 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
         inpos.set(p + (s!=0 ? 1 : 0));
     }
 
+    /**
+     * Creates a new buffer of the requested size.
+     *
+     * In case you need a different way to allocate buffers, you can override this method
+     * with a custom behavior. The default implementation allocates a new Java direct
+     * {@link ByteBuffer} on each invocation.
+     */
+    protected ByteBuffer makeBuffer(int sizeInBytes) {
+        return ByteBuffer.allocateDirect(sizeInBytes);
+    }
 }
