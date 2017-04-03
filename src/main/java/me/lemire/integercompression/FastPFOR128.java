@@ -21,7 +21,7 @@ import java.util.Arrays;
  *
  * @author Daniel Lemire
  */
-public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
+public class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
         final static int OVERHEAD_OF_EACH_EXCEPT = 8;
         /**
          *
@@ -50,7 +50,7 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
         public FastPFOR128(int pagesize) {
             pageSize = pagesize;
             // Initiate arrrays.
-            byteContainer = ByteBuffer.allocateDirect(3 * pageSize
+            byteContainer = makeBuffer(3 * pageSize
                     / BLOCK_SIZE + pageSize);
             byteContainer.order(ByteOrder.LITTLE_ENDIAN);
             for (int k = 1; k < dataTobePacked.length; ++k)
@@ -309,5 +309,16 @@ public final class FastPFOR128 implements IntegerCODEC,SkippableIntegerCODEC {
         @Override
         public String toString() {
                 return this.getClass().getSimpleName();
+        }
+
+        /**
+         * Creates a new buffer of the requested size.
+         *
+         * In case you need a different way to allocate buffers, you can override this method
+         * with a custom behavior. The default implementation allocates a new Java direct
+         * {@link ByteBuffer} on each invocation.
+         */
+        protected ByteBuffer makeBuffer(int sizeInBytes) {
+            return ByteBuffer.allocateDirect(sizeInBytes);
         }
 }

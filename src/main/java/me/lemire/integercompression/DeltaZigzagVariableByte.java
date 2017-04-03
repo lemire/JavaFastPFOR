@@ -13,7 +13,7 @@ import java.nio.IntBuffer;
  * 
  * @author MURAOKA Taro http://github.com/koron
  */
-public final class DeltaZigzagVariableByte implements IntegerCODEC {
+public class DeltaZigzagVariableByte implements IntegerCODEC {
 
         @Override
         public String toString() {
@@ -27,7 +27,7 @@ public final class DeltaZigzagVariableByte implements IntegerCODEC {
                         return;
                 }
 
-                ByteBuffer byteBuf = ByteBuffer.allocateDirect(inLen * 5 + 3);
+                ByteBuffer byteBuf = makeBuffer(inLen * 5 + 3);
                 DeltaZigzagEncoding.Encoder ctx = new DeltaZigzagEncoding.Encoder(0);
 
                 // Delta+Zigzag+VariableByte encoding.
@@ -126,5 +126,16 @@ public final class DeltaZigzagVariableByte implements IntegerCODEC {
 
                 outPos.set(op);
                 inPos.set(inPosLast);
+        }
+
+        /**
+         * Creates a new buffer of the requested size.
+         *
+         * In case you need a different way to allocate buffers, you can override this method
+         * with a custom behavior. The default implementation allocates a new Java direct
+         * {@link ByteBuffer} on each invocation.
+         */
+        protected ByteBuffer makeBuffer(int sizeInBytes) {
+                return ByteBuffer.allocateDirect(sizeInBytes);
         }
 }
