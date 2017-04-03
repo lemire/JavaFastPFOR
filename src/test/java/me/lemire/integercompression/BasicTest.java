@@ -27,6 +27,7 @@ public class BasicTest {
                     new IntegratedVariableByte()),
             new JustCopy(),
             new VariableByte(),
+            new GroupSimple9(),
             new IntegratedVariableByte(),
             new Composition(new BinaryPacking(), new VariableByte()),
             new Composition(new NewPFD(), new VariableByte()),
