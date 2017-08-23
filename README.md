@@ -34,7 +34,7 @@ The library is used in [LinkedIn Pinot](https://github.com/linkedin/pinot), a re
 Part of this library has been integrated in Parquet (http://parquet.io/).
 A modified version of the library is included in the search engine 
 Terrier (http://terrier.org/). This libary is used by ClueWeb 
-Tools (https://github.com/lintool/clueweb). 
+Tools (https://github.com/lintool/clueweb). It is also used by [Apache NiFi](https://nifi.apache.org).
 
 This library inspired a compression scheme used by Apache Lucene and Apache Lucene.NET (e.g., see
 http://lucene.apache.org/core/4_6_1/core/org/apache/lucene/util/PForDeltaDocIdSet.html ).
