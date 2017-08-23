@@ -36,7 +36,7 @@ A modified version of the library is included in the search engine
 Terrier (http://terrier.org/). This libary is used by ClueWeb 
 Tools (https://github.com/lintool/clueweb). 
 
-This library inspired a compression scheme used by Apache Lucene (e.g., see
+This library inspired a compression scheme used by Apache Lucene and Apache Lucene.NET (e.g., see
 http://lucene.apache.org/core/4_6_1/core/org/apache/lucene/util/PForDeltaDocIdSet.html ).
 
 It is a java port of the fastpfor C++ library (https://github.com/lemire/FastPFor). 
