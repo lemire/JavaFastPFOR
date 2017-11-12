@@ -98,7 +98,7 @@ We found no library that implemented state-of-the-art integer coding techniques
 such as Binary Packing, NewPFD, OptPFD, Variable Byte, Simple 9 and so on in Java.
 We wrote one. 
 
-Thread safery 
+Thread safety 
 ----
 
 Some codecs are thread-safe while others are not.
