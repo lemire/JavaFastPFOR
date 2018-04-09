@@ -49,9 +49,11 @@ public class SkippableIntegratedComposition implements
         if (inlength == 0)
             return;
         final int init = inpos.get();
+        int outposInit = outpos.get();
+
         F1.headlessCompress(in, inpos, inlength, out, outpos, initvalue);
-        if (outpos.get() == 0) {
-            out[0] = 0;
+        if (outpos.get() == outposInit) {
+            out[outposInit] = 0;
             outpos.increment();
         }
         inlength -= inpos.get() - init;
@@ -65,7 +67,11 @@ public class SkippableIntegratedComposition implements
             return;
         int init = inpos.get();
         F1.headlessUncompress(in, inpos, inlength, out, outpos,num,initvalue);
+        if (inpos.get() == init) {
+      	  inpos.increment();
+        }
         inlength -= inpos.get() - init;
+
         num -= outpos.get();
         F2.headlessUncompress(in, inpos, inlength, out, outpos,num,initvalue);
     }

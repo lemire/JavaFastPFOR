@@ -38,7 +38,12 @@ public class SkippableComposition implements SkippableIntegerCODEC {
     public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos) {
         int init = inpos.get();
+        int outposInit = outpos.get();
         F1.headlessCompress(in, inpos, inlength, out, outpos);
+        if (outpos.get() == outposInit) {
+            out[outposInit] = 0;
+            outpos.increment();
+        }
         inlength -= inpos.get() - init;
         F2.headlessCompress(in, inpos, inlength, out, outpos);
     }
@@ -48,6 +53,9 @@ public class SkippableComposition implements SkippableIntegerCODEC {
             IntWrapper outpos, int num) {
         int init = inpos.get();
         F1.headlessUncompress(in, inpos, inlength, out, outpos, num);
+        if (inpos.get() == init) {
+        	  inpos.increment();
+        }
         inlength -= inpos.get() - init;
         num -= outpos.get();
         F2.headlessUncompress(in, inpos, inlength, out, outpos, num);

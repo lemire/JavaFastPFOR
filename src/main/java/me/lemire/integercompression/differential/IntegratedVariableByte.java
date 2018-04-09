@@ -229,18 +229,22 @@ SkippableIntegratedIntegerCODEC  {
             int[] out, IntWrapper outpos, int num, IntWrapper initvalue) {
         int s = 0;
         int val = 0;
+
         int p = inpos.get();
         int initoffset = initvalue.get();
         int tmpoutpos = outpos.get();
         int finaloutpos = num + tmpoutpos;
         for (int v = 0, shift = 0; tmpoutpos < finaloutpos;) {
+
             val = in[p];
-            int c = val >>> s;
+            int c = (byte) (val >>> s);
             s += 8;
             p += s>>5;
             s = s & 31;
             v += ((c & 127) << shift);
+
             if ((c & 128) == 128) {
+
                 out[tmpoutpos++] = (initoffset = initoffset + v);
                 v = 0;
                 shift = 0;

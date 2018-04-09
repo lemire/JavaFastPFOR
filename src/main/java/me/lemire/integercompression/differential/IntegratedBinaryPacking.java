@@ -7,6 +7,7 @@
 
 package me.lemire.integercompression.differential;
 
+import me.lemire.integercompression.BitPacking;
 import me.lemire.integercompression.IntWrapper;
 import me.lemire.integercompression.Util;
 
@@ -83,6 +84,7 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
         if (inlength == 0)
             return;
         int tmpoutpos = outpos.get();
+
         int initoffset = initvalue.get();
         initvalue.set(in[inpos.get()+inlength -1]);
         int s = inpos.get();
