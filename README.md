@@ -1,8 +1,6 @@
 JavaFastPFOR: A simple integer compression library in Java 
 ==========================================================
-
-[![Build Status](https://travis-ci.org/lemire/JavaFastPFOR.png)](https://travis-ci.org/lemire/JavaFastPFOR) [![][maven img]][maven] [![][license img]][license] [![docs-badge][]][docs]
-[![Coverage Status](https://coveralls.io/repos/github/lemire/JavaFastPFOR/badge.svg?branch=master)](https://coveralls.io/github/lemire/JavaFastPFOR?branch=master)
+ [![][maven img]][maven] [![][license img]][license] [![docs-badge][]][docs]
 [![Code Quality: Cpp](https://img.shields.io/lgtm/grade/java/g/lemire/JavaFastPFOR.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lemire/JavaFastPFOR/context:java)
 
 
@@ -53,7 +51,7 @@ Usage
 
 Really simple usage:
 
-```
+```java
         IntegratedIntCompressor iic = new IntegratedIntCompressor();
         int[] data = ... ; // to be compressed
         int[] compressed = iic.compress(data); // compressed array
@@ -76,7 +74,7 @@ Maven central repository
 Using this code in your own project is easy with maven, just add
 the following code in your pom.xml file:
 
-
+```xml
     <dependencies>
          <dependency>
 	     <groupId>me.lemire.integercompression</groupId>
@@ -84,6 +82,7 @@ the following code in your pom.xml file:
 	     <version>[0.1,)</version>
          </dependency>
      </dependencies>
+```
 
 Naturally, you should replace "version" by the version
 you desire.
