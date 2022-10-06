@@ -8,6 +8,16 @@
     <depend srcdir="src/main/java" destdir="target/classes" />
     <javac includeantruntime="false" destdir="target/classes">
       <src path="src/main/java" />
+      <exclude name="me/lemire/integercompression/vector/*.java" />
+      <exclude name="module-info.java" />
+    </javac>
+  </target>
+
+  <target name="vector-fastpfor">
+    <mkdir dir="target/classes" />
+    <depend srcdir="src/main/java" destdir="target/classes" />
+    <javac includeantruntime="false" destdir="target/classes" release="19">
+      <src path="src/main/java" />
     </javac>
   </target>
 

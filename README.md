@@ -67,6 +67,10 @@ in sorted orders and use differential coding (they compress deltas).
 They can be found in the package me.lemire.integercompression.differential.
 Most others do not.
 
+The Java Team at Intel (R) introduced the vector implementation for FastPFOR
+based on the Java Vector API that showed significant gains over the
+non-vectorized implementation. For an example usage, see
+examples/vector/Example.java. The feature requires JDK 19+.
 
 Maven central repository
 ------------------------
@@ -123,6 +127,7 @@ with contributions by
 * Di Wu, http://www.facebook.com/diwu1989
 * Stefan Ackermann, https://github.com/Stivo
 * Samit Roy, https://github.com/roysamit
+* Mulugeta Mammo, https://github.com/mulugetam (for VectorFastPFOR)
 
 How does it compare to the Kamikaze PForDelta library?
 ------------------------------------------------------
@@ -161,7 +166,17 @@ Speed is always reported in millions of integers per second.
 For Maven users
 ---------------
 
+If you are running JDK 19+
+
+```
 mvn compile
+```
+
+If you are running earlier versions of JDK
+
+```
+mvn compiler:compile@default-compile
+```
 
 mvn exec:java
 
