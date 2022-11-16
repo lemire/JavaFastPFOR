@@ -217,7 +217,7 @@ We wrote several research papers documenting many of the CODECs implemented here
 Ikhtear Sharif wrote his M.Sc. thesis on this library:
 
 Ikhtear Sharif, Performance Evaluation of Fast Integer Compression Techniques Over Tables, M.Sc. thesis, UNB 2013.
-http://lemire.me/fr/documents/thesis/IkhtearThesis.pdf
+https://unbscholar.lib.unb.ca/islandora/object/unbscholar%3A9399/datastream/PDF/view
 
 He also posted his slides online: http://www.slideshare.net/ikhtearSharif/ikhtear-defense
 
