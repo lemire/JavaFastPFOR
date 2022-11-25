@@ -70,7 +70,8 @@ Most others do not.
 The Java Team at Intel (R) introduced the vector implementation for FastPFOR
 based on the Java Vector API that showed significant gains over the
 non-vectorized implementation. For an example usage, see
-examples/vector/Example.java. The feature requires JDK 19+.
+examples/vector/Example.java. The feature requires JDK 19+ and is currently for 
+advanced users.
 
 Maven central repository
 ------------------------
@@ -166,21 +167,15 @@ Speed is always reported in millions of integers per second.
 For Maven users
 ---------------
 
-If you are running JDK 19+
+
 
 ```
 mvn compile
-```
-
-If you are running earlier versions of JDK
-
-```
-mvn compiler:compile@default-compile
-```
-
 mvn exec:java
+```
 
-For ant users
+
+For ant users (legacy, currently untested)
 -------------
 
 If you use Apache ant, please try this:
