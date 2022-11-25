@@ -1,0 +1,24 @@
+name: Java CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ 11, 16 ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2.5.0
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'adopt'
+      - name: Build and test with Maven
+        run: mvn package
+      - name: Build example
+        run: javac -cp target/classes/:. example.java
+      - name: Run example
+        run: java -cp target/classes/:. example

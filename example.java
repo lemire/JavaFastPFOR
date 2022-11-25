@@ -88,8 +88,7 @@ public class example {
     /**
      * Like the basicExample, but we store the input array size manually.
      */
-    @Test
-    public void basicExampleHeadless() {
+    public static void basicExampleHeadless() {
         int[] data = new int[2342351];
         System.out.println("Compressing " + data.length + " integers in one go using the headless approach");
         // data should be sorted for best

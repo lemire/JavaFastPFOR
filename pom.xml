@@ -64,6 +64,10 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
+        <configuration>
+            <source>11</source>
+            <target>11</target>
+        </configuration>
         <executions>
           <execution>
             <id>default-compile</id>
@@ -76,18 +80,19 @@
                 <exclude>me/lemire/integercompression/vector/*</exclude>
                 <exclude>module-info.java</exclude>
               </excludes>
-            </configuration> 
-          </execution>                  
-          <execution>
+            </configuration>
+          </execution>
+          <!-- The vector module will be enabled when JDK19+ is LTE, currently only for advanced users. -->
+          <!--<execution>
             <id>vector-fastpfor</id>
             <phase>compile</phase>
             <goals>
               <goal>compile</goal>
             </goals>
-            <configuration>
+             <configuration>
               <release>19</release>
-            </configuration> 
-          </execution>                  
+            </configuration>
+          </execution>       -->
         </executions>
       </plugin>
       <plugin>
@@ -127,9 +132,9 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.4.1</version>
         <configuration>
-            <excludePackageNames>com.kamikaze.pfordelta:me.lemire.integercompression.benchmarktools</excludePackageNames>
+            <excludePackageNames>me.lemire.integercompression.vector;com.kamikaze.pfordelta:me.lemire.integercompression.benchmarktools</excludePackageNames>
        </configuration>
         <executions>
           <execution>
