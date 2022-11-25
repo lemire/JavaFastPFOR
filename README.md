@@ -172,7 +172,7 @@ mvn exec:java
 
 You may run our examples as follows:
 
-````
+```
 mvn package
 javac -cp target/classes/:. example.java
 java -cp target/classes/:. example
