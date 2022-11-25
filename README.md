@@ -147,19 +147,16 @@ Reference:
 Requirements
 ------------
 
-A recent Java compiler. Java 7 or better is recommended.
+Releases up to 0.1.12 require Java 7 or better.
 
-Good instructions on installing Java 7 on Linux:
+The current development versions assume JDK 11 or better.
 
-http://forums.linuxmint.com/viewtopic.php?f=42&t=93052
 
 
 How fast is it?
 ---------------
 
-Compile the code and execute me.lemire.integercompression.benchmarktools.Benchmark.
-
-I recommend running all the benchmarks with the "-server" flag on a desktop machine.
+Compile the code and execute `me.lemire.integercompression.benchmarktools.Benchmark`.
 
 Speed is always reported in millions of integers per second.
 
@@ -167,7 +164,6 @@ Speed is always reported in millions of integers per second.
 For Maven users
 ---------------
 
-The current development versions assume JDK 11 or better.
 
 ```
 mvn compile
