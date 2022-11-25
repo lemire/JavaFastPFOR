@@ -2,7 +2,7 @@ JavaFastPFOR: A simple integer compression library in Java
 ==========================================================
  [![][maven img]][maven] [![][license img]][license] [![docs-badge][]][docs]
 [![Code Quality: Cpp](https://img.shields.io/lgtm/grade/java/g/lemire/JavaFastPFOR.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lemire/JavaFastPFOR/context:java)
-
+[![Java CI](https://github.com/lemire/JavaFastPFOR/actions/workflows/basic.yml/badge.svg)](https://github.com/lemire/JavaFastPFOR/actions/workflows/basic.yml)
 
 
 License
