@@ -134,7 +134,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>3.4.1</version>
         <configuration>
-            <excludePackageNames>com.kamikaze.pfordelta:me.lemire.integercompression.benchmarktools</excludePackageNames>
+            <excludePackageNames>me.lemire.integercompression.vector;com.kamikaze.pfordelta:me.lemire.integercompression.benchmarktools</excludePackageNames>
        </configuration>
         <executions>
           <execution>

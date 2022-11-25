@@ -167,7 +167,7 @@ Speed is always reported in millions of integers per second.
 For Maven users
 ---------------
 
-
+The current development versions assume JDK 11 or better.
 
 ```
 mvn compile
