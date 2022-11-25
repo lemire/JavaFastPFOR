@@ -19,6 +19,6 @@ jobs:
       - name: Build and test with Maven
         run: mvn package
       - name: Build example
-        run: javac -cp target/classes/:. example.java  
+        run: javac -cp target/classes/:. example.java
       - name: Run example
         run: java -cp target/classes/:. example
