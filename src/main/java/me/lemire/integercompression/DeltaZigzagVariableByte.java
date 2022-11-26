@@ -105,7 +105,7 @@ public class DeltaZigzagVariableByte implements IntegerCODEC {
 
                 int ip = inPos.get();
                 int op = outPos.get();
-                int vbcNum = 0, vbcShift = 24; // Varialbe Byte Context.
+                int vbcNum = 0, vbcShift = 24; // Variable Byte Context.
                 final int inPosLast = ip + inLen;
                 while (ip < inPosLast) {
                         // Fetch a byte value.

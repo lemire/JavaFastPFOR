@@ -123,7 +123,7 @@ public class TestUtils {
         assertArrayEquals(orig, target);
     }
 
-    protected static int[] compress(IntegerCODEC codec, int[] data) {
+    public static int[] compress(IntegerCODEC codec, int[] data) {
         int[] outBuf = new int[data.length * 4];
         IntWrapper inPos = new IntWrapper();
         IntWrapper outPos = new IntWrapper();
