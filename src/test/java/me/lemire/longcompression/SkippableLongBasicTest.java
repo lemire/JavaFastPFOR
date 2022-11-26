@@ -12,11 +12,11 @@ import me.lemire.integercompression.VariableByte;
 /**
  * Just some basic sanity tests.
  * 
- * @author Daniel Lemire
+ * @author Benoit Lacelle
  */
 @SuppressWarnings({ "static-method" })
-public class SkippableBasicTest {
-    SkippableLongCODEC[] codecs = {
+public class SkippableLongBasicTest {
+    final SkippableLongCODEC[] codecs = {
             new LongJustCopy(),
             new LongVariableByte(), };
 
