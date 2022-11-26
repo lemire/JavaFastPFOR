@@ -29,7 +29,7 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings({ "static-method" })
 public class BasicTest {
-    IntegerCODEC[] codecs = {
+    final IntegerCODEC[] codecs = {
             new IntegratedComposition(new IntegratedBinaryPacking(),
                     new IntegratedVariableByte()),
             new JustCopy(),
@@ -51,7 +51,7 @@ public class BasicTest {
 					new DeltaZigzagVariableByte()) };
 
 	/**
-     * 
+     * This tests with a compressed array with various offset
      */
 	@Test
 	public void saulTest() {

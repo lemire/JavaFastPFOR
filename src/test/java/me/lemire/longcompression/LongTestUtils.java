@@ -77,7 +77,7 @@ public class LongTestUtils {
     }
 
     protected static long[] compress(LongCODEC codec, long[] data) {
-        long[] outBuf = new long[data.length * 4];
+        long[] outBuf = new long[data.length * 8];
         IntWrapper inPos = new IntWrapper();
         IntWrapper outPos = new IntWrapper();
         codec.compress(data, inPos, data.length, outBuf, outPos);

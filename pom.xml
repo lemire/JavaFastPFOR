@@ -48,6 +48,12 @@
       <version>4.13.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.roaringbitmap</groupId>
+      <artifactId>RoaringBitmap</artifactId>
+      <version>0.9.35</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <issueManagement>
     <system>GitHub Issue Tracking</system>

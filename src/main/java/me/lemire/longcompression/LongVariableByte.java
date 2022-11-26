@@ -41,6 +41,7 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
             IntWrapper outpos) {
         if (inlength == 0)
             return;
+        // Worst case: we write 10 bytes per long, hence 2 longs for a long, hence 16 bytes per long
         ByteBuffer buf = makeBuffer(inlength * 16);
         buf.order(ByteOrder.LITTLE_ENDIAN);
         for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
