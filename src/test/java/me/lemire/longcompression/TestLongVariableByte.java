@@ -28,17 +28,17 @@ public class TestLongVariableByte {
 			Assert.assertArrayEquals(array, uncompressed);
 		}
 
-		if (codec instanceof SkippableLongCODEC) {
-			long[] compressed = LongTestUtils.compressHeadless((SkippableLongCODEC) codec, array);
-			long[] uncompressed =
-					LongTestUtils.uncompressHeadless((SkippableLongCODEC) codec, compressed, array.length);
+		if (codec instanceof ByteLongCODEC) {
+			byte[] compressed = LongTestUtils.compress((ByteLongCODEC) codec, array);
+			long[] uncompressed = LongTestUtils.uncompress((ByteLongCODEC) codec, compressed, array.length);
 
 			Assert.assertArrayEquals(array, uncompressed);
 		}
 
-		if (codec instanceof ByteLongCODEC) {
-			byte[] compressed = LongTestUtils.compress((ByteLongCODEC) codec, array);
-			long[] uncompressed = LongTestUtils.uncompress((ByteLongCODEC) codec, compressed, array.length);
+		if (codec instanceof SkippableLongCODEC) {
+			long[] compressed = LongTestUtils.compressHeadless((SkippableLongCODEC) codec, array);
+			long[] uncompressed =
+					LongTestUtils.uncompressHeadless((SkippableLongCODEC) codec, compressed, array.length);
 
 			Assert.assertArrayEquals(array, uncompressed);
 		}
@@ -77,4 +77,27 @@ public class TestLongVariableByte {
 	public void testCodec_ZeroMinValue() {
 		checkConsistency(codec, new long[] { 0, Long.MIN_VALUE });
 	}
+
+	@Test
+	public void testCodec_allPowerOfTwo() {
+		checkConsistency(codec, new long[] { 1L << 42 });
+		for (int i = 0; i < 64; i++) {
+			checkConsistency(codec, new long[] { 1L << i });
+		}
+	}
+
+	@Test
+	public void testCodec_ZeroThenAllPowerOfTwo() {
+		for (int i = 0; i < 64; i++) {
+			checkConsistency(codec, new long[] { 0, 1L << i });
+		}
+	}
+
+	@Test
+	public void testCodec_intermediateHighPowerOfTwo() {
+		Assert.assertEquals(1, LongTestUtils.compress((LongCODEC) codec, new long[] { 1L << 42 }).length);
+		Assert.assertEquals(7, LongTestUtils.compress((ByteLongCODEC) codec, new long[] { 1L << 42 }).length);
+		Assert.assertEquals(1, LongTestUtils.compressHeadless((SkippableLongCODEC) codec, new long[] { 1L << 42 }).length);
+	}
+
 }

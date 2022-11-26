@@ -60,20 +60,20 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
                 buf.put((byte) extract7bits(1, val));
                 buf.put((byte) extract7bits(2, val));
                 buf.put((byte) (extract7bitsmaskless(3, (val)) | (1 << 7)));
-            } else if (val >= 0 && val < (1 << 35)) {
+            } else if (val >= 0 && val < (1L << 35)) {
                 buf.put((byte) extract7bits(0, val));
                 buf.put((byte) extract7bits(1, val));
                 buf.put((byte) extract7bits(2, val));
                 buf.put((byte) extract7bits(3, val));
                 buf.put((byte) (extract7bitsmaskless(4, (val)) | (1 << 7)));
-            } else if (val >= 0 && val < (1 << 42)) {
+            } else if (val >= 0 && val < (1L << 42)) {
                 buf.put((byte) extract7bits(0, val));
                 buf.put((byte) extract7bits(1, val));
                 buf.put((byte) extract7bits(2, val));
                 buf.put((byte) extract7bits(3, val));
                 buf.put((byte) extract7bits(4, val));
                 buf.put((byte) (extract7bitsmaskless(5, (val)) | (1 << 7)));
-            } else if (val >= 0 && val < (1 << 49)) {
+            } else if (val >= 0 && val < (1L << 49)) {
                 buf.put((byte) extract7bits(0, val));
                 buf.put((byte) extract7bits(1, val));
                 buf.put((byte) extract7bits(2, val));
@@ -81,7 +81,7 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
                 buf.put((byte) extract7bits(4, val));
                 buf.put((byte) extract7bits(5, val));
                 buf.put((byte) (extract7bitsmaskless(6, (val)) | (1 << 7)));
-            } else if (val >= 0 && val < (1 << 56)) {
+            } else if (val >= 0 && val < (1L << 56)) {
                 buf.put((byte) extract7bits(0, val));
                 buf.put((byte) extract7bits(1, val));
                 buf.put((byte) extract7bits(2, val));
@@ -90,7 +90,7 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
                 buf.put((byte) extract7bits(5, val));
                 buf.put((byte) extract7bits(6, val));
                 buf.put((byte) (extract7bitsmaskless(7, (val)) | (1 << 7)));
-            } else if (val >= 0 && val < (1 << 63)) {
+            } else if (val >= 0 && val < (1L << 63)) {
                 buf.put((byte) extract7bits(0, val));
                 buf.put((byte) extract7bits(1, val));
                 buf.put((byte) extract7bits(2, val));
@@ -145,20 +145,20 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
                 out[outpostmp++] = (byte) extract7bits(1, val);
                 out[outpostmp++] = (byte) extract7bits(2, val);
                 out[outpostmp++] = (byte) (extract7bitsmaskless(3, (val)) | (1 << 7));
-            } else if (val >= 0 && val < (1 << 35)) {
+            } else if (val >= 0 && val < (1L << 35)) {
                 out[outpostmp++] = (byte) extract7bits(0, val);
                 out[outpostmp++] = (byte) extract7bits(1, val);
                 out[outpostmp++] = (byte) extract7bits(2, val);
                 out[outpostmp++] = (byte) extract7bits(3, val);
                 out[outpostmp++] = (byte) (extract7bitsmaskless(4, (val)) | (1 << 7));
-            } else if (val >= 0 && val < (1 << 42)) {
+            } else if (val >= 0 && val < (1L << 42)) {
                 out[outpostmp++] = (byte) extract7bits(0, val);
                 out[outpostmp++] = (byte) extract7bits(1, val);
                 out[outpostmp++] = (byte) extract7bits(2, val);
                 out[outpostmp++] = (byte) extract7bits(3, val);
                 out[outpostmp++] = (byte) extract7bits(4, val);
                 out[outpostmp++] = (byte) (extract7bitsmaskless(5, (val)) | (1 << 7));
-            } else if (val >= 0 && val < (1 << 49)) {
+            } else if (val >= 0 && val < (1L << 49)) {
                 out[outpostmp++] = (byte) extract7bits(0, val);
                 out[outpostmp++] = (byte) extract7bits(1, val);
                 out[outpostmp++] = (byte) extract7bits(2, val);
@@ -166,7 +166,7 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
                 out[outpostmp++] = (byte) extract7bits(4, val);
                 out[outpostmp++] = (byte) extract7bits(5, val);
                 out[outpostmp++] = (byte) (extract7bitsmaskless(6, (val)) | (1 << 7));
-            } else if (val >= 0 && val < (1 << 56)) {
+            } else if (val >= 0 && val < (1L << 56)) {
                 out[outpostmp++] = (byte) extract7bits(0, val);
                 out[outpostmp++] = (byte) extract7bits(1, val);
                 out[outpostmp++] = (byte) extract7bits(2, val);
@@ -175,7 +175,7 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
                 out[outpostmp++] = (byte) extract7bits(5, val);
                 out[outpostmp++] = (byte) extract7bits(6, val);
                 out[outpostmp++] = (byte) (extract7bitsmaskless(7, (val)) | (1 << 7));
-            } else if (val >= 0 && val < (1 << 63)) {
+            } else if (val >= 0 && val < (1L << 63)) {
                 out[outpostmp++] = (byte) extract7bits(0, val);
                 out[outpostmp++] = (byte) extract7bits(1, val);
                 out[outpostmp++] = (byte) extract7bits(2, val);
