@@ -45,16 +45,16 @@ public final class LongBinaryPacking implements LongCODEC, SkippableLongCODEC {
             // Compress by block of 8 * 64 longs as much as possible
             for (; s + BLOCK_SIZE * 8 - 1 < inpos.get() + inlength; s += BLOCK_SIZE * 8) {
                 // maxbits can be anything between 0 and 64 included: expressed within a byte (1 << 6)
-                final long mbits1 = LongUtil.maxbits(in, s + 0 * BLOCK_SIZE, BLOCK_SIZE);
-                final long mbits2 = LongUtil.maxbits(in, s + 1 * BLOCK_SIZE, BLOCK_SIZE);
-                final long mbits3 = LongUtil.maxbits(in, s + 2 * BLOCK_SIZE, BLOCK_SIZE);
-                final long mbits4 = LongUtil.maxbits(in, s + 3 * BLOCK_SIZE, BLOCK_SIZE);
-                final long mbits5 = LongUtil.maxbits(in, s + 4 * BLOCK_SIZE, BLOCK_SIZE);
-                final long mbits6 = LongUtil.maxbits(in, s + 5 * BLOCK_SIZE, BLOCK_SIZE);
-                final long mbits7 = LongUtil.maxbits(in, s + 6 * BLOCK_SIZE, BLOCK_SIZE);
-                final long mbits8 = LongUtil.maxbits(in, s + 7 * BLOCK_SIZE, BLOCK_SIZE);
+                final int mbits1 = LongUtil.maxbits(in, s + 0 * BLOCK_SIZE, BLOCK_SIZE);
+                final int mbits2 = LongUtil.maxbits(in, s + 1 * BLOCK_SIZE, BLOCK_SIZE);
+                final int mbits3 = LongUtil.maxbits(in, s + 2 * BLOCK_SIZE, BLOCK_SIZE);
+                final int mbits4 = LongUtil.maxbits(in, s + 3 * BLOCK_SIZE, BLOCK_SIZE);
+                final int mbits5 = LongUtil.maxbits(in, s + 4 * BLOCK_SIZE, BLOCK_SIZE);
+                final int mbits6 = LongUtil.maxbits(in, s + 5 * BLOCK_SIZE, BLOCK_SIZE);
+                final int mbits7 = LongUtil.maxbits(in, s + 6 * BLOCK_SIZE, BLOCK_SIZE);
+                final int mbits8 = LongUtil.maxbits(in, s + 7 * BLOCK_SIZE, BLOCK_SIZE);
                 // The first long expressed the maxbits for the 8 buckets
-                out[tmpoutpos++] = (mbits1 << 56) | (mbits2 << 48) | (mbits3 << 40) | (mbits4 << 32) | (mbits5 << 24) | (mbits6 << 16) | (mbits7 << 8) | (mbits8);
+                out[tmpoutpos++] = ((long) mbits1 << 56) | ((long) mbits2 << 48) | ((long) mbits3 << 40) | ((long) mbits4 << 32) | (mbits5 << 24) | (mbits6 << 16) | (mbits7 << 8) | (mbits8);
                 LongBitPacking.fastpackwithoutmask(in, s + 0 * BLOCK_SIZE, out, tmpoutpos, (int) mbits1);
                 tmpoutpos += mbits1;
                 LongBitPacking.fastpackwithoutmask(in, s + 1 * BLOCK_SIZE, out, tmpoutpos, (int) mbits2);
@@ -100,30 +100,30 @@ public final class LongBinaryPacking implements LongCODEC, SkippableLongCODEC {
             int tmpinpos = inpos.get();
             int s = outpos.get();
             for (; s + BLOCK_SIZE * 8 - 1 < outpos.get() + outlength; s += BLOCK_SIZE * 8) {
-                final long mbits1 = (in[tmpinpos] >>> 56);
-                final long mbits2 = (in[tmpinpos] >>> 48) & 0xFF;
-                final long mbits3 = (in[tmpinpos] >>> 40) & 0xFF;
-                final long mbits4 = (in[tmpinpos] >>> 32) & 0xFF;
-                final long mbits5 = (in[tmpinpos] >>> 24) & 0xFF;
-                final long mbits6 = (in[tmpinpos] >>> 16) & 0xFF;
-                final long mbits7 = (in[tmpinpos] >>> 8) & 0xFF;
-                final long mbits8 = (in[tmpinpos]) & 0xFF;
+                final int mbits1 = (int) ((in[tmpinpos] >>> 56));
+                final int mbits2 = (int) ((in[tmpinpos] >>> 48) & 0xFF);
+                final int mbits3 = (int) ((in[tmpinpos] >>> 40) & 0xFF);
+                final int mbits4 = (int) ((in[tmpinpos] >>> 32) & 0xFF);
+                final int mbits5 = (int) ((in[tmpinpos] >>> 24) & 0xFF);
+                final int mbits6 = (int) ((in[tmpinpos] >>> 16) & 0xFF);
+                final int mbits7 = (int) ((in[tmpinpos] >>> 8) & 0xFF);
+                final int mbits8 = (int) ((in[tmpinpos]) & 0xFF);
                 ++tmpinpos;
-                LongBitPacking.fastunpack(in, tmpinpos, out, s + 0 * BLOCK_SIZE, (int) mbits1);
+                LongBitPacking.fastunpack(in, tmpinpos, out, s + 0 * BLOCK_SIZE, mbits1);
                 tmpinpos += mbits1;
-                LongBitPacking.fastunpack(in, tmpinpos, out, s + 1 * BLOCK_SIZE, (int) mbits2);
+                LongBitPacking.fastunpack(in, tmpinpos, out, s + 1 * BLOCK_SIZE, mbits2);
                 tmpinpos += mbits2;
-                LongBitPacking.fastunpack(in, tmpinpos, out, s + 2 * BLOCK_SIZE, (int) mbits3);
+                LongBitPacking.fastunpack(in, tmpinpos, out, s + 2 * BLOCK_SIZE, mbits3);
                 tmpinpos += mbits3;
-                LongBitPacking.fastunpack(in, tmpinpos, out, s + 3 * BLOCK_SIZE, (int) mbits4);
+                LongBitPacking.fastunpack(in, tmpinpos, out, s + 3 * BLOCK_SIZE, mbits4);
                 tmpinpos += mbits4;
-                LongBitPacking.fastunpack(in, tmpinpos, out, s + 4 * BLOCK_SIZE, (int) mbits5);
+                LongBitPacking.fastunpack(in, tmpinpos, out, s + 4 * BLOCK_SIZE, mbits5);
                 tmpinpos += mbits5;
-                LongBitPacking.fastunpack(in, tmpinpos, out, s + 5 * BLOCK_SIZE, (int) mbits6);
+                LongBitPacking.fastunpack(in, tmpinpos, out, s + 5 * BLOCK_SIZE, mbits6);
                 tmpinpos += mbits6;
-                LongBitPacking.fastunpack(in, tmpinpos, out, s + 6 * BLOCK_SIZE, (int) mbits7);
+                LongBitPacking.fastunpack(in, tmpinpos, out, s + 6 * BLOCK_SIZE, mbits7);
                 tmpinpos += mbits7;
-                LongBitPacking.fastunpack(in, tmpinpos, out, s + 7 * BLOCK_SIZE, (int) mbits8);
+                LongBitPacking.fastunpack(in, tmpinpos, out, s + 7 * BLOCK_SIZE, mbits8);
                 tmpinpos += mbits8;
             }
             for (; s < outpos.get() + outlength; s += BLOCK_SIZE ) {
