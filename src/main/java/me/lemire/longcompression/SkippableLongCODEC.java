@@ -11,7 +11,7 @@ import me.lemire.integercompression.IntWrapper;
 
 /**
  * Interface describing a standard CODEC to compress longs. This is a
- * variation on the LongCODEC interface meant to be used for head access.
+ * variation on the LongCODEC interface meant to be used for random access.
  * 
  * The main difference is that we must specify the number of longs we wish to
  * decode. This information should be stored elsewhere.
