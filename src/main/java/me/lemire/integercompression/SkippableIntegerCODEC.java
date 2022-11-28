@@ -10,7 +10,8 @@ package me.lemire.integercompression;
 
 /**
  * Interface describing a standard CODEC to compress integers. This is a
- * variation on the IntegerCODEC interface meant to be used for random access.
+ * variation on the IntegerCODEC interface meant to be used for random access
+ * (i.e., given a large array, you can segment it and decode just the subarray you need).
  * 
  * The main difference is that we must specify the number of integers we wish to
  * decode. This information should be stored elsewhere.
