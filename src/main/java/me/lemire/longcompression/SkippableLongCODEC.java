@@ -33,7 +33,7 @@ public interface SkippableLongCODEC {
      * @param in
      *            input array
      * @param inpos
-     *            location in the input array
+     *            where to start reading in the array
      * @param inlength
      *            how many longs to compress
      * @param out
@@ -57,9 +57,9 @@ public interface SkippableLongCODEC {
      * @param inlength
      *            length of the compressed data (ignored by some schemes)
      * @param out
-     *            array where to write the compressed output
+     *            array where to write the uncompressed output
      * @param outpos
-     *            where to write the compressed output in out
+     *            where to start writing the uncompressed output in out
      * @param num
      *            number of longs we want to decode, the actual number of longs decoded can be less
      */

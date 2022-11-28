@@ -25,7 +25,7 @@ public interface IntegerCODEC {
          * @param in
          *                input array
          * @param inpos
-         *                location in the input array
+         *                where to start reading in the array
          * @param inlength
          *                how many integers to compress
          * @param out
@@ -52,7 +52,7 @@ public interface IntegerCODEC {
          * @param out
          *                array where to write the compressed output
          * @param outpos
-         *                where to write the compressed output in out
+         *                where to start writing the uncompressed output in out
          */
         public void uncompress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos);

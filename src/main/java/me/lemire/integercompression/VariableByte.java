@@ -126,7 +126,7 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
             s += 8;
             // Shift to next integer if s==32
             p += s>>5;
-            // cycle from 31 to 0
+            // cycle from 32 to 0
             s = s & 31;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {
@@ -194,7 +194,7 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
             s += 8;
             // Shift to next integer if s==32
             p += s>>5;
-            // cycle from 31 to 0
+            // cycle from 32 to 0
             s = s & 31;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {
@@ -214,6 +214,9 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
      * In case you need a different way to allocate buffers, you can override this method
      * with a custom behavior. The default implementation allocates a new Java direct
      * {@link ByteBuffer} on each invocation.
+     * 
+     * @param sizeInBytes
+     * @return
      */
     protected ByteBuffer makeBuffer(int sizeInBytes) {
         return ByteBuffer.allocateDirect(sizeInBytes);

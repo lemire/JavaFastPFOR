@@ -25,7 +25,8 @@ import me.lemire.integercompression.VariableByte;
 public class SkippableLongBasicTest {
     final SkippableLongCODEC[] codecs = {
             new LongJustCopy(),
-            new LongVariableByte(), };
+            new LongVariableByte(),
+            new SkippableLongComposition(new LongBinaryPacking(), new LongVariableByte()), };
 
     
     /**

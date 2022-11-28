@@ -1,31 +1,35 @@
-package me.lemire.integercompression;
+package me.lemire.longcompression;
 
 import java.util.Arrays;
+
+import me.lemire.integercompression.IntWrapper;
+import me.lemire.integercompression.UncompressibleInputException;
 
 /**
  * This is a convenience class that wraps a codec to provide
  * a "friendly" API.
  *
+ * @author Benoit Lacelle
  */
-public class IntCompressor {
+public class LongCompressor {
 
 
-    SkippableIntegerCODEC codec;
+    SkippableLongCODEC codec;
     /**
      * Constructor wrapping a codec.
      * 
      * @param c the underlying codec
      */
-    public IntCompressor(SkippableIntegerCODEC c) {
+    public LongCompressor(SkippableLongCODEC c) {
       codec = c;
     }
     
     /**
      * Constructor with default codec.
      */
-    public IntCompressor() {
-        codec = new SkippableComposition(new BinaryPacking(),
-                new VariableByte());
+    public LongCompressor() {
+        codec = new SkippableLongComposition(new LongBinaryPacking(),
+                new LongVariableByte());
     }
 
     /**
@@ -35,8 +39,8 @@ public class IntCompressor {
      * @return compressed array
      * @throws UncompressibleInputException if the data is too poorly compressible
      */
-    public  int[] compress(int[] input) {
-        int[] compressed = new int[input.length + input.length / 100 + 1024];
+    public  long[] compress(long[] input) {
+    	long[] compressed = new long[input.length + input.length / 100 + 1024];
         // Store at index=0 the length of the input, hence enabling .headlessCompress
         compressed[0] = input.length;
         IntWrapper outpos = new IntWrapper(1);
@@ -58,9 +62,9 @@ public class IntCompressor {
      * @param compressed compressed array
      * @return uncompressed array
      */
-    public int[] uncompress(int[] compressed) {
+    public long[] uncompress(long[] compressed) {
         // Read at index=0 the length of the input, hence enabling .headlessUncompress
-        int[] decompressed = new int[compressed[0]];
+    	long[] decompressed = new long[(int) compressed[0]];
         IntWrapper inpos = new IntWrapper(1);
         codec.headlessUncompress(compressed, inpos, 
                 compressed.length - inpos.intValue(), 
