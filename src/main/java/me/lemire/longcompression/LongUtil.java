@@ -15,8 +15,8 @@ package me.lemire.longcompression;
  */
 @Deprecated
 public class LongUtil {
-	
-	/**
+    
+    /**
      * Compute the maximum of the integer logarithms (ceil(log(x+1)) of a range
      * of value
      * 
@@ -46,7 +46,7 @@ public class LongUtil {
         return 64 - Long.numberOfLeadingZeros(i);
     }
     
-	protected static String longToBinaryWithLeading(long l) {
-		return String.format("%64s", Long.toBinaryString(l)).replace(' ', '0');
-	}
+    protected static String longToBinaryWithLeading(long l) {
+        return String.format("%64s", Long.toBinaryString(l)).replace(' ', '0');
+    }
 }

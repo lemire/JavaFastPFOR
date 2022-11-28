@@ -237,7 +237,7 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
 
     @Override
     public void uncompress(byte[] in, IntWrapper inpos, int inlength,
-    		long[] out, IntWrapper outpos) {
+            long[] out, IntWrapper outpos) {
         int p = inpos.get();
         int finalp = inpos.get() + inlength;
         int tmpoutpos = outpos.get();

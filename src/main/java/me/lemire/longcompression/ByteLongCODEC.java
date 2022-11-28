@@ -57,6 +57,6 @@ public interface ByteLongCODEC {
          *                where to write the compressed output in out
          */
         public void uncompress(byte[] in, IntWrapper inpos, int inlength,
-        		long[] out, IntWrapper outpos);
+                long[] out, IntWrapper outpos);
 
 }

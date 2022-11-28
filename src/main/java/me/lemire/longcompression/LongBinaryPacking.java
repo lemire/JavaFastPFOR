@@ -27,7 +27,7 @@ public final class LongBinaryPacking implements LongCODEC, SkippableLongCODEC {
     
         @Override
         public void compress(long[] in, IntWrapper inpos, int inlength,
-        		long[] out, IntWrapper outpos) {
+                long[] out, IntWrapper outpos) {
             inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
             if (inlength == 0)
                     return;
@@ -38,13 +38,13 @@ public final class LongBinaryPacking implements LongCODEC, SkippableLongCODEC {
 
         @Override
         public void headlessCompress(long[] in, IntWrapper inpos, int inlength,
-        		long[] out, IntWrapper outpos) {
+                long[] out, IntWrapper outpos) {
             inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
             int tmpoutpos = outpos.get();
             int s = inpos.get();
             // Compress by block of 8 * 64 longs as much as possible
             for (; s + BLOCK_SIZE * 8 - 1 < inpos.get() + inlength; s += BLOCK_SIZE * 8) {
-            	// maxbits can be anything between 0 and 64 included: expressed within a byte (1 << 6)
+                // maxbits can be anything between 0 and 64 included: expressed within a byte (1 << 6)
                 final long mbits1 = LongUtil.maxbits(in, s + 0 * BLOCK_SIZE, BLOCK_SIZE);
                 final long mbits2 = LongUtil.maxbits(in, s + 1 * BLOCK_SIZE, BLOCK_SIZE);
                 final long mbits3 = LongUtil.maxbits(in, s + 2 * BLOCK_SIZE, BLOCK_SIZE);
@@ -85,7 +85,7 @@ public final class LongBinaryPacking implements LongCODEC, SkippableLongCODEC {
 
         @Override
         public void uncompress(long[] in, IntWrapper inpos, int inlength,
-        		long[] out, IntWrapper outpos) {
+                long[] out, IntWrapper outpos) {
                 if (inlength == 0)
                         return;
                 final int outlength = (int) in[inpos.get()];
@@ -95,7 +95,7 @@ public final class LongBinaryPacking implements LongCODEC, SkippableLongCODEC {
 
         @Override
         public void headlessUncompress(long[] in, IntWrapper inpos, int inlength,
-        		long[] out, IntWrapper outpos, int num) {
+                long[] out, IntWrapper outpos, int num) {
             final int outlength = Util.greatestMultiple(num, BLOCK_SIZE);
             int tmpinpos = inpos.get();
             int s = outpos.get();
