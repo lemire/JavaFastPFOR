@@ -5,27 +5,28 @@
  * (c) Daniel Lemire, http://lemire.me/en/
  */
 
-package me.lemire.integercompression;
+package me.lemire.longcompression;
 
+import me.lemire.integercompression.IntWrapper;
 
 /**
- * Interface describing a standard CODEC to compress integers. This is a
- * variation on the IntegerCODEC interface meant to be used for head access.
+ * Interface describing a standard CODEC to compress longs. This is a
+ * variation on the LongCODEC interface meant to be used for head access.
  * 
- * The main difference is that we must specify the number of integers we wish to
+ * The main difference is that we must specify the number of longs we wish to
  * decode. This information should be stored elsewhere.
  * 
  * This interface was designed by the Terrier team for their search engine.
  * 
- * @author Daniel Lemire
+ * @author Benoit Lacelle
  * 
  */
-public interface SkippableIntegerCODEC {
+public interface SkippableLongCODEC {
     /**
      * Compress data from an array to another array.
      * 
      * Both inpos and outpos are modified to represent how much data was read
-     * and written to. If 12 ints (inlength = 12) are compressed to 3 ints, then
+     * and written to. If 12 longs (inlength = 12) are compressed to 3 longs, then
      * inpos will be incremented by 12 while outpos will be incremented by 3. We
      * use IntWrapper to pass the values by reference.
      * 
@@ -34,13 +35,13 @@ public interface SkippableIntegerCODEC {
      * @param inpos
      *            location in the input array
      * @param inlength
-     *            how many integers to compress
+     *            how many longs to compress
      * @param out
      *            output array
      * @param outpos
      *            where to write in the output array
      */
-    public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessCompress(long[] in, IntWrapper inpos, int inlength, long[] out,
             IntWrapper outpos);
 
     /**
@@ -60,9 +61,9 @@ public interface SkippableIntegerCODEC {
      * @param outpos
      *            where to write the compressed output in out
      * @param num
-     *            number of integers we want to decode, the actual number of integers decoded can be less
+     *            number of longs we want to decode, the actual number of longs decoded can be less
      */
-    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
+    public void headlessUncompress(long[] in, IntWrapper inpos, int inlength, long[] out,
             IntWrapper outpos, int num);
 
 }

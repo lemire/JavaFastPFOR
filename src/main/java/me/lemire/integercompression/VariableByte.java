@@ -122,8 +122,11 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
         for (int v = 0, shift = 0; p < finalp;) {
             val = in[p];
             int c = (byte) (val >>> s);
+            // Shift to next byte
             s += 8;
+            // Shift to next integer if s==32
             p += s>>5;
+            // cycle from 31 to 0
             s = s & 31;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {
@@ -187,8 +190,11 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
         for (int v = 0, shift = 0; tmpoutpos < finaloutpos;) {
             val = in[p];
             int c = val >>> s;
+            // Shift to next byte
             s += 8;
+            // Shift to next integer if s==32
             p += s>>5;
+            // cycle from 31 to 0
             s = s & 31;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {

@@ -5,34 +5,27 @@
  * (c) Daniel Lemire, http://lemire.me/en/
  */
 
-package me.lemire.integercompression;
+package me.lemire.longcompression;
 
 import java.util.Arrays;
 
 import org.junit.Test;
 
+import me.lemire.integercompression.IntWrapper;
+import me.lemire.integercompression.TestUtils;
+import me.lemire.integercompression.VariableByte;
+
 
 /**
  * Just some basic sanity tests.
  * 
- * @author Daniel Lemire
+ * @author Benoit Lacelle
  */
 @SuppressWarnings({ "static-method" })
-public class SkippableBasicTest {
-	final SkippableIntegerCODEC[] codecs = {
-            new JustCopy(),
-            new VariableByte(),
-            new SkippableComposition(new BinaryPacking(), new VariableByte()),
-            new SkippableComposition(new NewPFD(), new VariableByte()),
-            new SkippableComposition(new NewPFDS9(), new VariableByte()),
-            new SkippableComposition(new NewPFDS16(), new VariableByte()),
-            new SkippableComposition(new OptPFD(), new VariableByte()),
-            new SkippableComposition(new OptPFDS9(), new VariableByte()),
-            new SkippableComposition(new OptPFDS16(), new VariableByte()),
-            new SkippableComposition(new FastPFOR128(), new VariableByte()),
-            new SkippableComposition(new FastPFOR(), new VariableByte()),
-            new Simple9(),
-            new Simple16() };
+public class SkippableLongBasicTest {
+    final SkippableLongCODEC[] codecs = {
+            new LongJustCopy(),
+            new LongVariableByte(), };
 
     
     /**
@@ -41,14 +34,14 @@ public class SkippableBasicTest {
     @Test
     public void consistentTest() {
         int N = 4096;
-        int[] data = new int[N];
-        int[] rev = new int[N];
+        long[] data = new long[N];
+        long[] rev = new long[N];
         for (int k = 0; k < N; ++k)
             data[k] = k % 128;
-        for (SkippableIntegerCODEC c : codecs) {
+        for (SkippableLongCODEC c : codecs) {
             System.out.println("[SkippeableBasicTest.consistentTest] codec = "
                     + c);
-            int[] outBuf = new int[N + 1024];
+            long[] outBuf = new long[N + 1024];
             for (int n = 0; n <= N; ++n) {
                 IntWrapper inPos = new IntWrapper();
                 IntWrapper outPos = new IntWrapper();
@@ -79,21 +72,21 @@ public class SkippableBasicTest {
     @Test
     public void varyingLengthTest() {
         int N = 4096;
-        int[] data = new int[N];
+        long[] data = new long[N];
         for (int k = 0; k < N; ++k)
             data[k] = k;
-        for (SkippableIntegerCODEC c : codecs) {
+        for (SkippableLongCODEC c : codecs) {
             System.out.println("[SkippeableBasicTest.varyingLengthTest] codec = "+c);
             for (int L = 1; L <= 128; L++) {
-                int[] comp = TestUtils.compressHeadless(c, Arrays.copyOf(data, L));
-                int[] answer = TestUtils.uncompressHeadless(c, comp, L);
+            	long[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));
+            	long[] answer = LongTestUtils.uncompressHeadless(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug "+c.toString()+" "+k+" "+answer[k]+" "+data[k]);
             }
             for (int L = 128; L <= N; L *= 2) {
-                int[] comp = TestUtils.compressHeadless(c, Arrays.copyOf(data, L));
-                int[] answer = TestUtils.uncompressHeadless(c, comp, L);
+            	long[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));
+            	long[] answer = LongTestUtils.uncompressHeadless(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
@@ -108,9 +101,9 @@ public class SkippableBasicTest {
     @Test
     public void varyingLengthTest2() {
         int N = 128;
-        int[] data = new int[N];
+        long[] data = new long[N];
         data[127] = -1;
-        for (SkippableIntegerCODEC c : codecs) {
+        for (SkippableLongCODEC c : codecs) {
             System.out.println("[SkippeableBasicTest.varyingLengthTest2] codec = "+c);
 
             try {
@@ -130,15 +123,16 @@ public class SkippableBasicTest {
                 e.printStackTrace();
             }
             for (int L = 1; L <= 128; L++) {
-                int[] comp = TestUtils.compressHeadless(c, Arrays.copyOf(data, L));
-                int[] answer = TestUtils.uncompressHeadless(c, comp, L);
+            	long[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));
+            	long[] answer = LongTestUtils.uncompressHeadless(c, comp, L);
                 for (int k = 0; k < L; ++k)
-                    if (answer[k] != data[k])
-                        throw new RuntimeException("bug at k = "+k+" "+answer[k]+" "+data[k]+" for "+c.toString());
+                    if (answer[k] != data[k]) {
+                    	throw new RuntimeException("L=" + L + ": bug at k = "+k+" "+answer[k]+" "+data[k]+" for "+c.toString());
+                    }
             }
             for (int L = 128; L <= N; L *= 2) {
-                int[] comp = TestUtils.compressHeadless(c, Arrays.copyOf(data, L));
-                int[] answer = TestUtils.uncompressHeadless(c, comp, L);
+            	long[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));
+            	long[] answer = LongTestUtils.uncompressHeadless(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");

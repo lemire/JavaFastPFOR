@@ -5,21 +5,23 @@
  * (c) Daniel Lemire, http://lemire.me/en/
  */
 
-package me.lemire.integercompression;
+package me.lemire.longcompression;
+
+import me.lemire.integercompression.IntWrapper;
 
 /**
- * Interface describing a CODEC to compress integers to bytes.
+ * Interface describing a standard CODEC to compress longs.
  * 
- * @author Daniel Lemire
+ * @author Benoit Lacelle
  * 
  */
-public interface ByteIntegerCODEC {
+public interface LongCODEC {
         /**
          * Compress data from an array to another array.
          * 
          * Both inpos and outpos are modified to represent how much data was
-         * read and written to. If 12 ints (inlength = 12) are compressed to 3
-         * bytes, then inpos will be incremented by 12 while outpos will be
+         * read and written to. If 12 longs (inlength = 12) are compressed to 3
+         * longs, then inpos will be incremented by 12 while outpos will be
          * incremented by 3. We use IntWrapper to pass the values by reference.
          * 
          * @param in
@@ -27,14 +29,14 @@ public interface ByteIntegerCODEC {
          * @param inpos
          *                location in the input array
          * @param inlength
-         *                how many integers to compress
+         *                how many longs to compress
          * @param out
          *                output array
          * @param outpos
          *                where to write in the output array
          */
-        public void compress(int[] in, IntWrapper inpos, int inlength,
-                byte[] out, IntWrapper outpos);
+        public void compress(long[] in, IntWrapper inpos, int inlength,
+        		long[] out, IntWrapper outpos);
 
         /**
          * Uncompress data from an array to another array.
@@ -54,7 +56,7 @@ public interface ByteIntegerCODEC {
          * @param outpos
          *                where to write the compressed output in out
          */
-        public void uncompress(byte[] in, IntWrapper inpos, int inlength,
-                int[] out, IntWrapper outpos);
+        public void uncompress(long[] in, IntWrapper inpos, int inlength,
+        		long[] out, IntWrapper outpos);
 
 }

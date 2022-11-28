@@ -18,9 +18,9 @@ public interface IntegerCODEC {
          * Compress data from an array to another array.
          * 
          * Both inpos and outpos are modified to represent how much data was
-         * read and written to if 12 ints (inlength = 12) are compressed to 3
+         * read and written to. If 12 ints (inlength = 12) are compressed to 3
          * ints, then inpos will be incremented by 12 while outpos will be
-         * incremented by 3 we use IntWrapper to pass the values by reference.
+         * incremented by 3. We use IntWrapper to pass the values by reference.
          * 
          * @param in
          *                input array
