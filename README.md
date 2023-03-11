@@ -222,6 +222,7 @@ He also posted his slides online: http://www.slideshare.net/ikhtearSharif/ikhtea
 Other recommended libraries
 -----------------------------
 
+* Fast integer compression in Go: https://github.com/ronanh/intcomp
 * Encoding: Integer Compression Libraries for Go https://github.com/zhenjl/encoding
 * CSharpFastPFOR: A C#  integer compression library  https://github.com/Genbox/CSharpFastPFOR
 * TurboPFor is a C library that offers lots of interesting optimizations and Java wrappers. Well worth checking! (Uses a GPL license.) https://github.com/powturbo/TurboPFor
