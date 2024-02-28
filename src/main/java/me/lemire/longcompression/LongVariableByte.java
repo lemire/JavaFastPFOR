@@ -46,7 +46,6 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
         buf.order(ByteOrder.LITTLE_ENDIAN);
         for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {
             final long val = in[k];
-            // System.out.println(LongUtil.longToBinaryWithLeading(val));
             if (val >= 0 && val < (1 << 7)) {
                 buf.put((byte) (val | (1 << 7)));
             } else if (val >= 0 && val < (1 << 14)) {
@@ -213,7 +212,6 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
         int tmpoutpos = outpos.get();
         for (long v = 0, shift = 0; p < finalp;) {
             val = in[p];
-            // System.out.println(LongUtil.longToBinaryWithLeading(val));
             long c = (byte) (val >>> s);
             // Shift to next byte
             s += 8;

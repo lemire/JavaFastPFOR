@@ -117,7 +117,7 @@ public class example {
          */
         IntWrapper inputoffset = new IntWrapper(0);
         IntWrapper outputoffset = new IntWrapper(1);
-        compressed[0] = data.length; // we manually store how many integers we
+        compressed[0] = data.length; // we manually store how many integers
         codec.headlessCompress(data, inputoffset, data.length, compressed, outputoffset, new IntWrapper(0));
         // got it!
         // inputoffset should be at data.length but outputoffset tells

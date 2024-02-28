@@ -1,7 +1,6 @@
 JavaFastPFOR: A simple integer compression library in Java 
 ==========================================================
  [![][maven img]][maven] [![][license img]][license] [![docs-badge][]][docs]
-[![Code Quality: Cpp](https://img.shields.io/lgtm/grade/java/g/lemire/JavaFastPFOR.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lemire/JavaFastPFOR/context:java)
 [![Java CI](https://github.com/lemire/JavaFastPFOR/actions/workflows/basic.yml/badge.svg)](https://github.com/lemire/JavaFastPFOR/actions/workflows/basic.yml)
 
 
@@ -222,6 +221,7 @@ He also posted his slides online: http://www.slideshare.net/ikhtearSharif/ikhtea
 Other recommended libraries
 -----------------------------
 
+* Fast integer compression in Go: https://github.com/ronanh/intcomp
 * Encoding: Integer Compression Libraries for Go https://github.com/zhenjl/encoding
 * CSharpFastPFOR: A C#  integer compression library  https://github.com/Genbox/CSharpFastPFOR
 * TurboPFor is a C library that offers lots of interesting optimizations and Java wrappers. Well worth checking! (Uses a GPL license.) https://github.com/powturbo/TurboPFor

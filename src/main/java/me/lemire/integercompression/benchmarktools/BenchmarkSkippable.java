@@ -83,7 +83,6 @@ public class BenchmarkSkippable {
             if (num > length - uncomppos.get())
                 num = length - uncomppos.get();
             int location = metadata[metapos++];
-            // System.out.println("location = "+location);
             int initvalue = metadata[metapos++];
             int outputlocation = uncomppos.get();
             if (location != compressedpos.get())
