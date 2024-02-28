@@ -126,7 +126,7 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
             s += 8;
             // Shift to next integer if s==32
             p += s>>5;
-            // cycle from 32 to 0
+            // cycle from 31 to 0
             s = s & 31;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {
@@ -194,7 +194,7 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
             s += 8;
             // Shift to next integer if s==32
             p += s>>5;
-            // cycle from 32 to 0
+            // cycle from 31 to 0
             s = s & 31;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {

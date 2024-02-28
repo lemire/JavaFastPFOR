@@ -13,8 +13,8 @@ import me.lemire.integercompression.UncompressibleInputException;
  */
 public class LongCompressor {
 
-
     SkippableLongCODEC codec;
+    
     /**
      * Constructor wrapping a codec.
      * 
@@ -48,8 +48,7 @@ public class LongCompressor {
             codec.headlessCompress(input, new IntWrapper(0),
                     input.length, compressed, outpos);
         } catch (IndexOutOfBoundsException ioebe) {
-            throw new
-            UncompressibleInputException("Your input is too poorly compressible "
+            throw new UncompressibleInputException("Your input is too poorly compressible "
                     + "with the current codec : "+codec);
         }
         compressed = Arrays.copyOf(compressed,outpos.intValue());

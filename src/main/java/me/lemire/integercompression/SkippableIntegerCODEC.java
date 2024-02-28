@@ -10,10 +10,10 @@ package me.lemire.integercompression;
 
 /**
  * Interface describing a standard CODEC to compress integers. This is a
- * variation on the IntegerCODEC interface meant to be used for head access.
+ * variation on the IntegerCODEC interface meant to be used for partial reads.
  * 
- * The main difference is that we must specify the number of integers we wish to
- * decode. This information should be stored elsewhere.
+ * The main difference is that you must specify the number of integers you wish to
+ * uncompress. This information should be stored elsewhere.
  * 
  * This interface was designed by the Terrier team for their search engine.
  * 
@@ -28,6 +28,9 @@ public interface SkippableIntegerCODEC {
      * and written to. If 12 ints (inlength = 12) are compressed to 3 ints, then
      * inpos will be incremented by 12 while outpos will be incremented by 3. We
      * use IntWrapper to pass the values by reference.
+     * 
+     * Implementation note: contrary to {@link IntegerCODEC#compress},
+     * this may skip writing information about the number of encoded integers.
      * 
      * @param in
      *            input array
@@ -60,7 +63,7 @@ public interface SkippableIntegerCODEC {
      * @param outpos
      *            where to start writing the uncompressed output in out
      * @param num
-     *            number of integers we want to decode, the actual number of integers decoded can be less
+     *            number of integers we want to decode. May be less than the actual number of compressed integers
      */
     public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num);

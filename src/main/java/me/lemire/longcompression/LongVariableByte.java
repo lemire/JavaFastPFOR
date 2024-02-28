@@ -187,7 +187,6 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
                 out[outpostmp++] = (byte) extract7bits(7, val);
                 out[outpostmp++] = (byte) (extract7bitsmaskless(8, (val)) | (1 << 7));
             } else {
-                // System.out.println(LongUtil.longToBinaryWithLeading(val));
                 out[outpostmp++] = (byte) extract7bits(0, val);
                 out[outpostmp++] = (byte) extract7bits(1, val);
                 out[outpostmp++] = (byte) extract7bits(2, val);
@@ -220,7 +219,7 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
             s += 8;
             // Shift to next long if s==64
             p += s>>6;
-            // Cycle from 64 to 0
+            // Cycle from 63 to 0
             s = s & 63;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {
@@ -309,13 +308,12 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
         int finaloutpos = num + tmpoutpos;
         for (long v = 0, shift = 0; tmpoutpos < finaloutpos;) {
             val = in[p];
-            // System.out.println(longToBinaryWithLeading(val));
             long c = val >>> s;
             // Shift to next byte
             s += 8;
             // Shift to next long if s == 64
             p += s>>6;
-            // Cycle from 64 to 0
+            // Cycle from 63 to 0
             s = s & 63;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {
