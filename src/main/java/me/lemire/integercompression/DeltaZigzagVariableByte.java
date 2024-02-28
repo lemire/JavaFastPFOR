@@ -134,6 +134,9 @@ public class DeltaZigzagVariableByte implements IntegerCODEC {
          * In case you need a different way to allocate buffers, you can override this method
          * with a custom behavior. The default implementation allocates a new Java direct
          * {@link ByteBuffer} on each invocation.
+         * 
+         * @param sizeInBytes
+         * @return
          */
         protected ByteBuffer makeBuffer(int sizeInBytes) {
                 return ByteBuffer.allocateDirect(sizeInBytes);

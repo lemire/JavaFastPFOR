@@ -217,7 +217,7 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
             s += 8;
             // Shift to next long if s==64
             p += s>>6;
-            // cycle from 63 to 0
+            // Cycle from 63 to 0
             s = s & 63;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {
@@ -234,7 +234,7 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
 
     @Override
     public void uncompress(byte[] in, IntWrapper inpos, int inlength,
-    		long[] out, IntWrapper outpos) {
+            long[] out, IntWrapper outpos) {
         int p = inpos.get();
         int finalp = inpos.get() + inlength;
         int tmpoutpos = outpos.get();
@@ -311,7 +311,7 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
             s += 8;
             // Shift to next long if s == 64
             p += s>>6;
-            // cycle from 63 to 0
+            // Cycle from 63 to 0
             s = s & 63;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {
