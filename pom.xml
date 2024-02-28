@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.lemire.integercompression</groupId>
   <artifactId>JavaFastPFOR</artifactId>
-  <version>0.2.0</version>
+  <version>0.2.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <properties>
     <maven.compiler.source>1.7</maven.compiler.source>
