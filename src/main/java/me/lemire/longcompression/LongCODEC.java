@@ -27,7 +27,7 @@ public interface LongCODEC {
          * @param in
          *                input array
          * @param inpos
-         *                location in the input array
+         *                where to start reading in the array
          * @param inlength
          *                how many longs to compress
          * @param out
@@ -52,9 +52,9 @@ public interface LongCODEC {
          *                length of the compressed data (ignored by some
          *                schemes)
          * @param out
-         *                array where to write the compressed output
+         *                array where to write the uncompressed output
          * @param outpos
-         *                where to write the compressed output in out
+         *                where to start writing the uncompressed output in out
          */
         public void uncompress(long[] in, IntWrapper inpos, int inlength,
                 long[] out, IntWrapper outpos);

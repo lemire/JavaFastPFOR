@@ -14,24 +14,9 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import me.lemire.integercompression.BinaryPacking;
-import me.lemire.integercompression.Composition;
 import me.lemire.integercompression.FastPFOR;
 import me.lemire.integercompression.FastPFOR128;
 import me.lemire.integercompression.IntWrapper;
-import me.lemire.integercompression.JustCopy;
-import me.lemire.integercompression.NewPFD;
-import me.lemire.integercompression.NewPFDS16;
-import me.lemire.integercompression.NewPFDS9;
-import me.lemire.integercompression.OptPFD;
-import me.lemire.integercompression.OptPFDS16;
-import me.lemire.integercompression.OptPFDS9;
-import me.lemire.integercompression.Simple9;
-import me.lemire.integercompression.VariableByte;
-import me.lemire.integercompression.differential.Delta;
-import me.lemire.integercompression.differential.IntegratedBinaryPacking;
-import me.lemire.integercompression.differential.IntegratedComposition;
-import me.lemire.integercompression.differential.IntegratedVariableByte;
 import me.lemire.longcompression.differential.LongDelta;
 import me.lemire.longcompression.synth.LongClusteredDataGenerator;
 
@@ -45,7 +30,9 @@ public class LongBasicTest {
     final LongCODEC[] codecs = {
             new LongJustCopy(),
             new LongVariableByte(),
-            new LongAs2IntsCodec()};
+            new LongAs2IntsCodec(),
+            new LongComposition(new LongBinaryPacking(), new LongVariableByte()),
+            };
 
     /**
      * This tests with a compressed array with various offset
@@ -89,14 +76,19 @@ public class LongBasicTest {
                 long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));
                 long[] answer = LongTestUtils.uncompress(c, comp, L);
                 for (int k = 0; k < L; ++k)
-                    if (answer[k] != data[k])
-                        throw new RuntimeException("bug");
+                    if (answer[k] != data[k]) {
+                        long[] comp2 = LongTestUtils.compress(c, Arrays.copyOf(data, L));
+                        long[] answer2 = LongTestUtils.uncompress(c, comp2, L);
+                    	throw new RuntimeException("bug");
+                    }
             }
             for (int L = 128; L <= N; L *= 2) {
                 long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));
                 long[] answer = LongTestUtils.uncompress(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k]) {
+                        long[] comp2 = LongTestUtils.compress(c, Arrays.copyOf(data, L));
+                        long[] answer2 = LongTestUtils.uncompress(c, comp2, L);
                         System.out.println(Arrays.toString(Arrays.copyOf(
                                 answer, L)));
                         System.out.println(Arrays.toString(Arrays.copyOf(data,
@@ -357,19 +349,22 @@ public class LongBasicTest {
     @Test
     public void fastPforTest() {
         // proposed by Stefan Ackermann (https://github.com/Stivo)
-        for (LongCODEC codec : codecs) {
-            int N = FastPFOR.BLOCK_SIZE;
-            long[] data = new long[N];
-            for (int i = 0; i < N; i++)
-                data[i] = 0;
-            data[126] = -1;
-            long[] comp = LongTestUtils.compress(codec, Arrays.copyOf(data, N));
-            long[] answer = LongTestUtils.uncompress(codec, comp, N);
-            for (int k = 0; k < N; ++k)
-                if (answer[k] != data[k])
-                    throw new RuntimeException("bug " + k + " " + answer[k]
-                            + " != " + data[k]);
-        }
+    	for (LongCODEC codec : codecs) {
+	        int N = FastPFOR.BLOCK_SIZE;
+	        long[] data = new long[N];
+	        for (int i = 0; i < N; i++)
+	            data[i] = 0;
+	        data[126] = -1;
+	        long[] comp = LongTestUtils.compress(codec, Arrays.copyOf(data, N));
+	        long[] answer = LongTestUtils.uncompress(codec, comp, N);
+	        for (int k = 0; k < N; ++k)
+	            if (answer[k] != data[k]) {
+	    	        long[] comp2 = LongTestUtils.compress(codec, Arrays.copyOf(data, N));
+	    	        long[] answer2 = LongTestUtils.uncompress(codec, comp2, N);
+	                throw new RuntimeException("bug " + k + " " + answer[k]
+	                        + " != " + data[k]);
+	            }
+    	}
     }
 
     /**

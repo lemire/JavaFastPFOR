@@ -217,7 +217,7 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
             s += 8;
             // Shift to next long if s==64
             p += s>>6;
-            // cycle from 63 to 0
+            // Cycle from 63 to 0
             s = s & 63;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {
@@ -311,7 +311,7 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
             s += 8;
             // Shift to next long if s == 64
             p += s>>6;
-            // cycle from 63 to 0
+            // Cycle from 63 to 0
             s = s & 63;
             v += ((c & 127) << shift);
             if ((c & 128) == 128) {

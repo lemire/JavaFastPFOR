@@ -13,8 +13,8 @@ package me.lemire.integercompression;
  * variation on the IntegerCODEC interface meant to be used for random access
  * (i.e., given a large array, you can segment it and decode just the subarray you need).
  * 
- * The main difference is that we must specify the number of integers we wish to
- * decode. This information should be stored elsewhere.
+ * The main difference is that you must specify the number of integers you wish to
+ * uncompress. This information should be stored elsewhere.
  * 
  * This interface was designed by the Terrier team for their search engine.
  * 
@@ -30,10 +30,13 @@ public interface SkippableIntegerCODEC {
      * inpos will be incremented by 12 while outpos will be incremented by 3. We
      * use IntWrapper to pass the values by reference.
      * 
+     * Implementation note: contrary to {@link IntegerCODEC#compress},
+     * this may skip writing information about the number of encoded integers.
+     * 
      * @param in
      *            input array
      * @param inpos
-     *            location in the input array
+     *            where to start reading in the array
      * @param inlength
      *            how many integers to compress
      * @param out
@@ -57,11 +60,11 @@ public interface SkippableIntegerCODEC {
      * @param inlength
      *            length of the compressed data (ignored by some schemes)
      * @param out
-     *            array where to write the compressed output
+     *            array where to write the uncompressed output
      * @param outpos
-     *            where to write the compressed output in out
+     *            where to start writing the uncompressed output in out
      * @param num
-     *            number of integers we want to decode, the actual number of integers decoded can be less
+     *            number of integers we want to decode. May be less than the actual number of compressed integers
      */
     public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
             IntWrapper outpos, int num);

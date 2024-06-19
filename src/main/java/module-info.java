@@ -5,5 +5,6 @@ module me.lemire.integercompression {
   // This is currently only for advanced users:
   // requires jdk.incubator.vector;
   exports me.lemire.integercompression;
-  exports me.lemire.integercompression.vector;
+  exports me.lemire.longcompression;
+  // exports me.lemire.integercompression.vector;
 }

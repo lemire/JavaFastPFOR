@@ -1690,7 +1690,7 @@ public final class BitPacking {
         }
 
         /**
-         * Unpack 32 integers
+         * Pack without mask 32 integers
          * 
          * @param in
          *                source array
@@ -3005,7 +3005,7 @@ public final class BitPacking {
         }
 
         /**
-         * Pack the 32 integers
+         * Unpack the 32 integers
          * 
          * @param in
          *                source array
