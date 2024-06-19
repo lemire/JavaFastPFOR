@@ -68,7 +68,7 @@ public class SkippableIntegratedComposition implements
         int init = inpos.get();
         F1.headlessUncompress(in, inpos, inlength, out, outpos,num,initvalue);
         if (inpos.get() == init) {
-      	  inpos.increment();
+            inpos.increment();
         }
         inlength -= inpos.get() - init;
 

@@ -82,9 +82,9 @@ the following code in your pom.xml file:
 ```xml
     <dependencies>
          <dependency>
-	     <groupId>me.lemire.integercompression</groupId>
-	     <artifactId>JavaFastPFOR</artifactId>
-	     <version>[0.1,)</version>
+         <groupId>me.lemire.integercompression</groupId>
+         <artifactId>JavaFastPFOR</artifactId>
+         <version>[0.1,)</version>
          </dependency>
      </dependencies>
 ```

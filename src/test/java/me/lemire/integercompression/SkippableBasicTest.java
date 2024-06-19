@@ -19,7 +19,7 @@ import org.junit.Test;
  */
 @SuppressWarnings({ "static-method" })
 public class SkippableBasicTest {
-	final SkippableIntegerCODEC[] codecs = {
+    final SkippableIntegerCODEC[] codecs = {
             new JustCopy(),
             new VariableByte(),
             new SkippableComposition(new BinaryPacking(), new VariableByte()),

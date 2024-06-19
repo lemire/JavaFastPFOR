@@ -16,7 +16,7 @@ package me.lemire.longcompression;
 @Deprecated
 public class LongUtil {
 
-	protected static String longToBinaryWithLeading(long l) {
-		return String.format("%64s", Long.toBinaryString(l)).replace(' ', '0');
-	}
+    protected static String longToBinaryWithLeading(long l) {
+        return String.format("%64s", Long.toBinaryString(l)).replace(' ', '0');
+    }
 }

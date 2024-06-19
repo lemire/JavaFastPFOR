@@ -29,7 +29,7 @@ public class LongClusteredDataGenerator {
         }
 
         void fillUniform(long[] array, int offset, int length, long Min, long Max) {
-        	    long[] v = this.unidg.generateUniform(length, Max - Min);
+                long[] v = this.unidg.generateUniform(length, Max - Min);
                 for (int k = 0; k < v.length; ++k)
                         array[k + offset] = Min + v[k];
         }
@@ -70,7 +70,7 @@ public class LongClusteredDataGenerator {
          * @return array containing the integers
          */
         public long[] generateClustered(int N, long Max) {
-        	    long[] array = new long[N];
+                long[] array = new long[N];
                 fillClustered(array, 0, N, 0, Max);
                 return array;
         }
@@ -82,7 +82,7 @@ public class LongClusteredDataGenerator {
          *                arguments are ignored
          */
         public static void main(final String[] args) {
-        	    long[] example = (new LongClusteredDataGenerator())
+                long[] example = (new LongClusteredDataGenerator())
                         .generateClustered(20, 1000);
                 for (int k = 0; k < example.length; ++k)
                         System.out.println(example[k]);

@@ -127,7 +127,7 @@ public class LongTestUtils {
         return Arrays.copyOf(outBuf, outPos.get());
     }
 
-	public static String longToBinaryWithLeading(long l) {
-		return String.format("%64s", Long.toBinaryString(l)).replace(' ', '0');
-	}
+    public static String longToBinaryWithLeading(long l) {
+        return String.format("%64s", Long.toBinaryString(l)).replace(' ', '0');
+    }
 }

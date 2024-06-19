@@ -78,15 +78,15 @@ public class SkippableLongBasicTest {
         for (SkippableLongCODEC c : codecs) {
             System.out.println("[SkippeableBasicTest.varyingLengthTest] codec = "+c);
             for (int L = 1; L <= 128; L++) {
-            	long[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));
-            	long[] answer = LongTestUtils.uncompressHeadless(c, comp, L);
+                long[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));
+                long[] answer = LongTestUtils.uncompressHeadless(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug "+c.toString()+" "+k+" "+answer[k]+" "+data[k]);
             }
             for (int L = 128; L <= N; L *= 2) {
-            	long[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));
-            	long[] answer = LongTestUtils.uncompressHeadless(c, comp, L);
+                long[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));
+                long[] answer = LongTestUtils.uncompressHeadless(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
@@ -123,16 +123,16 @@ public class SkippableLongBasicTest {
                 e.printStackTrace();
             }
             for (int L = 1; L <= 128; L++) {
-            	long[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));
-            	long[] answer = LongTestUtils.uncompressHeadless(c, comp, L);
+                long[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));
+                long[] answer = LongTestUtils.uncompressHeadless(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k]) {
-                    	throw new RuntimeException("L=" + L + ": bug at k = "+k+" "+answer[k]+" "+data[k]+" for "+c.toString());
+                        throw new RuntimeException("L=" + L + ": bug at k = "+k+" "+answer[k]+" "+data[k]+" for "+c.toString());
                     }
             }
             for (int L = 128; L <= N; L *= 2) {
-            	long[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));
-            	long[] answer = LongTestUtils.uncompressHeadless(c, comp, L);
+                long[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));
+                long[] answer = LongTestUtils.uncompressHeadless(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");

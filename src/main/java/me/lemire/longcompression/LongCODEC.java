@@ -36,7 +36,7 @@ public interface LongCODEC {
          *                where to write in the output array
          */
         public void compress(long[] in, IntWrapper inpos, int inlength,
-        		long[] out, IntWrapper outpos);
+                long[] out, IntWrapper outpos);
 
         /**
          * Uncompress data from an array to another array.
@@ -57,6 +57,6 @@ public interface LongCODEC {
          *                where to write the compressed output in out
          */
         public void uncompress(long[] in, IntWrapper inpos, int inlength,
-        		long[] out, IntWrapper outpos);
+                long[] out, IntWrapper outpos);
 
 }

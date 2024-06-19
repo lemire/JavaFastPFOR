@@ -37,7 +37,7 @@ public class LongComposition implements LongCODEC {
 
         @Override
         public void compress(long[] in, IntWrapper inpos, int inlength,
-        		long[] out, IntWrapper outpos) {
+                long[] out, IntWrapper outpos) {
             if (inlength == 0) {
                 return;
             }
@@ -54,7 +54,7 @@ public class LongComposition implements LongCODEC {
 
         @Override
         public void uncompress(long[] in, IntWrapper inpos, int inlength,
-        		long[] out, IntWrapper outpos) {
+                long[] out, IntWrapper outpos) {
                 if (inlength == 0)
                         return;
                 final int init = inpos.get();

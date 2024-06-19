@@ -47,33 +47,33 @@ public class LongBasicTest {
             new LongVariableByte(),
             new LongAs2IntsCodec()};
 
-	/**
+    /**
      * This tests with a compressed array with various offset
      */
-	@Test
-	public void saulTest() {
-		for (LongCODEC C : codecs) {
-			for (int x = 0; x < 50; ++x) {
-				long[] a = { 2, 3, 4, 5 };
-				long[] b = new long[90];
-				long[] c = new long[a.length];
+    @Test
+    public void saulTest() {
+        for (LongCODEC C : codecs) {
+            for (int x = 0; x < 50; ++x) {
+                long[] a = { 2, 3, 4, 5 };
+                long[] b = new long[90];
+                long[] c = new long[a.length];
 
-				IntWrapper aOffset = new IntWrapper(0);
-				IntWrapper bOffset = new IntWrapper(x);
-				C.compress(a, aOffset, a.length, b, bOffset);
-				int len = bOffset.get() - x;
+                IntWrapper aOffset = new IntWrapper(0);
+                IntWrapper bOffset = new IntWrapper(x);
+                C.compress(a, aOffset, a.length, b, bOffset);
+                int len = bOffset.get() - x;
 
-				bOffset.set(x);
-				IntWrapper cOffset = new IntWrapper(0);
-				C.uncompress(b, bOffset, len, c, cOffset);
-				if(!Arrays.equals(a, c)) {
-					System.out.println("Problem with "+C);
-				}
-				assertArrayEquals(a, c);
+                bOffset.set(x);
+                IntWrapper cOffset = new IntWrapper(0);
+                C.uncompress(b, bOffset, len, c, cOffset);
+                if(!Arrays.equals(a, c)) {
+                    System.out.println("Problem with "+C);
+                }
+                assertArrayEquals(a, c);
 
-			}
-		}
-	}
+            }
+        }
+    }
     /**
      * 
      */
@@ -167,16 +167,16 @@ public class LongBasicTest {
     @Test
     public void checkVariousCases() {
         for (LongCODEC c : codecs) {
-	        testZeroInZeroOut(c);
-	        test(c, c, 5, 10);
-	        test(c, c, 5, 14);
-	        test(c, c, 2, 18);
-	        // TODO Unclear which codec should manage an empty output array or not
-	        // Some IntegerCodec does not output anything if the input is smaller than some block size
-        	// testSpurious(c);
-	        testUnsorted(c);
-	        testUnsorted2(c);
-	        testUnsorted3(c);
+            testZeroInZeroOut(c);
+            test(c, c, 5, 10);
+            test(c, c, 5, 14);
+            test(c, c, 2, 18);
+            // TODO Unclear which codec should manage an empty output array or not
+            // Some IntegerCodec does not output anything if the input is smaller than some block size
+            // testSpurious(c);
+            testUnsorted(c);
+            testUnsorted2(c);
+            testUnsorted3(c);
         }
     }
 
@@ -273,7 +273,7 @@ public class LongBasicTest {
             buffer[0] = backupdata[0];
             co.uncompress(dataout, inpos, thiscompsize - 1, buffer, outpos);
             if (!(c instanceof IntegratedLongCODEC))
-            	LongDelta.fastinverseDelta(buffer);
+                LongDelta.fastinverseDelta(buffer);
 
             // Check assertions.
             assertEquals("length is not match", outpos.get(), data[k].length);
@@ -357,19 +357,19 @@ public class LongBasicTest {
     @Test
     public void fastPforTest() {
         // proposed by Stefan Ackermann (https://github.com/Stivo)
-    	for (LongCODEC codec : codecs) {
-	        int N = FastPFOR.BLOCK_SIZE;
-	        long[] data = new long[N];
-	        for (int i = 0; i < N; i++)
-	            data[i] = 0;
-	        data[126] = -1;
-	        long[] comp = LongTestUtils.compress(codec, Arrays.copyOf(data, N));
-	        long[] answer = LongTestUtils.uncompress(codec, comp, N);
-	        for (int k = 0; k < N; ++k)
-	            if (answer[k] != data[k])
-	                throw new RuntimeException("bug " + k + " " + answer[k]
-	                        + " != " + data[k]);
-    	}
+        for (LongCODEC codec : codecs) {
+            int N = FastPFOR.BLOCK_SIZE;
+            long[] data = new long[N];
+            for (int i = 0; i < N; i++)
+                data[i] = 0;
+            data[126] = -1;
+            long[] comp = LongTestUtils.compress(codec, Arrays.copyOf(data, N));
+            long[] answer = LongTestUtils.uncompress(codec, comp, N);
+            for (int k = 0; k < N; ++k)
+                if (answer[k] != data[k])
+                    throw new RuntimeException("bug " + k + " " + answer[k]
+                            + " != " + data[k]);
+        }
     }
 
     /**
@@ -378,19 +378,19 @@ public class LongBasicTest {
     @Test
     public void fastPfor128Test() {
         // proposed by Stefan Ackermann (https://github.com/Stivo)
-    	for (LongCODEC codec : codecs) {
-	        int N = FastPFOR128.BLOCK_SIZE;
-	        long[] data = new long[N];
-	        for (int i = 0; i < N; i++)
-	            data[i] = 0;
-	        data[126] = -1;
-	        long[] comp = LongTestUtils.compress(codec, Arrays.copyOf(data, N));
-	        long[] answer = LongTestUtils.uncompress(codec, comp, N);
-	        for (int k = 0; k < N; ++k)
-	            if (answer[k] != data[k])
-	                throw new RuntimeException("bug " + k + " " + answer[k]
-	                        + " != " + data[k]);
-    	}
+        for (LongCODEC codec : codecs) {
+            int N = FastPFOR128.BLOCK_SIZE;
+            long[] data = new long[N];
+            for (int i = 0; i < N; i++)
+                data[i] = 0;
+            data[126] = -1;
+            long[] comp = LongTestUtils.compress(codec, Arrays.copyOf(data, N));
+            long[] answer = LongTestUtils.uncompress(codec, comp, N);
+            for (int k = 0; k < N; ++k)
+                if (answer[k] != data[k])
+                    throw new RuntimeException("bug " + k + " " + answer[k]
+                            + " != " + data[k]);
+        }
     }
 
 }

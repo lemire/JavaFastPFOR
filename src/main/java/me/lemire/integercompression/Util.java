@@ -15,13 +15,13 @@ package me.lemire.integercompression;
 public final class Util {
    
 
-	
-	// check whether x is small than y as unsigned ints (supported by Java 8 natively);
-	protected static final boolean smallerorequalthan(int x, int y) {
-		return (x + Integer.MIN_VALUE) <= (y + Integer.MIN_VALUE);
-	}
-	
-	/**
+    
+    // check whether x is small than y as unsigned ints (supported by Java 8 natively);
+    protected static final boolean smallerorequalthan(int x, int y) {
+        return (x + Integer.MIN_VALUE) <= (y + Integer.MIN_VALUE);
+    }
+    
+    /**
      * Compute the maximum of the integer logarithms (ceil(log(x+1)) of a range
      * of value
      * 

@@ -48,35 +48,35 @@ public class BasicTest {
             new GroupSimple9(),
             new Composition(new XorBinaryPacking(), new VariableByte()),
             new Composition(new DeltaZigzagBinaryPacking(),
-					new DeltaZigzagVariableByte()) };
+                    new DeltaZigzagVariableByte()) };
 
-	/**
+    /**
      * This tests with a compressed array with various offset
      */
-	@Test
-	public void saulTest() {
-		for (IntegerCODEC C : codecs) {
-			for (int x = 0; x < 50; ++x) {
-				int[] a = { 2, 3, 4, 5 };
-				int[] b = new int[90];
-				int[] c = new int[a.length];
+    @Test
+    public void saulTest() {
+        for (IntegerCODEC C : codecs) {
+            for (int x = 0; x < 50; ++x) {
+                int[] a = { 2, 3, 4, 5 };
+                int[] b = new int[90];
+                int[] c = new int[a.length];
 
-				IntWrapper aOffset = new IntWrapper(0);
-				IntWrapper bOffset = new IntWrapper(x);
-				C.compress(a, aOffset, a.length, b, bOffset);
-				int len = bOffset.get() - x;
+                IntWrapper aOffset = new IntWrapper(0);
+                IntWrapper bOffset = new IntWrapper(x);
+                C.compress(a, aOffset, a.length, b, bOffset);
+                int len = bOffset.get() - x;
 
-				bOffset.set(x);
-				IntWrapper cOffset = new IntWrapper(0);
-				C.uncompress(b, bOffset, len, c, cOffset);
-				if(!Arrays.equals(a, c)) {
-					System.out.println("Problem with "+C);
-				}
-				assertArrayEquals(a, c);
+                bOffset.set(x);
+                IntWrapper cOffset = new IntWrapper(0);
+                C.uncompress(b, bOffset, len, c, cOffset);
+                if(!Arrays.equals(a, c)) {
+                    System.out.println("Problem with "+C);
+                }
+                assertArrayEquals(a, c);
 
-			}
-		}
-	}
+            }
+        }
+    }
     /**
      * 
      */

@@ -43,12 +43,12 @@ public class IntegratedIntCompressor {
         compressed[0] = input.length;
         IntWrapper outpos = new IntWrapper(1);
         IntWrapper initvalue = new IntWrapper(0);
-		try {
-			codec.headlessCompress(input, new IntWrapper(0), input.length, compressed, outpos, initvalue);
-		} catch (IndexOutOfBoundsException ioebe) {
-			throw new UncompressibleInputException(
-					"Your input is too poorly compressible with the current codec : " + codec);
-		}
+        try {
+            codec.headlessCompress(input, new IntWrapper(0), input.length, compressed, outpos, initvalue);
+        } catch (IndexOutOfBoundsException ioebe) {
+            throw new UncompressibleInputException(
+                    "Your input is too poorly compressible with the current codec : " + codec);
+        }
         compressed = Arrays.copyOf(compressed,outpos.intValue());
         return compressed;
     }

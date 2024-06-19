@@ -66,7 +66,7 @@ public final class LongDelta {
          * @return next initial vale
          */
         public static long delta(long[] data, int start, int length, int init,
-        		long[] out) {
+                long[] out) {
                 for (int i = length - 1; i > 0; --i) {
                         out[i] = data[start + i] - data[start + i - 1];
                 }
@@ -98,7 +98,7 @@ public final class LongDelta {
                 int sz0 = data.length / 4 * 4;
                 int i = 1;
                 if (sz0 >= 4) {
-                	    long a = data[0];
+                        long a = data[0];
                         for (; i < sz0 - 4; i += 4) {
                                 a = data[i] += a;
                                 a = data[i + 1] += a;
@@ -132,7 +132,7 @@ public final class LongDelta {
                 int sz0 = length / 4 * 4;
                 int i = 1;
                 if (sz0 >= 4) {
-                	long a = data[start];
+                    long a = data[start];
                         for (; i < sz0 - 4; i += 4) {
                                 a = data[start + i] += a;
                                 a = data[start + i + 1] += a;

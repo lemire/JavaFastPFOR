@@ -54,7 +54,7 @@ public class SkippableComposition implements SkippableIntegerCODEC {
         int init = inpos.get();
         F1.headlessUncompress(in, inpos, inlength, out, outpos, num);
         if (inpos.get() == init) {
-        	  inpos.increment();
+              inpos.increment();
         }
         inlength -= inpos.get() - init;
         num -= outpos.get();

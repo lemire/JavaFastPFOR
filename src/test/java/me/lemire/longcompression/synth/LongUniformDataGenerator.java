@@ -59,12 +59,12 @@ public class LongUniformDataGenerator {
          * output all longs from the range [0,Max) that are not in the array
          */
         static long[] negate(long[] x, long Max) {
-        	int newLength = saturatedCast(Max - x.length);
-        	long[] ans = new long[newLength];
+            int newLength = saturatedCast(Max - x.length);
+            long[] ans = new long[newLength];
                 int i = 0;
                 int c = 0;
                 for (int j = 0; j < x.length; ++j) {
-                	long v = x[j];
+                    long v = x[j];
                         for (; i < v; ++i)
                                 ans[c++] = i;
                         ++i;
@@ -74,13 +74,13 @@ public class LongUniformDataGenerator {
                 return ans;
         }
 
-		private static int saturatedCast(long toInt) {
-        	if (toInt > Integer.MAX_VALUE) {
-        		return Integer.MAX_VALUE;
-        	} else {
-        		return (int) toInt;
-        	}
-		}
+        private static int saturatedCast(long toInt) {
+            if (toInt > Integer.MAX_VALUE) {
+                return Integer.MAX_VALUE;
+            } else {
+                return (int) toInt;
+            }
+        }
 
         /**
          * generates randomly N distinct longs from 0 to Max.
@@ -92,7 +92,7 @@ public class LongUniformDataGenerator {
          * @return an array containing randomly selected longs
          */
         public long[] generateUniform(int N, long Max) {
-        	    assert N >= 0;
+                assert N >= 0;
                 assert Max >= 0;
                 if (N * 2 > Max) {
                         return negate(generateUniform(saturatedCast(Max - N), Max), Max);
